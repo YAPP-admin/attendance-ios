@@ -14,6 +14,11 @@
 		5EF69EAC27A7DAFA007E9735 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5EF69EAB27A7DAFA007E9735 /* Assets.xcassets */; };
 		5EF69EAF27A7DAFA007E9735 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5EF69EAD27A7DAFA007E9735 /* LaunchScreen.storyboard */; };
 		5EF69EB827A7DCDE007E9735 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 5EF69EB727A7DCDE007E9735 /* .swiftlint.yml */; };
+		5EF69EC227A7EFFF007E9735 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69EC127A7EFFF007E9735 /* LoginViewModel.swift */; };
+		5EF69EC427A7F8B0007E9735 /* UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69EC327A7F8B0007E9735 /* UILabel.swift */; };
+		5EF69EC627A7FA40007E9735 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69EC527A7FA40007E9735 /* UIColor.swift */; };
+		5EF69EC927A81E4E007E9735 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69EC827A81E4E007E9735 /* HomeViewModel.swift */; };
+		5EF69ECB27A81E56007E9735 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69ECA27A81E56007E9735 /* HomeViewController.swift */; };
 		7F4FBAFCC0259F3E7AF9EDB6 /* Pods_attendance_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDDCE233E5BE7E34BB51BE5D /* Pods_attendance_ios.framework */; };
 /* End PBXBuildFile section */
 
@@ -27,6 +32,11 @@
 		5EF69EAE27A7DAFA007E9735 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5EF69EB027A7DAFA007E9735 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5EF69EB727A7DCDE007E9735 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		5EF69EC127A7EFFF007E9735 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		5EF69EC327A7F8B0007E9735 /* UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabel.swift; sourceTree = "<group>"; };
+		5EF69EC527A7FA40007E9735 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		5EF69EC827A81E4E007E9735 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		5EF69ECA27A81E56007E9735 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		6F02DCE832A2AB4DFD3E1B31 /* Pods-attendance-ios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-attendance-ios.release.xcconfig"; path = "Target Support Files/Pods-attendance-ios/Pods-attendance-ios.release.xcconfig"; sourceTree = "<group>"; };
 		BD84FC73203EF1BEB1378FE9 /* Pods-attendance-ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-attendance-ios.debug.xcconfig"; path = "Target Support Files/Pods-attendance-ios/Pods-attendance-ios.debug.xcconfig"; sourceTree = "<group>"; };
 		BDDCE233E5BE7E34BB51BE5D /* Pods_attendance_ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_attendance_ios.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -93,11 +103,12 @@
 			isa = PBXGroup;
 			children = (
 				5EF69EBD27A7DD8A007E9735 /* Models */,
-				5EF69EBC27A7DD68007E9735 /* Storyboards */,
 				5EF69EC027A7DDE1007E9735 /* Login */,
-				5EF69EBB27A7DD57007E9735 /* System */,
-				5EF69EBF27A7DDB3007E9735 /* Utilities */,
+				5EF69EC727A81E25007E9735 /* Home */,
 				5EF69EBE27A7DD8F007E9735 /* Extensions */,
+				5EF69EBF27A7DDB3007E9735 /* Utilities */,
+				5EF69EBB27A7DD57007E9735 /* System */,
+				5EF69EBC27A7DD68007E9735 /* Storyboards */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -130,6 +141,8 @@
 		5EF69EBE27A7DD8F007E9735 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				5EF69EC327A7F8B0007E9735 /* UILabel.swift */,
+				5EF69EC527A7FA40007E9735 /* UIColor.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -144,9 +157,19 @@
 		5EF69EC027A7DDE1007E9735 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				5EF69EC127A7EFFF007E9735 /* LoginViewModel.swift */,
 				5EF69EA627A7DAF8007E9735 /* LoginViewController.swift */,
 			);
 			path = Login;
+			sourceTree = "<group>";
+		};
+		5EF69EC727A81E25007E9735 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				5EF69EC827A81E4E007E9735 /* HomeViewModel.swift */,
+				5EF69ECA27A81E56007E9735 /* HomeViewController.swift */,
+			);
+			path = Home;
 			sourceTree = "<group>";
 		};
 		5EF9D0F13059E0544BF719D1 /* Pods */ = {
@@ -292,6 +315,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5EF69EC427A7F8B0007E9735 /* UILabel.swift in Sources */,
+				5EF69EC627A7FA40007E9735 /* UIColor.swift in Sources */,
+				5EF69EC927A81E4E007E9735 /* HomeViewModel.swift in Sources */,
+				5EF69ECB27A81E56007E9735 /* HomeViewController.swift in Sources */,
+				5EF69EC227A7EFFF007E9735 /* LoginViewModel.swift in Sources */,
 				5EF69EA727A7DAF8007E9735 /* LoginViewController.swift in Sources */,
 				5EF69EA327A7DAF8007E9735 /* AppDelegate.swift in Sources */,
 				5EF69EA527A7DAF8007E9735 /* SceneDelegate.swift in Sources */,
@@ -371,7 +399,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -426,7 +454,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
