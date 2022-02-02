@@ -10,7 +10,7 @@ import RxSwift
 import SnapKit
 
 protocol HomeBottomViewDelegate: AnyObject {
-    func goToDetailVC()
+    func showDetailVC()
 }
 
 final class HomeBottomView: UIView {
@@ -77,7 +77,7 @@ final class HomeBottomView: UIView {
     private func addTarget() {
         nextButton.rx.tap
             .bind { [weak self] _ in
-                self?.delegate?.goToDetailVC()
+                self?.delegate?.showDetailVC()
             }.disposed(by: disposeBag)
     }
     

@@ -22,6 +22,8 @@
 		5EF69ECF27A83424007E9735 /* HomeBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69ECE27A83424007E9735 /* HomeBottomView.swift */; };
 		5EF69ED127A83BB9007E9735 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69ED027A83BB9007E9735 /* DetailViewModel.swift */; };
 		5EF69ED427A83BCE007E9735 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69ED327A83BCE007E9735 /* DetailViewController.swift */; };
+		5EF69ED927AAACBA007E9735 /* PolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69ED827AAACBA007E9735 /* PolicyViewController.swift */; };
+		5EF69EDB27AAB0BC007E9735 /* PolicyUnitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69EDA27AAB0BC007E9735 /* PolicyUnitView.swift */; };
 		7F4FBAFCC0259F3E7AF9EDB6 /* Pods_attendance_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDDCE233E5BE7E34BB51BE5D /* Pods_attendance_ios.framework */; };
 /* End PBXBuildFile section */
 
@@ -43,6 +45,8 @@
 		5EF69ECE27A83424007E9735 /* HomeBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeBottomView.swift; sourceTree = "<group>"; };
 		5EF69ED027A83BB9007E9735 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 		5EF69ED327A83BCE007E9735 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		5EF69ED827AAACBA007E9735 /* PolicyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolicyViewController.swift; sourceTree = "<group>"; };
+		5EF69EDA27AAB0BC007E9735 /* PolicyUnitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolicyUnitView.swift; sourceTree = "<group>"; };
 		6F02DCE832A2AB4DFD3E1B31 /* Pods-attendance-ios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-attendance-ios.release.xcconfig"; path = "Target Support Files/Pods-attendance-ios/Pods-attendance-ios.release.xcconfig"; sourceTree = "<group>"; };
 		BD84FC73203EF1BEB1378FE9 /* Pods-attendance-ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-attendance-ios.debug.xcconfig"; path = "Target Support Files/Pods-attendance-ios/Pods-attendance-ios.debug.xcconfig"; sourceTree = "<group>"; };
 		BDDCE233E5BE7E34BB51BE5D /* Pods_attendance_ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_attendance_ios.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -112,6 +116,7 @@
 				5EF69EC027A7DDE1007E9735 /* Login */,
 				5EF69EC727A81E25007E9735 /* Home */,
 				5EF69ED227A83BC1007E9735 /* Detail */,
+				5EF69ED727AAAC88007E9735 /* Policy */,
 				5EF69EBE27A7DD8F007E9735 /* Extensions */,
 				5EF69EBF27A7DDB3007E9735 /* Utilities */,
 				5EF69EBB27A7DD57007E9735 /* System */,
@@ -187,6 +192,15 @@
 				5EF69ED327A83BCE007E9735 /* DetailViewController.swift */,
 			);
 			path = Detail;
+			sourceTree = "<group>";
+		};
+		5EF69ED727AAAC88007E9735 /* Policy */ = {
+			isa = PBXGroup;
+			children = (
+				5EF69ED827AAACBA007E9735 /* PolicyViewController.swift */,
+				5EF69EDA27AAB0BC007E9735 /* PolicyUnitView.swift */,
+			);
+			path = Policy;
 			sourceTree = "<group>";
 		};
 		5EF9D0F13059E0544BF719D1 /* Pods */ = {
@@ -340,6 +354,8 @@
 				5EF69EC927A81E4E007E9735 /* HomeViewModel.swift in Sources */,
 				5EF69ECB27A81E56007E9735 /* HomeViewController.swift in Sources */,
 				5EF69EC227A7EFFF007E9735 /* LoginViewModel.swift in Sources */,
+				5EF69ED927AAACBA007E9735 /* PolicyViewController.swift in Sources */,
+				5EF69EDB27AAB0BC007E9735 /* PolicyUnitView.swift in Sources */,
 				5EF69EA727A7DAF8007E9735 /* LoginViewController.swift in Sources */,
 				5EF69EA327A7DAF8007E9735 /* AppDelegate.swift in Sources */,
 				5EF69EA527A7DAF8007E9735 /* SceneDelegate.swift in Sources */,

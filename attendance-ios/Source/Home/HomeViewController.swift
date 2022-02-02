@@ -43,17 +43,20 @@ final class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.hidesBackButton = true
         view.backgroundColor = .white
         
         bindViewModel()
+        configureNavigationBar()
         configureCaptureSession()
         configureMaskView()
         configureGuideLabel()
         addSubViews()
     }
+}
+
+extension HomeViewController: AVCaptureMetadataOutputObjectsDelegate {
     
-    func configureMaskView() {
+    private func configureMaskView() {
         let maskLayer = CAShapeLayer()
         let path = UIBezierPath(rect: view.bounds)
         
@@ -64,9 +67,6 @@ final class HomeViewController: UIViewController {
 
         dimmedView.layer.mask = maskLayer
     }
-}
-
-extension HomeViewController: AVCaptureMetadataOutputObjectsDelegate {
     
     private func configureCaptureSession() {
         guard let device = AVCaptureDevice.default(for: AVMediaType.video) else { return }
@@ -104,9 +104,8 @@ extension HomeViewController: AVCaptureMetadataOutputObjectsDelegate {
 
 extension HomeViewController: HomeBottomViewDelegate {
     
-    func goToDetailVC() {
+    func showDetailVC() {
         let detailVC = DetailViewController()
-        navigationItem.backButtonTitle = ""
         navigationController?.pushViewController(detailVC, animated: true)
     }
 }
@@ -152,5 +151,10 @@ private extension HomeViewController {
             $0.bottom.left.right.equalToSuperview()
             $0.height.equalTo(250)
         }
+    }
+    
+    func configureNavigationBar() {
+        navigationItem.hidesBackButton = true
+        navigationItem.backButtonTitle = ""
     }
 }

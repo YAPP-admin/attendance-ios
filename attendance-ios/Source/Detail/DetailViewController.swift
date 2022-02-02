@@ -18,10 +18,11 @@ final class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        navigationController?.navigationBar.tintColor = .black
         
+        configureNavigationBar()
         bindViewModel()
         addSubViews()
+
     }
 }
 
@@ -33,5 +34,18 @@ private extension DetailViewController {
     
     func addSubViews() {
 
+    }
+    
+    func configureNavigationBar() {
+        let ellipsisButton = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .plain, target: self, action: #selector(showPolicyVC))
+        ellipsisButton.tintColor = .black
+        navigationItem.rightBarButtonItem = ellipsisButton
+        navigationItem.backButtonTitle = ""
+        navigationController?.navigationBar.tintColor = .black
+    }
+    
+    @objc func showPolicyVC() {
+        let policyVC = PolicyViewController()
+        self.navigationController?.pushViewController(policyVC, animated: true)
     }
 }

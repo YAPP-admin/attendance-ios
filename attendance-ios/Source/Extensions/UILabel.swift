@@ -20,4 +20,14 @@ extension UILabel {
         
         self.attributedText = attributedString
     }
+    
+    func setBoldFont(_ targetText: String) {
+        guard let fullText = self.text, let font = self.font else { return }
+        
+        let attributedString = NSMutableAttributedString(string: fullText)
+        let targetRange = (fullText as NSString).range(of: targetText)
+        attributedString.addAttribute(.font, value: UIFont.systemFont(ofSize: font.pointSize, weight: .bold), range: targetRange)
+        
+        self.attributedText = attributedString
+    }
 }

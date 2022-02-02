@@ -60,11 +60,11 @@ private extension LoginViewController {
         
         viewModel.output.goToHome
             .observe(on: MainScheduler.instance)
-            .bind(onNext: goToHome)
+            .bind(onNext: showHomeVC)
             .disposed(by: disposeBag)
     }
     
-    func goToHome() {
+    func showHomeVC() {
         let homeVC = HomeViewController()
         homeVC.modalPresentationStyle = .fullScreen
         present(homeVC, animated: true, completion: nil)
