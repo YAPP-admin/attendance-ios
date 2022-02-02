@@ -10,13 +10,13 @@ import UIKit
 extension UILabel {
     
     func setLineSpacing(_ lineSpacing: CGFloat) {
-        guard let labelText = self.text else { return }
+        guard let text = self.text else { return }
         
-        let attributedString = NSMutableAttributedString(string: labelText)
+        let attributedString = NSMutableAttributedString(string: text)
         let paragraphStyle = NSMutableParagraphStyle()
         
         paragraphStyle.lineSpacing = lineSpacing
-        attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attributedString.length))
+        attributedString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attributedString.length))
         
         self.attributedText = attributedString
     }

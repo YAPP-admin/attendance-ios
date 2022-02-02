@@ -19,6 +19,9 @@
 		5EF69EC627A7FA40007E9735 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69EC527A7FA40007E9735 /* UIColor.swift */; };
 		5EF69EC927A81E4E007E9735 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69EC827A81E4E007E9735 /* HomeViewModel.swift */; };
 		5EF69ECB27A81E56007E9735 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69ECA27A81E56007E9735 /* HomeViewController.swift */; };
+		5EF69ECF27A83424007E9735 /* HomeBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69ECE27A83424007E9735 /* HomeBottomView.swift */; };
+		5EF69ED127A83BB9007E9735 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69ED027A83BB9007E9735 /* DetailViewModel.swift */; };
+		5EF69ED427A83BCE007E9735 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69ED327A83BCE007E9735 /* DetailViewController.swift */; };
 		7F4FBAFCC0259F3E7AF9EDB6 /* Pods_attendance_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDDCE233E5BE7E34BB51BE5D /* Pods_attendance_ios.framework */; };
 /* End PBXBuildFile section */
 
@@ -37,6 +40,9 @@
 		5EF69EC527A7FA40007E9735 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		5EF69EC827A81E4E007E9735 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		5EF69ECA27A81E56007E9735 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		5EF69ECE27A83424007E9735 /* HomeBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeBottomView.swift; sourceTree = "<group>"; };
+		5EF69ED027A83BB9007E9735 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
+		5EF69ED327A83BCE007E9735 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		6F02DCE832A2AB4DFD3E1B31 /* Pods-attendance-ios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-attendance-ios.release.xcconfig"; path = "Target Support Files/Pods-attendance-ios/Pods-attendance-ios.release.xcconfig"; sourceTree = "<group>"; };
 		BD84FC73203EF1BEB1378FE9 /* Pods-attendance-ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-attendance-ios.debug.xcconfig"; path = "Target Support Files/Pods-attendance-ios/Pods-attendance-ios.debug.xcconfig"; sourceTree = "<group>"; };
 		BDDCE233E5BE7E34BB51BE5D /* Pods_attendance_ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_attendance_ios.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -105,6 +111,7 @@
 				5EF69EBD27A7DD8A007E9735 /* Models */,
 				5EF69EC027A7DDE1007E9735 /* Login */,
 				5EF69EC727A81E25007E9735 /* Home */,
+				5EF69ED227A83BC1007E9735 /* Detail */,
 				5EF69EBE27A7DD8F007E9735 /* Extensions */,
 				5EF69EBF27A7DDB3007E9735 /* Utilities */,
 				5EF69EBB27A7DD57007E9735 /* System */,
@@ -168,8 +175,18 @@
 			children = (
 				5EF69EC827A81E4E007E9735 /* HomeViewModel.swift */,
 				5EF69ECA27A81E56007E9735 /* HomeViewController.swift */,
+				5EF69ECE27A83424007E9735 /* HomeBottomView.swift */,
 			);
 			path = Home;
+			sourceTree = "<group>";
+		};
+		5EF69ED227A83BC1007E9735 /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				5EF69ED027A83BB9007E9735 /* DetailViewModel.swift */,
+				5EF69ED327A83BCE007E9735 /* DetailViewController.swift */,
+			);
+			path = Detail;
 			sourceTree = "<group>";
 		};
 		5EF9D0F13059E0544BF719D1 /* Pods */ = {
@@ -315,8 +332,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5EF69ED427A83BCE007E9735 /* DetailViewController.swift in Sources */,
+				5EF69ECF27A83424007E9735 /* HomeBottomView.swift in Sources */,
 				5EF69EC427A7F8B0007E9735 /* UILabel.swift in Sources */,
 				5EF69EC627A7FA40007E9735 /* UIColor.swift in Sources */,
+				5EF69ED127A83BB9007E9735 /* DetailViewModel.swift in Sources */,
 				5EF69EC927A81E4E007E9735 /* HomeViewModel.swift in Sources */,
 				5EF69ECB27A81E56007E9735 /* HomeViewController.swift in Sources */,
 				5EF69EC227A7EFFF007E9735 /* LoginViewModel.swift in Sources */,
