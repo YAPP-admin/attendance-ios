@@ -14,7 +14,7 @@ protocol HomeBottomViewDelegate: AnyObject {
 }
 
 final class HomeBottomView: UIView {
-    
+
     private let dateLabel: UILabel = {
         let label = UILabel()
         label.text = "01/01"
@@ -22,7 +22,7 @@ final class HomeBottomView: UIView {
         label.textColor = .gray
         return label
     }()
-    
+
     private let numberLabel: UILabel = {
         let label = UILabel()
         label.text = "1번째 세션"
@@ -30,7 +30,7 @@ final class HomeBottomView: UIView {
         label.textColor = .gray
         return label
     }()
-    
+
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "YAPP 오리엔테이션"
@@ -38,7 +38,7 @@ final class HomeBottomView: UIView {
         label.textColor = .black
         return label
     }()
-    
+
     private let summaryLabel: UILabel = {
         let label = UILabel()
         label.text = "팀원과 함께 모여서 앞으로의 방향성을\n논의하는 시간을 가져봐요!"
@@ -48,7 +48,7 @@ final class HomeBottomView: UIView {
         label.setLineSpacing(3)
         return label
     }()
-    
+
     private let nextButton: UIButton = {
         let button = UIButton()
         button.setTitle("내 점수 00점     오늘 출석: 출석", for: .normal)
@@ -58,42 +58,42 @@ final class HomeBottomView: UIView {
         button.layer.cornerRadius = 10
         return button
     }()
-    
+
     weak var delegate: HomeBottomViewDelegate?
     private let disposeBag = DisposeBag()
-        
+
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+
         addTarget()
         configureView()
         addSubViews()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func addTarget() {
         nextButton.rx.tap
             .bind { [weak self] _ in
                 self?.delegate?.showDetailVC()
             }.disposed(by: disposeBag)
     }
-    
+
     private func configureView() {
         backgroundColor = .white
         layer.cornerRadius = 20
         layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
     }
-    
+
     private func addSubViews() {
         addSubview(dateLabel)
         addSubview(numberLabel)
         addSubview(titleLabel)
         addSubview(summaryLabel)
         addSubview(nextButton)
-        
+
         dateLabel.snp.makeConstraints {
             $0.top.left.equalToSuperview().inset(24)
         }
@@ -114,4 +114,5 @@ final class HomeBottomView: UIView {
             $0.height.equalTo(52)
         }
     }
+
 }

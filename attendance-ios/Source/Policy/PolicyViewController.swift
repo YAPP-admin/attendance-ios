@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 final class PolicyViewController: UIViewController {
-    
+
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.text = "YAPP의 구성원은\n모든 세션에 필수적으로 참여해야 해요!"
@@ -19,7 +19,7 @@ final class PolicyViewController: UIViewController {
         label.setLineSpacing(4)
         return label
     }()
-    
+
     private let subTitleLabel: UILabel = {
         let label = UILabel()
         label.text = "지각과 결석 규칙에 대해 알려드릴게요"
@@ -27,19 +27,19 @@ final class PolicyViewController: UIViewController {
         label.textColor = .gray
         return label
     }()
-    
+
     private lazy var policyNoticeView: PolicyUnitView = {
         let view = PolicyUnitView()
         view.configureUI(title: "사전 통보", tardyGrade: -5, absentGrade: -15)
         return view
     }()
-    
+
     private lazy var policyNotNoticeView: PolicyUnitView = {
         let view = PolicyUnitView()
         view.configureUI(title: "미통보", tardyGrade: -10, absentGrade: -20)
         return view
     }()
-    
+
     private lazy var infoLabel: UILabel = {
         let label = UILabel()
         label.text = "직장인 우대사항은 없어요\n점수가 70점 미만이 되는 회원은 운영진 심의 하에 제명될 수 있어요"
@@ -49,7 +49,7 @@ final class PolicyViewController: UIViewController {
         label.setLineSpacing(4)
         return label
     }()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -57,17 +57,18 @@ final class PolicyViewController: UIViewController {
         configureNavigationBar()
         addSubViews()
     }
+
 }
 
 private extension PolicyViewController {
-    
+
     func addSubViews() {
         view.addSubview(titleLabel)
         view.addSubview(subTitleLabel)
         view.addSubview(policyNoticeView)
         view.addSubview(policyNotNoticeView)
         view.addSubview(infoLabel)
-        
+
         titleLabel.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(24)
             $0.left.equalToSuperview().inset(24)
@@ -91,9 +92,10 @@ private extension PolicyViewController {
             $0.left.right.equalToSuperview().inset(24)
         }
     }
-    
+
     func configureNavigationBar() {
         navigationItem.backButtonTitle = ""
         navigationController?.navigationBar.tintColor = .black
     }
+
 }

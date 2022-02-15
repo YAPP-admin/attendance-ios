@@ -18,13 +18,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let windowScene = scene as? UIWindowScene else { return }
-        
+
         window = UIWindow(windowScene: windowScene)
-        
+
         let navigationController = UINavigationController()
         let loginVC = LoginViewController()
         let homeVC = HomeViewController()
-        
+
         navigationController.viewControllers = [loginVC]
 
         if AuthApi.hasToken() {
@@ -33,11 +33,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 navigationController.viewControllers.append(homeVC)
             }
         }
-        
+
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
     }
-    
+
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         if let url = URLContexts.first?.url {
             if AuthApi.isKakaoTalkLoginUrl(url) {

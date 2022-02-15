@@ -1,5 +1,5 @@
 //
-//  LoginViewModel.swift
+//  BaseViewModel.swift
 //  attendance-ios
 //
 //  Created by leeesangheee on 2022/01/31.
@@ -14,29 +14,30 @@ import KakaoSDKAuth
 import KakaoSDKUser
 
 protocol ViewModel {
-    
+
     associatedtype Input
     associatedtype Output
-    
+
     var input: Input { get }
     var output: Output { get }
     var disposeBag: DisposeBag { get }
+
 }
 
-final class LoginViewModel: ViewModel {
-    
+final class BaseViewModel: ViewModel {
+
     struct Input {
         let tapLogin = PublishRelay<Void>()
     }
-    
+
     struct Output {
         var goToHome = PublishRelay<Void>()
     }
-    
+
     let input = Input()
     let output = Output()
     let disposeBag = DisposeBag()
-    
+
     init() {
         input.tapLogin
             .subscribe(onNext: { [weak self] _ in
@@ -45,7 +46,7 @@ final class LoginViewModel: ViewModel {
     }
 }
 
-private extension LoginViewModel {
+private extension BaseViewModel {
 
     func loginWithKakao() {
         if UserApi.isKakaoTalkLoginAvailable() {
@@ -59,4 +60,5 @@ private extension LoginViewModel {
             .disposed(by: disposeBag)
         }
     }
+
 }

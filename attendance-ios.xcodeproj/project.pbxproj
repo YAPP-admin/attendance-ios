@@ -14,13 +14,11 @@
 		5EF69EAC27A7DAFA007E9735 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5EF69EAB27A7DAFA007E9735 /* Assets.xcassets */; };
 		5EF69EAF27A7DAFA007E9735 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5EF69EAD27A7DAFA007E9735 /* LaunchScreen.storyboard */; };
 		5EF69EB827A7DCDE007E9735 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 5EF69EB727A7DCDE007E9735 /* .swiftlint.yml */; };
-		5EF69EC227A7EFFF007E9735 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69EC127A7EFFF007E9735 /* LoginViewModel.swift */; };
+		5EF69EC227A7EFFF007E9735 /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69EC127A7EFFF007E9735 /* BaseViewModel.swift */; };
 		5EF69EC427A7F8B0007E9735 /* UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69EC327A7F8B0007E9735 /* UILabel.swift */; };
 		5EF69EC627A7FA40007E9735 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69EC527A7FA40007E9735 /* UIColor.swift */; };
-		5EF69EC927A81E4E007E9735 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69EC827A81E4E007E9735 /* HomeViewModel.swift */; };
 		5EF69ECB27A81E56007E9735 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69ECA27A81E56007E9735 /* HomeViewController.swift */; };
 		5EF69ECF27A83424007E9735 /* HomeBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69ECE27A83424007E9735 /* HomeBottomView.swift */; };
-		5EF69ED127A83BB9007E9735 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69ED027A83BB9007E9735 /* DetailViewModel.swift */; };
 		5EF69ED427A83BCE007E9735 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69ED327A83BCE007E9735 /* DetailViewController.swift */; };
 		5EF69ED927AAACBA007E9735 /* PolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69ED827AAACBA007E9735 /* PolicyViewController.swift */; };
 		5EF69EDB27AAB0BC007E9735 /* PolicyUnitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69EDA27AAB0BC007E9735 /* PolicyUnitView.swift */; };
@@ -37,13 +35,11 @@
 		5EF69EAE27A7DAFA007E9735 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5EF69EB027A7DAFA007E9735 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5EF69EB727A7DCDE007E9735 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
-		5EF69EC127A7EFFF007E9735 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		5EF69EC127A7EFFF007E9735 /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
 		5EF69EC327A7F8B0007E9735 /* UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabel.swift; sourceTree = "<group>"; };
 		5EF69EC527A7FA40007E9735 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
-		5EF69EC827A81E4E007E9735 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		5EF69ECA27A81E56007E9735 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		5EF69ECE27A83424007E9735 /* HomeBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeBottomView.swift; sourceTree = "<group>"; };
-		5EF69ED027A83BB9007E9735 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 		5EF69ED327A83BCE007E9735 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		5EF69ED827AAACBA007E9735 /* PolicyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolicyViewController.swift; sourceTree = "<group>"; };
 		5EF69EDA27AAB0BC007E9735 /* PolicyUnitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolicyUnitView.swift; sourceTree = "<group>"; };
@@ -113,6 +109,7 @@
 			isa = PBXGroup;
 			children = (
 				5EF69EBD27A7DD8A007E9735 /* Models */,
+				5EF69EC127A7EFFF007E9735 /* BaseViewModel.swift */,
 				5EF69EC027A7DDE1007E9735 /* Login */,
 				5EF69EC727A81E25007E9735 /* Home */,
 				5EF69ED227A83BC1007E9735 /* Detail */,
@@ -169,7 +166,6 @@
 		5EF69EC027A7DDE1007E9735 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				5EF69EC127A7EFFF007E9735 /* LoginViewModel.swift */,
 				5EF69EA627A7DAF8007E9735 /* LoginViewController.swift */,
 			);
 			path = Login;
@@ -178,7 +174,6 @@
 		5EF69EC727A81E25007E9735 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				5EF69EC827A81E4E007E9735 /* HomeViewModel.swift */,
 				5EF69ECA27A81E56007E9735 /* HomeViewController.swift */,
 				5EF69ECE27A83424007E9735 /* HomeBottomView.swift */,
 			);
@@ -188,7 +183,6 @@
 		5EF69ED227A83BC1007E9735 /* Detail */ = {
 			isa = PBXGroup;
 			children = (
-				5EF69ED027A83BB9007E9735 /* DetailViewModel.swift */,
 				5EF69ED327A83BCE007E9735 /* DetailViewController.swift */,
 			);
 			path = Detail;
@@ -350,10 +344,8 @@
 				5EF69ECF27A83424007E9735 /* HomeBottomView.swift in Sources */,
 				5EF69EC427A7F8B0007E9735 /* UILabel.swift in Sources */,
 				5EF69EC627A7FA40007E9735 /* UIColor.swift in Sources */,
-				5EF69ED127A83BB9007E9735 /* DetailViewModel.swift in Sources */,
-				5EF69EC927A81E4E007E9735 /* HomeViewModel.swift in Sources */,
 				5EF69ECB27A81E56007E9735 /* HomeViewController.swift in Sources */,
-				5EF69EC227A7EFFF007E9735 /* LoginViewModel.swift in Sources */,
+				5EF69EC227A7EFFF007E9735 /* BaseViewModel.swift in Sources */,
 				5EF69ED927AAACBA007E9735 /* PolicyViewController.swift in Sources */,
 				5EF69EDB27AAB0BC007E9735 /* PolicyUnitView.swift in Sources */,
 				5EF69EA727A7DAF8007E9735 /* LoginViewController.swift in Sources */,

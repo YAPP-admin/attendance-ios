@@ -2,6 +2,20 @@ excluded:
   - Pods
 
 disabled_rules:
-  - trailing_whitespace
-  - line_length
   - legacy_constructor
+
+type_body_length:
+  warning: 500
+  error: 800
+
+function_body_length:
+  warning: 100
+  error: 200
+
+line_length:
+  warning: 500
+  error: 800
+
+file_length:
+  warning: 500
+  error: 800
