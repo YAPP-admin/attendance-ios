@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5E63BC9427BBD2AC0024FCE3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5E63BC9327BBD2AC0024FCE3 /* GoogleService-Info.plist */; };
 		5EF69EA327A7DAF8007E9735 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69EA227A7DAF8007E9735 /* AppDelegate.swift */; };
 		5EF69EA527A7DAF8007E9735 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69EA427A7DAF8007E9735 /* SceneDelegate.swift */; };
 		5EF69EA727A7DAF8007E9735 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69EA627A7DAF8007E9735 /* LoginViewController.swift */; };
@@ -26,6 +27,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5E63BC9327BBD2AC0024FCE3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5EF69E9F27A7DAF8007E9735 /* attendance-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "attendance-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5EF69EA227A7DAF8007E9735 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5EF69EA427A7DAF8007E9735 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -90,6 +92,7 @@
 		5EF69EA127A7DAF8007E9735 /* attendance-ios */ = {
 			isa = PBXGroup;
 			children = (
+				5E63BC9327BBD2AC0024FCE3 /* GoogleService-Info.plist */,
 				5EF69EB927A7DD09007E9735 /* Resource */,
 				5EF69EBA27A7DD10007E9735 /* Source */,
 			);
@@ -269,6 +272,7 @@
 			files = (
 				5EF69EB827A7DCDE007E9735 /* .swiftlint.yml in Resources */,
 				5EF69EAF27A7DAFA007E9735 /* LaunchScreen.storyboard in Resources */,
+				5E63BC9427BBD2AC0024FCE3 /* GoogleService-Info.plist in Resources */,
 				5EF69EAC27A7DAFA007E9735 /* Assets.xcassets in Resources */,
 				5EF69EAA27A7DAF8007E9735 /* Main.storyboard in Resources */,
 			);
@@ -503,6 +507,7 @@
 				DEVELOPMENT_TEAM = T53Y7GLJ7K;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "attendance-ios/Resource/Info.plist";
+				INFOPLIST_KEY_NSCameraUsageDescription = "YAPP이 카메라 사용을 요청합니다";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -513,7 +518,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.leeesangheee.attendance-ios";
+				PRODUCT_BUNDLE_IDENTIFIER = "attendance-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -532,6 +537,7 @@
 				DEVELOPMENT_TEAM = T53Y7GLJ7K;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "attendance-ios/Resource/Info.plist";
+				INFOPLIST_KEY_NSCameraUsageDescription = "YAPP이 카메라 사용을 요청합니다";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -542,7 +548,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.leeesangheee.attendance-ios";
+				PRODUCT_BUNDLE_IDENTIFIER = "attendance-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

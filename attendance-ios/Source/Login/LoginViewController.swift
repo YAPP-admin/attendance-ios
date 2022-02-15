@@ -5,10 +5,10 @@
 //  Created by leeesangheee on 2022/01/31.
 //
 
-import UIKit
-import RxSwift
 import RxCocoa
+import RxSwift
 import SnapKit
+import UIKit
 
 final class LoginViewController: UIViewController {
 
@@ -44,7 +44,6 @@ final class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-
         bindViewModel()
         addSubViews()
     }

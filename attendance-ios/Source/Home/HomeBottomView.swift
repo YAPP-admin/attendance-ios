@@ -5,9 +5,9 @@
 //  Created by leeesangheee on 2022/02/01.
 //
 
-import UIKit
 import RxSwift
 import SnapKit
+import UIKit
 
 protocol HomeBottomViewDelegate: AnyObject {
     func showDetailVC()

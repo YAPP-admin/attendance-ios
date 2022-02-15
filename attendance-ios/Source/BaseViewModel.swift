@@ -6,12 +6,12 @@
 //
 
 import Foundation
-import RxSwift
+import KakaoSDKAuth
+import KakaoSDKUser
 import RxCocoa
 import RxKakaoSDKAuth
 import RxKakaoSDKUser
-import KakaoSDKAuth
-import KakaoSDKUser
+import RxSwift
 
 protocol ViewModel {
 

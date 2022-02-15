@@ -5,10 +5,10 @@
 //  Created by leeesangheee on 2022/02/01.
 //
 
-import UIKit
-import RxSwift
 import RxCocoa
+import RxSwift
 import SnapKit
+import UIKit
 
 final class DetailViewController: UIViewController {
 

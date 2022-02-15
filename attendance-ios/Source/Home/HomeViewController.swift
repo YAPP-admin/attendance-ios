@@ -5,11 +5,11 @@
 //  Created by leeesangheee on 2022/01/31.
 //
 
-import UIKit
-import RxSwift
-import RxCocoa
-import SnapKit
 import AVFoundation
+import RxCocoa
+import RxSwift
+import SnapKit
+import UIKit
 
 final class HomeViewController: UIViewController {
 
