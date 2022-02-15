@@ -31,6 +31,7 @@ final class BaseViewModel: ViewModel {
     }
 
     struct Output {
+        var goToLoginInfo = PublishRelay<Void>()
         var goToHome = PublishRelay<Void>()
     }
 
@@ -42,7 +43,8 @@ final class BaseViewModel: ViewModel {
         input.tapLogin
             .subscribe(onNext: { [weak self] _ in
                 self?.loginWithKakao()
-            }).disposed(by: disposeBag)
+            })
+            .disposed(by: disposeBag)
     }
 }
 
@@ -50,15 +52,46 @@ private extension BaseViewModel {
 
     func loginWithKakao() {
         if UserApi.isKakaoTalkLoginAvailable() {
-            UserApi.shared.rx.loginWithKakaoTalk()
-                .subscribe(onNext: { [weak self] oauthToken in
-                    print("oauthToken: \(oauthToken)")
-                    self?.output.goToHome.accept(())
-                }, onError: { error in
-                    print(error)
-                })
-            .disposed(by: disposeBag)
+            loginWithKakaoTalk()
+        } else {
+            loginWithKakaoAccount()
         }
+    }
+
+    func loginWithKakaoTalk() {
+        UserApi.shared.rx.loginWithKakaoTalk()
+            .subscribe(onNext: { [weak self] oauthToken in
+                print("oauthToken: \(oauthToken)")
+                self?.output.goToLoginInfo.accept(())
+            }, onError: { error in
+                print(error)
+            })
+            .disposed(by: disposeBag)
+    }
+
+    // MARK: - kakao developers에서 yapp 계정에서 애플리케이션 등록 후
+    //         iOS 번들 ID를 attendance-ios로 등록해야 성공함
+    func loginWithKakaoAccount() {
+        UserApi.shared.rx.loginWithKakaoAccount()
+            .subscribe(onNext: { [weak self] oauthToken in
+                print("oauthToken: \(oauthToken)")
+                self?.output.goToLoginInfo.accept(())
+            }, onError: { error in
+                print(error)
+                // 번들 ID 등록 후 삭제
+                self.output.goToLoginInfo.accept(())
+            })
+            .disposed(by: disposeBag)
+    }
+
+    func logoutWithKakao() {
+        UserApi.shared.rx.logout()
+            .subscribe(onCompleted: {
+                print("로그아웃 성공")
+            }, onError: {error in
+                print(error)
+            })
+            .disposed(by: disposeBag)
     }
 
 }

@@ -12,6 +12,12 @@ import UIKit
 
 final class LoginViewController: UIViewController {
 
+    enum Constants {
+        static let padding: CGFloat = 24
+        static let buttonSpacing: CGFloat = 6
+        static let cornerRadius: CGFloat = 12
+    }
+
     private let emptyView: UIView = {
         let view = UIView()
         view.backgroundColor = .systemGroupedBackground
@@ -20,7 +26,7 @@ final class LoginViewController: UIViewController {
 
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "간편하게 로그인하고\n간편하게 출석체크 해봐요"
+        label.text = "3초만에 끝나는\n간편한 출석체크"
         label.font = .systemFont(ofSize: 24, weight: .heavy)
         label.textColor = .black
         label.numberOfLines = 0
@@ -34,7 +40,14 @@ final class LoginViewController: UIViewController {
         button.backgroundColor = .yapp_kakao_yellow
         button.titleLabel?.font = .systemFont(ofSize: 19, weight: .regular)
         button.setTitleColor(.black, for: .normal)
-        button.layer.cornerRadius = 12
+        button.setImage(UIImage(systemName: "bubble.left.fill"), for: .normal)
+
+        button.titleEdgeInsets = .init(top: 0, left: Constants.buttonSpacing/2, bottom: 0, right: -Constants.buttonSpacing/2)
+        button.imageEdgeInsets = .init(top: 0, left: -Constants.buttonSpacing/2, bottom: 0, right: Constants.buttonSpacing/2)
+
+        button.backgroundColor = .kakaoYellow
+        button.tintColor = .black
+        button.layer.cornerRadius = Constants.cornerRadius
         return button
     }()
 
@@ -58,13 +71,25 @@ private extension LoginViewController {
             .bind(to: viewModel.input.tapLogin)
             .disposed(by: disposeBag)
 
+        viewModel.output.goToLoginInfo
+            .observe(on: MainScheduler.instance)
+            .bind(onNext: goToLoginInfoVC)
+            .disposed(by: disposeBag)
+
         viewModel.output.goToHome
             .observe(on: MainScheduler.instance)
-            .bind(onNext: showHomeVC)
+            .bind(onNext: goToHomeVC)
             .disposed(by: disposeBag)
     }
 
-    func showHomeVC() {
+    func goToLoginInfoVC() {
+        let loginInfoVC = LoginInfoViewController()
+        navigationItem.backButtonTitle = ""
+        navigationController?.navigationBar.tintColor = .black
+        navigationController?.pushViewController(loginInfoVC, animated: true)
+    }
+
+    func goToHomeVC() {
         let homeVC = HomeViewController()
         homeVC.modalPresentationStyle = .fullScreen
         present(homeVC, animated: true, completion: nil)
@@ -80,12 +105,12 @@ private extension LoginViewController {
             $0.height.equalTo(view.safeAreaLayoutGuide.snp.width)
         }
         titleLabel.snp.makeConstraints {
-            $0.top.equalTo(emptyView.snp.bottom).offset(23)
-            $0.left.right.equalToSuperview().inset(24)
+            $0.top.equalTo(emptyView.snp.bottom).offset(Constants.padding)
+            $0.left.right.equalToSuperview().inset(Constants.padding)
         }
         loginButton.snp.makeConstraints {
             $0.bottom.equalToSuperview().inset(57)
-            $0.left.right.equalToSuperview().inset(24)
+            $0.left.right.equalToSuperview().inset(Constants.padding)
             $0.height.equalTo(45)
         }
     }
