@@ -131,7 +131,7 @@ private extension HomeViewController {
         let tardyRange = (fullText as NSString).range(of: "지각")
 
         attributedString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attributedString.length))
-        attributedString.addAttributes([.font: UIFont.systemFont(ofSize: 16, weight: .bold), .foregroundColor: UIColor.yappYellow], range: timeRange)
+		attributedString.addAttributes([.font: UIFont.systemFont(ofSize: 16, weight: .bold), .foregroundColor: UIColor.yapp_yellow], range: timeRange)
         attributedString.addAttribute(.font, value: UIFont.systemFont(ofSize: 16, weight: .bold), range: tardyRange)
 
         guideLabel.attributedText = attributedString
