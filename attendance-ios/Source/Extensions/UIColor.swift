@@ -15,7 +15,7 @@ extension UIColor {
 	static var gray_400: UIColor {return UIColor(red: 0.801, green: 0.822, blue: 0.854, alpha: 1)} // CCD2DA
 	static var gray_300: UIColor {return UIColor(red: 0.91, green: 0.918, blue: 0.929, alpha: 1)} // E8EAED
 	static var gray_200: UIColor {return UIColor(red: 0.967, green: 0.97, blue: 0.975, alpha: 1)} // F7F7F9
-	
+
 	static var yapp_orange: UIColor {return UIColor(red: 0.979, green: 0.376, blue: 0.152, alpha: 1)} // FA6027
 	static var yapp_orange_pressed: UIColor {return UIColor(red: 1, green: 0.465, blue: 0.267, alpha: 1)} // FF7744
 	static var yapp_yellow: UIColor {return UIColor(red: 1, green: 0.844, blue: 0.293, alpha: 1)} // FFD74B
