@@ -43,8 +43,7 @@ final class BaseViewModel: ViewModel {
         input.tapLogin
             .subscribe(onNext: { [weak self] _ in
                 self?.loginWithKakao()
-            })
-            .disposed(by: disposeBag)
+            }).disposed(by: disposeBag)
     }
 }
 
@@ -69,8 +68,7 @@ private extension BaseViewModel {
                 print(error)
                 // TODO: - 애플리케이션 등록 후 삭제
                 self.output.goToSignUp.accept(())
-            })
-            .disposed(by: disposeBag)
+            }).disposed(by: disposeBag)
     }
 
     func loginWithKakaoAccount() {
@@ -82,8 +80,7 @@ private extension BaseViewModel {
                 print(error)
                 // TODO: - 애플리케이션 등록 후 삭제
                 self.output.goToSignUp.accept(())
-            })
-            .disposed(by: disposeBag)
+            }).disposed(by: disposeBag)
     }
 
     func logoutWithKakao() {
@@ -92,8 +89,7 @@ private extension BaseViewModel {
                 print("로그아웃 성공")
             }, onError: {error in
                 print(error)
-            })
-            .disposed(by: disposeBag)
+            }).disposed(by: disposeBag)
     }
 
 }
