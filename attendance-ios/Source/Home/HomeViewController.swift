@@ -25,10 +25,16 @@ final class HomeViewController: UIViewController {
 
     private let dimmedView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(white: 0, alpha: 0.5)
+//        view.backgroundColor = UIColor(white: 0, alpha: 0.5)
         view.clipsToBounds = true
         return view
     }()
+	private let frameView: UIImageView = {
+		let view = UIImageView()
+		view.backgroundColor = .clear
+		view.image = UIImage(named: "qr_frame")
+		return view
+	}()
 
     private lazy var homebottomView: HomeBottomView = {
         let view = HomeBottomView()
@@ -48,7 +54,7 @@ final class HomeViewController: UIViewController {
         bindViewModel()
         configureNavigationBar()
         configureCaptureSession()
-        configureMaskView()
+//        configureMaskView()
         configureGuideLabel()
         addSubViews()
     }
@@ -62,10 +68,8 @@ extension HomeViewController: AVCaptureMetadataOutputObjectsDelegate {
         let path = UIBezierPath(rect: view.bounds)
 
         path.append(UIBezierPath(rect: CGRect(x: (view.bounds.width-240)/2, y: 132, width: 240, height: 240)))
-
         maskLayer.path = path.cgPath
         maskLayer.fillRule = CAShapeLayerFillRule.evenOdd
-
         dimmedView.layer.mask = maskLayer
     }
 
@@ -131,7 +135,7 @@ private extension HomeViewController {
         let tardyRange = (fullText as NSString).range(of: "지각")
 
         attributedString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attributedString.length))
-        attributedString.addAttributes([.font: UIFont.systemFont(ofSize: 16, weight: .bold), .foregroundColor: UIColor.yappYellow], range: timeRange)
+		attributedString.addAttributes([.font: UIFont.systemFont(ofSize: 16, weight: .bold), .foregroundColor: UIColor.yapp_yellow], range: timeRange)
         attributedString.addAttribute(.font, value: UIFont.systemFont(ofSize: 16, weight: .bold), range: tardyRange)
 
         guideLabel.attributedText = attributedString
@@ -142,6 +146,7 @@ private extension HomeViewController {
         view.addSubview(dimmedView)
         view.addSubview(guideLabel)
         view.addSubview(homebottomView)
+		view.addSubview(frameView)
 
         dimmedView.snp.makeConstraints {
             $0.top.bottom.left.right.equalToSuperview()
@@ -154,6 +159,13 @@ private extension HomeViewController {
             $0.bottom.left.right.equalToSuperview()
             $0.height.equalTo(250)
         }
+		frameView.snp.makeConstraints {
+			$0.top.equalTo(guideLabel.snp.bottom).offset(20)
+			$0.leading.equalToSuperview().offset(68)
+			$0.trailing.equalToSuperview().offset(-68)
+			$0.width.equalTo(240)
+			$0.height.equalTo(160)
+		}
     }
 
     func configureNavigationBar() {

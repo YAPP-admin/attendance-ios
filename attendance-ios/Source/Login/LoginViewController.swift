@@ -31,7 +31,7 @@ final class LoginViewController: UIViewController {
     private let loginButton: UIButton = {
         let button = UIButton()
         button.setTitle("카카오 로그인", for: .normal)
-        button.backgroundColor = .kakaoYellow
+        button.backgroundColor = .yapp_kakao_yellow
         button.titleLabel?.font = .systemFont(ofSize: 19, weight: .regular)
         button.setTitleColor(.black, for: .normal)
         button.layer.cornerRadius = 12
