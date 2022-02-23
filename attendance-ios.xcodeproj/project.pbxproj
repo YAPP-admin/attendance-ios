@@ -13,8 +13,9 @@
 		527657FB27C387E40080DA32 /* UILabelWithRound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527657FA27C387E40080DA32 /* UILabelWithRound.swift */; };
 		52BCA07027C4D393001BF86F /* TextStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BCA06F27C4D393001BF86F /* TextStyle.swift */; };
 		52BCA07227C4D3DF001BF86F /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BCA07127C4D3DF001BF86F /* UIFont.swift */; };
+		5E6179AC27C670D500B1A835 /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E6179AB27C670D500B1A835 /* UITextField.swift */; };
 		5E63BC9427BBD2AC0024FCE3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5E63BC9327BBD2AC0024FCE3 /* GoogleService-Info.plist */; };
-		5E63BC9B27BBE90F0024FCE3 /* LoginInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E63BC9A27BBE90F0024FCE3 /* LoginInfoViewController.swift */; };
+		5E63BC9B27BBE90F0024FCE3 /* SignUpNameInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E63BC9A27BBE90F0024FCE3 /* SignUpNameInfoViewController.swift */; };
 		5EF69EA327A7DAF8007E9735 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69EA227A7DAF8007E9735 /* AppDelegate.swift */; };
 		5EF69EA527A7DAF8007E9735 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69EA427A7DAF8007E9735 /* SceneDelegate.swift */; };
 		5EF69EA727A7DAF8007E9735 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69EA627A7DAF8007E9735 /* LoginViewController.swift */; };
@@ -40,8 +41,9 @@
 		527657FA27C387E40080DA32 /* UILabelWithRound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabelWithRound.swift; sourceTree = "<group>"; };
 		52BCA06F27C4D393001BF86F /* TextStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStyle.swift; sourceTree = "<group>"; };
 		52BCA07127C4D3DF001BF86F /* UIFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFont.swift; sourceTree = "<group>"; };
+		5E6179AB27C670D500B1A835 /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
 		5E63BC9327BBD2AC0024FCE3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		5E63BC9A27BBE90F0024FCE3 /* LoginInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginInfoViewController.swift; sourceTree = "<group>"; };
+		5E63BC9A27BBE90F0024FCE3 /* SignUpNameInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpNameInfoViewController.swift; sourceTree = "<group>"; };
 		5EF69E9F27A7DAF8007E9735 /* attendance-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "attendance-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5EF69EA227A7DAF8007E9735 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5EF69EA427A7DAF8007E9735 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -161,14 +163,12 @@
 			isa = PBXGroup;
 			children = (
 				527657F827C387C00080DA32 /* Common */,
-				5EF69EBD27A7DD8A007E9735 /* Models */,
 				5EF69EC127A7EFFF007E9735 /* BaseViewModel.swift */,
 				5EF69EC027A7DDE1007E9735 /* Login */,
 				5EF69EC727A81E25007E9735 /* Home */,
 				5EF69ED227A83BC1007E9735 /* Detail */,
 				5EF69ED727AAAC88007E9735 /* Policy */,
 				5EF69EBE27A7DD8F007E9735 /* Extensions */,
-				5E63BC9727BBE4180024FCE3 /* Utilities */,
 				5EF69EBB27A7DD57007E9735 /* System */,
 				5EF69EBC27A7DD68007E9735 /* Storyboards */,
 			);
@@ -200,6 +200,7 @@
 				5EF69EC527A7FA40007E9735 /* UIColor.swift */,
 				527657F627C384AE0080DA32 /* UIViewController.swift */,
 				52BCA07127C4D3DF001BF86F /* UIFont.swift */,
+				5E6179AB27C670D500B1A835 /* UITextField.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -208,7 +209,7 @@
 			isa = PBXGroup;
 			children = (
 				5EF69EA627A7DAF8007E9735 /* LoginViewController.swift */,
-				5E63BC9A27BBE90F0024FCE3 /* LoginInfoViewController.swift */,
+				5E63BC9A27BBE90F0024FCE3 /* SignUpNameInfoViewController.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -385,7 +386,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5E63BC9B27BBE90F0024FCE3 /* LoginInfoViewController.swift in Sources */,
+				5E63BC9B27BBE90F0024FCE3 /* SignUpNameInfoViewController.swift in Sources */,
 				5EF69ED427A83BCE007E9735 /* DetailViewController.swift in Sources */,
 				527657FB27C387E40080DA32 /* UILabelWithRound.swift in Sources */,
 				5EF69ECF27A83424007E9735 /* HomeBottomView.swift in Sources */,
@@ -400,6 +401,7 @@
 				52BCA07027C4D393001BF86F /* TextStyle.swift in Sources */,
 				5EF69EA727A7DAF8007E9735 /* LoginViewController.swift in Sources */,
 				5EF69EA327A7DAF8007E9735 /* AppDelegate.swift in Sources */,
+				5E6179AC27C670D500B1A835 /* UITextField.swift in Sources */,
 				5EF69EA527A7DAF8007E9735 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

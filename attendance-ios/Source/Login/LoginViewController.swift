@@ -1,4 +1,3 @@
-//
 //  LoginViewController.swift
 //  attendance-ios
 //
@@ -27,10 +26,10 @@ final class LoginViewController: UIViewController {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "3초만에 끝나는\n간편한 출석체크"
-        label.font = .systemFont(ofSize: 24, weight: .heavy)
-        label.textColor = .black
+        label.font = .Pretendard(type: .Bold, size: 24)
+        label.textColor = .gray_1200
         label.numberOfLines = 0
-        label.setLineSpacing(6)
+        label.setLineSpacing(4)
         return label
     }()
 
@@ -38,14 +37,12 @@ final class LoginViewController: UIViewController {
         let button = UIButton()
         button.setTitle("카카오 로그인", for: .normal)
         button.backgroundColor = .yapp_kakao_yellow
-        button.titleLabel?.font = .systemFont(ofSize: 19, weight: .regular)
+        button.titleLabel?.font = .Pretendard(type: .Medium, size: 19)
         button.setTitleColor(.black, for: .normal)
         button.setImage(UIImage(systemName: "bubble.left.fill"), for: .normal)
-
         button.titleEdgeInsets = .init(top: 0, left: Constants.buttonSpacing/2, bottom: 0, right: -Constants.buttonSpacing/2)
         button.imageEdgeInsets = .init(top: 0, left: -Constants.buttonSpacing/2, bottom: 0, right: Constants.buttonSpacing/2)
-
-        button.backgroundColor = .kakaoYellow
+        button.backgroundColor = .yapp_kakao_yellow
         button.tintColor = .black
         button.layer.cornerRadius = Constants.cornerRadius
         return button
@@ -56,9 +53,9 @@ final class LoginViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
         bindViewModel()
-        addSubViews()
+        configureUI()
+        configureLayout()
     }
 
 }
@@ -71,9 +68,9 @@ private extension LoginViewController {
             .bind(to: viewModel.input.tapLogin)
             .disposed(by: disposeBag)
 
-        viewModel.output.goToLoginInfo
+        viewModel.output.goToSignUp
             .observe(on: MainScheduler.instance)
-            .bind(onNext: goToLoginInfoVC)
+            .bind(onNext: goToSignUpVC)
             .disposed(by: disposeBag)
 
         viewModel.output.goToHome
@@ -82,11 +79,11 @@ private extension LoginViewController {
             .disposed(by: disposeBag)
     }
 
-    func goToLoginInfoVC() {
-        let loginInfoVC = LoginInfoViewController()
+    func goToSignUpVC() {
+        let signUpNameInfoVC = SignUpNameInfoViewController()
         navigationItem.backButtonTitle = ""
-        navigationController?.navigationBar.tintColor = .black
-        navigationController?.pushViewController(loginInfoVC, animated: true)
+        navigationController?.navigationBar.tintColor = .gray_800
+        navigationController?.pushViewController(signUpNameInfoVC, animated: true)
     }
 
     func goToHomeVC() {
@@ -95,14 +92,18 @@ private extension LoginViewController {
         present(homeVC, animated: true, completion: nil)
     }
 
-    func addSubViews() {
+    func configureUI() {
+        view.backgroundColor = .white
+    }
+
+    func configureLayout() {
         view.addSubview(emptyView)
         view.addSubview(titleLabel)
         view.addSubview(loginButton)
 
         emptyView.snp.makeConstraints {
             $0.top.left.right.equalToSuperview()
-            $0.height.equalTo(view.safeAreaLayoutGuide.snp.width)
+            $0.height.equalTo(view.bounds.width)
         }
         titleLabel.snp.makeConstraints {
             $0.top.equalTo(emptyView.snp.bottom).offset(Constants.padding)
