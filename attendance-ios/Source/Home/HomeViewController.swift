@@ -14,21 +14,24 @@ import UIKit
 final class HomeViewController: UIViewController {
 
     private let guideLabel: UILabel = {
-        let label = UILabel()
-        label.text = "2시 5분까지 출석체크를 완료해주세요!\n이후 출석은 지각으로 처리돼요"
-        label.font = .systemFont(ofSize: 16, weight: .regular)
+        let label = UILabelWithRound(frame: .zero, color: UIColor.clear.cgColor, width: 0, inset: UIEdgeInsets(top: 12, left: 24, bottom: 12, right: 24))
+        label.text = "2시 5분까지 출석체크를 완료해주세요!"
         label.textColor = .white
         label.numberOfLines = 0
         label.textAlignment = .center
+		label.font(.Body2)
+		label.backgroundColor = UIColor(red: 0.173, green: 0.185, blue: 0.208, alpha: 0.8)
         return label
     }()
 
-    private let dimmedView: UIView = {
-        let view = UIView()
-//        view.backgroundColor = UIColor(white: 0, alpha: 0.5)
-        view.clipsToBounds = true
-        return view
-    }()
+	private let settingButton: UIButton = {
+		let button = UIButton()
+		button.backgroundColor = .clear
+		button.setImage(UIImage(named: "setting"), for: .normal)
+		button.contentEdgeInsets = UIEdgeInsets(top: 12, left: 24, bottom: 12, right: 24)
+		return button
+	}()
+
 	private let frameView: UIImageView = {
 		let view = UIImageView()
 		view.backgroundColor = .clear
@@ -49,13 +52,14 @@ final class HomeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .clear
+		navigationController?.isNavigationBarHidden = true
 
         bindViewModel()
-        configureNavigationBar()
+//        configureNavigationBar()
         configureCaptureSession()
 //        configureMaskView()
-        configureGuideLabel()
+//        configureGuideLabel()
         addSubViews()
     }
 
@@ -63,15 +67,15 @@ final class HomeViewController: UIViewController {
 
 extension HomeViewController: AVCaptureMetadataOutputObjectsDelegate {
 
-    private func configureMaskView() {
-        let maskLayer = CAShapeLayer()
-        let path = UIBezierPath(rect: view.bounds)
-
-        path.append(UIBezierPath(rect: CGRect(x: (view.bounds.width-240)/2, y: 132, width: 240, height: 240)))
-        maskLayer.path = path.cgPath
-        maskLayer.fillRule = CAShapeLayerFillRule.evenOdd
-        dimmedView.layer.mask = maskLayer
-    }
+//    private func configureMaskView() {
+//        let maskLayer = CAShapeLayer()
+//        let path = UIBezierPath(rect: view.bounds)
+//
+//        path.append(UIBezierPath(rect: CGRect(x: (view.bounds.width-240)/2, y: 132, width: 240, height: 240)))
+//        maskLayer.path = path.cgPath
+//        maskLayer.fillRule = CAShapeLayerFillRule.evenOdd
+//		self.view.layer.mask = maskLayer
+//    }
 
     private func configureCaptureSession() {
         guard let device = AVCaptureDevice.default(for: AVMediaType.video) else { return }
@@ -143,16 +147,19 @@ private extension HomeViewController {
     }
 
     func addSubViews() {
-        view.addSubview(dimmedView)
+		view.addSubview(settingButton)
         view.addSubview(guideLabel)
         view.addSubview(homebottomView)
 		view.addSubview(frameView)
 
-        dimmedView.snp.makeConstraints {
-            $0.top.bottom.left.right.equalToSuperview()
-        }
+		settingButton.snp.makeConstraints {
+			$0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(20)
+			$0.trailing.equalToSuperview()
+			$0.width.equalTo(68)
+			$0.height.equalTo(44)
+		}
         guideLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(60)
+			$0.top.equalTo(settingButton.snp.bottom).offset(20)
             $0.centerX.equalToSuperview()
         }
         homebottomView.snp.makeConstraints {
