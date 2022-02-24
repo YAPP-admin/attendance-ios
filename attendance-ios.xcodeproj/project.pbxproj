@@ -16,6 +16,7 @@
 		5E6179AC27C670D500B1A835 /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E6179AB27C670D500B1A835 /* UITextField.swift */; };
 		5E63BC9427BBD2AC0024FCE3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5E63BC9327BBD2AC0024FCE3 /* GoogleService-Info.plist */; };
 		5E63BC9B27BBE90F0024FCE3 /* SignUpNameInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E63BC9A27BBE90F0024FCE3 /* SignUpNameInfoViewController.swift */; };
+		5EE25B2427C7CB700065B816 /* bg_buong.html in Resources */ = {isa = PBXBuildFile; fileRef = 5EE25B2327C7CB700065B816 /* bg_buong.html */; };
 		5EF69EA327A7DAF8007E9735 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69EA227A7DAF8007E9735 /* AppDelegate.swift */; };
 		5EF69EA527A7DAF8007E9735 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69EA427A7DAF8007E9735 /* SceneDelegate.swift */; };
 		5EF69EA727A7DAF8007E9735 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69EA627A7DAF8007E9735 /* LoginViewController.swift */; };
@@ -44,6 +45,7 @@
 		5E6179AB27C670D500B1A835 /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
 		5E63BC9327BBD2AC0024FCE3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5E63BC9A27BBE90F0024FCE3 /* SignUpNameInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpNameInfoViewController.swift; sourceTree = "<group>"; };
+		5EE25B2327C7CB700065B816 /* bg_buong.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = bg_buong.html; sourceTree = "<group>"; };
 		5EF69E9F27A7DAF8007E9735 /* attendance-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "attendance-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5EF69EA227A7DAF8007E9735 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5EF69EA427A7DAF8007E9735 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -120,6 +122,14 @@
 			path = Pretendard;
 			sourceTree = "<group>";
 		};
+		5EE25B2527C7CBA10065B816 /* Image */ = {
+			isa = PBXGroup;
+			children = (
+				5EE25B2327C7CB700065B816 /* bg_buong.html */,
+			);
+			path = Image;
+			sourceTree = "<group>";
+		};
 		5EF69E9627A7DAF8007E9735 = {
 			isa = PBXGroup;
 			children = (
@@ -155,6 +165,7 @@
 				5EF69EB027A7DAFA007E9735 /* Info.plist */,
 				5EF69EAB27A7DAFA007E9735 /* Assets.xcassets */,
 				52BCA06E27C4D36C001BF86F /* Font */,
+				5EE25B2527C7CBA10065B816 /* Image */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -313,6 +324,7 @@
 				296C7B0327C523450042B630 /* Pretendard-Medium.otf in Resources */,
 				5EF69EB827A7DCDE007E9735 /* .swiftlint.yml in Resources */,
 				296C7B0127C523390042B630 /* Pretendard-Bold.otf in Resources */,
+				5EE25B2427C7CB700065B816 /* bg_buong.html in Resources */,
 				5EF69EAF27A7DAFA007E9735 /* LaunchScreen.storyboard in Resources */,
 				5E63BC9427BBD2AC0024FCE3 /* GoogleService-Info.plist in Resources */,
 				5EF69EAC27A7DAFA007E9735 /* Assets.xcassets in Resources */,

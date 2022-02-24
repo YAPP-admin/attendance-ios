@@ -8,6 +8,7 @@ import RxCocoa
 import RxSwift
 import SnapKit
 import UIKit
+import WebKit
 
 final class LoginViewController: UIViewController {
 
@@ -15,12 +16,12 @@ final class LoginViewController: UIViewController {
         static let padding: CGFloat = 24
         static let buttonSpacing: CGFloat = 6
         static let cornerRadius: CGFloat = 12
+        static let kakaoBlack: UIColor = UIColor(red: 25/255, green: 25/255, blue: 25/255, alpha: 1)
     }
 
-    private let emptyView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .systemGroupedBackground
-        return view
+    private let webView: WKWebView = {
+        let webView = WKWebView()
+        return webView
     }()
 
     private let titleLabel: UILabel = {
@@ -38,12 +39,12 @@ final class LoginViewController: UIViewController {
         button.setTitle("카카오 로그인", for: .normal)
         button.backgroundColor = .yapp_kakao_yellow
         button.titleLabel?.font = .Pretendard(type: .Medium, size: 19)
-        button.setTitleColor(.black, for: .normal)
+        button.setTitleColor(Constants.kakaoBlack, for: .normal)
         button.setImage(UIImage(systemName: "bubble.left.fill"), for: .normal)
         button.titleEdgeInsets = .init(top: 0, left: Constants.buttonSpacing/2, bottom: 0, right: -Constants.buttonSpacing/2)
         button.imageEdgeInsets = .init(top: 0, left: -Constants.buttonSpacing/2, bottom: 0, right: Constants.buttonSpacing/2)
         button.backgroundColor = .yapp_kakao_yellow
-        button.tintColor = .black
+        button.tintColor = Constants.kakaoBlack
         button.layer.cornerRadius = Constants.cornerRadius
         return button
     }()
@@ -54,9 +55,22 @@ final class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         bindViewModel()
+        configureWebView()
         configureUI()
         configureLayout()
     }
+
+    func configureWebView() {
+        guard let filePath = Bundle.main.path(forResource: "bg_buong", ofType: "html"),
+              let data = NSData(contentsOfFile: filePath),
+              let html = NSString(data: data as Data, encoding: String.Encoding.utf8.rawValue) else { return }
+
+        webView.loadHTMLString(html as String, baseURL: Bundle.main.bundleURL)
+    }
+
+}
+
+extension LoginViewController: UIWebViewDelegate {
 
 }
 
@@ -97,16 +111,17 @@ private extension LoginViewController {
     }
 
     func configureLayout() {
-        view.addSubview(emptyView)
         view.addSubview(titleLabel)
+        view.addSubview(webView)
         view.addSubview(loginButton)
 
-        emptyView.snp.makeConstraints {
-            $0.top.left.right.equalToSuperview()
+        webView.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(73)
+            $0.left.right.equalToSuperview()
             $0.height.equalTo(view.bounds.width)
         }
         titleLabel.snp.makeConstraints {
-            $0.top.equalTo(emptyView.snp.bottom).offset(Constants.padding)
+            $0.bottom.equalToSuperview().inset(180)
             $0.left.right.equalToSuperview().inset(Constants.padding)
         }
         loginButton.snp.makeConstraints {
