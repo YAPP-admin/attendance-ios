@@ -31,8 +31,10 @@ final class BaseViewModel: ViewModel {
     }
 
     struct Output {
-        var goToSignUp = PublishRelay<Void>()
-        var goToHome = PublishRelay<Void>()
+        let accessToken = PublishSubject<String>()
+
+        let goToSignUp = PublishRelay<Void>()
+        let goToHome = PublishRelay<Void>()
     }
 
     let input = Input()
@@ -45,12 +47,11 @@ final class BaseViewModel: ViewModel {
                 self?.loginWithKakao()
             }).disposed(by: disposeBag)
     }
+
 }
 
 private extension BaseViewModel {
 
-// TODO: - kakao developers에서 yapp 계정에서 애플리케이션 등록 후
-// iOS 번들 ID를 attendance-ios로 등록해야 성공함
     func loginWithKakao() {
         if UserApi.isKakaoTalkLoginAvailable() {
             loginWithKakaoTalk()
@@ -62,24 +63,20 @@ private extension BaseViewModel {
     func loginWithKakaoTalk() {
         UserApi.shared.rx.loginWithKakaoTalk()
             .subscribe(onNext: { [weak self] oauthToken in
-                print("oauthToken: \(oauthToken)")
+                self?.output.accessToken.onNext(oauthToken.accessToken)
                 self?.output.goToSignUp.accept(())
             }, onError: { error in
                 print(error)
-                // TODO: - 애플리케이션 등록 후 삭제
-                self.output.goToSignUp.accept(())
             }).disposed(by: disposeBag)
     }
 
     func loginWithKakaoAccount() {
         UserApi.shared.rx.loginWithKakaoAccount()
             .subscribe(onNext: { [weak self] oauthToken in
-                print("oauthToken: \(oauthToken)")
+                self?.output.accessToken.onNext(oauthToken.accessToken)
                 self?.output.goToSignUp.accept(())
             }, onError: { error in
                 print(error)
-                // TODO: - 애플리케이션 등록 후 삭제
-                self.output.goToSignUp.accept(())
             }).disposed(by: disposeBag)
     }
 
