@@ -5,6 +5,9 @@
 //  Created by leeesangheee on 2022/02/23.
 //
 
+import RxCocoa
+import RxSwift
+import SnapKit
 import UIKit
 
 final class SignUpNameInfoViewController: UIViewController {
@@ -17,12 +20,19 @@ final class SignUpNameInfoViewController: UIViewController {
 
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "만나서 반가워요!\n이름을 알려주세요"
-        label.font = .systemFont(ofSize: 24, weight: .heavy)
+        label.text = "이름을 작성해주세요"
         label.font = .Pretendard(type: .Bold, size: 24)
         label.textColor = .gray_1200
         label.numberOfLines = 0
-        label.setLineSpacing(4)
+        return label
+    }()
+
+    private let subTitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "실명을 작성해야 출석을 확인할 수 있어요"
+        label.font = .Pretendard(type: .Medium, size: 16)
+        label.textColor = .gray_800
+        label.numberOfLines = 0
         return label
     }()
 
@@ -34,6 +44,7 @@ final class SignUpNameInfoViewController: UIViewController {
         textField.backgroundColor = .gray_200
         textField.layer.cornerRadius = Constants.textFieldHeight/2
         textField.addLeftPadding(20)
+        textField.tintColor = .yapp_orange
         return textField
     }()
 
@@ -46,15 +57,48 @@ final class SignUpNameInfoViewController: UIViewController {
         return button
     }()
 
+    private var disposeBag = DisposeBag()
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupTextField()
+        setupDelegate()
         configureUI()
         configureLayout()
     }
 
 }
 
+extension SignUpNameInfoViewController: UITextFieldDelegate {
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool { textField.resignFirstResponder()
+        return true
+    }
+
+}
+
 private extension SignUpNameInfoViewController {
+
+    // TODO: - 텍스트필드 입력값 저장
+    // TODO: - 텍스트필드 이외 범위 클릭시 키보드 내려감
+    func setupTextField() {
+        textField.rx.controlEvent([.editingChanged])
+            .asObservable()
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                print("1. text: \(self.textField.text)")
+            }).disposed(by: disposeBag)
+
+        textField.rx.text
+            .subscribe(onNext: { [weak self] text in
+                guard let self = self else { return }
+                print("2. text: \(text)")
+            }).disposed(by: disposeBag)
+    }
+
+    func setupDelegate() {
+        textField.delegate = self
+    }
 
     func configureUI() {
         view.backgroundColor = .white
@@ -62,15 +106,20 @@ private extension SignUpNameInfoViewController {
 
     func configureLayout() {
         view.addSubview(titleLabel)
+        view.addSubview(subTitleLabel)
         view.addSubview(textField)
         view.addSubview(nextButton)
 
         titleLabel.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(32)
-            $0.left.equalToSuperview().offset(Constants.padding)
+            $0.left.right.equalToSuperview().inset(Constants.padding)
+        }
+        subTitleLabel.snp.makeConstraints {
+            $0.top.equalTo(titleLabel.snp.bottom).offset(12)
+            $0.left.right.equalToSuperview().offset(Constants.padding)
         }
         textField.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(28)
+            $0.top.equalTo(subTitleLabel.snp.bottom).offset(28)
             $0.left.right.equalToSuperview().inset(Constants.padding)
             $0.height.equalTo(Constants.textFieldHeight)
         }
