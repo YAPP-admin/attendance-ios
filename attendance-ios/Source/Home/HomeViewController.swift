@@ -170,8 +170,6 @@ private extension HomeViewController {
 			$0.top.equalTo(guideLabel.snp.bottom).offset(20)
 			$0.leading.equalToSuperview().offset(68)
 			$0.trailing.equalToSuperview().offset(-68)
-			$0.width.equalTo(240)
-			$0.height.equalTo(160)
 		}
     }
 
