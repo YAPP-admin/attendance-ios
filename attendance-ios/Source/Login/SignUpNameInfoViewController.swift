@@ -15,7 +15,8 @@ final class SignUpNameInfoViewController: UIViewController {
     enum Constants {
         static let padding: CGFloat = 24
         static let textFieldHeight: CGFloat = 60
-        static let fontSize: CGFloat = 16
+        static let textFieldFontSize: CGFloat = 16
+        static let buttonHeight: CGFloat = 60
     }
 
     private let titleLabel: UILabel = {
@@ -38,9 +39,9 @@ final class SignUpNameInfoViewController: UIViewController {
 
     private let textField: UITextField = {
         let textField = UITextField()
-        textField.font = .Pretendard(type: .Bold, size: Constants.fontSize)
+        textField.font = .Pretendard(type: .Bold, size: Constants.textFieldFontSize)
         textField.textColor = .gray_800
-        textField.attributedPlaceholder = NSAttributedString(string: "ex. 야뿌", attributes: [.foregroundColor: UIColor.gray_400, .font: UIFont.Pretendard(type: .Bold, size: Constants.fontSize)])
+        textField.attributedPlaceholder = NSAttributedString(string: "ex. 야뿌", attributes: [.foregroundColor: UIColor.gray_400, .font: UIFont.Pretendard(type: .Bold, size: Constants.textFieldFontSize)])
         textField.backgroundColor = .gray_200
         textField.layer.cornerRadius = Constants.textFieldHeight/2
         textField.addLeftPadding(20)
@@ -54,6 +55,21 @@ final class SignUpNameInfoViewController: UIViewController {
         button.titleLabel?.font = .Pretendard(type: .Bold, size: 18)
         button.backgroundColor = .gray_400
         button.layer.cornerRadius = 10
+        button.isEnabled = false
+        return button
+    }()
+
+    private lazy var accessoryView: UIView = {
+        let view = UIView(frame: .init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: Constants.buttonHeight))
+        return view
+    }()
+
+    private let keyboardNextButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("다음", for: .normal)
+        button.titleLabel?.font = .Pretendard(type: .Bold, size: 18)
+        button.backgroundColor = .gray_400
+        button.isEnabled = false
         return button
     }()
 
@@ -61,8 +77,10 @@ final class SignUpNameInfoViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupTextField()
+        bindTextField()
+        bindButton()
         setupDelegate()
+        setupTextField()
         configureUI()
         configureLayout()
     }
@@ -83,9 +101,8 @@ extension SignUpNameInfoViewController: UITextFieldDelegate {
 
 private extension SignUpNameInfoViewController {
 
-    // TODO: - 텍스트필드 입력값 저장
-    // TODO: - 텍스트필드 이외 범위 클릭시 키보드 내려감
-    func setupTextField() {
+    // TODO: - 텍스트필드 입력값 저장, 버튼 활성화
+    func bindTextField() {
         textField.rx.controlEvent([.editingChanged])
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
@@ -100,8 +117,32 @@ private extension SignUpNameInfoViewController {
             }).disposed(by: disposeBag)
     }
 
+    func bindButton() {
+        nextButton.rx.controlEvent([.touchUpInside])
+            .asObservable()
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                print("다음")
+            }).disposed(by: disposeBag)
+
+        keyboardNextButton.rx.controlEvent([.touchUpInside])
+            .asObservable()
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                print("다음")
+            }).disposed(by: disposeBag)
+    }
+
+}
+
+private extension SignUpNameInfoViewController {
+
     func setupDelegate() {
         textField.delegate = self
+    }
+
+    func setupTextField() {
+        textField.inputAccessoryView = accessoryView
     }
 
     func configureUI() {
@@ -130,7 +171,13 @@ private extension SignUpNameInfoViewController {
         nextButton.snp.makeConstraints {
             $0.left.right.equalToSuperview().inset(Constants.padding)
             $0.bottom.equalToSuperview().inset(40)
-            $0.height.equalTo(60)
+            $0.height.equalTo(Constants.buttonHeight)
+        }
+
+        accessoryView.addSubview(keyboardNextButton)
+
+        keyboardNextButton.snp.makeConstraints {
+            $0.top.bottom.left.right.equalToSuperview()
         }
     }
 
