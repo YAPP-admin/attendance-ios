@@ -115,16 +115,19 @@ extension HomeViewController: AVCaptureMetadataOutputObjectsDelegate {
 extension HomeViewController: HomeBottomViewDelegate {
 
     func showDetailVC() {
-        let detailVC = DetailViewController()
-        navigationController?.pushViewController(detailVC, animated: true)
+//        let detailVC = DetailViewController()
+//        navigationController?.pushViewController(detailVC, animated: true)
+		let qrVC = QRViewController()
+		qrVC.modalPresentationStyle = .fullScreen
+		qrVC.modalTransitionStyle = .coverVertical
+		present(qrVC, animated: true, completion: nil)
     }
-
 }
 
 private extension HomeViewController {
 
     func bindViewModel() {
-
+		
     }
 
     func configureGuideLabel() {

@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		296C7B0127C523390042B630 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 296C7B0027C523390042B630 /* Pretendard-Bold.otf */; };
 		296C7B0327C523450042B630 /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 296C7B0227C523450042B630 /* Pretendard-Medium.otf */; };
+		297E957F27CFA68600452222 /* QRViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297E957E27CFA68600452222 /* QRViewController.swift */; };
+		297E958327CFAC0A00452222 /* QRViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297E958227CFAC0A00452222 /* QRViewModel.swift */; };
 		527657F727C384AE0080DA32 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527657F627C384AE0080DA32 /* UIViewController.swift */; };
 		527657FB27C387E40080DA32 /* UILabelWithRound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527657FA27C387E40080DA32 /* UILabelWithRound.swift */; };
 		52BCA07027C4D393001BF86F /* TextStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BCA06F27C4D393001BF86F /* TextStyle.swift */; };
@@ -35,6 +37,8 @@
 /* Begin PBXFileReference section */
 		296C7B0027C523390042B630 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
 		296C7B0227C523450042B630 /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
+		297E957E27CFA68600452222 /* QRViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRViewController.swift; sourceTree = "<group>"; };
+		297E958227CFAC0A00452222 /* QRViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRViewModel.swift; sourceTree = "<group>"; };
 		527657F627C384AE0080DA32 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		527657FA27C387E40080DA32 /* UILabelWithRound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabelWithRound.swift; sourceTree = "<group>"; };
 		52BCA06F27C4D393001BF86F /* TextStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStyle.swift; sourceTree = "<group>"; };
@@ -80,6 +84,15 @@
 				BDDCE233E5BE7E34BB51BE5D /* Pods_attendance_ios.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		297E957D27CFA66C00452222 /* QR */ = {
+			isa = PBXGroup;
+			children = (
+				297E957E27CFA68600452222 /* QRViewController.swift */,
+				297E958227CFAC0A00452222 /* QRViewModel.swift */,
+			);
+			path = QR;
 			sourceTree = "<group>";
 		};
 		527657F827C387C00080DA32 /* Common */ = {
@@ -158,6 +171,7 @@
 		5EF69EBA27A7DD10007E9735 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				297E957D27CFA66C00452222 /* QR */,
 				527657F827C387C00080DA32 /* Common */,
 				5EF69EBD27A7DD8A007E9735 /* Models */,
 				5EF69EC127A7EFFF007E9735 /* BaseViewModel.swift */,
@@ -399,6 +413,7 @@
 				5EF69ED427A83BCE007E9735 /* DetailViewController.swift in Sources */,
 				527657FB27C387E40080DA32 /* UILabelWithRound.swift in Sources */,
 				5EF69ECF27A83424007E9735 /* HomeBottomView.swift in Sources */,
+				297E957F27CFA68600452222 /* QRViewController.swift in Sources */,
 				527657F727C384AE0080DA32 /* UIViewController.swift in Sources */,
 				5EF69EC427A7F8B0007E9735 /* UILabel.swift in Sources */,
 				5EF69EC627A7FA40007E9735 /* UIColor.swift in Sources */,
@@ -406,6 +421,7 @@
 				5EF69EC227A7EFFF007E9735 /* BaseViewModel.swift in Sources */,
 				52BCA07227C4D3DF001BF86F /* UIFont.swift in Sources */,
 				5EF69ED927AAACBA007E9735 /* PolicyViewController.swift in Sources */,
+				297E958327CFAC0A00452222 /* QRViewModel.swift in Sources */,
 				5EF69EDB27AAB0BC007E9735 /* PolicyUnitView.swift in Sources */,
 				52BCA07027C4D393001BF86F /* TextStyle.swift in Sources */,
 				5EF69EA727A7DAF8007E9735 /* LoginViewController.swift in Sources */,
