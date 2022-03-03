@@ -28,6 +28,17 @@ final class SignUpTeamInfoViewController: UIViewController {
         return label
     }()
 
+    // TODO: - 이후 작업
+//    private let jobCollectionView: UICollectionView = {
+//        let collectionView = UICollectionView()
+//        return collectionView
+//    }()
+//
+//    private let teamCollectionView: UICollectionView = {
+//        let collectionView = UICollectionView()
+//        return collectionView
+//    }()
+
     private let okButton: UIButton = {
         let button = UIButton()
         button.setTitle("확인", for: .normal)

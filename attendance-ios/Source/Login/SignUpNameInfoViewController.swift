@@ -107,7 +107,7 @@ private extension SignUpNameInfoViewController {
             .subscribe(onNext: { [weak self] text in
                 guard let self = self, let text = text else { return }
                 self.textFieldText = text
-                self.configureButtons(isTextFieldValid: (text.count > 1))
+                self.configureButtons(isTextFieldValid: !text.isEmpty)
             }).disposed(by: disposeBag)
     }
 
