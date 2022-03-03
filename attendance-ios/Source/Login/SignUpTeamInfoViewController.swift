@@ -151,7 +151,8 @@ private extension SignUpTeamInfoViewController {
         }
         jobCollectionView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(28)
-            $0.left.right.equalToSuperview().inset(Constants.padding)
+            $0.left.equalToSuperview().inset(Constants.padding)
+            $0.right.equalToSuperview().inset(Constants.padding*6)
             $0.height.equalTo(Constants.cellHeight*2+Constants.cellSpacing)
         }
         okButton.snp.makeConstraints {
