@@ -12,40 +12,55 @@ import SnapKit
 import UIKit
 
 final class HomeViewController: UIViewController {
-
-    private let guideLabel: UILabel = {
-        let label = UILabelWithRound(frame: .zero, color: UIColor.clear.cgColor, width: 0, inset: UIEdgeInsets(top: 12, left: 24, bottom: 12, right: 24))
-        label.text = "2시 5분까지 출석체크를 완료해주세요!"
-        label.textColor = .white
-        label.numberOfLines = 0
-        label.textAlignment = .center
-		label.font(.Body2)
-		label.backgroundColor = UIColor(red: 0.173, green: 0.185, blue: 0.208, alpha: 0.8)
-        return label
+    private let topView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        return view
     }()
 
 	private let settingButton: UIButton = {
 		let button = UIButton()
 		button.backgroundColor = .clear
 		button.setImage(UIImage(named: "setting"), for: .normal)
-		button.contentEdgeInsets = UIEdgeInsets(top: 12, left: 24, bottom: 12, right: 24)
+		button.contentEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
 		return button
 	}()
 
-	private let frameView: UIImageView = {
-		let view = UIImageView()
-		view.backgroundColor = .clear
-		view.image = UIImage(named: "qr_frame")
-		return view
-	}()
-
-    private lazy var homebottomView: HomeBottomView = {
-        let view = HomeBottomView()
-        view.delegate = self
+    private lazy var tabView: HomeBottomTabView = {
+        let view = HomeBottomTabView()
         return view
     }()
 
-    private let captureSession = AVCaptureSession()
+    private let scrollView: UIScrollView = {
+        let view = UIScrollView()
+        view.alwaysBounceVertical = true
+        view.showsVerticalScrollIndicator = false
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+
+    private let contentView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+
+    private let oneView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .red.withAlphaComponent(0.1)
+        return view
+    }()
+    private let twoView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemGreen.withAlphaComponent(0.1)
+        return view
+    }()
+    private let threeView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .blue.withAlphaComponent(0.1)
+        return view
+    }()
 
     private let viewModel = BaseViewModel()
     private var disposeBag = DisposeBag()
@@ -53,132 +68,60 @@ final class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .clear
-		navigationController?.isNavigationBarHidden = true
+        navigationController?.isNavigationBarHidden = true
 
-        bindViewModel()
-//        configureNavigationBar()
-        configureCaptureSession()
-//        configureMaskView()
-//        configureGuideLabel()
         addSubViews()
     }
 
-}
-
-extension HomeViewController: AVCaptureMetadataOutputObjectsDelegate {
-
-//    private func configureMaskView() {
-//        let maskLayer = CAShapeLayer()
-//        let path = UIBezierPath(rect: view.bounds)
-//
-//        path.append(UIBezierPath(rect: CGRect(x: (view.bounds.width-240)/2, y: 132, width: 240, height: 240)))
-//        maskLayer.path = path.cgPath
-//        maskLayer.fillRule = CAShapeLayerFillRule.evenOdd
-//		self.view.layer.mask = maskLayer
-//    }
-
-    private func configureCaptureSession() {
-        guard let device = AVCaptureDevice.default(for: AVMediaType.video) else { return }
-
-        do {
-            let input = try AVCaptureDeviceInput(device: device)
-            let output = AVCaptureMetadataOutput()
-
-            captureSession.addInput(input)
-            captureSession.addOutput(output)
-
-            output.setMetadataObjectsDelegate(self, queue: .main)
-            output.metadataObjectTypes = [.qr]
-
-            configurePreviewLayer()
-            captureSession.startRunning()
-        } catch {}
-    }
-
-    private func configurePreviewLayer() {
-        let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-        previewLayer.frame = view.layer.bounds
-        previewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
-        view.layer.addSublayer(previewLayer)
-    }
-
-    func metadataOutput(_ captureOutput: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
-        guard let metadataObject = metadataObjects.first, let readableObject = metadataObject as? AVMetadataMachineReadableCodeObject, let stringValue = readableObject.stringValue else { return }
-
-        // MARK: - 출석인증
-        print("stringValue: \(stringValue)")
-//            self.captureSession.stopRunning()
-    }
-
-}
-
-extension HomeViewController: HomeBottomViewDelegate {
-
-    func showDetailVC() {
-//        let detailVC = DetailViewController()
-//        navigationController?.pushViewController(detailVC, animated: true)
-		let qrVC = QRViewController()
-		qrVC.modalPresentationStyle = .fullScreen
-		qrVC.modalTransitionStyle = .coverVertical
-		present(qrVC, animated: true, completion: nil)
-    }
-}
-
-private extension HomeViewController {
-
-    func bindViewModel() {
-		
-    }
-
-    func configureGuideLabel() {
-        guard let fullText = guideLabel.text else { return }
-
-        let attributedString = NSMutableAttributedString(string: fullText)
-
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 6
-
-        let timeRange = (fullText as NSString).range(of: "2시 5분")
-        let tardyRange = (fullText as NSString).range(of: "지각")
-
-        attributedString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attributedString.length))
-		attributedString.addAttributes([.font: UIFont.systemFont(ofSize: 16, weight: .bold), .foregroundColor: UIColor.yapp_yellow], range: timeRange)
-        attributedString.addAttribute(.font, value: UIFont.systemFont(ofSize: 16, weight: .bold), range: tardyRange)
-
-        guideLabel.attributedText = attributedString
-        guideLabel.textAlignment = .center
-    }
-
     func addSubViews() {
-		view.addSubview(settingButton)
-        view.addSubview(guideLabel)
-        view.addSubview(homebottomView)
-		view.addSubview(frameView)
-
-		settingButton.snp.makeConstraints {
-			$0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(20)
-			$0.trailing.equalToSuperview()
-			$0.width.equalTo(68)
-			$0.height.equalTo(44)
-		}
-        guideLabel.snp.makeConstraints {
-			$0.top.equalTo(settingButton.snp.bottom).offset(20)
-            $0.centerX.equalToSuperview()
+        view.addSubview(topView)
+        topView.addSubview(settingButton)
+        view.addSubview(tabView)
+        view.addSubview(scrollView)
+        scrollView.addSubview(contentView)
+        topView.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(44)
         }
-        homebottomView.snp.makeConstraints {
+        settingButton.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.trailing.equalToSuperview().offset(-14)
+            $0.width.height.equalTo(44)
+        }
+        tabView.snp.makeConstraints {
             $0.bottom.left.right.equalToSuperview()
-            $0.height.equalTo(250)
+            $0.height.equalTo(100)
         }
-		frameView.snp.makeConstraints {
-			$0.top.equalTo(guideLabel.snp.bottom).offset(20)
-			$0.leading.equalToSuperview().offset(68)
-			$0.trailing.equalToSuperview().offset(-68)
-		}
-    }
 
-    func configureNavigationBar() {
-        navigationItem.hidesBackButton = true
-        navigationItem.backButtonTitle = ""
+        contentView.addSubview(oneView)
+        contentView.addSubview(twoView)
+        contentView.addSubview(threeView)
+        scrollView.snp.makeConstraints {
+            $0.top.equalTo(topView.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
+            $0.bottom.equalTo(tabView.snp.top)
+        }
+        contentView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+            $0.width.equalToSuperview()
+            $0.height.greaterThanOrEqualToSuperview()
+        }
+        oneView.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.height.equalTo(400)
+            $0.leading.trailing.equalToSuperview()
+        }
+        twoView.snp.makeConstraints {
+            $0.top.equalTo(oneView.snp.bottom).offset(10)
+            $0.height.equalTo(400)
+            $0.leading.trailing.equalToSuperview()
+        }
+        threeView.snp.makeConstraints {
+            $0.top.equalTo(twoView.snp.bottom).offset(10)
+            $0.height.equalTo(400)
+            $0.bottom.equalToSuperview()
+            $0.leading.trailing.equalToSuperview()
+        }
     }
-
 }
