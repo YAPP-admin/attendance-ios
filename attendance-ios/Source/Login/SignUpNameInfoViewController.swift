@@ -114,18 +114,25 @@ private extension SignUpNameInfoViewController {
     func bindButton() {
         nextButton.rx.controlEvent([.touchUpInside])
             .asObservable()
-            .subscribe(onNext: { _ in
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                self.goToSignUpTeamVC()
             }).disposed(by: disposeBag)
 
         keyboardNextButton.rx.controlEvent([.touchUpInside])
             .asObservable()
-            .subscribe(onNext: { _ in
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                self.goToSignUpTeamVC()
             }).disposed(by: disposeBag)
     }
 
-}
-
-private extension SignUpNameInfoViewController {
+    func goToSignUpTeamVC() {
+        let signUpTeamInfoVC = SignUpTeamInfoViewController()
+        navigationItem.backButtonTitle = ""
+        navigationController?.navigationBar.tintColor = .gray_800
+        navigationController?.pushViewController(signUpTeamInfoVC, animated: true)
+    }
 
     func setupDelegate() {
         textField.delegate = self

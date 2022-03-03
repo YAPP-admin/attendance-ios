@@ -84,7 +84,7 @@ private extension LoginViewController {
 
         viewModel.output.goToSignUp
             .observe(on: MainScheduler.instance)
-            .bind(onNext: goToSignUpVC)
+            .bind(onNext: goToSignUpNameVC)
             .disposed(by: disposeBag)
 
         viewModel.output.goToHome
@@ -93,7 +93,7 @@ private extension LoginViewController {
             .disposed(by: disposeBag)
     }
 
-    func goToSignUpVC() {
+    func goToSignUpNameVC() {
         let signUpNameInfoVC = SignUpNameInfoViewController()
         navigationItem.backButtonTitle = ""
         navigationController?.navigationBar.tintColor = .gray_800
