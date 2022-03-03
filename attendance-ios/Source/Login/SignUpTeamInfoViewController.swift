@@ -14,9 +14,10 @@ final class SignUpTeamInfoViewController: UIViewController {
 
     enum Constants {
         static let padding: CGFloat = 24
-        static let textFieldHeight: CGFloat = 60
-        static let textFieldFontSize: CGFloat = 16
         static let buttonHeight: CGFloat = 60
+
+        static let cellHeight: CGFloat = 47
+        static let cellSpacing: CGFloat = 12
     }
 
     private let titleLabel: UILabel = {
@@ -28,16 +29,21 @@ final class SignUpTeamInfoViewController: UIViewController {
         return label
     }()
 
-    // TODO: - 이후 작업
-//    private let jobCollectionView: UICollectionView = {
-//        let collectionView = UICollectionView()
-//        return collectionView
-//    }()
-//
-//    private let teamCollectionView: UICollectionView = {
-//        let collectionView = UICollectionView()
-//        return collectionView
-//    }()
+    private let jobCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.showsHorizontalScrollIndicator = false
+        return collectionView
+    }()
+
+    private let teamCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.showsHorizontalScrollIndicator = false
+        return collectionView
+    }()
 
     private let okButton: UIButton = {
         let button = UIButton()
@@ -49,14 +55,55 @@ final class SignUpTeamInfoViewController: UIViewController {
         return button
     }()
 
+    // TODO: - 이후 분리 필요
+    private let jobs: [String] = ["All-Rounder", "Android", "iOS", "Web"]
+    private let teamCount: Int = 2
+
     private var disposeBag = DisposeBag()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         bindButton()
         setupDelegate()
+        setupCollectionView()
         configureUI()
         configureLayout()
+    }
+
+}
+
+extension SignUpTeamInfoViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        jobs.count
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SignUpCollectionViewCell.identifier, for: indexPath) as? SignUpCollectionViewCell else { return UICollectionViewCell() }
+        cell.configureUI(text: jobs[indexPath.row])
+        return cell
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        CGSize(width: 100, height: Constants.cellHeight)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        Constants.cellSpacing
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        Constants.cellSpacing
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? SignUpCollectionViewCell else { return }
+        cell.configureSelectedUI()
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? SignUpCollectionViewCell else { return }
+        cell.configureDeselectedUI()
     }
 
 }
@@ -74,17 +121,33 @@ private extension SignUpTeamInfoViewController {
 
     }
 
+    func setupCollectionView() {
+        jobCollectionView.delegate = self
+        teamCollectionView.delegate = self
+        jobCollectionView.dataSource = self
+        teamCollectionView.dataSource = self
+
+        jobCollectionView.register(SignUpCollectionViewCell.self, forCellWithReuseIdentifier: SignUpCollectionViewCell.identifier)
+        teamCollectionView.register(SignUpCollectionViewCell.self, forCellWithReuseIdentifier: SignUpCollectionViewCell.identifier)
+    }
+
     func configureUI() {
         view.backgroundColor = .white
     }
 
     func configureLayout() {
         view.addSubview(titleLabel)
+        view.addSubview(jobCollectionView)
         view.addSubview(okButton)
 
         titleLabel.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(32)
             $0.left.right.equalToSuperview().inset(Constants.padding)
+        }
+        jobCollectionView.snp.makeConstraints {
+            $0.top.equalTo(titleLabel.snp.bottom).offset(28)
+            $0.left.right.equalToSuperview().inset(Constants.padding)
+            $0.height.equalTo(Constants.cellHeight*2+Constants.cellSpacing)
         }
         okButton.snp.makeConstraints {
             $0.left.right.equalToSuperview().inset(Constants.padding)
