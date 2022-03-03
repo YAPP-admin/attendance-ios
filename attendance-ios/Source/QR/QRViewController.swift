@@ -101,13 +101,9 @@ final class QRViewController: UIViewController {
 	}
 
 	func showCheck() {
-		checkView.isHidden = false
-		UIView.animate(withDuration: 3.0, delay: 0.1, options: .curveEaseIn, animations: {
-			self.checkView.alpha = 0.0
-		}, completion: { _ in
-			self.checkView.removeFromSuperview()
-			self.checkView.isHidden = true
-		})
+        UIView.animate(withDuration: 3.0, delay: 0.1, options: .curveEaseOut, animations: {
+            self.checkView.isHidden = false
+		}, completion: nil)
 	}
 }
 
@@ -125,7 +121,7 @@ extension QRViewController: AVCaptureMetadataOutputObjectsDelegate {
 			output.setMetadataObjectsDelegate(self, queue: .main)
 			output.metadataObjectTypes = [.qr]
 
-			let rectOfInterest = CGRect(x: (UIScreen.main.bounds.width - 200) / 2 , y: (UIScreen.main.bounds.height - 200) / 2, width: 200, height: 200)
+			let rectOfInterest = CGRect(x: (UIScreen.main.bounds.width - 200) / 2, y: (UIScreen.main.bounds.height - 200) / 2, width: 200, height: 200)
 			let rectConverted = setVideoLayer(rectOfInterest: rectOfInterest)
 			output.rectOfInterest = rectConverted
 
@@ -147,10 +143,9 @@ extension QRViewController: AVCaptureMetadataOutputObjectsDelegate {
 
 		print("stringValue: \(stringValue)")
 
-		if stringValue == "재관이" {
-//			self.captureSession.stopRunning()
+		if stringValue == "yapp" {
+			self.captureSession.stopRunning()
 			showCheck()
 		}
-//            self.captureSession.stopRunning()
 	}
 }

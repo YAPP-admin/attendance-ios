@@ -67,7 +67,7 @@ final class HomeBottomTabView: UIView {
         return label
     }()
 
-    private let nextButton: UIButton = {
+    let qrButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .yapp_orange
         button.layer.cornerRadius = 56/2
@@ -90,7 +90,7 @@ final class HomeBottomTabView: UIView {
     private func addSubViews() {
         backgroundColor = .white
         addSubview(line)
-        addSubview(nextButton)
+        addSubview(qrButton)
         addSubview(leftStackView)
         leftStackView.addArrangedSubview(leftImageView)
         leftStackView.addArrangedSubview(leftLabel)
@@ -102,7 +102,7 @@ final class HomeBottomTabView: UIView {
             $0.height.equalTo(1
             )
         }
-        nextButton.snp.makeConstraints {
+        qrButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalToSuperview().offset(10)
             $0.bottom.equalToSuperview().offset(-34)
