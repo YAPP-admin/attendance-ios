@@ -29,6 +29,16 @@ final class SignUpTeamInfoViewController: UIViewController {
         return label
     }()
 
+    private let subTitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "하나만 더 알려주세요"
+        label.font = .Pretendard(type: .Bold, size: 18)
+        label.textColor = .gray_1200
+        label.numberOfLines = 0
+        return label
+    }()
+
+    // TODO: - 셀 우측정렬 필요
     private let jobCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -59,6 +69,8 @@ final class SignUpTeamInfoViewController: UIViewController {
     private let jobs: [String] = ["All-Rounder", "Android", "iOS", "Web"]
     private let teamCount: Int = 2
 
+    private var selectedJobIndex: Int?
+
     private var disposeBag = DisposeBag()
 
     override func viewDidLoad() {
@@ -75,10 +87,15 @@ final class SignUpTeamInfoViewController: UIViewController {
 extension SignUpTeamInfoViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        jobs.count
+        switch section {
+        case 0: return jobs.count
+        case 1: return teamCount
+        default: return 0
+        }
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        // TODO: - collectionView 분기 필요
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SignUpCollectionViewCell.identifier, for: indexPath) as? SignUpCollectionViewCell else { return UICollectionViewCell() }
         cell.configureUI(text: jobs[indexPath.row])
         return cell
@@ -103,6 +120,8 @@ extension SignUpTeamInfoViewController: UICollectionViewDelegateFlowLayout, UICo
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) as? SignUpCollectionViewCell else { return }
+        if selectedJobIndex == nil { configureTeamLayout() }
+        selectedJobIndex = indexPath.row
         cell.configureSelectedUI()
     }
 
@@ -152,13 +171,28 @@ private extension SignUpTeamInfoViewController {
         jobCollectionView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(28)
             $0.left.equalToSuperview().inset(Constants.padding)
-            $0.right.equalToSuperview().inset(Constants.padding*6)
+            $0.right.equalToSuperview().inset(Constants.padding*4)
             $0.height.equalTo(Constants.cellHeight*2+Constants.cellSpacing)
         }
         okButton.snp.makeConstraints {
             $0.left.right.equalToSuperview().inset(Constants.padding)
             $0.bottom.equalToSuperview().inset(40)
             $0.height.equalTo(Constants.buttonHeight)
+        }
+    }
+
+    func configureTeamLayout() {
+        view.addSubview(subTitleLabel)
+        view.addSubview(teamCollectionView)
+
+        subTitleLabel.snp.makeConstraints {
+            $0.top.equalTo(jobCollectionView.snp.bottom).offset(32)
+            $0.left.right.equalToSuperview().inset(Constants.padding)
+        }
+        teamCollectionView.snp.makeConstraints {
+            $0.top.equalTo(subTitleLabel.snp.bottom).offset(10)
+            $0.left.right.equalToSuperview().inset(Constants.padding)
+            $0.height.equalTo(Constants.cellHeight)
         }
     }
 
