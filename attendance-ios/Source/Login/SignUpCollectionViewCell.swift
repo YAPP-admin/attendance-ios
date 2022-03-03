@@ -10,10 +10,16 @@ import UIKit
 
 final class SignUpCollectionViewCell: UICollectionViewCell {
 
+    enum Constants {
+        static let horizontalPadding: CGFloat = 22
+        static let verticalPadding: CGFloat = 14
+    }
+
     private let jobLabel: UILabel = {
         let label = UILabel()
         label.font = .Pretendard(type: .Medium, size: 16)
         label.textColor = .gray_800
+        label.textAlignment = .center
         return label
     }()
 
@@ -50,7 +56,8 @@ final class SignUpCollectionViewCell: UICollectionViewCell {
         addSubview(jobLabel)
 
         jobLabel.snp.makeConstraints {
-            $0.center.equalToSuperview()
+            $0.top.bottom.equalToSuperview().inset(Constants.verticalPadding)
+            $0.left.right.equalToSuperview().inset(Constants.horizontalPadding)
         }
     }
 

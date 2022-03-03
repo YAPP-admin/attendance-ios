@@ -31,17 +31,17 @@ final class SignUpTeamInfoViewController: UIViewController {
 
     private let jobCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
+        layout.scrollDirection = .vertical
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.showsVerticalScrollIndicator = false
         return collectionView
     }()
 
     private let teamCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
+        layout.scrollDirection = .vertical
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.showsVerticalScrollIndicator = false
         return collectionView
     }()
 
@@ -55,7 +55,7 @@ final class SignUpTeamInfoViewController: UIViewController {
         return button
     }()
 
-    // TODO: - 이후 분리 필요
+    // TODO: - 파이어베이스 연동 필요
     private let jobs: [String] = ["All-Rounder", "Android", "iOS", "Web"]
     private let teamCount: Int = 2
 
@@ -85,7 +85,12 @@ extension SignUpTeamInfoViewController: UICollectionViewDelegateFlowLayout, UICo
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(width: 100, height: Constants.cellHeight)
+        let dummyCell = SignUpCollectionViewCell(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: Constants.cellHeight))
+        dummyCell.configureUI(text: jobs[indexPath.row])
+        dummyCell.layoutIfNeeded()
+
+        let estimatedSize = dummyCell.systemLayoutSizeFitting(CGSize(width: 100, height: Constants.cellHeight))
+        return estimatedSize
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
