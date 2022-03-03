@@ -73,6 +73,7 @@ final class SignUpNameInfoViewController: UIViewController {
         return button
     }()
 
+    private var textFieldText: String = ""
     private var disposeBag = DisposeBag()
 
     override func viewDidLoad() {
@@ -101,35 +102,24 @@ extension SignUpNameInfoViewController: UITextFieldDelegate {
 
 private extension SignUpNameInfoViewController {
 
-    // TODO: - 텍스트필드 입력값 저장, 버튼 활성화
     func bindTextField() {
-        textField.rx.controlEvent([.editingChanged])
-            .asObservable()
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                print("1. text: \(self.textField.text)")
-            }).disposed(by: disposeBag)
-
         textField.rx.text
             .subscribe(onNext: { [weak self] text in
-                guard let self = self else { return }
-                print("2. text: \(text)")
+                guard let self = self, let text = text else { return }
+                self.textFieldText = text
+                self.configureButtons(isTextFieldValid: (text.count > 1))
             }).disposed(by: disposeBag)
     }
 
     func bindButton() {
         nextButton.rx.controlEvent([.touchUpInside])
             .asObservable()
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                print("다음")
+            .subscribe(onNext: { _ in
             }).disposed(by: disposeBag)
 
         keyboardNextButton.rx.controlEvent([.touchUpInside])
             .asObservable()
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                print("다음")
+            .subscribe(onNext: { _ in
             }).disposed(by: disposeBag)
     }
 
@@ -143,6 +133,13 @@ private extension SignUpNameInfoViewController {
 
     func setupTextField() {
         textField.inputAccessoryView = accessoryView
+    }
+
+    func configureButtons(isTextFieldValid: Bool) {
+        nextButton.isEnabled = isTextFieldValid
+        nextButton.backgroundColor = isTextFieldValid ? UIColor.yapp_orange : UIColor.gray_400
+        keyboardNextButton.isEnabled = isTextFieldValid
+        keyboardNextButton.backgroundColor = isTextFieldValid ? UIColor.yapp_orange : UIColor.gray_400
     }
 
     func configureUI() {
