@@ -12,11 +12,11 @@ extension UIFont {
         guard let font = UIFont(name: type.name, size: size) else { return UIFont() }
         return font
     }
-    
+
     public enum PretendardType {
         case Bold
         case Medium
-        
+
         var name: String {
             switch self {
             case .Bold:
