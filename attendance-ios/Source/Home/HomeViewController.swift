@@ -14,7 +14,7 @@ import UIKit
 final class HomeViewController: UIViewController {
     private let topView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = .white.withAlphaComponent(0.8)
         return view
     }()
 	private let settingButton: UIButton = {
@@ -44,7 +44,7 @@ final class HomeViewController: UIViewController {
     }()
     private let bgView: UIView = {
         let view = UIView()
-        view.backgroundColor = .gray_400
+        view.backgroundColor = .white
         return view
     }()
     private let illustView: UIImageView = {
@@ -79,12 +79,35 @@ final class HomeViewController: UIViewController {
         label.textColor = .gray_600
         return label
     }()
-    private let contentsView: UIView = {
+    private let contentsInfoView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
-        view.layer.cornerRadius = 10
+        view.layer.cornerRadius = 15
         view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         return view
+    }()
+    private let dateLabel: UILabel = {
+        let label = UILabel()
+        label.text = "02.07"
+        label.font(.Body1)
+        label.textColor = .gray_600
+        return label
+    }()
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "YAPP 3번째 데브 캠프\n및 성과 공유회"
+        label.font(.H1)
+        label.textColor = .gray_1000
+        label.numberOfLines = 0
+        return label
+    }()
+    private let contentsLabel: UILabel = {
+        let label = UILabel()
+        label.text = "드디어 마지막 성과 공유를 하는 세션입니다!\n지금까지 하나의 팀으로서 열심히 작업한 결과물을 YAPP 전원에게 보여주세요 🎉\n\n드디어 마지막 성과 공유를 하는 세션입니다!\n지금까지 하나의 팀으로서 열심히 작업한 결과물을 YAPP 전원에게 보여주세요 🎉\n\n드디어 마지막 성과 공유를 하는 세션입니다!\n지금까지 하나의 팀으로서 열심히 작업한 결과물을 YAPP 전원에게 보여주세요 🎉\n\n드디어 마지막 성과 공유를 하는 세션입니다!\n지금까지 하나의 팀으로서 열심히 작업한 결과물을 YAPP 전원에게 보여주세요 🎉"
+        label.font(.Body1)
+        label.textColor = .gray_800
+        label.numberOfLines = 0
+        return label
     }()
 
     private let viewModel = HomeViewModel()
@@ -92,13 +115,11 @@ final class HomeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .clear
+        view.backgroundColor = .white
         navigationController?.isNavigationBarHidden = true
 
         addSubViews()
         bind()
-
-        bgView.setGradient(color1: .white, color2: .gray_400)
     }
 
     func addSubViews() {
@@ -128,7 +149,7 @@ final class HomeViewController: UIViewController {
         infoView.addSubview(infoStackView)
         infoStackView.addArrangedSubview(checkButton)
         infoStackView.addArrangedSubview(infoLabel)
-        contentView.addSubview(contentsView)
+        contentView.addSubview(contentsInfoView)
         scrollView.snp.makeConstraints {
             $0.top.equalTo(topView.snp.bottom)
             $0.leading.trailing.equalToSuperview()
@@ -141,8 +162,8 @@ final class HomeViewController: UIViewController {
         }
         bgView.snp.makeConstraints {
             $0.top.equalToSuperview()
-            $0.height.equalTo(330)
             $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(330)
         }
         illustView.snp.makeConstraints {
             $0.center.equalToSuperview()
@@ -164,11 +185,30 @@ final class HomeViewController: UIViewController {
             $0.width.height.equalTo(20
             )
         }
-        contentsView.snp.makeConstraints {
-            $0.top.equalTo(infoView.snp.bottom).offset(20)
-            $0.height.equalTo(369)
+        contentsInfoView.snp.makeConstraints {
+            $0.top.equalTo(bgView.snp.bottom).offset(-20)
             $0.bottom.equalToSuperview()
             $0.leading.trailing.equalToSuperview()
+        }
+
+        contentsInfoView.addSubview(dateLabel)
+        contentsInfoView.addSubview(titleLabel)
+        contentsInfoView.addSubview(contentsLabel)
+        dateLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(24)
+            $0.leading.equalToSuperview().offset(24)
+            $0.trailing.equalToSuperview().offset(-24)
+        }
+        titleLabel.snp.makeConstraints {
+            $0.top.equalTo(dateLabel.snp.bottom).offset(28)
+            $0.leading.equalToSuperview().offset(24)
+            $0.trailing.equalToSuperview().offset(-24)
+        }
+        contentsLabel.snp.makeConstraints {
+            $0.top.equalTo(titleLabel.snp.bottom).offset(12)
+            $0.leading.equalToSuperview().offset(24)
+            $0.trailing.equalToSuperview().offset(-24)
+            $0.bottom.equalToSuperview().offset(-40)
         }
     }
 
@@ -187,18 +227,5 @@ final class HomeViewController: UIViewController {
         let vc = QRViewController()
         vc.modalPresentationStyle = .overFullScreen
         self.present(vc, animated: true, completion: nil)
-    }
-}
-
-
-extension UIView{
-    func setGradient(color1:UIColor,color2:UIColor){
-        let gradient: CAGradientLayer = CAGradientLayer()
-        gradient.colors = [color1.cgColor,color2.cgColor]
-        gradient.locations = [0.0 , 1.0]
-        gradient.startPoint = CGPoint(x: 0.0, y: 1.0)
-        gradient.endPoint = CGPoint(x: 1.0, y: 1.0)
-        gradient.frame = bounds
-        layer.addSublayer(gradient)
     }
 }

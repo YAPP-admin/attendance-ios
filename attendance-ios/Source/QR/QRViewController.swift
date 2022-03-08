@@ -103,7 +103,11 @@ final class QRViewController: UIViewController {
 	func showCheck() {
         UIView.animate(withDuration: 3.0, delay: 0.1, options: .curveEaseOut, animations: {
             self.checkView.isHidden = false
-		}, completion: nil)
+		}, completion: { _ in
+            UIView.animate(withDuration: 3.0, delay: 3.0, options: .curveEaseOut, animations: {
+                self.showHomeVC()
+            }, completion: nil)
+        })
 	}
 }
 

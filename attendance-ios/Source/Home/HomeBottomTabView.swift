@@ -27,14 +27,14 @@ final class HomeBottomTabView: UIView {
 
     private let leftImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "home_disabled")
+        imageView.image = UIImage(named: "home_enabled")
         imageView.backgroundColor = .clear
         return imageView
     }()
 
     private let leftLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .gray_600
+        label.textColor = .black
         // TODO: - font 정의 안되어있음
         label.font(.Caption1)
         label.text = "오늘 세션"
