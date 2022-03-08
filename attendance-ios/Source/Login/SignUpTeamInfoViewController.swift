@@ -158,9 +158,16 @@ extension SignUpTeamInfoViewController: UICollectionViewDelegateFlowLayout, UICo
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let dummyCell = SignUpCollectionViewCell(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: Constants.cellHeight))
-        dummyCell.configureUI(text: viewModel.jobs[indexPath.row])
-        dummyCell.layoutIfNeeded()
+        var text = ""
 
+        switch collectionView {
+        case jobCollectionView: text = viewModel.jobs[indexPath.row]
+        case teamCollectionView: text = "\(indexPath.row+1)팀"
+        default: ()
+        }
+
+        dummyCell.configureUI(text: text)
+        dummyCell.layoutIfNeeded()
         let estimatedSize = dummyCell.systemLayoutSizeFitting(CGSize(width: 80, height: Constants.cellHeight))
         return estimatedSize
     }
