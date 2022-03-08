@@ -42,9 +42,6 @@ final class BaseViewModel: ViewModel {
     let disposeBag = DisposeBag()
 
     init() {
-        //TODO: - 테스트 후 삭제
-        logoutWithKakao()
-
         input.tapLogin
             .subscribe(onNext: { [weak self] _ in
                 self?.loginWithKakao()
