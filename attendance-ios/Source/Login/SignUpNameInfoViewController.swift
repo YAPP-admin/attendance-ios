@@ -93,14 +93,7 @@ final class SignUpNameInfoViewController: UIViewController {
 
 }
 
-extension SignUpNameInfoViewController: UITextFieldDelegate {
-
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool { textField.resignFirstResponder()
-        return true
-    }
-
-}
-
+// MARK: - Bind
 private extension SignUpNameInfoViewController {
 
     func bindViewModel() {
@@ -133,6 +126,20 @@ private extension SignUpNameInfoViewController {
                 self?.goToSignUpTeamVC()
             }).disposed(by: disposeBag)
     }
+
+}
+
+// MARK: - TextField
+extension SignUpNameInfoViewController: UITextFieldDelegate {
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool { textField.resignFirstResponder()
+        return true
+    }
+
+}
+
+// MARK: - etc
+private extension SignUpNameInfoViewController {
 
     func goToSignUpTeamVC() {
         let signUpTeamInfoVC = SignUpTeamInfoViewController(viewModel: viewModel)

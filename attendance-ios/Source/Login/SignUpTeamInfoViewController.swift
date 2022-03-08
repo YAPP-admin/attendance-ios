@@ -84,6 +84,7 @@ final class SignUpTeamInfoViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        bindViewModel()
         bindButton()
         setupDelegate()
         setupCollectionView()
@@ -93,19 +94,65 @@ final class SignUpTeamInfoViewController: UIViewController {
 
 }
 
+// MARK: - Bind
+private extension SignUpTeamInfoViewController {
+
+    func bindViewModel() {
+        viewModel.output.showTeamList
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] _ in
+                self?.configureTeamLayout()
+            })
+            .disposed(by: disposeBag)
+
+        viewModel.output.complete
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] _ in
+                self?.activateButton()
+            })
+            .disposed(by: disposeBag)
+    }
+
+    func bindButton() {
+        okButton.rx.controlEvent([.touchUpInside])
+            .asObservable()
+            .subscribe(onNext: { _ in
+                print("확인")
+            }).disposed(by: disposeBag)
+    }
+
+}
+
+// MARK: - CollectionView
 extension SignUpTeamInfoViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
 
+    private func setupCollectionView() {
+        jobCollectionView.delegate = self
+        teamCollectionView.delegate = self
+        jobCollectionView.dataSource = self
+        teamCollectionView.dataSource = self
+
+        jobCollectionView.register(SignUpCollectionViewCell.self, forCellWithReuseIdentifier: SignUpCollectionViewCell.identifier)
+        teamCollectionView.register(SignUpCollectionViewCell.self, forCellWithReuseIdentifier: SignUpCollectionViewCell.identifier)
+    }
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        switch section {
-        case 0: return viewModel.jobs.count
-        case 1: return viewModel.teamCount
+        switch collectionView {
+        case jobCollectionView: return viewModel.jobs.count
+        case teamCollectionView: return viewModel.teamCount
         default: return 0
         }
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SignUpCollectionViewCell.identifier, for: indexPath) as? SignUpCollectionViewCell else { return UICollectionViewCell() }
-        cell.configureUI(text: viewModel.jobs[indexPath.row])
+
+        switch collectionView {
+        case jobCollectionView: cell.configureUI(text: viewModel.jobs[indexPath.row])
+        case teamCollectionView: cell.configureUI(text: "\(indexPath.row+1)팀")
+        default: break
+        }
+
         return cell
     }
 
@@ -114,7 +161,7 @@ extension SignUpTeamInfoViewController: UICollectionViewDelegateFlowLayout, UICo
         dummyCell.configureUI(text: viewModel.jobs[indexPath.row])
         dummyCell.layoutIfNeeded()
 
-        let estimatedSize = dummyCell.systemLayoutSizeFitting(CGSize(width: 100, height: Constants.cellHeight))
+        let estimatedSize = dummyCell.systemLayoutSizeFitting(CGSize(width: 80, height: Constants.cellHeight))
         return estimatedSize
     }
 
@@ -128,8 +175,11 @@ extension SignUpTeamInfoViewController: UICollectionViewDelegateFlowLayout, UICo
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) as? SignUpCollectionViewCell else { return }
-//        if viewModel.input.jobIndex.value == nil { configureTeamLayout() }
-        viewModel.input.jobIndex.onNext(indexPath.row)
+        switch collectionView {
+        case jobCollectionView: viewModel.input.jobIndex.onNext(indexPath.row)
+        case teamCollectionView: viewModel.input.teamIndex.onNext(indexPath.row)
+        default: break
+        }
         cell.configureSelectedUI()
     }
 
@@ -140,27 +190,21 @@ extension SignUpTeamInfoViewController: UICollectionViewDelegateFlowLayout, UICo
 
 }
 
+// MARK: - etc
 private extension SignUpTeamInfoViewController {
-
-    func bindButton() {
-        okButton.rx.controlEvent([.touchUpInside])
-            .asObservable()
-            .subscribe(onNext: { _ in
-            }).disposed(by: disposeBag)
-    }
 
     func setupDelegate() {
 
     }
 
-    func setupCollectionView() {
-        jobCollectionView.delegate = self
-        teamCollectionView.delegate = self
-        jobCollectionView.dataSource = self
-        teamCollectionView.dataSource = self
+    func activateButton() {
+        okButton.isEnabled = true
+        okButton.backgroundColor = UIColor.yapp_orange
+    }
 
-        jobCollectionView.register(SignUpCollectionViewCell.self, forCellWithReuseIdentifier: SignUpCollectionViewCell.identifier)
-        teamCollectionView.register(SignUpCollectionViewCell.self, forCellWithReuseIdentifier: SignUpCollectionViewCell.identifier)
+    func deactivateButton() {
+        okButton.isEnabled = false
+        okButton.backgroundColor = UIColor.gray_400
     }
 
     func configureUI() {

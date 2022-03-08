@@ -18,6 +18,8 @@ final class SignUpViewModel: ViewModel {
 
     struct Output {
         let isNameTextFieldValid = BehaviorSubject(value: false)
+        let showTeamList = PublishRelay<Void>()
+        let complete = PublishRelay<Void>()
     }
 
     let input = Input()
@@ -31,6 +33,16 @@ final class SignUpViewModel: ViewModel {
         input.name
             .subscribe(onNext: { [weak self] name in
                 self?.output.isNameTextFieldValid.onNext(!name.isEmpty)
+            }).disposed(by: disposeBag)
+
+        input.jobIndex
+            .subscribe(onNext: { [weak self] _ in
+                self?.output.showTeamList.accept(())
+            }).disposed(by: disposeBag)
+
+        input.teamIndex
+            .subscribe(onNext: { [weak self] _ in
+                self?.output.complete.accept(())
             }).disposed(by: disposeBag)
     }
 
