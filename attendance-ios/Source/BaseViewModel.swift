@@ -31,7 +31,10 @@ final class BaseViewModel: ViewModel {
     }
 
     struct Output {
-        var goToHome = PublishRelay<Void>()
+        let accessToken = PublishSubject<String>()
+
+        let goToSignUp = PublishRelay<Void>()
+        let goToHome = PublishRelay<Void>()
     }
 
     let input = Input()
@@ -44,21 +47,46 @@ final class BaseViewModel: ViewModel {
                 self?.loginWithKakao()
             }).disposed(by: disposeBag)
     }
+
 }
 
 private extension BaseViewModel {
 
     func loginWithKakao() {
         if UserApi.isKakaoTalkLoginAvailable() {
-            UserApi.shared.rx.loginWithKakaoTalk()
-                .subscribe(onNext: { [weak self] oauthToken in
-                    print("oauthToken: \(oauthToken)")
-                    self?.output.goToHome.accept(())
-                }, onError: { error in
-                    print(error)
-                })
-            .disposed(by: disposeBag)
+            loginWithKakaoTalk()
+        } else {
+            loginWithKakaoAccount()
         }
+    }
+
+    func loginWithKakaoTalk() {
+        UserApi.shared.rx.loginWithKakaoTalk()
+            .subscribe(onNext: { [weak self] oauthToken in
+                self?.output.accessToken.onNext(oauthToken.accessToken)
+                self?.output.goToSignUp.accept(())
+            }, onError: { error in
+                print(error)
+            }).disposed(by: disposeBag)
+    }
+
+    func loginWithKakaoAccount() {
+        UserApi.shared.rx.loginWithKakaoAccount()
+            .subscribe(onNext: { [weak self] oauthToken in
+                self?.output.accessToken.onNext(oauthToken.accessToken)
+                self?.output.goToSignUp.accept(())
+            }, onError: { error in
+                print(error)
+            }).disposed(by: disposeBag)
+    }
+
+    func logoutWithKakao() {
+        UserApi.shared.rx.logout()
+            .subscribe(onCompleted: {
+                print("로그아웃 성공")
+            }, onError: {error in
+                print(error)
+            }).disposed(by: disposeBag)
     }
 
 }
