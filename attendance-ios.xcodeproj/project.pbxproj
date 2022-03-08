@@ -153,6 +153,17 @@
 			path = Image;
 			sourceTree = "<group>";
 		};
+		5EED02BE27D7832500C52637 /* SignUp */ = {
+			isa = PBXGroup;
+			children = (
+				5EED02BC27D76D4200C52637 /* SignUpViewModel.swift */,
+				5E63BC9A27BBE90F0024FCE3 /* SignUpNameInfoViewController.swift */,
+				5E9CC7B727D0ED2D006D8B12 /* SignUpTeamInfoViewController.swift */,
+				5E9CC7BB27D0F79D006D8B12 /* SignUpCollectionViewCell.swift */,
+			);
+			path = SignUp;
+			sourceTree = "<group>";
+		};
 		5EF69E9627A7DAF8007E9735 = {
 			isa = PBXGroup;
 			children = (
@@ -200,6 +211,7 @@
 				527657F827C387C00080DA32 /* Common */,
 				5EF69EC127A7EFFF007E9735 /* BaseViewModel.swift */,
 				5EF69EC027A7DDE1007E9735 /* Login */,
+				5EED02BE27D7832500C52637 /* SignUp */,
 				5EF69EC727A81E25007E9735 /* Home */,
 				5EF69ED227A83BC1007E9735 /* Detail */,
 				5EF69ED727AAAC88007E9735 /* Policy */,
@@ -244,11 +256,7 @@
 		5EF69EC027A7DDE1007E9735 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				5EED02BC27D76D4200C52637 /* SignUpViewModel.swift */,
 				5EF69EA627A7DAF8007E9735 /* LoginViewController.swift */,
-				5E63BC9A27BBE90F0024FCE3 /* SignUpNameInfoViewController.swift */,
-				5E9CC7B727D0ED2D006D8B12 /* SignUpTeamInfoViewController.swift */,
-				5E9CC7BB27D0F79D006D8B12 /* SignUpCollectionViewCell.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
