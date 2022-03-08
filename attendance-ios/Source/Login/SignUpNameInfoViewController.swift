@@ -73,11 +73,12 @@ final class SignUpNameInfoViewController: UIViewController {
         return button
     }()
 
-    private var textFieldText: String = ""
     private var disposeBag = DisposeBag()
+    private let viewModel = SignUpViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        bindViewModel()
         bindTextField()
         bindButton()
         setupDelegate()
@@ -102,12 +103,20 @@ extension SignUpNameInfoViewController: UITextFieldDelegate {
 
 private extension SignUpNameInfoViewController {
 
+    func bindViewModel() {
+        viewModel.output.isNameTextFieldValid
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] isValid in
+                isValid ? self?.activateButtons() : self?.deactivateButtons()
+            })
+            .disposed(by: disposeBag)
+    }
+
     func bindTextField() {
         textField.rx.text
             .subscribe(onNext: { [weak self] text in
-                guard let self = self, let text = text else { return }
-                self.textFieldText = text
-                self.configureButtons(isTextFieldValid: !text.isEmpty)
+                guard let text = text else { return }
+                self?.viewModel.input.name.onNext(text)
             }).disposed(by: disposeBag)
     }
 
@@ -115,20 +124,18 @@ private extension SignUpNameInfoViewController {
         nextButton.rx.controlEvent([.touchUpInside])
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                self.goToSignUpTeamVC()
+                self?.goToSignUpTeamVC()
             }).disposed(by: disposeBag)
 
         keyboardNextButton.rx.controlEvent([.touchUpInside])
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                self.goToSignUpTeamVC()
+                self?.goToSignUpTeamVC()
             }).disposed(by: disposeBag)
     }
 
     func goToSignUpTeamVC() {
-        let signUpTeamInfoVC = SignUpTeamInfoViewController()
+        let signUpTeamInfoVC = SignUpTeamInfoViewController(viewModel: viewModel)
         navigationItem.backButtonTitle = ""
         navigationController?.navigationBar.tintColor = .gray_800
         navigationController?.pushViewController(signUpTeamInfoVC, animated: true)
@@ -142,11 +149,18 @@ private extension SignUpNameInfoViewController {
         textField.inputAccessoryView = accessoryView
     }
 
-    func configureButtons(isTextFieldValid: Bool) {
-        nextButton.isEnabled = isTextFieldValid
-        nextButton.backgroundColor = isTextFieldValid ? UIColor.yapp_orange : UIColor.gray_400
-        keyboardNextButton.isEnabled = isTextFieldValid
-        keyboardNextButton.backgroundColor = isTextFieldValid ? UIColor.yapp_orange : UIColor.gray_400
+    func activateButtons() {
+        nextButton.isEnabled = true
+        keyboardNextButton.isEnabled = true
+        nextButton.backgroundColor = UIColor.yapp_orange
+        keyboardNextButton.backgroundColor = UIColor.yapp_orange
+    }
+
+    func deactivateButtons() {
+        nextButton.isEnabled = false
+        keyboardNextButton.isEnabled = false
+        nextButton.backgroundColor = UIColor.gray_400
+        keyboardNextButton.backgroundColor = UIColor.gray_400
     }
 
     func configureUI() {

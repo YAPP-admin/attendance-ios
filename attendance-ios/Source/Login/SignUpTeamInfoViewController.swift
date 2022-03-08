@@ -38,7 +38,7 @@ final class SignUpTeamInfoViewController: UIViewController {
         return label
     }()
 
-    // TODO: - 셀 우측정렬 필요
+    // TODO: - 셀 우측정렬
     private let jobCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -65,13 +65,22 @@ final class SignUpTeamInfoViewController: UIViewController {
         return button
     }()
 
-    // TODO: - 파이어베이스 연동 필요
-    private let jobs: [String] = ["All-Rounder", "Android", "iOS", "Web"]
-    private let teamCount: Int = 2
-
-    private var selectedJobIndex: Int?
-
     private var disposeBag = DisposeBag()
+    private let viewModel: SignUpViewModel
+
+    init(viewModel: SignUpViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    init?(coder: NSCoder, viewModel: SignUpViewModel) {
+        self.viewModel = viewModel
+        super.init(coder: coder)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -88,22 +97,21 @@ extension SignUpTeamInfoViewController: UICollectionViewDelegateFlowLayout, UICo
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
-        case 0: return jobs.count
-        case 1: return teamCount
+        case 0: return viewModel.jobs.count
+        case 1: return viewModel.teamCount
         default: return 0
         }
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        // TODO: - collectionView 분기 필요
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SignUpCollectionViewCell.identifier, for: indexPath) as? SignUpCollectionViewCell else { return UICollectionViewCell() }
-        cell.configureUI(text: jobs[indexPath.row])
+        cell.configureUI(text: viewModel.jobs[indexPath.row])
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let dummyCell = SignUpCollectionViewCell(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: Constants.cellHeight))
-        dummyCell.configureUI(text: jobs[indexPath.row])
+        dummyCell.configureUI(text: viewModel.jobs[indexPath.row])
         dummyCell.layoutIfNeeded()
 
         let estimatedSize = dummyCell.systemLayoutSizeFitting(CGSize(width: 100, height: Constants.cellHeight))
@@ -120,8 +128,8 @@ extension SignUpTeamInfoViewController: UICollectionViewDelegateFlowLayout, UICo
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) as? SignUpCollectionViewCell else { return }
-        if selectedJobIndex == nil { configureTeamLayout() }
-        selectedJobIndex = indexPath.row
+//        if viewModel.input.jobIndex.value == nil { configureTeamLayout() }
+        viewModel.input.jobIndex.onNext(indexPath.row)
         cell.configureSelectedUI()
     }
 
