@@ -39,7 +39,6 @@ final class SettingsViewController: UIViewController {
 // MARK: - Bind
 private extension SettingsViewController {
 
-    //TODO: - 로그아웃
     func bindButton() {
         logoutButton.rx.controlEvent([.touchUpInside])
             .asObservable()
