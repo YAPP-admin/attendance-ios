@@ -12,165 +12,220 @@ import SnapKit
 import UIKit
 
 final class HomeViewController: UIViewController {
-
-    private let guideLabel: UILabel = {
-        let label = UILabel()
-        label.text = "2시 5분까지 출석체크를 완료해주세요!\n이후 출석은 지각으로 처리돼요"
-        label.font = .systemFont(ofSize: 16, weight: .regular)
-        label.textColor = .white
-        label.numberOfLines = 0
-        label.textAlignment = .center
-        return label
-    }()
-
-    private let dimmedView: UIView = {
+    private let topView: UIView = {
         let view = UIView()
-//        view.backgroundColor = UIColor(white: 0, alpha: 0.5)
+        view.backgroundColor = .white.withAlphaComponent(0.8)
+        return view
+    }()
+	private let settingButton: UIButton = {
+		let button = UIButton()
+		button.backgroundColor = .clear
+		button.setImage(UIImage(named: "setting"), for: .normal)
+		button.contentEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+		return button
+	}()
+    private lazy var tabView: HomeBottomTabView = {
+        let view = HomeBottomTabView()
+        return view
+    }()
+    private let scrollView: UIScrollView = {
+        let view = UIScrollView()
+        view.alwaysBounceVertical = true
+        view.showsVerticalScrollIndicator = false
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .white
+        return view
+    }()
+    private let contentView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    private let bgView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        return view
+    }()
+    private let illustView: UIImageView = {
+        let view = UIImageView()
+        view.backgroundColor = .clear
+        view.image = UIImage(named: "illust_member_home_disabled")
+        return view
+    }()
+    private let infoView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.layer.cornerRadius = 10
         view.clipsToBounds = true
         return view
     }()
-	private let frameView: UIImageView = {
-		let view = UIImageView()
-		view.backgroundColor = .clear
-		view.image = UIImage(named: "qr_frame")
-		return view
-	}()
-
-    private lazy var homebottomView: HomeBottomView = {
-        let view = HomeBottomView()
-        view.delegate = self
+    private let infoStackView: UIStackView = {
+        let view = UIStackView()
+        view.axis = .horizontal
+        view.spacing = 8
         return view
     }()
+    private let checkButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "info_check_disabled"), for: .normal)
+        button.backgroundColor = .clear
+        return button
+    }()
+    private let infoLabel: UILabel = {
+        let label = UILabel()
+        label.text = "아직 출석 전이에요"
+        label.font(.Body2)
+        label.textColor = .gray_600
+        return label
+    }()
+    private let contentsInfoView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.layer.cornerRadius = 15
+        view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        return view
+    }()
+    private let dateLabel: UILabel = {
+        let label = UILabel()
+        label.text = "02.07"
+        label.font(.Body1)
+        label.textColor = .gray_600
+        return label
+    }()
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "YAPP 3번째 데브 캠프\n및 성과 공유회"
+        label.font(.H1)
+        label.textColor = .gray_1000
+        label.numberOfLines = 0
+        return label
+    }()
+    private let contentsLabel: UILabel = {
+        let label = UILabel()
+        label.text = "드디어 마지막 성과 공유를 하는 세션입니다!\n지금까지 하나의 팀으로서 열심히 작업한 결과물을 YAPP 전원에게 보여주세요 🎉\n\n드디어 마지막 성과 공유를 하는 세션입니다!\n지금까지 하나의 팀으로서 열심히 작업한 결과물을 YAPP 전원에게 보여주세요 🎉\n\n드디어 마지막 성과 공유를 하는 세션입니다!\n지금까지 하나의 팀으로서 열심히 작업한 결과물을 YAPP 전원에게 보여주세요 🎉\n\n드디어 마지막 성과 공유를 하는 세션입니다!\n지금까지 하나의 팀으로서 열심히 작업한 결과물을 YAPP 전원에게 보여주세요 🎉"
+        label.font(.Body1)
+        label.textColor = .gray_800
+        label.numberOfLines = 0
+        return label
+    }()
 
-    private let captureSession = AVCaptureSession()
-
-    private let viewModel = BaseViewModel()
+    private let viewModel = HomeViewModel()
     private var disposeBag = DisposeBag()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        navigationController?.isNavigationBarHidden = true
 
-        bindViewModel()
-        configureNavigationBar()
-        configureCaptureSession()
-//        configureMaskView()
-        configureGuideLabel()
         addSubViews()
-    }
-
-}
-
-extension HomeViewController: AVCaptureMetadataOutputObjectsDelegate {
-
-    private func configureMaskView() {
-        let maskLayer = CAShapeLayer()
-        let path = UIBezierPath(rect: view.bounds)
-
-        path.append(UIBezierPath(rect: CGRect(x: (view.bounds.width-240)/2, y: 132, width: 240, height: 240)))
-        maskLayer.path = path.cgPath
-        maskLayer.fillRule = CAShapeLayerFillRule.evenOdd
-        dimmedView.layer.mask = maskLayer
-    }
-
-    private func configureCaptureSession() {
-        guard let device = AVCaptureDevice.default(for: AVMediaType.video) else { return }
-
-        do {
-            let input = try AVCaptureDeviceInput(device: device)
-            let output = AVCaptureMetadataOutput()
-
-            captureSession.addInput(input)
-            captureSession.addOutput(output)
-
-            output.setMetadataObjectsDelegate(self, queue: .main)
-            output.metadataObjectTypes = [.qr]
-
-            configurePreviewLayer()
-            captureSession.startRunning()
-        } catch {}
-    }
-
-    private func configurePreviewLayer() {
-        let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-        previewLayer.frame = view.layer.bounds
-        previewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
-        view.layer.addSublayer(previewLayer)
-    }
-
-    func metadataOutput(_ captureOutput: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
-        guard let metadataObject = metadataObjects.first, let readableObject = metadataObject as? AVMetadataMachineReadableCodeObject, let stringValue = readableObject.stringValue else { return }
-
-        // MARK: - 출석인증
-        print("stringValue: \(stringValue)")
-//            self.captureSession.stopRunning()
-    }
-
-}
-
-extension HomeViewController: HomeBottomViewDelegate {
-
-    func showDetailVC() {
-        let detailVC = DetailViewController()
-        navigationController?.pushViewController(detailVC, animated: true)
-    }
-
-}
-
-private extension HomeViewController {
-
-    func bindViewModel() {
-
-    }
-
-    func configureGuideLabel() {
-        guard let fullText = guideLabel.text else { return }
-
-        let attributedString = NSMutableAttributedString(string: fullText)
-
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 6
-
-        let timeRange = (fullText as NSString).range(of: "2시 5분")
-        let tardyRange = (fullText as NSString).range(of: "지각")
-
-        attributedString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attributedString.length))
-		attributedString.addAttributes([.font: UIFont.systemFont(ofSize: 16, weight: .bold), .foregroundColor: UIColor.yapp_yellow], range: timeRange)
-        attributedString.addAttribute(.font, value: UIFont.systemFont(ofSize: 16, weight: .bold), range: tardyRange)
-
-        guideLabel.attributedText = attributedString
-        guideLabel.textAlignment = .center
+        bind()
     }
 
     func addSubViews() {
-        view.addSubview(dimmedView)
-        view.addSubview(guideLabel)
-        view.addSubview(homebottomView)
-		view.addSubview(frameView)
-
-        dimmedView.snp.makeConstraints {
-            $0.top.bottom.left.right.equalToSuperview()
+        view.addSubview(topView)
+        topView.addSubview(settingButton)
+        view.addSubview(tabView)
+        view.addSubview(scrollView)
+        scrollView.addSubview(contentView)
+        topView.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(44)
         }
-        guideLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(60)
-            $0.centerX.equalToSuperview()
+        settingButton.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.trailing.equalToSuperview().offset(-14)
+            $0.width.height.equalTo(44)
         }
-        homebottomView.snp.makeConstraints {
+        tabView.snp.makeConstraints {
             $0.bottom.left.right.equalToSuperview()
-            $0.height.equalTo(250)
+            $0.height.equalTo(100)
         }
-		frameView.snp.makeConstraints {
-			$0.top.equalTo(guideLabel.snp.bottom).offset(20)
-			$0.leading.equalToSuperview().offset(68)
-			$0.trailing.equalToSuperview().offset(-68)
-			$0.width.equalTo(240)
-			$0.height.equalTo(160)
-		}
+
+        contentView.addSubview(bgView)
+        bgView.addSubview(illustView)
+        contentView.addSubview(infoView)
+        infoView.addSubview(infoStackView)
+        infoStackView.addArrangedSubview(checkButton)
+        infoStackView.addArrangedSubview(infoLabel)
+        contentView.addSubview(contentsInfoView)
+        scrollView.snp.makeConstraints {
+            $0.top.equalTo(topView.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
+            $0.bottom.equalTo(tabView.snp.top)
+        }
+        contentView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+            $0.width.equalToSuperview()
+            $0.height.greaterThanOrEqualToSuperview()
+        }
+        bgView.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(330)
+        }
+        illustView.snp.makeConstraints {
+            $0.center.equalToSuperview()
+            $0.width.equalToSuperview()
+            $0.height.equalTo(86)
+        }
+        infoView.snp.makeConstraints {
+            $0.top.equalTo(illustView.snp.bottom).offset(24)
+            $0.leading.equalToSuperview().offset(24)
+            $0.trailing.equalToSuperview().offset(-24)
+            $0.height.equalTo(60)
+        }
+        infoStackView.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.equalToSuperview().offset(20)
+            $0.trailing.equalToSuperview().offset(-20)
+        }
+        checkButton.snp.makeConstraints {
+            $0.width.height.equalTo(20
+            )
+        }
+        contentsInfoView.snp.makeConstraints {
+            $0.top.equalTo(bgView.snp.bottom).offset(-20)
+            $0.bottom.equalToSuperview()
+            $0.leading.trailing.equalToSuperview()
+        }
+
+        contentsInfoView.addSubview(dateLabel)
+        contentsInfoView.addSubview(titleLabel)
+        contentsInfoView.addSubview(contentsLabel)
+        dateLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(24)
+            $0.leading.equalToSuperview().offset(24)
+            $0.trailing.equalToSuperview().offset(-24)
+        }
+        titleLabel.snp.makeConstraints {
+            $0.top.equalTo(dateLabel.snp.bottom).offset(28)
+            $0.leading.equalToSuperview().offset(24)
+            $0.trailing.equalToSuperview().offset(-24)
+        }
+        contentsLabel.snp.makeConstraints {
+            $0.top.equalTo(titleLabel.snp.bottom).offset(12)
+            $0.leading.equalToSuperview().offset(24)
+            $0.trailing.equalToSuperview().offset(-24)
+            $0.bottom.equalToSuperview().offset(-40)
+        }
     }
 
-    func configureNavigationBar() {
-        navigationItem.hidesBackButton = true
-        navigationItem.backButtonTitle = ""
+    func bind() {
+        tabView.qrButton.rx.tap
+            .bind(to: viewModel.input.tapQR)
+            .disposed(by: disposeBag)
+
+        viewModel.output.goToQR
+            .observe(on: MainScheduler.instance)
+            .bind(onNext: showQRVC)
+            .disposed(by: disposeBag)
     }
 
+    func showQRVC() {
+        let vc = QRViewController()
+        vc.modalPresentationStyle = .overFullScreen
+        self.present(vc, animated: true, completion: nil)
+    }
 }
