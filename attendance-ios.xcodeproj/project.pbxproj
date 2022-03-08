@@ -25,6 +25,7 @@
 		5E9CC7BC27D0F79E006D8B12 /* SignUpCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9CC7BB27D0F79D006D8B12 /* SignUpCollectionViewCell.swift */; };
 		5EE25B2427C7CB700065B816 /* bg_buong.html in Resources */ = {isa = PBXBuildFile; fileRef = 5EE25B2327C7CB700065B816 /* bg_buong.html */; };
 		5EED02BD27D76D4200C52637 /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EED02BC27D76D4200C52637 /* SignUpViewModel.swift */; };
+		5EED02C027D7854F00C52637 /* SignUpAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EED02BF27D7854F00C52637 /* SignUpAlertViewController.swift */; };
 		5EF69EA327A7DAF8007E9735 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69EA227A7DAF8007E9735 /* AppDelegate.swift */; };
 		5EF69EA527A7DAF8007E9735 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69EA427A7DAF8007E9735 /* SceneDelegate.swift */; };
 		5EF69EA727A7DAF8007E9735 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69EA627A7DAF8007E9735 /* LoginViewController.swift */; };
@@ -61,6 +62,7 @@
 		5E9CC7BB27D0F79D006D8B12 /* SignUpCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpCollectionViewCell.swift; sourceTree = "<group>"; };
 		5EE25B2327C7CB700065B816 /* bg_buong.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = bg_buong.html; sourceTree = "<group>"; };
 		5EED02BC27D76D4200C52637 /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
+		5EED02BF27D7854F00C52637 /* SignUpAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpAlertViewController.swift; sourceTree = "<group>"; };
 		5EF69E9F27A7DAF8007E9735 /* attendance-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "attendance-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5EF69EA227A7DAF8007E9735 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5EF69EA427A7DAF8007E9735 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -160,6 +162,7 @@
 				5E63BC9A27BBE90F0024FCE3 /* SignUpNameInfoViewController.swift */,
 				5E9CC7B727D0ED2D006D8B12 /* SignUpTeamInfoViewController.swift */,
 				5E9CC7BB27D0F79D006D8B12 /* SignUpCollectionViewCell.swift */,
+				5EED02BF27D7854F00C52637 /* SignUpAlertViewController.swift */,
 			);
 			path = SignUp;
 			sourceTree = "<group>";
@@ -457,6 +460,7 @@
 				5EF69EA727A7DAF8007E9735 /* LoginViewController.swift in Sources */,
 				5EED02BD27D76D4200C52637 /* SignUpViewModel.swift in Sources */,
 				5EF69EA327A7DAF8007E9735 /* AppDelegate.swift in Sources */,
+				5EED02C027D7854F00C52637 /* SignUpAlertViewController.swift in Sources */,
 				5E6179AC27C670D500B1A835 /* UITextField.swift in Sources */,
 				5EF69EA527A7DAF8007E9735 /* SceneDelegate.swift in Sources */,
 			);
