@@ -5,6 +5,9 @@
 //  Created by leeesangheee on 2022/03/08.
 //
 
+import RxCocoa
+import RxSwift
+import SnapKit
 import UIKit
 
 final class SignUpAlertViewController: UIViewController {
@@ -72,8 +75,11 @@ final class SignUpAlertViewController: UIViewController {
         return button
     }()
 
+    private var disposeBag = DisposeBag()
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        bindButton()
         configureUI()
         configureLayout()
     }
@@ -81,6 +87,20 @@ final class SignUpAlertViewController: UIViewController {
 }
 
 private extension SignUpAlertViewController {
+
+    func bindButton() {
+        noButton.rx.controlEvent([.touchUpInside])
+            .asObservable()
+            .subscribe(onNext: { [weak self] _ in
+                self?.dismiss(animated: false, completion: nil)
+            }).disposed(by: disposeBag)
+
+        cancelButton.rx.controlEvent([.touchUpInside])
+            .asObservable()
+            .subscribe(onNext: { [weak self] _ in
+                print("취소합니다")
+            }).disposed(by: disposeBag)
+    }
 
     func configureUI() {
         view.backgroundColor = .black.withAlphaComponent(0.2)

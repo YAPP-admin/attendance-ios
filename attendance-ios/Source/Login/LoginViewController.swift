@@ -93,11 +93,21 @@ private extension LoginViewController {
             .disposed(by: disposeBag)
     }
 
+    // TODO: - barBackButton
     func goToSignUpNameVC() {
         let signUpNameInfoVC = SignUpNameInfoViewController()
-        navigationItem.backButtonTitle = ""
+
+        let button = UIBarButtonItem(image: .init(systemName: "chevron.right"), style: .plain, target: self, action: #selector(showAlert))
+        navigationItem.backBarButtonItem = button
         navigationController?.navigationBar.tintColor = .gray_800
         navigationController?.pushViewController(signUpNameInfoVC, animated: true)
+    }
+
+    @objc func showAlert() {
+        print("showAlert")
+        let alertVC = SignUpAlertViewController()
+        alertVC.modalPresentationStyle = .overCurrentContext
+        present(alertVC, animated: false, completion: nil)
     }
 
     func goToHomeVC() {
