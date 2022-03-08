@@ -38,9 +38,8 @@ final class SignUpTeamInfoViewController: UIViewController {
         return label
     }()
 
-    // TODO: - 셀 우측정렬
     private let jobCollectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
+        let layout = CollectionViewLeftAlignFlowLayout()
         layout.scrollDirection = .vertical
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.showsVerticalScrollIndicator = false
@@ -193,6 +192,28 @@ extension SignUpTeamInfoViewController: UICollectionViewDelegateFlowLayout, UICo
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) as? SignUpCollectionViewCell else { return }
         cell.configureDeselectedUI()
+    }
+
+    final class CollectionViewLeftAlignFlowLayout: UICollectionViewFlowLayout {
+
+        override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+            guard let attributes = super.layoutAttributesForElements(in: rect) else { return nil }
+            self.minimumLineSpacing = Constants.cellSpacing
+            var leftMargin = sectionInset.left
+            var maxY: CGFloat = -1.0
+
+            attributes.forEach { attribute in
+                if attribute.frame.origin.y >= maxY {
+                    leftMargin = sectionInset.left
+                }
+                attribute.frame.origin.x = leftMargin
+                leftMargin += attribute.frame.width + Constants.cellSpacing
+                maxY = max(attribute.frame.maxY, maxY)
+            }
+
+            return attributes
+        }
+
     }
 
 }
