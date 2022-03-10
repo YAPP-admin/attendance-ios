@@ -24,6 +24,8 @@
 		5E9CC7BA27D0F57A006D8B12 /* UICollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9CC7B927D0F57A006D8B12 /* UICollectionViewCell.swift */; };
 		5E9CC7BC27D0F79E006D8B12 /* SignUpCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9CC7BB27D0F79D006D8B12 /* SignUpCollectionViewCell.swift */; };
 		5EE25B2427C7CB700065B816 /* bg_buong.html in Resources */ = {isa = PBXBuildFile; fileRef = 5EE25B2327C7CB700065B816 /* bg_buong.html */; };
+		5EE54FEE27DA469700294120 /* splash_login.html in Resources */ = {isa = PBXBuildFile; fileRef = 5EE54FED27DA469700294120 /* splash_login.html */; };
+		5EE54FF027DA469A00294120 /* splash_main.html in Resources */ = {isa = PBXBuildFile; fileRef = 5EE54FEF27DA469A00294120 /* splash_main.html */; };
 		5EED02BD27D76D4200C52637 /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EED02BC27D76D4200C52637 /* SignUpViewModel.swift */; };
 		5EED02C027D7854F00C52637 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EED02BF27D7854F00C52637 /* AlertView.swift */; };
 		5EF69EA327A7DAF8007E9735 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69EA227A7DAF8007E9735 /* AppDelegate.swift */; };
@@ -61,6 +63,8 @@
 		5E9CC7B927D0F57A006D8B12 /* UICollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionViewCell.swift; sourceTree = "<group>"; };
 		5E9CC7BB27D0F79D006D8B12 /* SignUpCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpCollectionViewCell.swift; sourceTree = "<group>"; };
 		5EE25B2327C7CB700065B816 /* bg_buong.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = bg_buong.html; sourceTree = "<group>"; };
+		5EE54FED27DA469700294120 /* splash_login.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = splash_login.html; sourceTree = "<group>"; };
+		5EE54FEF27DA469A00294120 /* splash_main.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = splash_main.html; sourceTree = "<group>"; };
 		5EED02BC27D76D4200C52637 /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 		5EED02BF27D7854F00C52637 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		5EF69E9F27A7DAF8007E9735 /* attendance-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "attendance-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -151,6 +155,8 @@
 		5EE25B2527C7CBA10065B816 /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				5EE54FEF27DA469A00294120 /* splash_main.html */,
+				5EE54FED27DA469700294120 /* splash_login.html */,
 				5EE25B2327C7CB700065B816 /* bg_buong.html */,
 			);
 			path = Image;
@@ -361,6 +367,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5EE54FF027DA469A00294120 /* splash_main.html in Resources */,
 				296C7B0327C523450042B630 /* Pretendard-Medium.otf in Resources */,
 				5EF69EB827A7DCDE007E9735 /* .swiftlint.yml in Resources */,
 				296C7B0127C523390042B630 /* Pretendard-Bold.otf in Resources */,
@@ -368,6 +375,7 @@
 				5EF69EAF27A7DAFA007E9735 /* LaunchScreen.storyboard in Resources */,
 				5E63BC9427BBD2AC0024FCE3 /* GoogleService-Info.plist in Resources */,
 				5EF69EAC27A7DAFA007E9735 /* Assets.xcassets in Resources */,
+				5EE54FEE27DA469700294120 /* splash_login.html in Resources */,
 				5EF69EAA27A7DAF8007E9735 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
