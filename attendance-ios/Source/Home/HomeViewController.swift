@@ -217,12 +217,6 @@ final class HomeViewController: UIViewController {
             .bind(to: viewModel.input.tapQR)
             .disposed(by: disposeBag)
 
-        settingButton.rx.controlEvent([.touchUpInside])
-            .asObservable()
-            .subscribe(onNext: { [weak self] _ in
-                self?.showSettingVC()
-            }).disposed(by: disposeBag)
-
         viewModel.output.goToQR
             .observe(on: MainScheduler.instance)
             .bind(onNext: showQRVC)
@@ -235,8 +229,4 @@ final class HomeViewController: UIViewController {
         self.present(vc, animated: true, completion: nil)
     }
 
-    func showSettingVC() {
-        let vc = SettingsViewController()
-        navigationController?.pushViewController(vc, animated: true)
-    }
 }
