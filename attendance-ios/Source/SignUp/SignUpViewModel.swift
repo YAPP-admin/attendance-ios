@@ -10,6 +10,7 @@ import RxSwift
 import UIKit
 
 final class SignUpViewModel: ViewModel {
+
     struct Input {
         let name = PublishSubject<String>()
         let jobIndex = PublishSubject<Int>()
