@@ -115,8 +115,12 @@ private extension SignUpTeamInfoViewController {
     func bindButton() {
         okButton.rx.controlEvent([.touchUpInside])
             .asObservable()
-            .subscribe(onNext: { _ in
+            .subscribe(onNext: { [weak self] _ in
                 print("확인")
+                // TODO: - 파이어베이스에 계정 정보 저장
+                let homeVC = HomeViewController()
+                homeVC.modalPresentationStyle = .fullScreen
+                self?.present(homeVC, animated: true, completion: nil)
             }).disposed(by: disposeBag)
     }
 

@@ -167,13 +167,6 @@
 			path = SignUp;
 			sourceTree = "<group>";
 		};
-		5EED02C127D7915000C52637 /* Settings */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Settings;
-			sourceTree = "<group>";
-		};
 		5EF69E9627A7DAF8007E9735 = {
 			isa = PBXGroup;
 			children = (
@@ -225,7 +218,6 @@
 				5EF69EC727A81E25007E9735 /* Home */,
 				5EF69ED227A83BC1007E9735 /* Detail */,
 				5EF69ED727AAAC88007E9735 /* Policy */,
-				5EED02C127D7915000C52637 /* Settings */,
 				5EF69EBE27A7DD8F007E9735 /* Extensions */,
 				5EF69EBB27A7DD57007E9735 /* System */,
 				5EF69EBC27A7DD68007E9735 /* Storyboards */,
