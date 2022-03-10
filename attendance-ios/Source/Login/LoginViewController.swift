@@ -102,7 +102,7 @@ private extension LoginViewController {
 
     @objc func showAlert() {
         print("showAlert")
-        let alertVC = SignUpAlertViewController()
+        let alertVC = AlertViewController()
         alertVC.modalPresentationStyle = .overCurrentContext
         present(alertVC, animated: false, completion: nil)
     }

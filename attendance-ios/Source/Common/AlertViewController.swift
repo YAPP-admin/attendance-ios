@@ -1,5 +1,5 @@
 //
-//  SignUpAlertViewController.swift
+//  AlertViewController.swift
 //  attendance-ios
 //
 //  Created by leeesangheee on 2022/03/08.
@@ -10,7 +10,7 @@ import RxSwift
 import SnapKit
 import UIKit
 
-final class SignUpAlertViewController: UIViewController {
+final class AlertViewController: UIViewController {
 
     enum Constants {
         static let margin: CGFloat = 32
@@ -86,7 +86,7 @@ final class SignUpAlertViewController: UIViewController {
 
 }
 
-private extension SignUpAlertViewController {
+private extension AlertViewController {
 
     func bindButton() {
         noButton.rx.controlEvent([.touchUpInside])
