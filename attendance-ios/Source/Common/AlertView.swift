@@ -1,5 +1,5 @@
 //
-//  AlertViewController.swift
+//  AlertView.swift
 //  attendance-ios
 //
 //  Created by leeesangheee on 2022/03/08.
@@ -10,7 +10,7 @@ import RxSwift
 import SnapKit
 import UIKit
 
-final class AlertViewController: UIViewController {
+final class AlertView: UIView {
 
     enum Constants {
         static let margin: CGFloat = 32
@@ -77,22 +77,26 @@ final class AlertViewController: UIViewController {
 
     private var disposeBag = DisposeBag()
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         bindButton()
         configureUI()
         configureLayout()
     }
 
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
 }
 
-private extension AlertViewController {
+private extension AlertView {
 
     func bindButton() {
         noButton.rx.controlEvent([.touchUpInside])
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
-                self?.dismiss(animated: false, completion: nil)
+                self?.removeFromSuperview()
             }).disposed(by: disposeBag)
 
         cancelButton.rx.controlEvent([.touchUpInside])
@@ -103,11 +107,11 @@ private extension AlertViewController {
     }
 
     func configureUI() {
-        view.backgroundColor = .black.withAlphaComponent(0.2)
+        backgroundColor = .black.withAlphaComponent(0.2)
     }
 
     func configureLayout() {
-        view.addSubview(containerView)
+        addSubview(containerView)
         containerView.addSubview(label)
         containerView.addSubview(subLabel)
         containerView.addSubview(stackView)

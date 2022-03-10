@@ -102,9 +102,10 @@ private extension LoginViewController {
 
     @objc func showAlert() {
         print("showAlert")
-        let alertVC = AlertViewController()
-        alertVC.modalPresentationStyle = .overCurrentContext
-        present(alertVC, animated: false, completion: nil)
+        let alertView = AlertView()
+        alertView.snp.makeConstraints {
+            $0.top.bottom.left.right.equalToSuperview()
+        }
     }
 
     func goToHomeVC() {
