@@ -24,6 +24,11 @@ final class LoginViewController: UIViewController {
         return webView
     }()
 
+    private let splashView: WKWebView = {
+        let webView = WKWebView()
+        return webView
+    }()
+
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "3초만에 끝나는\n간편한 출석체크"
@@ -55,22 +60,24 @@ final class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         bindViewModel()
+        setupDelegate()
+        configureSplashView()
         configureWebView()
         configureUI()
         configureLayout()
     }
 
-    func configureWebView() {
-        guard let filePath = Bundle.main.path(forResource: "bg_buong", ofType: "html"),
-              let data = NSData(contentsOfFile: filePath),
-              let html = NSString(data: data as Data, encoding: String.Encoding.utf8.rawValue) else { return }
-
-        webView.loadHTMLString(html as String, baseURL: Bundle.main.bundleURL)
-    }
-
 }
 
-extension LoginViewController: UIWebViewDelegate {
+extension LoginViewController: WKNavigationDelegate {
+
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        if webView == splashView {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                self.splashView.removeFromSuperview()
+            }
+        }
+    }
 
 }
 
@@ -114,6 +121,27 @@ private extension LoginViewController {
         present(homeVC, animated: true, completion: nil)
     }
 
+    func setupDelegate() {
+        webView.navigationDelegate = self
+        splashView.navigationDelegate = self
+    }
+
+    func configureWebView() {
+        guard let filePath = Bundle.main.path(forResource: "bg_buong", ofType: "html"),
+              let data = NSData(contentsOfFile: filePath),
+              let html = NSString(data: data as Data, encoding: String.Encoding.utf8.rawValue) else { return }
+
+        webView.loadHTMLString(html as String, baseURL: Bundle.main.bundleURL)
+    }
+
+    func configureSplashView() {
+        guard let filePath = Bundle.main.path(forResource: "splash_login", ofType: "html"),
+              let data = NSData(contentsOfFile: filePath),
+              let html = NSString(data: data as Data, encoding: String.Encoding.utf8.rawValue) else { return }
+
+        splashView.loadHTMLString(html as String, baseURL: Bundle.main.bundleURL)
+    }
+
     func configureUI() {
         view.backgroundColor = .white
     }
@@ -122,10 +150,11 @@ private extension LoginViewController {
         view.addSubview(titleLabel)
         view.addSubview(webView)
         view.addSubview(loginButton)
+        view.addSubview(splashView)
 
         webView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(73)
-            $0.left.right.equalToSuperview()
+            $0.top.equalToSuperview().offset(80)
+            $0.left.right.equalToSuperview().inset(68)
             $0.height.equalTo(view.bounds.width)
         }
         titleLabel.snp.makeConstraints {
@@ -136,6 +165,11 @@ private extension LoginViewController {
             $0.bottom.equalToSuperview().inset(57)
             $0.left.right.equalToSuperview().inset(Constants.padding)
             $0.height.equalTo(45)
+        }
+        splashView.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.bottom.equalToSuperview().inset(40)
+            $0.left.right.equalToSuperview().inset(10)
         }
     }
 
