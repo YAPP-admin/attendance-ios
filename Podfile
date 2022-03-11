@@ -20,5 +20,6 @@ target 'attendance-ios' do
   pod 'Firebase/Auth'
   pod 'Firebase/Firestore'
   pod 'FirebaseFirestoreSwift'
+  pod 'Firebase/RemoteConfig'
 
 end

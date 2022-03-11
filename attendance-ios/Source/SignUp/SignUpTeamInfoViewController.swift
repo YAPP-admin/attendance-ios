@@ -5,12 +5,12 @@
 //  Created by leeesangheee on 2022/03/03.
 //
 
+import FirebaseFirestore
+import KakaoSDKUser
 import RxCocoa
 import RxSwift
 import SnapKit
 import UIKit
-import FirebaseFirestore
-import KakaoSDKUser
 
 final class SignUpTeamInfoViewController: UIViewController {
 
