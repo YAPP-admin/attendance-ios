@@ -120,6 +120,13 @@ final class SignUpTeamInfoViewController: UIViewController {
 private extension SignUpTeamInfoViewController {
 
     func bindViewModel() {
+        viewModel.input.team
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] _ in
+                self?.teamCollectionView.reloadData()
+            })
+            .disposed(by: disposeBag)
+
         viewModel.output.showTeamList
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] _ in
@@ -159,18 +166,14 @@ private extension SignUpTeamInfoViewController {
     }
 
     func registerInfo() {
-        guard let config = try? viewModel.input.config.value(), let configTeams = try? viewModel.input.configTeams.value() else { return }
+        guard let config = try? viewModel.output.config.value(),
+              let name = try? viewModel.input.name.value(),
+              let team = try? viewModel.input.team.value(),
+              let teamNumber = try? viewModel.input.teamNumber.value() else { return }
         let generation = config.generation
-        let teams = configTeams.map({ $0.team })
 
         let db = Firestore.firestore()
         let docRef = db.collection("member").document("\(generation)th").collection("members")
-
-        guard let name = try? viewModel.input.name.value(),
-                let positionIndex = try? viewModel.input.positionIndex.value(),
-                let teamIndex = try? viewModel.input.teamNumber.value() else { return }
-        let position = teams[positionIndex]
-        let team = teamIndex+1
 
         UserApi.shared.me { user, error in
             guard let user = user, let userId = user.id else { return }
@@ -178,8 +181,8 @@ private extension SignUpTeamInfoViewController {
                 "id": userId,
                 "isAdmin": false,
                 "name": name,
-                "position": position,
-                "team": "\(position) \(team)"
+                "position": team,
+                "team": "\(team) \(teamNumber)"
             ]) { [weak self] error in
                 guard error == nil else { return }
                 self?.goToHome()
@@ -203,19 +206,33 @@ extension SignUpTeamInfoViewController: UICollectionViewDelegateFlowLayout, UICo
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        guard let teams = try? viewModel.output.configTeams.value() else { return 0 }
+
         switch collectionView {
-        case positionCollectionView: return viewModel.positions.count
-        case teamCollectionView: return viewModel.teamCount
+        case positionCollectionView: return teams.count
+        case teamCollectionView:
+            guard let team = try? viewModel.input.team.value(),
+                  let countString = teams.filter({ $0.team == team}).first?.count,
+                  let count = Int(countString) else { break }
+            return count
         default: return 0
         }
+
+        return 0
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SignUpCollectionViewCell.identifier, for: indexPath) as? SignUpCollectionViewCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SignUpCollectionViewCell.identifier, for: indexPath) as? SignUpCollectionViewCell,
+              let teams = try? viewModel.output.configTeams.value(),
+              let team = try? viewModel.input.team.value(),
+              let teamNumber = try? viewModel.input.teamNumber.value() else { return UICollectionViewCell() }
 
         switch collectionView {
-        case positionCollectionView: cell.configureUI(text: viewModel.positions[indexPath.row])
-        case teamCollectionView: cell.configureUI(text: "\(indexPath.row+1)팀")
+        case positionCollectionView:
+            cell.configureUI(text: teams[indexPath.row].team)
+        case teamCollectionView:
+            cell.configureUI(text: "\(indexPath.row+1)팀")
+            cell.configureUI(isSelected: teamNumber == indexPath.row+1)
         default: break
         }
 
@@ -227,7 +244,9 @@ extension SignUpTeamInfoViewController: UICollectionViewDelegateFlowLayout, UICo
         var text = ""
 
         switch collectionView {
-        case positionCollectionView: text = viewModel.positions[indexPath.row]
+        case positionCollectionView:
+            guard let teams = try? viewModel.output.configTeams.value() else { break }
+            text = teams[indexPath.row].team
         case teamCollectionView: text = "\(indexPath.row+1)팀"
         default: ()
         }
@@ -247,10 +266,12 @@ extension SignUpTeamInfoViewController: UICollectionViewDelegateFlowLayout, UICo
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let teams = try? viewModel.output.configTeams.value().map({ $0.team }) else { return }
+
         guard let cell = collectionView.cellForItem(at: indexPath) as? SignUpCollectionViewCell else { return }
         switch collectionView {
-        case positionCollectionView: viewModel.input.positionIndex.onNext(indexPath.row)
-        case teamCollectionView: viewModel.input.teamNumber.onNext(indexPath.row)
+        case positionCollectionView: viewModel.input.team.onNext(teams[indexPath.row])
+        case teamCollectionView: viewModel.input.teamNumber.onNext(indexPath.row+1)
         default: break
         }
         cell.configureSelectedUI()

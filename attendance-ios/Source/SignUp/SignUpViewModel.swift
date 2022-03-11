@@ -14,14 +14,16 @@ final class SignUpViewModel: ViewModel {
 
     struct Input {
         let name = BehaviorSubject<String>(value: "")
-        let positionIndex = BehaviorSubject<Int>(value: 0)
-        let teamNumber = BehaviorSubject<Int>(value: 0)
-
-        let config = BehaviorSubject<Config?>(value: nil)
-        let configTeams = BehaviorSubject<[ConfigTeam]>(value: [])
+        let team = BehaviorSubject<String>(value: "")
+        let teamNumber = BehaviorSubject<Int>(value: 1)
     }
 
     struct Output {
+        let config = BehaviorSubject<Config?>(value: nil)
+        let configTeams = BehaviorSubject<[ConfigTeam]>(value: [])
+
+        let generation = BehaviorSubject<Int>(value: 0)
+
         let isNameTextFieldValid = BehaviorSubject(value: false)
         let showTeamList = PublishRelay<Void>()
         let complete = PublishRelay<Void>()
@@ -31,9 +33,6 @@ final class SignUpViewModel: ViewModel {
     let output = Output()
     let disposeBag = DisposeBag()
 
-    let positions: [String] = ["All-Rounder", "Android", "iOS", "Web"]
-    let teamCount: Int = 2
-
     init() {
         setupConfig()
 
@@ -42,7 +41,7 @@ final class SignUpViewModel: ViewModel {
                 self?.output.isNameTextFieldValid.onNext(!name.isEmpty)
             }).disposed(by: disposeBag)
 
-        input.positionIndex
+        input.team
             .subscribe(onNext: { [weak self] _ in
                 self?.output.showTeamList.accept(())
             }).disposed(by: disposeBag)
@@ -78,14 +77,12 @@ private extension SignUpViewModel {
                 guard let configString = remoteConfig[ConfigKeys.config.rawValue].stringValue,
                       let configData = configString.data(using: .utf8),
                       let config = try? decoder.decode(Config.self, from: configData) else { return }
-                print("config: \(config)")
-                self.input.config.onNext(config)
+                self.output.config.onNext(config)
 
                 guard let configTeamString = remoteConfig[ConfigKeys.selectTeams.rawValue].stringValue,
                       let configTeamData = configTeamString.data(using: .utf8),
                       let configTeams = try? decoder.decode([ConfigTeam].self, from: configTeamData) else { return }
-                print("configTeams: \(configTeams)")
-                self.input.configTeams.onNext(configTeams)
+                self.output.configTeams.onNext(configTeams)
             }
         }
     }

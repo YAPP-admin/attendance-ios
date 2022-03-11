@@ -37,6 +37,10 @@ final class SignUpCollectionViewCell: UICollectionViewCell {
         positionLabel.text = text
     }
 
+    func configureUI(isSelected: Bool) {
+        isSelected ? configureSelectedUI() : configureDeselectedUI()
+    }
+
     func configureSelectedUI() {
         positionLabel.textColor = UIColor.white
         backgroundColor = UIColor.yapp_orange
