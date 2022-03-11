@@ -17,7 +17,7 @@ final class AlertView: UIView {
         static let padding: CGFloat = 24
         static let containerViewHeight: CGFloat = 174
         static let cornerRadius: CGFloat = 10
-        static let labelSpacing: CGFloat = 6
+        static let labelSpacing: CGFloat = 10
 
         static let buttonHeight: CGFloat = 47
         static let buttonSpacing: CGFloat = 12
@@ -33,7 +33,6 @@ final class AlertView: UIView {
 
     private let label: UILabel = {
         let label = UILabel()
-        label.text = "입력을 취소할까요?"
         label.textColor = .gray_1200
         label.font = .Pretendard(type: .Bold, size: 18)
         return label
@@ -41,7 +40,6 @@ final class AlertView: UIView {
 
     private let subLabel: UILabel = {
         let label = UILabel()
-        label.text = "언제든 다시 돌아올 수 있어요"
         label.textColor = .gray_800
         label.font = .Pretendard(type: .Medium, size: 16)
         return label
@@ -55,9 +53,8 @@ final class AlertView: UIView {
         return stackView
     }()
 
-    private let noButton: UIButton = {
+    private let leftButton: UIButton = {
         let button = UIButton()
-        button.setTitle("아니요", for: .normal)
         button.backgroundColor = .gray_200
         button.setTitleColor(.gray_800, for: .normal)
         button.titleLabel?.font = .Pretendard(type: .Medium, size: 16)
@@ -65,9 +62,8 @@ final class AlertView: UIView {
         return button
     }()
 
-    let cancelButton: UIButton = {
+    let rightButton: UIButton = {
         let button = UIButton()
-        button.setTitle("취소합니다", for: .normal)
         button.backgroundColor = .yapp_orange
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = .Pretendard(type: .Medium, size: 16)
@@ -88,12 +84,19 @@ final class AlertView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    func configureUI(text: String, subText: String, leftButtonText: String, rightButtonText: String) {
+        label.text = text
+        subLabel.text = subText
+        leftButton.setTitle(leftButtonText, for: .normal)
+        rightButton.setTitle(rightButtonText, for: .normal)
+    }
+
 }
 
 private extension AlertView {
 
     func bindButton() {
-        noButton.rx.controlEvent([.touchUpInside])
+        leftButton.rx.controlEvent([.touchUpInside])
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
                 self?.isHidden = true
@@ -101,7 +104,7 @@ private extension AlertView {
     }
 
     func configureUI() {
-        backgroundColor = .black.withAlphaComponent(0.2)
+        backgroundColor = .black.withAlphaComponent(0.4)
     }
 
     func configureLayout() {
@@ -110,8 +113,8 @@ private extension AlertView {
         containerView.addSubview(subLabel)
         containerView.addSubview(stackView)
 
-        stackView.addArrangedSubview(noButton)
-        stackView.addArrangedSubview(cancelButton)
+        stackView.addArrangedSubview(leftButton)
+        stackView.addArrangedSubview(rightButton)
 
         containerView.snp.makeConstraints {
             $0.left.right.equalToSuperview().inset(Constants.margin)
