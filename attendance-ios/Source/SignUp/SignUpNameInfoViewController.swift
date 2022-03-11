@@ -79,6 +79,12 @@ final class SignUpNameInfoViewController: UIViewController {
         return button
     }()
 
+    private let alertView: AlertView = {
+        let view = AlertView()
+        view.isHidden = true
+        return view
+    }()
+
     private var disposeBag = DisposeBag()
     private let viewModel = SignUpViewModel()
 
@@ -91,6 +97,8 @@ final class SignUpNameInfoViewController: UIViewController {
         setupTextField()
         configureUI()
         configureLayout()
+        configureAccessoryViewLayout()
+        configureAlertViewLayout()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -124,25 +132,27 @@ private extension SignUpNameInfoViewController {
         nextButton.rx.controlEvent([.touchUpInside])
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
-                self?.goToSignUpTeamVC()
+                self?.goToTeamInfo()
             }).disposed(by: disposeBag)
 
         keyboardNextButton.rx.controlEvent([.touchUpInside])
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
-                self?.goToSignUpTeamVC()
+                self?.goToTeamInfo()
             }).disposed(by: disposeBag)
 
         backButton.rx.controlEvent([.touchUpInside])
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
-                let alertView = AlertView()
-                self?.view.addSubview(alertView)
-                alertView.snp.makeConstraints {
-                    $0.top.bottom.left.right.equalToSuperview()
-                }
+                self?.alertView.isHidden.toggle()
             }).disposed(by: disposeBag)
 
+        alertView.cancelButton.rx.controlEvent([.touchUpInside])
+            .asObservable()
+            .subscribe(onNext: { [weak self] _ in
+                self?.alertView.isHidden.toggle()
+                self?.goToLogin()
+            }).disposed(by: disposeBag)
     }
 
 }
@@ -163,11 +173,15 @@ extension SignUpNameInfoViewController: UITextFieldDelegate {
 // MARK: - etc
 private extension SignUpNameInfoViewController {
 
-    func goToSignUpTeamVC() {
-        let signUpTeamInfoVC = SignUpTeamInfoViewController(viewModel: viewModel)
+    func goToLogin() {
+        navigationController?.popToRootViewController(animated: true)
+    }
+
+    func goToTeamInfo() {
+        let teamInfoVC = SignUpTeamInfoViewController(viewModel: viewModel)
         navigationItem.backButtonTitle = ""
         navigationController?.navigationBar.tintColor = .gray_800
-        navigationController?.pushViewController(signUpTeamInfoVC, animated: true)
+        navigationController?.pushViewController(teamInfoVC, animated: true)
     }
 
     func setupDelegate() {
@@ -226,10 +240,20 @@ private extension SignUpNameInfoViewController {
             $0.bottom.equalToSuperview().inset(40)
             $0.height.equalTo(Constants.buttonHeight)
         }
+    }
 
+    func configureAccessoryViewLayout() {
         accessoryView.addSubview(keyboardNextButton)
 
         keyboardNextButton.snp.makeConstraints {
+            $0.top.bottom.left.right.equalToSuperview()
+        }
+    }
+
+    func configureAlertViewLayout() {
+        view.addSubview(alertView)
+
+        alertView.snp.makeConstraints {
             $0.top.bottom.left.right.equalToSuperview()
         }
     }

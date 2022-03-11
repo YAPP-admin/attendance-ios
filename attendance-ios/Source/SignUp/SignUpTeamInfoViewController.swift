@@ -35,6 +35,7 @@ final class SignUpTeamInfoViewController: UIViewController {
         label.font = .Pretendard(type: .Bold, size: 18)
         label.textColor = .gray_1200
         label.numberOfLines = 0
+        label.isHidden = true
         return label
     }()
 
@@ -51,6 +52,7 @@ final class SignUpTeamInfoViewController: UIViewController {
         layout.scrollDirection = .vertical
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.showsVerticalScrollIndicator = false
+        collectionView.isHidden = true
         return collectionView
     }()
 
@@ -68,6 +70,12 @@ final class SignUpTeamInfoViewController: UIViewController {
         let button = UIButton()
         button.setImage(UIImage(named: "back"), for: .normal)
         return button
+    }()
+
+    private let alertView: AlertView = {
+        let view = AlertView()
+        view.isHidden = true
+        return view
     }()
 
     private var disposeBag = DisposeBag()
@@ -95,6 +103,7 @@ final class SignUpTeamInfoViewController: UIViewController {
         setupCollectionView()
         configureUI()
         configureLayout()
+        configureAlertViewLayout()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -111,7 +120,9 @@ private extension SignUpTeamInfoViewController {
         viewModel.output.showTeamList
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] _ in
-                self?.configureTeamLayout()
+                // TODO: - 이후 애니메이션 추가
+                self?.subTitleLabel.isHidden = false
+                self?.teamCollectionView.isHidden = false
             })
             .disposed(by: disposeBag)
 
@@ -129,19 +140,20 @@ private extension SignUpTeamInfoViewController {
             .subscribe(onNext: { [weak self] _ in
                 print("확인")
                 // TODO: - 파이어베이스에 계정 정보 저장
-                let homeVC = HomeViewController()
-                homeVC.modalPresentationStyle = .fullScreen
-                self?.present(homeVC, animated: true, completion: nil)
+                self?.goToHome()
             }).disposed(by: disposeBag)
 
         backButton.rx.controlEvent([.touchUpInside])
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
-                let alertView = AlertView()
-                self?.view.addSubview(alertView)
-                alertView.snp.makeConstraints {
-                    $0.top.bottom.left.right.equalToSuperview()
-                }
+                self?.alertView.isHidden.toggle()
+            }).disposed(by: disposeBag)
+
+        alertView.cancelButton.rx.controlEvent([.touchUpInside])
+            .asObservable()
+            .subscribe(onNext: { [weak self] _ in
+                self?.alertView.isHidden.toggle()
+                self?.goToLogin()
             }).disposed(by: disposeBag)
     }
 
@@ -246,6 +258,16 @@ extension SignUpTeamInfoViewController: UICollectionViewDelegateFlowLayout, UICo
 // MARK: - etc
 private extension SignUpTeamInfoViewController {
 
+    func goToHome() {
+        let homeVC = HomeViewController()
+        homeVC.modalPresentationStyle = .fullScreen
+        self.present(homeVC, animated: true, completion: nil)
+    }
+
+    func goToLogin() {
+        navigationController?.popToRootViewController(animated: true)
+    }
+
     func setupDelegate() {
 
     }
@@ -268,6 +290,8 @@ private extension SignUpTeamInfoViewController {
         view.addSubview(backButton)
         view.addSubview(titleLabel)
         view.addSubview(jobCollectionView)
+        view.addSubview(subTitleLabel)
+        view.addSubview(teamCollectionView)
         view.addSubview(okButton)
 
         backButton.snp.makeConstraints {
@@ -285,17 +309,6 @@ private extension SignUpTeamInfoViewController {
             $0.right.equalToSuperview().inset(Constants.padding*4)
             $0.height.equalTo(Constants.cellHeight*2+Constants.cellSpacing)
         }
-        okButton.snp.makeConstraints {
-            $0.left.right.equalToSuperview().inset(Constants.padding)
-            $0.bottom.equalToSuperview().inset(40)
-            $0.height.equalTo(Constants.buttonHeight)
-        }
-    }
-
-    func configureTeamLayout() {
-        view.addSubview(subTitleLabel)
-        view.addSubview(teamCollectionView)
-
         subTitleLabel.snp.makeConstraints {
             $0.top.equalTo(jobCollectionView.snp.bottom).offset(32)
             $0.left.right.equalToSuperview().inset(Constants.padding)
@@ -304,6 +317,19 @@ private extension SignUpTeamInfoViewController {
             $0.top.equalTo(subTitleLabel.snp.bottom).offset(10)
             $0.left.right.equalToSuperview().inset(Constants.padding)
             $0.height.equalTo(Constants.cellHeight)
+        }
+        okButton.snp.makeConstraints {
+            $0.left.right.equalToSuperview().inset(Constants.padding)
+            $0.bottom.equalToSuperview().inset(40)
+            $0.height.equalTo(Constants.buttonHeight)
+        }
+    }
+
+    func configureAlertViewLayout() {
+        view.addSubview(alertView)
+
+        alertView.snp.makeConstraints {
+            $0.top.bottom.left.right.equalToSuperview()
         }
     }
 

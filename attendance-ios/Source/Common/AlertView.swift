@@ -65,7 +65,7 @@ final class AlertView: UIView {
         return button
     }()
 
-    private let cancelButton: UIButton = {
+    let cancelButton: UIButton = {
         let button = UIButton()
         button.setTitle("취소합니다", for: .normal)
         button.backgroundColor = .yapp_orange
@@ -96,13 +96,7 @@ private extension AlertView {
         noButton.rx.controlEvent([.touchUpInside])
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
-                self?.removeFromSuperview()
-            }).disposed(by: disposeBag)
-
-        cancelButton.rx.controlEvent([.touchUpInside])
-            .asObservable()
-            .subscribe(onNext: { [weak self] _ in
-                print("취소합니다")
+                self?.isHidden = true
             }).disposed(by: disposeBag)
     }
 
