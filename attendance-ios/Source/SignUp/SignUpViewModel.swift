@@ -54,7 +54,7 @@ final class SignUpViewModel: ViewModel {
 
 private extension SignUpViewModel {
 
-    enum ConfigKey: String {
+    enum ConfigKeys: String {
         case sessionList = "attendance_session_list"
         case config = "config"
         case selectTeams = "attendance_select_teams"
@@ -70,10 +70,18 @@ private extension SignUpViewModel {
         remoteConfig.fetch { status, _ in
             guard status == .success else { return }
             remoteConfig.activate { _, _ in
-                print("sessionList: \(remoteConfig[ConfigKey.sessionList.rawValue].stringValue)")
-                print("config: \(remoteConfig[ConfigKey.config.rawValue].stringValue)")
-                print("selectTeams: \(remoteConfig[ConfigKey.selectTeams.rawValue].stringValue)")
-                print("maginotlineTime: \(remoteConfig[ConfigKey.maginotlineTime.rawValue].stringValue)")
+                let decoder = JSONDecoder()
+
+                guard let configString = remoteConfig[ConfigKeys.config.rawValue].stringValue,
+                      let configData = configString.data(using: .utf8),
+                      let config = try? decoder.decode(Config.self, from: configData) else { return }
+                print("config: \(config)")
+
+                guard let selectTeamsString = remoteConfig[ConfigKeys.selectTeams.rawValue].stringValue,
+                      let selectTeamsData = selectTeamsString.data(using: .utf8),
+                      let selectTeams = try? decoder.decode([ConfigSelectTeams].self, from: selectTeamsData) else { return }
+                print("selectTeams: \(selectTeams)")
+
             }
         }
     }

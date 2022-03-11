@@ -16,17 +16,18 @@ struct Member {
     let attendances: [Attendance]
 }
 
-struct Session {
+struct Session: Codable {
     let sessionId: Int
     let title: String
     let date: String // yyyy-mm-dd
     let description: String
-}
 
-struct Config {
-    let generation: Int
-    let sessionCount: Int
-    let adminPassword: String
+    enum CodingKeys: String, CodingKey {
+        case sessionId = "session_id"
+        case title
+        case date
+        case description
+    }
 }
 
 enum PositionType {
