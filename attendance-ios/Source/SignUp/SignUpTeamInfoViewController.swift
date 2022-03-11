@@ -9,6 +9,7 @@ import RxCocoa
 import RxSwift
 import SnapKit
 import UIKit
+import FirebaseFirestore
 
 final class SignUpTeamInfoViewController: UIViewController {
 
@@ -39,7 +40,7 @@ final class SignUpTeamInfoViewController: UIViewController {
         return label
     }()
 
-    private let jobCollectionView: UICollectionView = {
+    private let positionCollectionView: UICollectionView = {
         let layout = CollectionViewLeftAlignFlowLayout()
         layout.scrollDirection = .vertical
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -139,9 +140,7 @@ private extension SignUpTeamInfoViewController {
         okButton.rx.controlEvent([.touchUpInside])
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
-                print("확인")
-                // TODO: - 파이어베이스에 계정 정보 저장
-                self?.goToHome()
+                self?.registerInfo()
             }).disposed(by: disposeBag)
 
         backButton.rx.controlEvent([.touchUpInside])
@@ -158,24 +157,46 @@ private extension SignUpTeamInfoViewController {
             }).disposed(by: disposeBag)
     }
 
+    func registerInfo() {
+        let db = Firestore.firestore()
+        let docRef = db.collection("member").document("20th").collection("members")
+
+        guard let name = try? viewModel.input.name.value(),
+                let positionIndex = try? viewModel.input.positionIndex.value(),
+                let teamIndex = try? viewModel.input.teamIndex.value() else { return }
+        let position = viewModel.positions[positionIndex]
+        let team = teamIndex+1
+
+        docRef.document(UUID().uuidString).setData([
+            "id": 0,
+            "isAdmin": false,
+            "name": name,
+            "position": position,
+            "team": "\(position) \(team)"
+        ]) { [weak self] error in
+            guard error == nil else { return }
+            self?.goToHome()
+        }
+    }
+
 }
 
 // MARK: - CollectionView
 extension SignUpTeamInfoViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
 
     private func setupCollectionView() {
-        jobCollectionView.delegate = self
+        positionCollectionView.delegate = self
+        positionCollectionView.dataSource = self
         teamCollectionView.delegate = self
-        jobCollectionView.dataSource = self
         teamCollectionView.dataSource = self
 
-        jobCollectionView.register(SignUpCollectionViewCell.self, forCellWithReuseIdentifier: SignUpCollectionViewCell.identifier)
+        positionCollectionView.register(SignUpCollectionViewCell.self, forCellWithReuseIdentifier: SignUpCollectionViewCell.identifier)
         teamCollectionView.register(SignUpCollectionViewCell.self, forCellWithReuseIdentifier: SignUpCollectionViewCell.identifier)
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch collectionView {
-        case jobCollectionView: return viewModel.jobs.count
+        case positionCollectionView: return viewModel.positions.count
         case teamCollectionView: return viewModel.teamCount
         default: return 0
         }
@@ -185,7 +206,7 @@ extension SignUpTeamInfoViewController: UICollectionViewDelegateFlowLayout, UICo
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SignUpCollectionViewCell.identifier, for: indexPath) as? SignUpCollectionViewCell else { return UICollectionViewCell() }
 
         switch collectionView {
-        case jobCollectionView: cell.configureUI(text: viewModel.jobs[indexPath.row])
+        case positionCollectionView: cell.configureUI(text: viewModel.positions[indexPath.row])
         case teamCollectionView: cell.configureUI(text: "\(indexPath.row+1)팀")
         default: break
         }
@@ -198,7 +219,7 @@ extension SignUpTeamInfoViewController: UICollectionViewDelegateFlowLayout, UICo
         var text = ""
 
         switch collectionView {
-        case jobCollectionView: text = viewModel.jobs[indexPath.row]
+        case positionCollectionView: text = viewModel.positions[indexPath.row]
         case teamCollectionView: text = "\(indexPath.row+1)팀"
         default: ()
         }
@@ -220,7 +241,7 @@ extension SignUpTeamInfoViewController: UICollectionViewDelegateFlowLayout, UICo
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) as? SignUpCollectionViewCell else { return }
         switch collectionView {
-        case jobCollectionView: viewModel.input.jobIndex.onNext(indexPath.row)
+        case positionCollectionView: viewModel.input.positionIndex.onNext(indexPath.row)
         case teamCollectionView: viewModel.input.teamIndex.onNext(indexPath.row)
         default: break
         }
@@ -290,7 +311,7 @@ private extension SignUpTeamInfoViewController {
     func configureLayout() {
         view.addSubview(backButton)
         view.addSubview(titleLabel)
-        view.addSubview(jobCollectionView)
+        view.addSubview(positionCollectionView)
         view.addSubview(subTitleLabel)
         view.addSubview(teamCollectionView)
         view.addSubview(okButton)
@@ -304,14 +325,14 @@ private extension SignUpTeamInfoViewController {
             $0.top.equalToSuperview().offset(120)
             $0.left.right.equalToSuperview().inset(Constants.padding)
         }
-        jobCollectionView.snp.makeConstraints {
+        positionCollectionView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(28)
             $0.left.equalToSuperview().inset(Constants.padding)
             $0.right.equalToSuperview().inset(Constants.padding*4)
             $0.height.equalTo(Constants.cellHeight*2+Constants.cellSpacing)
         }
         subTitleLabel.snp.makeConstraints {
-            $0.top.equalTo(jobCollectionView.snp.bottom).offset(32)
+            $0.top.equalTo(positionCollectionView.snp.bottom).offset(32)
             $0.left.right.equalToSuperview().inset(Constants.padding)
         }
         teamCollectionView.snp.makeConstraints {

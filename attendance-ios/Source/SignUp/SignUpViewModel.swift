@@ -12,9 +12,9 @@ import UIKit
 final class SignUpViewModel: ViewModel {
 
     struct Input {
-        let name = PublishSubject<String>()
-        let jobIndex = PublishSubject<Int>()
-        let teamIndex = PublishSubject<Int>()
+        let name = BehaviorSubject<String>(value: "")
+        let positionIndex = BehaviorSubject<Int>(value: 0)
+        let teamIndex = BehaviorSubject<Int>(value: 0)
     }
 
     struct Output {
@@ -27,7 +27,7 @@ final class SignUpViewModel: ViewModel {
     let output = Output()
     let disposeBag = DisposeBag()
 
-    let jobs: [String] = ["All-Rounder", "Android", "iOS", "Web"]
+    let positions: [String] = ["All-Rounder", "Android", "iOS", "Web"]
     let teamCount: Int = 2
 
     init() {
@@ -36,7 +36,7 @@ final class SignUpViewModel: ViewModel {
                 self?.output.isNameTextFieldValid.onNext(!name.isEmpty)
             }).disposed(by: disposeBag)
 
-        input.jobIndex
+        input.positionIndex
             .subscribe(onNext: { [weak self] _ in
                 self?.output.showTeamList.accept(())
             }).disposed(by: disposeBag)

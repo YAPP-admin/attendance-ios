@@ -15,7 +15,7 @@ final class SignUpCollectionViewCell: UICollectionViewCell {
         static let verticalPadding: CGFloat = 14
     }
 
-    private let jobLabel: UILabel = {
+    private let positionLabel: UILabel = {
         let label = UILabel()
         label.font = .Pretendard(type: .Medium, size: 16)
         label.textColor = .gray_800
@@ -34,16 +34,16 @@ final class SignUpCollectionViewCell: UICollectionViewCell {
     }
 
     func configureUI(text: String) {
-        jobLabel.text = text
+        positionLabel.text = text
     }
 
     func configureSelectedUI() {
-        jobLabel.textColor = UIColor.white
+        positionLabel.textColor = UIColor.white
         backgroundColor = UIColor.yapp_orange
     }
 
     func configureDeselectedUI() {
-        jobLabel.textColor = UIColor.gray_800
+        positionLabel.textColor = UIColor.gray_800
         backgroundColor = UIColor.gray_200
     }
 
@@ -53,9 +53,9 @@ final class SignUpCollectionViewCell: UICollectionViewCell {
     }
 
     private func configureLayout() {
-        addSubview(jobLabel)
+        addSubview(positionLabel)
 
-        jobLabel.snp.makeConstraints {
+        positionLabel.snp.makeConstraints {
             $0.top.bottom.equalToSuperview().inset(Constants.verticalPadding)
             $0.left.right.equalToSuperview().inset(Constants.horizontalPadding)
         }
