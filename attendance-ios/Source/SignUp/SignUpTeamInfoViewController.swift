@@ -127,6 +127,13 @@ private extension SignUpTeamInfoViewController {
             })
             .disposed(by: disposeBag)
 
+        viewModel.input.teamNumber
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] _ in
+                self?.teamCollectionView.reloadData()
+            })
+            .disposed(by: disposeBag)
+
         viewModel.output.showTeamList
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] _ in
@@ -224,7 +231,6 @@ extension SignUpTeamInfoViewController: UICollectionViewDelegateFlowLayout, UICo
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SignUpCollectionViewCell.identifier, for: indexPath) as? SignUpCollectionViewCell,
               let teams = try? viewModel.output.configTeams.value(),
-              let team = try? viewModel.input.team.value(),
               let teamNumber = try? viewModel.input.teamNumber.value() else { return UICollectionViewCell() }
 
         switch collectionView {

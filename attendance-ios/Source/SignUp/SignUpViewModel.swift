@@ -15,7 +15,7 @@ final class SignUpViewModel: ViewModel {
     struct Input {
         let name = BehaviorSubject<String>(value: "")
         let team = BehaviorSubject<String>(value: "")
-        let teamNumber = BehaviorSubject<Int>(value: 1)
+        let teamNumber = BehaviorSubject<Int>(value: 0)
     }
 
     struct Output {
