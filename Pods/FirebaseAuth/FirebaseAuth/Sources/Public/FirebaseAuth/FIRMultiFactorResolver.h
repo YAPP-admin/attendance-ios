@@ -14,6 +14,9 @@
  * limitations under the License.
  */
 
+#import <TargetConditionals.h>
+#if TARGET_OS_IOS
+
 #import "FIRMultiFactor.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -21,10 +24,9 @@ NS_ASSUME_NONNULL_BEGIN
 /** @class FIRMultiFactorResolver
     @brief The data structure used to help developers resolve 2nd factor requirements on users that
         have opted in to 2 factor authentication.
-        This class is available on iOS only.
 */
-NS_SWIFT_NAME(MultiFactorResolver) API_UNAVAILABLE(macos, tvos, watchos)
-    @interface FIRMultiFactorResolver : NSObject
+NS_SWIFT_NAME(MultiFactorResolver)
+@interface FIRMultiFactorResolver : NSObject
 
 /**
    @brief The opaque session identifier for the current sign-in flow.
@@ -54,3 +56,5 @@ NS_SWIFT_NAME(MultiFactorResolver) API_UNAVAILABLE(macos, tvos, watchos)
 @end
 
 NS_ASSUME_NONNULL_END
+
+#endif

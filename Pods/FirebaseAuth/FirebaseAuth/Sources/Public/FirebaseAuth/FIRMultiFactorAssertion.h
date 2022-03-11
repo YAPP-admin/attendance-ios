@@ -14,17 +14,19 @@
  * limitations under the License.
  */
 
+#import <TargetConditionals.h>
+#if TARGET_OS_IOS
+
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
 /** @class FIRMultiFactorAssertion
     @brief The base class for asserting ownership of a second factor. This is equivalent to the
-        AuthCredential class.
-        This class is available on iOS only.
+   AuthCredential class.
 */
-NS_SWIFT_NAME(MultiFactorAssertion) API_UNAVAILABLE(macos, tvos, watchos)
-    @interface FIRMultiFactorAssertion : NSObject
+NS_SWIFT_NAME(MultiFactorAssertion)
+@interface FIRMultiFactorAssertion : NSObject
 
 /**
    @brief The second factor identifier for this opaque object asserting a second factor.
@@ -34,3 +36,5 @@ NS_SWIFT_NAME(MultiFactorAssertion) API_UNAVAILABLE(macos, tvos, watchos)
 @end
 
 NS_ASSUME_NONNULL_END
+
+#endif

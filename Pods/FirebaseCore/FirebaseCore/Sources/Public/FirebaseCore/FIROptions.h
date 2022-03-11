@@ -32,8 +32,7 @@ NS_SWIFT_NAME(FirebaseOptions)
 
 /**
  * An iOS API key used for authenticating requests from your app, e.g.
- * The key must begin with "A" and contain exactly 39 alphanumeric characters, used to identify your
- * app to Google servers.
+ * @"AIzaSyDdVgKwhZl0sTTTLZ7iTmt1r3N2cJLnaDk", used to identify your app to Google servers.
  */
 @property(nonatomic, copy, nullable) NSString *APIKey NS_SWIFT_NAME(apiKey);
 
@@ -107,7 +106,7 @@ NS_SWIFT_NAME(FirebaseOptions)
  * FIROptions *options = [[FIROptions alloc] initWithContentsOfFile:filePath];
  * Returns nil if the plist file does not exist or is invalid.
  */
-- (nullable instancetype)initWithContentsOfFile:(NSString *)plistPath NS_DESIGNATED_INITIALIZER;
+- (nullable instancetype)initWithContentsOfFile:(NSString *)plistPath;
 
 /**
  * Initializes a customized instance of FIROptions with required fields. Use the mutable properties
@@ -116,11 +115,8 @@ NS_SWIFT_NAME(FirebaseOptions)
 // clang-format off
 - (instancetype)initWithGoogleAppID:(NSString *)googleAppID
                         GCMSenderID:(NSString *)GCMSenderID
-    NS_SWIFT_NAME(init(googleAppID:gcmSenderID:)) NS_DESIGNATED_INITIALIZER;
+    NS_SWIFT_NAME(init(googleAppID:gcmSenderID:));
 // clang-format on
-
-/** Unavailable. Please use `init(contentsOfFile:)` or `init(googleAppID:gcmSenderID:)` instead. */
-- (instancetype)init NS_UNAVAILABLE;
 
 @end
 

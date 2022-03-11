@@ -14,13 +14,15 @@
  * limitations under the License.
  */
 
+#import <TargetConditionals.h>
+#if !TARGET_OS_OSX
+
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
 /**
  *  @brief The APNs token type for the app.
- *      This enum is available on iOS, macOS Catalyst, tvOS, and watchOS only.
  */
 typedef NS_ENUM(NSInteger, FIRAuthAPNSTokenType) {
 
@@ -36,6 +38,8 @@ typedef NS_ENUM(NSInteger, FIRAuthAPNSTokenType) {
   /** Production token type.
    */
   FIRAuthAPNSTokenTypeProd,
-} NS_SWIFT_NAME(AuthAPNSTokenType) API_UNAVAILABLE(macosx);
+} NS_SWIFT_NAME(AuthAPNSTokenType);
 
 NS_ASSUME_NONNULL_END
+
+#endif

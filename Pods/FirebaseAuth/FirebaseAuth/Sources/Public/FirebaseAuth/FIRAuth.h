@@ -17,8 +17,11 @@
 #import <AvailabilityMacros.h>
 #import <Foundation/Foundation.h>
 
-#import "FIRAuthAPNSTokenType.h"
 #import "FIRAuthErrors.h"
+
+#if TARGET_OS_IOS
+#import "FIRAuthAPNSTokenType.h"
+#endif
 
 @class FIRActionCodeSettings;
 @class FIRApp;
@@ -27,6 +30,7 @@
 @class FIRAuthDataResult;
 @class FIRAuthSettings;
 @class FIRUser;
+@protocol FIRAuthStateListener;
 @protocol FIRAuthUIDelegate;
 @protocol FIRFederatedAuthProvider;
 
@@ -40,11 +44,8 @@ typedef void (^FIRUserUpdateCallback)(NSError *_Nullable error) NS_SWIFT_NAME(Us
 /** @typedef FIRAuthStateDidChangeListenerHandle
     @brief The type of handle returned by `FIRAuth.addAuthStateDidChangeListener:`.
  */
-// clang-format off
-// clang-format12 merges the next two lines.
 typedef id<NSObject> FIRAuthStateDidChangeListenerHandle
     NS_SWIFT_NAME(AuthStateDidChangeListenerHandle);
-// clang-format on
 
 /** @typedef FIRAuthStateDidChangeListenerBlock
     @brief The type of block which can be registered as a listener for auth state did change events.
@@ -58,11 +59,8 @@ typedef void (^FIRAuthStateDidChangeListenerBlock)(FIRAuth *auth, FIRUser *_Null
 /** @typedef FIRIDTokenDidChangeListenerHandle
     @brief The type of handle returned by `FIRAuth.addIDTokenDidChangeListener:`.
  */
-// clang-format off
-// clang-format12 merges the next two lines.
 typedef id<NSObject> FIRIDTokenDidChangeListenerHandle
     NS_SWIFT_NAME(IDTokenDidChangeListenerHandle);
-// clang-format on
 
 /** @typedef FIRIDTokenDidChangeListenerBlock
     @brief The type of block which can be registered as a listener for ID token did change events.
@@ -83,12 +81,23 @@ typedef void (^FIRIDTokenDidChangeListenerBlock)(FIRAuth *auth, FIRUser *_Nullab
 typedef void (^FIRAuthDataResultCallback)(FIRAuthDataResult *_Nullable authResult,
                                           NSError *_Nullable error)
     NS_SWIFT_NAME(AuthDataResultCallback);
+
+#if defined(__IPHONE_10_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0
 /**
     @brief The name of the `NSNotificationCenter` notification which is posted when the auth state
         changes (for example, a new token has been produced, a user signs in or signs out). The
         object parameter of the notification is the sender `FIRAuth` instance.
  */
 extern const NSNotificationName FIRAuthStateDidChangeNotification NS_SWIFT_NAME(AuthStateDidChange);
+#else
+/**
+    @brief The name of the `NSNotificationCenter` notification which is posted when the auth state
+        changes (for example, a new token has been produced, a user signs in or signs out). The
+        object parameter of the notification is the sender `FIRAuth` instance.
+ */
+extern NSString *const FIRAuthStateDidChangeNotification
+    NS_SWIFT_NAME(AuthStateDidChangeNotification);
+#endif  // defined(__IPHONE_10_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0
 
 /** @typedef FIRAuthResultCallback
     @brief The type of block invoked when sign-in related events complete.
@@ -167,6 +176,19 @@ typedef void (^FIRApplyActionCodeCallback)(NSError *_Nullable error)
 
 typedef void (^FIRAuthVoidErrorCallback)(NSError *_Nullable) NS_SWIFT_NAME(AuthVoidErrorCallback);
 
+/**
+    @brief Deprecated. Please directly use email or previousEmail properties instead.
+  */
+typedef NS_ENUM(NSInteger, FIRActionDataKey) {
+  /** Deprecated. Please directly use email property instead.  */
+  FIRActionCodeEmailKey = 0,
+
+  /** Deprecated. Please directly use previousEmail property instead. */
+  FIRActionCodeFromEmailKey = 1,
+
+} NS_SWIFT_NAME(ActionDataKey)
+    DEPRECATED_MSG_ATTRIBUTE("Please directly use email or previousEmail properties instead.");
+
 /** @class FIRActionCodeInfo
     @brief Manages information regarding action codes.
  */
@@ -204,6 +226,12 @@ typedef NS_ENUM(NSInteger, FIRActionCodeOperation) {
     @brief The operation being performed.
  */
 @property(nonatomic, readonly) FIRActionCodeOperation operation;
+
+/** @fn dataForKey:
+    @brief Deprecated. Please directly use email or previousEmail properties instead.
+ */
+- (NSString *)dataForKey:(FIRActionDataKey)key
+    DEPRECATED_MSG_ATTRIBUTE("Please directly use email or previousEmail properties instead.");
 
 /** @property email
     @brief The email address to which the code was sent. The new email address in the case of
@@ -331,27 +359,20 @@ NS_SWIFT_NAME(Auth)
  */
 @property(readonly, nonatomic, copy, nullable) NSString *userAccessGroup;
 
-/** @property shareAuthStateAcrossDevices
-    @brief Contains shareAuthStateAcrossDevices setting related to the auth object.
-    @remarks If userAccessGroup is not set, setting shareAuthStateAcrossDevices will
-        have no effect. You should set shareAuthStateAcrossDevices to it's desired
-        state and then set the userAccessGroup after.
- */
-@property(nonatomic) BOOL shareAuthStateAcrossDevices;
-
 /** @property tenantID
     @brief The tenant ID of the auth instance. nil if none is available.
  */
 @property(nonatomic, copy, nullable) NSString *tenantID;
 
+#if TARGET_OS_IOS
 /** @property APNSToken
     @brief The APNs token used for phone number authentication. The type of the token (production
         or sandbox) will be attempted to be automatcially detected.
-        This property is available on iOS only.
     @remarks If swizzling is disabled, the APNs Token must be set for phone number auth to work,
-        by either setting this property or by calling `setAPNSToken:type:`.
+        by either setting this property or by calling `setAPNSToken:type:`
  */
-@property(nonatomic, strong, nullable) NSData *APNSToken API_UNAVAILABLE(macos, tvos, watchos);
+@property(nonatomic, strong, nullable) NSData *APNSToken;
+#endif
 
 /** @fn init
     @brief Please access auth instances using `FIRAuth.auth` and `FIRAuth.authForApp:`.
@@ -360,12 +381,22 @@ NS_SWIFT_NAME(Auth)
 
 /** @fn updateCurrentUser:completion:
     @brief Sets the currentUser on the calling Auth instance to the provided user object.
-    @param user The user object to be set as the current user of the calling Auth instance.
+    @param  user The user object to be set as the current user of the calling Auth instance.
     @param completion Optionally; a block invoked after the user of the calling Auth instance has
         been updated or an error was encountered.
  */
 - (void)updateCurrentUser:(FIRUser *)user
                completion:(nullable void (^)(NSError *_Nullable error))completion;
+
+/** @fn fetchProvidersForEmail:completion:
+    @brief Please use fetchSignInMethodsForEmail:completion: for Objective-C or
+        fetchSignInMethods(forEmail:completion:) for Swift instead.
+ */
+- (void)fetchProvidersForEmail:(NSString *)email
+                    completion:(nullable void (^)(NSArray<NSString *> *_Nullable providers,
+                                                  NSError *_Nullable error))completion
+    DEPRECATED_MSG_ATTRIBUTE("Please use fetchSignInMethodsForEmail:completion: for Objective-C or "
+                             "fetchSignInMethods(forEmail:completion:) for Swift instead.");
 
 /** @fn fetchSignInMethodsForEmail:completion:
     @brief Fetches the list of all sign-in methods previously used for the provided email address.
@@ -440,7 +471,6 @@ NS_SWIFT_NAME(Auth)
 
 /** @fn signInWithProvider:UIDelegate:completion:
     @brief Signs in using the provided auth provider instance.
-        This method is available on iOS, macOS Catalyst, and tvOS only.
 
     @param provider An instance of an auth provider used to initiate the sign-in flow.
     @param UIDelegate Optionally an instance of a class conforming to the FIRAuthUIDelegate
@@ -487,7 +517,18 @@ NS_SWIFT_NAME(Auth)
                 UIDelegate:(nullable id<FIRAuthUIDelegate>)UIDelegate
                 completion:(nullable void (^)(FIRAuthDataResult *_Nullable authResult,
                                               NSError *_Nullable error))completion
-    API_UNAVAILABLE(macosx, watchos);
+    API_UNAVAILABLE(watchos);
+
+/** @fn signInAndRetrieveDataWithCredential:completion:
+    @brief Please use signInWithCredential:completion: for Objective-C or "
+        "signIn(with:completion:) for Swift instead.
+ */
+- (void)signInAndRetrieveDataWithCredential:(FIRAuthCredential *)credential
+                                 completion:
+                                     (nullable void (^)(FIRAuthDataResult *_Nullable authResult,
+                                                        NSError *_Nullable error))completion
+    DEPRECATED_MSG_ATTRIBUTE("Please use signInWithCredential:completion: for Objective-C or "
+                             "signIn(with:completion:) for Swift instead.");
 
 /** @fn signInWithCredential:completion:
     @brief Asynchronously signs in to Firebase with the given 3rd-party credentials (e.g. a Facebook
@@ -694,7 +735,7 @@ NS_SWIFT_NAME(Auth)
         + `FIRAuthErrorCodeMissingAndroidPackageName` - Indicates that the android package name
             is missing when the `androidInstallApp` flag is set to true.
         + `FIRAuthErrorCodeUnauthorizedDomain` - Indicates that the domain specified in the
-            continue URL is not allowlisted in the Firebase console.
+            continue URL is not whitelisted in the Firebase console.
         + `FIRAuthErrorCodeInvalidContinueURI` - Indicates that the domain specified in the
             continue URI is not valid.
 
@@ -805,14 +846,10 @@ NS_SWIFT_NAME(Auth)
  */
 - (void)useAppLanguage;
 
-/** @fn useEmulatorWithHost:port
-    @brief Configures Firebase Auth to connect to an emulated host instead of the remote backend.
- */
-- (void)useEmulatorWithHost:(NSString *)host port:(NSInteger)port;
+#if TARGET_OS_IOS
 
 /** @fn canHandleURL:
     @brief Whether the specific URL is handled by `FIRAuth` .
-        This method is available on iOS only.
     @param URL The URL received by the application delegate from any of the openURL method.
     @return Whether or the URL is handled. YES means the URL is for Firebase Auth
         so the caller should ignore the URL from further processing, and NO means the
@@ -821,20 +858,17 @@ NS_SWIFT_NAME(Auth)
     @remarks If swizzling is disabled, URLs received by the application delegate must be forwarded
         to this method for phone number auth to work.
  */
-- (BOOL)canHandleURL:(nonnull NSURL *)URL API_UNAVAILABLE(macos, tvos, watchos);
+- (BOOL)canHandleURL:(nonnull NSURL *)URL;
 
 /** @fn setAPNSToken:type:
     @brief Sets the APNs token along with its type.
-        This method is available on iOS only.
     @remarks If swizzling is disabled, the APNs Token must be set for phone number auth to work,
         by either setting calling this method or by setting the `APNSToken` property.
  */
-- (void)setAPNSToken:(NSData *)token
-                type:(FIRAuthAPNSTokenType)type API_UNAVAILABLE(macos, tvos, watchos);
+- (void)setAPNSToken:(NSData *)token type:(FIRAuthAPNSTokenType)type;
 
 /** @fn canHandleNotification:
     @brief Whether the specific remote notification is handled by `FIRAuth` .
-        This method is available on iOS only.
     @param userInfo A dictionary that contains information related to the
         notification in question.
     @return Whether or the notification is handled. YES means the notification is for Firebase Auth
@@ -844,7 +878,9 @@ NS_SWIFT_NAME(Auth)
     @remarks If swizzling is disabled, related remote notifications must be forwarded to this method
         for phone number auth to work.
  */
-- (BOOL)canHandleNotification:(NSDictionary *)userInfo API_UNAVAILABLE(macos, tvos, watchos);
+- (BOOL)canHandleNotification:(NSDictionary *)userInfo;
+
+#endif  // TARGET_OS_IOS
 
 #pragma mark - User sharing
 

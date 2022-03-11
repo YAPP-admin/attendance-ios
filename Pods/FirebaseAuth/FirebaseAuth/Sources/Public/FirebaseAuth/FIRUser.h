@@ -116,12 +116,12 @@ NS_SWIFT_NAME(User)
  */
 @property(nonatomic, readonly, nullable) NSString *tenantID;
 
+#if TARGET_OS_IOS
 /** @property multiFactor
     @brief Multi factor object associated with the user.
-        This property is available on iOS only.
 */
-@property(nonatomic, readonly, nonnull)
-    FIRMultiFactor *multiFactor API_UNAVAILABLE(macos, tvos, watchos);
+@property(nonatomic, readonly, nonnull) FIRMultiFactor *multiFactor;
+#endif
 
 /** @fn init
     @brief This class should not be instantiated.
@@ -187,10 +187,10 @@ NS_SWIFT_NAME(User)
             completion:(nullable void (^)(NSError *_Nullable error))completion
     NS_SWIFT_NAME(updatePassword(to:completion:));
 
+#if TARGET_OS_IOS
 /** @fn updatePhoneNumberCredential:completion:
     @brief Updates the phone number for the user. On success, the cached user profile data is
         updated.
-        This method is available on iOS only.
 
     @param phoneNumberCredential The new phone number credential corresponding to the phone number
         to be added to the Firebase account, if a phone number is already linked to the account this
@@ -208,8 +208,8 @@ NS_SWIFT_NAME(User)
     @remarks See `FIRAuthErrors` for a list of error codes that are common to all FIRUser methods.
  */
 - (void)updatePhoneNumberCredential:(FIRPhoneAuthCredential *)phoneNumberCredential
-                         completion:(nullable void (^)(NSError *_Nullable error))completion
-    API_UNAVAILABLE(macos, tvos, watchos);
+                         completion:(nullable void (^)(NSError *_Nullable error))completion;
+#endif
 
 /** @fn profileChangeRequest
     @brief Creates an object which may be used to change the user's profile data.
@@ -275,9 +275,20 @@ NS_SWIFT_NAME(User)
                           completion:(nullable void (^)(FIRAuthDataResult *_Nullable authResult,
                                                         NSError *_Nullable error))completion;
 
+/** @fn reauthenticateAndRetrieveDataWithCredential:completion:
+    @brief Please use linkWithCredential:completion: for Objective-C
+        or link(withCredential:completion:) for Swift instead.
+ */
+- (void)reauthenticateAndRetrieveDataWithCredential:(FIRAuthCredential *)credential
+                                         completion:(nullable void (^)(
+                                                        FIRAuthDataResult *_Nullable authResult,
+                                                        NSError *_Nullable error))completion
+    DEPRECATED_MSG_ATTRIBUTE("Please use reauthenticateWithCredential:completion: for"
+                             " Objective-C or reauthenticate(withCredential:completion:)"
+                             " for Swift instead.");
+
 /** @fn reauthenticateWithProvider:UIDelegate:completion:
     @brief Renews the user's authentication using the provided auth provider instance.
-        This method is available on iOS, macOS Catalyst, and tvOS only.
 
     @param provider An instance of an auth provider used to initiate the reauthenticate flow.
     @param UIDelegate Optionally an instance of a class conforming to the FIRAuthUIDelegate
@@ -290,7 +301,7 @@ NS_SWIFT_NAME(User)
                         UIDelegate:(nullable id<FIRAuthUIDelegate>)UIDelegate
                         completion:(nullable void (^)(FIRAuthDataResult *_Nullable authResult,
                                                       NSError *_Nullable error))completion
-    NS_SWIFT_NAME(reauthenticate(with:uiDelegate:completion:))API_UNAVAILABLE(macosx, watchos);
+    NS_SWIFT_NAME(reauthenticate(with:uiDelegate:completion:));
 
 /** @fn getIDTokenResultWithCompletion:
     @brief Retrieves the Firebase authentication token, possibly refreshing it if it has expired.
@@ -351,6 +362,17 @@ NS_SWIFT_NAME(User)
                       completion:(nullable void (^)(NSString *_Nullable token,
                                                     NSError *_Nullable error))completion;
 
+/** @fn linkAndRetrieveDataWithCredential:completion:
+    @brief Please use linkWithCredential:completion: for Objective-C
+        or link(withCredential:completion:) for Swift instead.
+ */
+- (void)linkAndRetrieveDataWithCredential:(FIRAuthCredential *)credential
+                               completion:
+                                   (nullable void (^)(FIRAuthDataResult *_Nullable authResult,
+                                                      NSError *_Nullable error))completion
+    DEPRECATED_MSG_ATTRIBUTE("Please use linkWithCredential:completion: for Objective-C "
+                             "or link(withCredential:completion:) for Swift instead.");
+
 /** @fn linkWithCredential:completion:
     @brief Associates a user account from a third-party identity provider with this user and
         returns additional identity provider data.
@@ -380,7 +402,6 @@ NS_SWIFT_NAME(User)
 
 /** @fn linkWithProvider:UIDelegate:completion:
     @brief link the user with the provided auth provider instance.
-        This method is available on iOS, macOS Catalyst, and tvOS only.
 
     @param provider An instance of an auth provider used to initiate the link flow.
     @param UIDelegate Optionally an instance of a class conforming to the FIRAuthUIDelegate
@@ -393,7 +414,7 @@ NS_SWIFT_NAME(User)
               UIDelegate:(nullable id<FIRAuthUIDelegate>)UIDelegate
               completion:(nullable void (^)(FIRAuthDataResult *_Nullable authResult,
                                             NSError *_Nullable error))completion
-    NS_SWIFT_NAME(link(with:uiDelegate:completion:))API_UNAVAILABLE(macosx, watchos);
+    NS_SWIFT_NAME(link(with:uiDelegate:completion:));
 
 /** @fn unlinkFromProvider:completion:
     @brief Disassociates a user account from a third-party identity provider with this user.
@@ -457,7 +478,7 @@ NS_SWIFT_NAME(User)
         + `FIRAuthErrorCodeMissingAndroidPackageName` - Indicates that the android package name
             is missing when the `androidInstallApp` flag is set to true.
         + `FIRAuthErrorCodeUnauthorizedDomain` - Indicates that the domain specified in the
-            continue URL is not allowlisted in the Firebase console.
+            continue URL is not whitelisted in the Firebase console.
         + `FIRAuthErrorCodeInvalidContinueURI` - Indicates that the domain specified in the
             continue URI is not valid.
  */

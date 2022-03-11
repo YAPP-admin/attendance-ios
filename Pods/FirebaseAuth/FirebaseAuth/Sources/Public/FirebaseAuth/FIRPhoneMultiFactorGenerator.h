@@ -14,6 +14,9 @@
  * limitations under the License.
  */
 
+#import <TargetConditionals.h>
+#if TARGET_OS_IOS
+
 #import <Foundation/Foundation.h>
 
 #import "FIRPhoneAuthCredential.h"
@@ -25,10 +28,9 @@ NS_ASSUME_NONNULL_BEGIN
     @brief The data structure used to help initialize an assertion for a second factor entity to the
         Firebase Auth/CICP server. Depending on the type of second factor, this will help generate
         the assertion.
-        This class is available on iOS only.
 */
-NS_SWIFT_NAME(PhoneMultiFactorGenerator) API_UNAVAILABLE(macos, tvos, watchos)
-    @interface FIRPhoneMultiFactorGenerator : NSObject
+NS_SWIFT_NAME(PhoneMultiFactorGenerator)
+@interface FIRPhoneMultiFactorGenerator : NSObject
 
 /** @fn assertionWithCredential:
     @brief Initializes the MFA assertion to confirm ownership of the phone second factor. Note that
@@ -41,3 +43,5 @@ NS_SWIFT_NAME(PhoneMultiFactorGenerator) API_UNAVAILABLE(macos, tvos, watchos)
 @end
 
 NS_ASSUME_NONNULL_END
+
+#endif
