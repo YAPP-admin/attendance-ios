@@ -159,13 +159,17 @@ private extension SignUpTeamInfoViewController {
     }
 
     func registerInfo() {
+        guard let config = try? viewModel.input.config.value(), let configTeams = try? viewModel.input.configTeams.value() else { return }
+        let generation = config.generation
+        let teams = configTeams.map({ $0.team })
+
         let db = Firestore.firestore()
-        let docRef = db.collection("member").document("20th").collection("members")
+        let docRef = db.collection("member").document("\(generation)th").collection("members")
 
         guard let name = try? viewModel.input.name.value(),
                 let positionIndex = try? viewModel.input.positionIndex.value(),
-                let teamIndex = try? viewModel.input.teamIndex.value() else { return }
-        let position = viewModel.positions[positionIndex]
+                let teamIndex = try? viewModel.input.teamNumber.value() else { return }
+        let position = teams[positionIndex]
         let team = teamIndex+1
 
         UserApi.shared.me { user, error in
@@ -246,7 +250,7 @@ extension SignUpTeamInfoViewController: UICollectionViewDelegateFlowLayout, UICo
         guard let cell = collectionView.cellForItem(at: indexPath) as? SignUpCollectionViewCell else { return }
         switch collectionView {
         case positionCollectionView: viewModel.input.positionIndex.onNext(indexPath.row)
-        case teamCollectionView: viewModel.input.teamIndex.onNext(indexPath.row)
+        case teamCollectionView: viewModel.input.teamNumber.onNext(indexPath.row)
         default: break
         }
         cell.configureSelectedUI()

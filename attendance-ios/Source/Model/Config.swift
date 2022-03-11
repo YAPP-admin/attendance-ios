@@ -17,9 +17,10 @@ struct Config: Codable {
         case sessionCount = "session_count"
         case adminPassword = "admin_password"
     }
+
 }
 
-struct ConfigSelectTeams: Codable {
+struct ConfigTeam: Codable {
     let team: String
     let count: String
 }
