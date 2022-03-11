@@ -91,6 +91,11 @@ final class SignUpTeamInfoViewController: UIViewController {
         configureLayout()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationItem.hidesBackButton = true
+    }
+
 }
 
 // MARK: - Bind
