@@ -64,6 +64,12 @@ final class SignUpTeamInfoViewController: UIViewController {
         return button
     }()
 
+    private let backButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "back"), for: .normal)
+        return button
+    }()
+
     private var disposeBag = DisposeBag()
     private let viewModel: SignUpViewModel
 
@@ -126,6 +132,16 @@ private extension SignUpTeamInfoViewController {
                 let homeVC = HomeViewController()
                 homeVC.modalPresentationStyle = .fullScreen
                 self?.present(homeVC, animated: true, completion: nil)
+            }).disposed(by: disposeBag)
+
+        backButton.rx.controlEvent([.touchUpInside])
+            .asObservable()
+            .subscribe(onNext: { [weak self] _ in
+                let alertView = AlertView()
+                self?.view.addSubview(alertView)
+                alertView.snp.makeConstraints {
+                    $0.top.bottom.left.right.equalToSuperview()
+                }
             }).disposed(by: disposeBag)
     }
 
@@ -249,12 +265,18 @@ private extension SignUpTeamInfoViewController {
     }
 
     func configureLayout() {
+        view.addSubview(backButton)
         view.addSubview(titleLabel)
         view.addSubview(jobCollectionView)
         view.addSubview(okButton)
 
+        backButton.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(56)
+            $0.left.equalToSuperview().offset(Constants.padding)
+            $0.width.height.equalTo(24)
+        }
         titleLabel.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(32)
+            $0.top.equalToSuperview().offset(120)
             $0.left.right.equalToSuperview().inset(Constants.padding)
         }
         jobCollectionView.snp.makeConstraints {

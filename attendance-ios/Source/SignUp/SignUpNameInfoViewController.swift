@@ -59,6 +59,12 @@ final class SignUpNameInfoViewController: UIViewController {
         return button
     }()
 
+    private let backButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "back"), for: .normal)
+        return button
+    }()
+
     private lazy var accessoryView: UIView = {
         let view = UIView(frame: .init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: Constants.buttonHeight))
         return view
@@ -126,6 +132,17 @@ private extension SignUpNameInfoViewController {
             .subscribe(onNext: { [weak self] _ in
                 self?.goToSignUpTeamVC()
             }).disposed(by: disposeBag)
+
+        backButton.rx.controlEvent([.touchUpInside])
+            .asObservable()
+            .subscribe(onNext: { [weak self] _ in
+                let alertView = AlertView()
+                self?.view.addSubview(alertView)
+                alertView.snp.makeConstraints {
+                    $0.top.bottom.left.right.equalToSuperview()
+                }
+            }).disposed(by: disposeBag)
+
     }
 
 }
@@ -180,13 +197,19 @@ private extension SignUpNameInfoViewController {
     }
 
     func configureLayout() {
+        view.addSubview(backButton)
         view.addSubview(titleLabel)
         view.addSubview(subTitleLabel)
         view.addSubview(textField)
         view.addSubview(nextButton)
 
+        backButton.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(56)
+            $0.left.equalToSuperview().offset(Constants.padding)
+            $0.width.height.equalTo(24)
+        }
         titleLabel.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(32)
+            $0.top.equalToSuperview().offset(120)
             $0.left.right.equalToSuperview().inset(Constants.padding)
         }
         subTitleLabel.snp.makeConstraints {

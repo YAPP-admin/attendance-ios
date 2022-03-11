@@ -107,14 +107,6 @@ private extension LoginViewController {
         navigationController?.pushViewController(signUpNameInfoVC, animated: true)
     }
 
-    @objc func showAlert() {
-        print("showAlert")
-        let alertView = AlertView()
-        alertView.snp.makeConstraints {
-            $0.top.bottom.left.right.equalToSuperview()
-        }
-    }
-
     func goToHomeVC() {
         let homeVC = HomeViewController()
         homeVC.modalPresentationStyle = .fullScreen
