@@ -10,6 +10,7 @@ import RxSwift
 import SnapKit
 import UIKit
 import FirebaseFirestore
+import KakaoSDKUser
 
 final class SignUpTeamInfoViewController: UIViewController {
 
@@ -167,15 +168,18 @@ private extension SignUpTeamInfoViewController {
         let position = viewModel.positions[positionIndex]
         let team = teamIndex+1
 
-        docRef.document(UUID().uuidString).setData([
-            "id": 0,
-            "isAdmin": false,
-            "name": name,
-            "position": position,
-            "team": "\(position) \(team)"
-        ]) { [weak self] error in
-            guard error == nil else { return }
-            self?.goToHome()
+        UserApi.shared.me { user, error in
+            guard let user = user, let userId = user.id else { return }
+            docRef.document(UUID().uuidString).setData([
+                "id": userId,
+                "isAdmin": false,
+                "name": name,
+                "position": position,
+                "team": "\(position) \(team)"
+            ]) { [weak self] error in
+                guard error == nil else { return }
+                self?.goToHome()
+            }
         }
     }
 
