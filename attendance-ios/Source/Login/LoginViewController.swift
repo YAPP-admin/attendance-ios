@@ -54,6 +54,8 @@ final class LoginViewController: UIViewController {
         return button
     }()
 
+    private let secretAdminButton: UIButton = UIButton()
+
     private let viewModel = BaseViewModel()
     private var disposeBag = DisposeBag()
 
@@ -89,6 +91,12 @@ private extension LoginViewController {
             .bind(to: viewModel.input.tapLogin)
             .disposed(by: disposeBag)
 
+        secretAdminButton.rx.tap
+            .bind { [weak self] _ in
+                self?.goToAdminVC()
+            }
+            .disposed(by: disposeBag)
+
         viewModel.output.goToSignUp
             .observe(on: MainScheduler.instance)
             .bind(onNext: goToSignUpNameVC)
@@ -97,6 +105,11 @@ private extension LoginViewController {
         viewModel.output.goToHome
             .observe(on: MainScheduler.instance)
             .bind(onNext: goToHomeVC)
+            .disposed(by: disposeBag)
+
+        viewModel.output.goToAdmin
+            .observe(on: MainScheduler.instance)
+            .bind(onNext: goToAdminVC)
             .disposed(by: disposeBag)
     }
 
@@ -111,6 +124,12 @@ private extension LoginViewController {
         let homeVC = HomeViewController()
         homeVC.modalPresentationStyle = .fullScreen
         present(homeVC, animated: true, completion: nil)
+    }
+
+    func goToAdminVC() {
+        let adminVC = AdminViewController()
+        adminVC.modalPresentationStyle = .fullScreen
+        present(adminVC, animated: true, completion: nil)
     }
 
     func setupDelegate() {
@@ -143,6 +162,7 @@ private extension LoginViewController {
         view.addSubview(webView)
         view.addSubview(loginButton)
         view.addSubview(splashView)
+        view.addSubview(secretAdminButton)
 
         webView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(80)
@@ -162,6 +182,10 @@ private extension LoginViewController {
             $0.top.equalToSuperview()
             $0.bottom.equalToSuperview().inset(40)
             $0.left.right.equalToSuperview().inset(10)
+        }
+        secretAdminButton.snp.makeConstraints {
+            $0.top.left.equalTo(view.safeAreaLayoutGuide)
+            $0.width.height.equalTo(20)
         }
     }
 
