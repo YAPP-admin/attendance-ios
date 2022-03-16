@@ -185,7 +185,7 @@ private extension LoginViewController {
         }
         secretAdminButton.snp.makeConstraints {
             $0.top.left.equalTo(view.safeAreaLayoutGuide)
-            $0.width.height.equalTo(20)
+            $0.width.height.equalTo(40)
         }
     }
 
