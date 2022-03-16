@@ -16,7 +16,6 @@
 
 #import <Foundation/Foundation.h>
 #import "FirebaseAuth/Sources/Public/FirebaseAuth/FIRAuth.h"
-#import "FirebaseCore/Sources/Private/FIRLogger.h"
 #import "Interop/Auth/Public/FIRAuthInterop.h"
 
 @class FIRAuthRequestConfiguration;
@@ -66,11 +65,9 @@ NS_ASSUME_NONNULL_BEGIN
     @brief Designated initializer.
     @param APIKey The Google Developers Console API key for making requests from your app.
     @param appName The name property of the previously created @c FIRApp instance.
-    @param appID The app ID of the Firebase application.
  */
 - (nullable instancetype)initWithAPIKey:(NSString *)APIKey
-                                appName:(NSString *)appName
-                                  appID:(NSString *)appID NS_DESIGNATED_INITIALIZER;
+                                appName:(NSString *)appName NS_DESIGNATED_INITIALIZER;
 
 /** @fn getUserID
     @brief Gets the identifier of the current user, if any.
@@ -145,10 +142,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (FIRAuthDataResultCallback)signInFlowAuthDataResultCallbackByDecoratingCallback:
     (nullable FIRAuthDataResultCallback)callback;
 
+/** @fn useEmulatorWithHost:port
+    @brief Configures Firebase Auth to connect to an emulated host instead of the remote backend.
+ */
+- (void)useEmulatorWithHost:(NSString *)host port:(NSInteger)port;
+
 @end
-
-/// Logger Service String
-
-extern FIRLoggerService kFIRLoggerAuth;
 
 NS_ASSUME_NONNULL_END
