@@ -25,6 +25,8 @@
 		5E7AEF2227E212690059FB3A /* AdminViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7AEF2127E212690059FB3A /* AdminViewController.swift */; };
 		5E7AEF2427E21D680059FB3A /* AdminViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7AEF2327E21D680059FB3A /* AdminViewModel.swift */; };
 		5E7AEF2627E21E4C0059FB3A /* AdminCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7AEF2527E21E4C0059FB3A /* AdminCardView.swift */; };
+		5E7AEF2827E222C30059FB3A /* AdminGradeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7AEF2727E222C30059FB3A /* AdminGradeViewController.swift */; };
+		5E7AEF2A27E223040059FB3A /* AdminManagementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7AEF2927E223040059FB3A /* AdminManagementViewController.swift */; };
 		5E9CC7B827D0ED2D006D8B12 /* SignUpTeamInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9CC7B727D0ED2D006D8B12 /* SignUpTeamInfoViewController.swift */; };
 		5E9CC7BA27D0F57A006D8B12 /* UICollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9CC7B927D0F57A006D8B12 /* UICollectionViewCell.swift */; };
 		5E9CC7BC27D0F79E006D8B12 /* SignUpCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9CC7BB27D0F79D006D8B12 /* SignUpCollectionViewCell.swift */; };
@@ -71,6 +73,8 @@
 		5E7AEF2127E212690059FB3A /* AdminViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminViewController.swift; sourceTree = "<group>"; };
 		5E7AEF2327E21D680059FB3A /* AdminViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminViewModel.swift; sourceTree = "<group>"; };
 		5E7AEF2527E21E4C0059FB3A /* AdminCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminCardView.swift; sourceTree = "<group>"; };
+		5E7AEF2727E222C30059FB3A /* AdminGradeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminGradeViewController.swift; sourceTree = "<group>"; };
+		5E7AEF2927E223040059FB3A /* AdminManagementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminManagementViewController.swift; sourceTree = "<group>"; };
 		5E9CC7B727D0ED2D006D8B12 /* SignUpTeamInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpTeamInfoViewController.swift; sourceTree = "<group>"; };
 		5E9CC7B927D0F57A006D8B12 /* UICollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionViewCell.swift; sourceTree = "<group>"; };
 		5E9CC7BB27D0F79D006D8B12 /* SignUpCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -171,8 +175,10 @@
 		5E7AEF2027E2125A0059FB3A /* Admin */ = {
 			isa = PBXGroup;
 			children = (
-				5E7AEF2127E212690059FB3A /* AdminViewController.swift */,
 				5E7AEF2327E21D680059FB3A /* AdminViewModel.swift */,
+				5E7AEF2127E212690059FB3A /* AdminViewController.swift */,
+				5E7AEF2727E222C30059FB3A /* AdminGradeViewController.swift */,
+				5E7AEF2927E223040059FB3A /* AdminManagementViewController.swift */,
 				5E7AEF2527E21E4C0059FB3A /* AdminCardView.swift */,
 			);
 			path = Admin;
@@ -502,6 +508,7 @@
 				5EF69EC227A7EFFF007E9735 /* BaseViewModel.swift in Sources */,
 				52BCA07227C4D3DF001BF86F /* UIFont.swift in Sources */,
 				5EF69ED927AAACBA007E9735 /* PolicyViewController.swift in Sources */,
+				5E7AEF2827E222C30059FB3A /* AdminGradeViewController.swift in Sources */,
 				297E958327CFAC0A00452222 /* QRViewModel.swift in Sources */,
 				5EF69EDB27AAB0BC007E9735 /* PolicyUnitView.swift in Sources */,
 				52BCA07027C4D393001BF86F /* TextStyle.swift in Sources */,
@@ -511,6 +518,7 @@
 				5EF69EA327A7DAF8007E9735 /* AppDelegate.swift in Sources */,
 				5EED02C027D7854F00C52637 /* AlertView.swift in Sources */,
 				5EA97D8827DBA621004E2330 /* Models.swift in Sources */,
+				5E7AEF2A27E223040059FB3A /* AdminManagementViewController.swift in Sources */,
 				5E6179AC27C670D500B1A835 /* UITextField.swift in Sources */,
 				5EF69EA527A7DAF8007E9735 /* SceneDelegate.swift in Sources */,
 				5E7AEF2627E21E4C0059FB3A /* AdminCardView.swift in Sources */,
