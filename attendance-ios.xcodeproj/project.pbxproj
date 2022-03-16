@@ -20,6 +20,7 @@
 		5E6179AC27C670D500B1A835 /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E6179AB27C670D500B1A835 /* UITextField.swift */; };
 		5E63BC9427BBD2AC0024FCE3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5E63BC9327BBD2AC0024FCE3 /* GoogleService-Info.plist */; };
 		5E63BC9B27BBE90F0024FCE3 /* SignUpNameInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E63BC9A27BBE90F0024FCE3 /* SignUpNameInfoViewController.swift */; };
+		5E7AEF2227E212690059FB3A /* AdminViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7AEF2127E212690059FB3A /* AdminViewController.swift */; };
 		5E9CC7B827D0ED2D006D8B12 /* SignUpTeamInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9CC7B727D0ED2D006D8B12 /* SignUpTeamInfoViewController.swift */; };
 		5E9CC7BA27D0F57A006D8B12 /* UICollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9CC7B927D0F57A006D8B12 /* UICollectionViewCell.swift */; };
 		5E9CC7BC27D0F79E006D8B12 /* SignUpCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9CC7BB27D0F79D006D8B12 /* SignUpCollectionViewCell.swift */; };
@@ -61,6 +62,7 @@
 		5E6179AB27C670D500B1A835 /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
 		5E63BC9327BBD2AC0024FCE3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5E63BC9A27BBE90F0024FCE3 /* SignUpNameInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpNameInfoViewController.swift; sourceTree = "<group>"; };
+		5E7AEF2127E212690059FB3A /* AdminViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminViewController.swift; sourceTree = "<group>"; };
 		5E9CC7B727D0ED2D006D8B12 /* SignUpTeamInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpTeamInfoViewController.swift; sourceTree = "<group>"; };
 		5E9CC7B927D0F57A006D8B12 /* UICollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionViewCell.swift; sourceTree = "<group>"; };
 		5E9CC7BB27D0F79D006D8B12 /* SignUpCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -156,6 +158,14 @@
 			path = Pretendard;
 			sourceTree = "<group>";
 		};
+		5E7AEF2027E2125A0059FB3A /* Admin */ = {
+			isa = PBXGroup;
+			children = (
+				5E7AEF2127E212690059FB3A /* AdminViewController.swift */,
+			);
+			path = Admin;
+			sourceTree = "<group>";
+		};
 		5EA97D8427DBA5C4004E2330 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -238,6 +248,7 @@
 				5EF69EC727A81E25007E9735 /* Home */,
 				5EF69ED227A83BC1007E9735 /* Detail */,
 				5EF69ED727AAAC88007E9735 /* Policy */,
+				5E7AEF2027E2125A0059FB3A /* Admin */,
 				5EF69EBE27A7DD8F007E9735 /* Extensions */,
 				5EF69EBB27A7DD57007E9735 /* System */,
 				5EF69EBC27A7DD68007E9735 /* Storyboards */,
@@ -464,6 +475,7 @@
 				5E63BC9B27BBE90F0024FCE3 /* SignUpNameInfoViewController.swift in Sources */,
 				5EA97D8A27DBB06A004E2330 /* Config.swift in Sources */,
 				5E9CC7BC27D0F79E006D8B12 /* SignUpCollectionViewCell.swift in Sources */,
+				5E7AEF2227E212690059FB3A /* AdminViewController.swift in Sources */,
 				5EF69ED427A83BCE007E9735 /* DetailViewController.swift in Sources */,
 				52C4CDE227D0C4D1005EDE78 /* HomeViewModel.swift in Sources */,
 				527657FB27C387E40080DA32 /* UILabelWithRound.swift in Sources */,
