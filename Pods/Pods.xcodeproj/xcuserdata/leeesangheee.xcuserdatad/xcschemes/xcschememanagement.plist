@@ -18,6 +18,11 @@
 			<key>orderHint</key>
 			<integer>2</integer>
 		</dict>
+		<key>BoringSSL-GRPC.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>14</integer>
+		</dict>
 		<key>Firebase.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -31,6 +36,11 @@
 			<false/>
 			<key>orderHint</key>
 			<integer>4</integer>
+		</dict>
+		<key>FirebaseABTesting.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>16</integer>
 		</dict>
 		<key>FirebaseAuth.xcscheme</key>
 		<dict>
@@ -80,6 +90,26 @@
 			<false/>
 			<key>orderHint</key>
 			<integer>11</integer>
+		</dict>
+		<key>FirebaseFirestore.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>18</integer>
+		</dict>
+		<key>FirebaseFirestoreSwift.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>20</integer>
+		</dict>
+		<key>FirebaseInstallations.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>22</integer>
+		</dict>
+		<key>FirebaseRemoteConfig.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>24</integer>
 		</dict>
 		<key>GTMSessionFetcher.xcscheme</key>
 		<dict>
