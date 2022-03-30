@@ -106,8 +106,7 @@ private extension SignUpViewModel {
 extension SignUpViewModel {
 
     func registerInfo() {
-        guard let config = try? output.config.value(),
-              let name = try? input.name.value(),
+        guard let name = try? input.name.value(),
               let position = try? input.position.value(),
               let platform = try? input.platform.value(),
               let teamNumber = try? input.teamNumber.value() else { return }
