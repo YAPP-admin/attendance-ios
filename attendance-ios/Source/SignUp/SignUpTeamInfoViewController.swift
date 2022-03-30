@@ -186,10 +186,11 @@ private extension SignUpTeamInfoViewController {
             guard let user = user, let userId = user.id else { return }
             docRef.document(UUID().uuidString).setData([
                 "id": userId,
-                "isAdmin": false,
                 "name": name,
                 "position": team,
-                "team": "\(team) \(teamNumber)"
+                "team": "\(team) \(teamNumber)",
+                // TODO: - 20개의 미통보 결석 생성
+                "attendances": "[]"
             ]) { [weak self] error in
                 guard error == nil else { return }
                 self?.goToHome()

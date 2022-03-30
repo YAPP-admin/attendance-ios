@@ -12,7 +12,6 @@ struct Member {
     let name: String
     let position: String
     let team: Team
-    let isAdmin: Bool
     let attendances: [Attendance]
 }
 
