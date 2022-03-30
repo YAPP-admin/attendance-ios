@@ -71,7 +71,7 @@ final class HomeBottomTabView: UIView {
         let button = UIButton()
         button.backgroundColor = .yapp_orange
         button.layer.cornerRadius = 56/2
-        button.setImage(UIImage(named: "qr_button"), for: .normal)
+        button.setImage(UIImage(named: "qr"), for: .normal)
         return button
     }()
 

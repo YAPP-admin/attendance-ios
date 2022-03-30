@@ -32,7 +32,7 @@ final class LoginViewController: UIViewController {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "3초만에 끝나는\n간편한 출석체크"
-        label.font = .Pretendard(type: .Bold, size: 24)
+        label.font = .Pretendard(type: .bold, size: 24)
         label.textColor = .gray_1200
         label.numberOfLines = 0
         label.setLineSpacing(4)
@@ -43,7 +43,7 @@ final class LoginViewController: UIViewController {
         let button = UIButton()
         button.setTitle("카카오 로그인", for: .normal)
         button.backgroundColor = .yapp_kakao_yellow
-        button.titleLabel?.font = .Pretendard(type: .Medium, size: 19)
+        button.titleLabel?.font = .Pretendard(type: .medium, size: 19)
         button.setTitleColor(Constants.kakaoBlack, for: .normal)
         button.setImage(UIImage(systemName: "bubble.left.fill"), for: .normal)
         button.titleEdgeInsets = .init(top: 0, left: Constants.buttonSpacing/2, bottom: 0, right: -Constants.buttonSpacing/2)

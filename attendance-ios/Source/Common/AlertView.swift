@@ -34,14 +34,14 @@ final class AlertView: UIView {
     private let label: UILabel = {
         let label = UILabel()
         label.textColor = .gray_1200
-        label.font = .Pretendard(type: .Bold, size: 18)
+        label.font = .Pretendard(type: .bold, size: 18)
         return label
     }()
 
     private let subLabel: UILabel = {
         let label = UILabel()
         label.textColor = .gray_800
-        label.font = .Pretendard(type: .Medium, size: 16)
+        label.font = .Pretendard(type: .medium, size: 16)
         return label
     }()
 
@@ -57,7 +57,7 @@ final class AlertView: UIView {
         let button = UIButton()
         button.backgroundColor = .gray_200
         button.setTitleColor(.gray_800, for: .normal)
-        button.titleLabel?.font = .Pretendard(type: .Medium, size: 16)
+        button.titleLabel?.font = .Pretendard(type: .medium, size: 16)
         button.layer.cornerRadius = Constants.cornerRadius
         return button
     }()
@@ -66,7 +66,7 @@ final class AlertView: UIView {
         let button = UIButton()
         button.backgroundColor = .yapp_orange
         button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = .Pretendard(type: .Medium, size: 16)
+        button.titleLabel?.font = .Pretendard(type: .medium, size: 16)
         button.layer.cornerRadius = Constants.cornerRadius
         return button
     }()

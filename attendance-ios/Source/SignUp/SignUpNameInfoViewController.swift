@@ -22,7 +22,7 @@ final class SignUpNameInfoViewController: UIViewController {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "이름을 작성해주세요"
-        label.font = .Pretendard(type: .Bold, size: 24)
+        label.font = .Pretendard(type: .bold, size: 24)
         label.textColor = .gray_1200
         label.numberOfLines = 0
         return label
@@ -31,7 +31,7 @@ final class SignUpNameInfoViewController: UIViewController {
     private let subTitleLabel: UILabel = {
         let label = UILabel()
         label.text = "실명을 작성해야 출석을 확인할 수 있어요"
-        label.font = .Pretendard(type: .Medium, size: 16)
+        label.font = .Pretendard(type: .medium, size: 16)
         label.textColor = .gray_800
         label.numberOfLines = 0
         return label
@@ -39,9 +39,9 @@ final class SignUpNameInfoViewController: UIViewController {
 
     private let textField: UITextField = {
         let textField = UITextField()
-        textField.font = .Pretendard(type: .Bold, size: Constants.textFieldFontSize)
+        textField.font = .Pretendard(type: .bold, size: Constants.textFieldFontSize)
         textField.textColor = .gray_800
-        textField.attributedPlaceholder = NSAttributedString(string: "ex. 야뿌", attributes: [.foregroundColor: UIColor.gray_400, .font: UIFont.Pretendard(type: .Bold, size: Constants.textFieldFontSize)])
+        textField.attributedPlaceholder = NSAttributedString(string: "ex. 야뿌", attributes: [.foregroundColor: UIColor.gray_400, .font: UIFont.Pretendard(type: .bold, size: Constants.textFieldFontSize)])
         textField.backgroundColor = .gray_200
         textField.layer.cornerRadius = Constants.textFieldHeight/2
         textField.addLeftPadding(20)
@@ -52,7 +52,7 @@ final class SignUpNameInfoViewController: UIViewController {
     private let nextButton: UIButton = {
         let button = UIButton()
         button.setTitle("다음", for: .normal)
-        button.titleLabel?.font = .Pretendard(type: .Bold, size: 18)
+        button.titleLabel?.font = .Pretendard(type: .bold, size: 18)
         button.backgroundColor = .gray_400
         button.layer.cornerRadius = 10
         button.isEnabled = false
@@ -73,7 +73,7 @@ final class SignUpNameInfoViewController: UIViewController {
     private let keyboardNextButton: UIButton = {
         let button = UIButton()
         button.setTitle("다음", for: .normal)
-        button.titleLabel?.font = .Pretendard(type: .Bold, size: 18)
+        button.titleLabel?.font = .Pretendard(type: .bold, size: 18)
         button.backgroundColor = .gray_400
         button.isEnabled = false
         return button
