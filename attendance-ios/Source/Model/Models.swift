@@ -10,7 +10,6 @@ import Foundation
 struct Member: Codable {
     let id: Int
     let name: String
-    let position: PositionType
     let team: Team
     let attendances: [Attendance]
 }
@@ -27,13 +26,6 @@ struct Session: Codable {
         case date
         case description
     }
-}
-
-enum PositionType: Codable {
-    case frontend
-    case backend
-    case designer
-    case projectManager
 }
 
 struct Team: Codable {

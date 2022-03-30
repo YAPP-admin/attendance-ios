@@ -118,13 +118,6 @@ final class SignUpTeamInfoViewController: UIViewController {
 private extension SignUpTeamInfoViewController {
 
     func bindViewModel() {
-        viewModel.input.position
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] _ in
-                self?.teamCollectionView.reloadData()
-            })
-            .disposed(by: disposeBag)
-
         viewModel.input.platform
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] _ in

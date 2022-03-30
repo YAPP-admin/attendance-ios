@@ -16,7 +16,6 @@ final class SignUpViewModel: ViewModel {
 
     struct Input {
         let name = BehaviorSubject<String?>(value: nil)
-        let position = BehaviorSubject<PositionType?>(value: nil)
         let platform = BehaviorSubject<PlatformType?>(value: nil)
         let teamNumber = BehaviorSubject<Int?>(value: nil)
     }
@@ -41,27 +40,18 @@ final class SignUpViewModel: ViewModel {
     init() {
         setupConfig()
 
-        // TODO: - 테스트용 print문 회원가입 구현 후 제거
         input.name
             .subscribe(onNext: { [weak self] name in
-                print("name: \(name)")
                 self?.output.isNameTextFieldValid.onNext(name?.isEmpty == false)
             }).disposed(by: disposeBag)
 
-        input.position
-            .subscribe(onNext: { [weak self] position in
-                print("position: \(position)")
-            }).disposed(by: disposeBag)
-
         input.platform
-            .subscribe(onNext: { [weak self] platform in
-                print("platform: \(platform)")
+            .subscribe(onNext: { [weak self] _ in
                 self?.output.showTeamCount.accept(())
             }).disposed(by: disposeBag)
 
         input.teamNumber
-            .subscribe(onNext: { [weak self] teamNumber in
-                print("teamNumber: \(teamNumber)")
+            .subscribe(onNext: { [weak self] _ in
                 self?.output.complete.accept(())
             }).disposed(by: disposeBag)
     }
@@ -105,9 +95,9 @@ private extension SignUpViewModel {
 
 extension SignUpViewModel {
 
+    // TODO: - 파이어베이스에 유저 저장
     func registerInfo() {
         guard let name = try? input.name.value(),
-              let position = try? input.position.value(),
               let platform = try? input.platform.value(),
               let teamNumber = try? input.teamNumber.value() else { return }
 
@@ -116,17 +106,19 @@ extension SignUpViewModel {
 
         UserApi.shared.me { [weak self] user, error in
             guard let self = self, let user = user, let userId = user.id else { return }
-            let member = Member(id: Int(userId), name: name, position: position, team: Team(platform: platform, teamNumber: teamNumber), attendances: Attendance.defaults)
+            let team = Team(platform: platform, teamNumber: teamNumber)
 
-            guard let data = try? JSONEncoder().encode(member), let json = String(data: data, encoding: .utf8) else { return }
-            print("json: \(json)")
+//            let encoder = JSONEncoder()
+//            guard let teamJsonData = try? encoder.encode(team),
+//                  let teamJsonString = String(data: teamJsonData, encoding: .utf8),
+//                  let attendancesJsonData = try? encoder.encode(Attendance.defaults),
+//                  let attendancesJsonData = String(data: attendancesJsonData, encoding: .utf8) else { return }
 
             docRef.document("\(userId)").setData([
                 "id": userId,
                 "name": name,
-                "position": "position",
-                "team": "team",
-                "attendances": "[]"
+                "team": ["platform": "iOS", "teamNumber": 1],
+                "attendances": ["sessionId": 0, "attendanceType": ["text": "미통보 결석", "point": -20]]
             ]) { [weak self] error in
                 guard error == nil else { return }
                 self?.output.goToHome.accept(())
