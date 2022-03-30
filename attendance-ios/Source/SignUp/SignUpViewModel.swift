@@ -5,7 +5,9 @@
 //  Created by leeesangheee on 2022/03/08.
 //
 
+import FirebaseFirestore
 import FirebaseRemoteConfig
+import KakaoSDKUser
 import RxCocoa
 import RxSwift
 import UIKit
@@ -27,7 +29,9 @@ final class SignUpViewModel: ViewModel {
 
         let isNameTextFieldValid = BehaviorSubject(value: false)
         let showTeamCount = PublishRelay<Void>()
+
         let complete = PublishRelay<Void>()
+        let goToHome = PublishRelay<Void>()
     }
 
     let input = Input()
@@ -37,6 +41,7 @@ final class SignUpViewModel: ViewModel {
     init() {
         setupConfig()
 
+        // TODO: - 테스트용 print문 회원가입 구현 후 제거
         input.name
             .subscribe(onNext: { [weak self] name in
                 print("name: \(name)")
@@ -94,6 +99,53 @@ private extension SignUpViewModel {
                 self.output.configTeams.onNext(configTeams)
             }
         }
+    }
+
+}
+
+extension SignUpViewModel {
+
+    func registerInfo() {
+        guard let config = try? output.config.value(),
+              let name = try? input.name.value(),
+              let position = try? input.position.value(),
+              let platform = try? input.platform.value(),
+              let teamNumber = try? input.teamNumber.value() else { return }
+
+        let db = Firestore.firestore()
+        let docRef = db.collection("member")
+
+        UserApi.shared.me { [weak self] user, error in
+            guard let self = self, let user = user, let userId = user.id else { return }
+            let member = Member(id: Int(userId), name: name, position: position, team: Team(platform: platform, teamNumber: teamNumber), attendances: Attendance.defaults)
+
+            guard let data = try? JSONEncoder().encode(member), let json = String(data: data, encoding: .utf8) else { return }
+            print("json: \(json)")
+
+            docRef.document("\(userId)").setData([
+                "id": userId,
+                "name": name,
+                "position": "position",
+                "team": "team",
+                "attendances": "[]"
+            ]) { [weak self] error in
+                guard error == nil else { return }
+                self?.output.goToHome.accept(())
+            }
+        }
+    }
+
+}
+
+fileprivate extension Attendance {
+
+    static var defaults: [Attendance] {
+        let sessionCount = 20
+        var attendances: [Attendance] = []
+        for id in 0..<sessionCount {
+            attendances.append(Attendance(sesstionId: id, attendanceType: .notMentionedAbsence))
+        }
+        return attendances
     }
 
 }

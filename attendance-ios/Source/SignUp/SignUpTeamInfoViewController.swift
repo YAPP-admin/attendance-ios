@@ -5,8 +5,6 @@
 //  Created by leeesangheee on 2022/03/03.
 //
 
-import FirebaseFirestore
-import KakaoSDKUser
 import RxCocoa
 import RxSwift
 import SnapKit
@@ -141,10 +139,10 @@ private extension SignUpTeamInfoViewController {
             })
             .disposed(by: disposeBag)
 
+        // TODO: - 애니메이션 추가
         viewModel.output.showTeamCount
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] _ in
-                // TODO: - 이후 애니메이션 추가
                 self?.subTitleLabel.isHidden = false
                 self?.teamCollectionView.isHidden = false
             })
@@ -156,13 +154,20 @@ private extension SignUpTeamInfoViewController {
                 self?.activateButton()
             })
             .disposed(by: disposeBag)
+
+        viewModel.output.goToHome
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] _ in
+                self?.goToHome()
+            })
+            .disposed(by: disposeBag)
     }
 
     func bindButton() {
         okButton.rx.controlEvent([.touchUpInside])
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
-                self?.registerInfo()
+                self?.viewModel.registerInfo()
             }).disposed(by: disposeBag)
 
         backButton.rx.controlEvent([.touchUpInside])
@@ -177,36 +182,6 @@ private extension SignUpTeamInfoViewController {
                 self?.alertView.isHidden.toggle()
                 self?.goToLogin()
             }).disposed(by: disposeBag)
-    }
-
-    func registerInfo() {
-        guard let config = try? viewModel.output.config.value(),
-              let name = try? viewModel.input.name.value(),
-              let position = try? viewModel.input.position.value(),
-              let platform = try? viewModel.input.platform.value(),
-              let teamNumber = try? viewModel.input.teamNumber.value() else { return }
-
-        let db = Firestore.firestore()
-        let docRef = db.collection("member")
-
-        UserApi.shared.me { [weak self] user, error in
-            guard let self = self, let user = user, let userId = user.id else { return }
-            let member = Member(id: Int(userId), name: name, position: position, team: Team(platform: platform, teamNumber: teamNumber), attendances: Attendance.defaults)
-
-            guard let data = try? JSONEncoder().encode(member), let json = String(data: data, encoding: .utf8) else { return }
-            print("json: \(json)")
-
-            docRef.document("\(userId)").setData([
-                "id": userId,
-                "name": name,
-                "position": "position",
-                "team": "team",
-                "attendances": "[]"
-            ]) { [weak self] error in
-                guard error == nil else { return }
-                self?.goToHome()
-            }
-        }
     }
 
 }
@@ -402,20 +377,6 @@ private extension SignUpTeamInfoViewController {
         alertView.snp.makeConstraints {
             $0.top.bottom.left.right.equalToSuperview()
         }
-    }
-
-}
-
-// MARK: -
-fileprivate extension Attendance {
-
-    static var defaults: [Attendance] {
-        let sessionCount = 20
-        var attendances: [Attendance] = []
-        for id in 0..<sessionCount {
-            attendances.append(Attendance(sesstionId: id, attendanceType: .notMentionedAbsence))
-        }
-        return attendances
     }
 
 }
