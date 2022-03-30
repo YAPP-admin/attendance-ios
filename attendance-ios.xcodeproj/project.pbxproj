@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2925E79E27F41A91005533EF /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2925E79C27F41A91005533EF /* Pretendard-Regular.otf */; };
+		2925E79F27F41A91005533EF /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2925E79D27F41A91005533EF /* Pretendard-SemiBold.otf */; };
 		296C7B0127C523390042B630 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 296C7B0027C523390042B630 /* Pretendard-Bold.otf */; };
 		296C7B0327C523450042B630 /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 296C7B0227C523450042B630 /* Pretendard-Medium.otf */; };
 		297E957F27CFA68600452222 /* QRViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297E957E27CFA68600452222 /* QRViewController.swift */; };
@@ -48,6 +50,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2925E79C27F41A91005533EF /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
+		2925E79D27F41A91005533EF /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
 		296C7B0027C523390042B630 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
 		296C7B0227C523450042B630 /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
 		297E957E27CFA68600452222 /* QRViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRViewController.swift; sourceTree = "<group>"; };
@@ -150,6 +154,8 @@
 		52BCA07327C4D63A001BF86F /* Pretendard */ = {
 			isa = PBXGroup;
 			children = (
+				2925E79C27F41A91005533EF /* Pretendard-Regular.otf */,
+				2925E79D27F41A91005533EF /* Pretendard-SemiBold.otf */,
 				296C7B0027C523390042B630 /* Pretendard-Bold.otf */,
 				296C7B0227C523450042B630 /* Pretendard-Medium.otf */,
 			);
@@ -384,11 +390,13 @@
 				5EE54FF027DA469A00294120 /* splash_main.html in Resources */,
 				296C7B0327C523450042B630 /* Pretendard-Medium.otf in Resources */,
 				5EF69EB827A7DCDE007E9735 /* .swiftlint.yml in Resources */,
+				2925E79F27F41A91005533EF /* Pretendard-SemiBold.otf in Resources */,
 				296C7B0127C523390042B630 /* Pretendard-Bold.otf in Resources */,
 				5EE25B2427C7CB700065B816 /* bg_buong.html in Resources */,
 				5EF69EAF27A7DAFA007E9735 /* LaunchScreen.storyboard in Resources */,
 				5E63BC9427BBD2AC0024FCE3 /* GoogleService-Info.plist in Resources */,
 				5EF69EAC27A7DAFA007E9735 /* Assets.xcassets in Resources */,
+				2925E79E27F41A91005533EF /* Pretendard-Regular.otf in Resources */,
 				5EE54FEE27DA469700294120 /* splash_login.html in Resources */,
 				5EF69EAA27A7DAF8007E9735 /* Main.storyboard in Resources */,
 			);

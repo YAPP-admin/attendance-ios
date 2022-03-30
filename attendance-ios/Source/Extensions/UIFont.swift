@@ -14,15 +14,21 @@ extension UIFont {
     }
 
     public enum PretendardType {
-        case Bold
-        case Medium
+        case regular
+		case medium
+		case semiBold
+        case bold
 
         var name: String {
             switch self {
-            case .Bold:
+			case .regular:
+				return "Pretendard-Regular"
+			case .medium:
+				return "Pretendard-Medium"
+			case .semiBold:
+				return "Pretendard-Semi-Bold"
+            case .bold:
                 return "Pretendard-Bold"
-            case .Medium:
-                return "Pretendard-Medium"
             }
         }
     }

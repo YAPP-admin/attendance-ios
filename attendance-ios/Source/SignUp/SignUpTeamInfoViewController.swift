@@ -25,7 +25,7 @@ final class SignUpTeamInfoViewController: UIViewController {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "소속 팀을 \n알려주세요"
-        label.font = .Pretendard(type: .Bold, size: 24)
+        label.font = .Pretendard(type: .bold, size: 24)
         label.textColor = .gray_1200
         label.numberOfLines = 0
         return label
@@ -34,7 +34,7 @@ final class SignUpTeamInfoViewController: UIViewController {
     private let subTitleLabel: UILabel = {
         let label = UILabel()
         label.text = "하나만 더 알려주세요"
-        label.font = .Pretendard(type: .Bold, size: 18)
+        label.font = .Pretendard(type: .bold, size: 18)
         label.textColor = .gray_1200
         label.numberOfLines = 0
         label.isHidden = true
@@ -61,7 +61,7 @@ final class SignUpTeamInfoViewController: UIViewController {
     private let okButton: UIButton = {
         let button = UIButton()
         button.setTitle("확인", for: .normal)
-        button.titleLabel?.font = .Pretendard(type: .Bold, size: 18)
+        button.titleLabel?.font = .Pretendard(type: .bold, size: 18)
         button.backgroundColor = .gray_400
         button.layer.cornerRadius = 10
         button.isEnabled = false

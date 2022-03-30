@@ -40,7 +40,7 @@ final class QRViewController: UIViewController {
 	private let checkView: UIImageView = {
 		let view = UIImageView()
 		view.backgroundColor = .clear
-		view.image = UIImage(named: "check")
+		view.image = UIImage(named: "check_enabled")
 		view.isHidden = true
 		return view
 	}()
