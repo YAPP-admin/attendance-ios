@@ -107,12 +107,7 @@ extension SignUpViewModel {
         UserApi.shared.me { [weak self] user, error in
             guard let self = self, let user = user, let userId = user.id else { return }
             let team = Team(platform: platform, teamNumber: teamNumber)
-
-//            let encoder = JSONEncoder()
-//            guard let teamJsonData = try? encoder.encode(team),
-//                  let teamJsonString = String(data: teamJsonData, encoding: .utf8),
-//                  let attendancesJsonData = try? encoder.encode(Attendance.defaults),
-//                  let attendancesJsonData = String(data: attendancesJsonData, encoding: .utf8) else { return }
+            let member = Member(id: userId, name: name, team: team, attendances: Attendance.defaults)
 
             docRef.document("\(userId)").setData([
                 "id": userId,
