@@ -15,7 +15,8 @@ final class SignUpViewModel: ViewModel {
     struct Input {
         let name = BehaviorSubject<String?>(value: nil)
         let position = BehaviorSubject<PositionType?>(value: nil)
-        let team = BehaviorSubject<Team?>(value: nil)
+        let platform = BehaviorSubject<PlatformType?>(value: nil)
+        let teamNumber = BehaviorSubject<Int?>(value: nil)
     }
 
     struct Output {
@@ -25,7 +26,7 @@ final class SignUpViewModel: ViewModel {
         let generation = BehaviorSubject<Int>(value: 0)
 
         let isNameTextFieldValid = BehaviorSubject(value: false)
-        let showTeamList = PublishRelay<Void>()
+        let showTeamCount = PublishRelay<Void>()
         let complete = PublishRelay<Void>()
     }
 
@@ -41,15 +42,13 @@ final class SignUpViewModel: ViewModel {
                 self?.output.isNameTextFieldValid.onNext(name?.isEmpty == false)
             }).disposed(by: disposeBag)
 
-        input.team
+        input.platform
             .subscribe(onNext: { [weak self] _ in
-                self?.output.showTeamList.accept(())
+                self?.output.showTeamCount.accept(())
             }).disposed(by: disposeBag)
 
-        // TODO: - 팀정보 받은 후 complete
-        input.team
-            .subscribe(onNext: { [weak self] team in
-                guard team != nil else { return }
+        input.teamNumber
+            .subscribe(onNext: { [weak self] _ in
                 self?.output.complete.accept(())
             }).disposed(by: disposeBag)
     }
