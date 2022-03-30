@@ -39,16 +39,24 @@ final class SignUpViewModel: ViewModel {
 
         input.name
             .subscribe(onNext: { [weak self] name in
+                print("name: \(name)")
                 self?.output.isNameTextFieldValid.onNext(name?.isEmpty == false)
             }).disposed(by: disposeBag)
 
+        input.position
+            .subscribe(onNext: { [weak self] position in
+                print("position: \(position)")
+            }).disposed(by: disposeBag)
+
         input.platform
-            .subscribe(onNext: { [weak self] _ in
+            .subscribe(onNext: { [weak self] platform in
+                print("platform: \(platform)")
                 self?.output.showTeamCount.accept(())
             }).disposed(by: disposeBag)
 
         input.teamNumber
-            .subscribe(onNext: { [weak self] _ in
+            .subscribe(onNext: { [weak self] teamNumber in
+                print("teamNumber: \(teamNumber)")
                 self?.output.complete.accept(())
             }).disposed(by: disposeBag)
     }

@@ -50,6 +50,14 @@ enum PlatformType: String, Codable {
     case android = "Android"
     case ios = "iOS"
     case web = "Web"
+    case allRounder = "All-Rounder"
+
+    enum CodingKeys: String, CodingKey {
+        case android = "Android"
+        case ios = "iOS"
+        case web = "Web"
+        case allRounder = "All-Rounder"
+    }
 }
 
 enum AttendanceType: Int, Codable {

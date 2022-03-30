@@ -225,13 +225,13 @@ extension SignUpTeamInfoViewController: UICollectionViewDelegateFlowLayout, UICo
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let teams = try? viewModel.output.configTeams.value() else { return 0 }
+        guard let platforms = try? viewModel.output.configTeams.value() else { return 0 }
 
         switch collectionView {
-        case positionCollectionView: return teams.count
+        case positionCollectionView: return platforms.count
         case teamCollectionView:
             guard let platform = try? viewModel.input.platform.value(),
-                  let countString = teams.filter({ $0.team == platform.rawValue }).first?.count,
+                  let countString = platforms.filter({ $0.team == platform.rawValue }).first?.count,
                   let count = Int(countString) else { break }
             return count
         default: return 0
@@ -240,18 +240,17 @@ extension SignUpTeamInfoViewController: UICollectionViewDelegateFlowLayout, UICo
         return 0
     }
 
-    // TODO: - isSelected 수정
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SignUpCollectionViewCell.identifier, for: indexPath) as? SignUpCollectionViewCell,
-              let teams = try? viewModel.output.configTeams.value() else { return UICollectionViewCell() }
+                let teams = try? viewModel.output.configTeams.value() else { return UICollectionViewCell() }
 
         switch collectionView {
         case positionCollectionView:
             cell.configureUI(text: teams[indexPath.row].team)
         case teamCollectionView:
             cell.configureUI(text: "\(indexPath.row+1)팀")
-            cell.configureUI(isSelected: true)
-//            cell.configureUI(isSelected: teamNumber == indexPath.row+1)
+            guard let teamNumber = try? viewModel.input.teamNumber.value() else { break }
+            cell.configureUI(isSelected: teamNumber == indexPath.row+1)
         default: break
         }
 
@@ -284,14 +283,15 @@ extension SignUpTeamInfoViewController: UICollectionViewDelegateFlowLayout, UICo
         Constants.cellSpacing
     }
 
-    // TODO: - platform 수정 필요
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let teams = try? viewModel.output.configTeams.value().map({ $0.team }) else { return }
-
-        guard let cell = collectionView.cellForItem(at: indexPath) as? SignUpCollectionViewCell else { return }
+        guard let platforms = try? viewModel.output.configTeams.value().map({ $0.team }),
+              let cell = collectionView.cellForItem(at: indexPath) as? SignUpCollectionViewCell else { return }
         switch collectionView {
-        case positionCollectionView: viewModel.input.platform.onNext(.ios)
-        case teamCollectionView: viewModel.input.teamNumber.onNext(indexPath.row+1)
+        case positionCollectionView:
+            let platform = PlatformType(rawValue: platforms[indexPath.row])
+            viewModel.input.platform.onNext(platform)
+        case teamCollectionView:
+            viewModel.input.teamNumber.onNext(indexPath.row+1)
         default: break
         }
         cell.configureSelectedUI()
