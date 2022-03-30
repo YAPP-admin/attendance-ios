@@ -127,13 +127,6 @@ private extension SignUpTeamInfoViewController {
             })
             .disposed(by: disposeBag)
 
-        viewModel.input.teamNumber
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] _ in
-                self?.teamCollectionView.reloadData()
-            })
-            .disposed(by: disposeBag)
-
         viewModel.output.showTeamList
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] _ in
@@ -175,21 +168,24 @@ private extension SignUpTeamInfoViewController {
     func registerInfo() {
         guard let config = try? viewModel.output.config.value(),
               let name = try? viewModel.input.name.value(),
-              let team = try? viewModel.input.team.value(),
-              let teamNumber = try? viewModel.input.teamNumber.value() else { return }
-        let generation = config.generation
+              let position = try? viewModel.input.position.value(),
+              let team = try? viewModel.input.team.value() else { return }
 
         let db = Firestore.firestore()
-        let docRef = db.collection("member").document("\(generation)th").collection("members")
+        let docRef = db.collection("member")
 
-        UserApi.shared.me { user, error in
-            guard let user = user, let userId = user.id else { return }
-            docRef.document(UUID().uuidString).setData([
+        UserApi.shared.me { [weak self] user, error in
+            guard let self = self, let user = user, let userId = user.id else { return }
+            let member = Member(id: Int(userId), name: name, position: position, team: team, attendances: Attendance.defaults)
+
+//            guard let data = try? JSONEncoder().encode(member), let json = String(data: data, encoding: .utf8) else { return }
+//            print("json: \(json)")
+
+            docRef.document("\(userId)").setData([
                 "id": userId,
                 "name": name,
-                "position": team,
-                "team": "\(team) \(teamNumber)",
-                // TODO: - 20개의 미통보 결석 생성
+                "position": "position",
+                "team": "team",
                 "attendances": "[]"
             ]) { [weak self] error in
                 guard error == nil else { return }
@@ -220,7 +216,7 @@ extension SignUpTeamInfoViewController: UICollectionViewDelegateFlowLayout, UICo
         case positionCollectionView: return teams.count
         case teamCollectionView:
             guard let team = try? viewModel.input.team.value(),
-                  let countString = teams.filter({ $0.team == team}).first?.count,
+                  let countString = teams.filter({ $0.team == team.platform.rawValue }).first?.count,
                   let count = Int(countString) else { break }
             return count
         default: return 0
@@ -232,7 +228,7 @@ extension SignUpTeamInfoViewController: UICollectionViewDelegateFlowLayout, UICo
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SignUpCollectionViewCell.identifier, for: indexPath) as? SignUpCollectionViewCell,
               let teams = try? viewModel.output.configTeams.value(),
-              let teamNumber = try? viewModel.input.teamNumber.value() else { return UICollectionViewCell() }
+              let teamNumber = try? viewModel.input.team.value()?.teamNumber else { return UICollectionViewCell() }
 
         switch collectionView {
         case positionCollectionView:
@@ -273,14 +269,16 @@ extension SignUpTeamInfoViewController: UICollectionViewDelegateFlowLayout, UICo
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let teams = try? viewModel.output.configTeams.value().map({ $0.team }) else { return }
+        guard let teams = try? viewModel.output.configTeams.value().map({ $0.team }), var team = try? viewModel.input.team.value() else { return }
 
         guard let cell = collectionView.cellForItem(at: indexPath) as? SignUpCollectionViewCell else { return }
         switch collectionView {
-        case positionCollectionView: viewModel.input.team.onNext(teams[indexPath.row])
-        case teamCollectionView: viewModel.input.teamNumber.onNext(indexPath.row+1)
+        // TODO: - platform 수정 필요
+        case positionCollectionView: team.platform = .ios
+        case teamCollectionView: team.teamNumber = indexPath.row+1
         default: break
         }
+        viewModel.input.team.onNext(team)
         cell.configureSelectedUI()
     }
 
@@ -389,6 +387,20 @@ private extension SignUpTeamInfoViewController {
         alertView.snp.makeConstraints {
             $0.top.bottom.left.right.equalToSuperview()
         }
+    }
+
+}
+
+// MARK: -
+fileprivate extension Attendance {
+
+    static var defaults: [Attendance] {
+        let sessionCount = 20
+        var attendances: [Attendance] = []
+        for id in 0..<sessionCount {
+            attendances.append(Attendance(sesstionId: id, attendanceType: .notMentionedAbsence))
+        }
+        return attendances
     }
 
 }

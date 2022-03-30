@@ -13,9 +13,9 @@ import UIKit
 final class SignUpViewModel: ViewModel {
 
     struct Input {
-        let name = BehaviorSubject<String>(value: "")
-        let team = BehaviorSubject<String>(value: "")
-        let teamNumber = BehaviorSubject<Int>(value: 0)
+        let name = BehaviorSubject<String?>(value: nil)
+        let position = BehaviorSubject<PositionType?>(value: nil)
+        let team = BehaviorSubject<Team?>(value: nil)
     }
 
     struct Output {
@@ -38,7 +38,7 @@ final class SignUpViewModel: ViewModel {
 
         input.name
             .subscribe(onNext: { [weak self] name in
-                self?.output.isNameTextFieldValid.onNext(!name.isEmpty)
+                self?.output.isNameTextFieldValid.onNext(name?.isEmpty == false)
             }).disposed(by: disposeBag)
 
         input.team
@@ -46,8 +46,10 @@ final class SignUpViewModel: ViewModel {
                 self?.output.showTeamList.accept(())
             }).disposed(by: disposeBag)
 
-        input.teamNumber
-            .subscribe(onNext: { [weak self] _ in
+        // TODO: - 팀정보 받은 후 complete
+        input.team
+            .subscribe(onNext: { [weak self] team in
+                guard team != nil else { return }
                 self?.output.complete.accept(())
             }).disposed(by: disposeBag)
     }

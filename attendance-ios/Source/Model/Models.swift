@@ -7,10 +7,10 @@
 
 import Foundation
 
-struct Member {
+struct Member: Codable {
     let id: Int
     let name: String
-    let position: String
+    let position: PositionType
     let team: Team
     let attendances: [Attendance]
 }
@@ -29,30 +29,30 @@ struct Session: Codable {
     }
 }
 
-enum PositionType {
+enum PositionType: Codable {
     case frontend
     case backend
     case designer
     case projectManager
 }
 
-struct Team {
-    let platform: PlatformType
-    let teamNumber: Int
+struct Team: Codable {
+    var platform: PlatformType
+    var teamNumber: Int
 }
 
-struct Attendance {
+struct Attendance: Codable {
     let sesstionId: Int
     let attendanceType: AttendanceType
 }
 
-enum PlatformType {
-    case android
-    case ios
-    case web
+enum PlatformType: String, Codable {
+    case android = "Android"
+    case ios = "iOS"
+    case web = "Web"
 }
 
-enum AttendanceType: Int {
+enum AttendanceType: Int, Codable {
     case notMentionedAbsence
     case absence
     case attendance
