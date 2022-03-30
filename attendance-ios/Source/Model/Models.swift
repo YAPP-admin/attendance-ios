@@ -59,7 +59,16 @@ enum AttendanceType: Int {
     case attendance
     case notMentionedTardy
     case tardy
-    case empty
+
+    var text: String {
+        switch self {
+        case .notMentionedAbsence: return "미통보 결석"
+        case .absence: return "결석"
+        case .attendance: return "출석"
+        case .notMentionedTardy: return "미통보 지각"
+        case .tardy: return "지각"
+        }
+    }
 
     var point: Int {
         switch self {
@@ -68,7 +77,6 @@ enum AttendanceType: Int {
         case .attendance: return 0
         case .notMentionedTardy: return -10
         case .tardy: return -5
-        case .empty: return 0
         }
     }
 }
