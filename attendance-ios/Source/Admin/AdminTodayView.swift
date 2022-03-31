@@ -77,6 +77,7 @@ extension AdminTodayView {
 
 }
 
+// MARK: - UI
 private extension AdminTodayView {
 
     func configureUI() {

@@ -329,6 +329,10 @@ private extension SignUpTeamInfoViewController {
     func setupDelegate() {
 
     }
+}
+
+// MARK: - UI
+private extension SignUpTeamInfoViewController {
 
     func activateButton() {
         okButton.isEnabled = true

@@ -37,14 +37,18 @@ final class AdminGradeViewController: UIViewController {
         super.viewDidLoad()
         bindSubviews()
         bindViewModel()
+
         setupDelegate()
+        setupNavigationTitle()
+
         configureUI()
         configureLayout()
     }
 
 }
 
-private extension AdminGradeViewController {
+// MARK: - Bind
+extension AdminGradeViewController {
 
     func bindSubviews() {
 
@@ -54,9 +58,24 @@ private extension AdminGradeViewController {
 
     }
 
+}
+
+// MARK: - etc
+private extension AdminGradeViewController {
+
     func setupDelegate() {
 
     }
+
+    func setupNavigationTitle() {
+        navigationItem.title = "누적 출결 점수"
+
+    }
+
+}
+
+// MARK: - UI
+private extension AdminGradeViewController {
 
     func configureUI() {
         view.backgroundColor = .white

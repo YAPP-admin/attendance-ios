@@ -150,6 +150,11 @@ private extension LoginViewController {
         splashView.navigationDelegate = self
     }
 
+}
+
+// MARK: - UI
+private extension LoginViewController {
+
     func configureWebView() {
         guard let filePath = Bundle.main.path(forResource: "bg_buong", ofType: "html"),
               let data = NSData(contentsOfFile: filePath),

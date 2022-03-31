@@ -24,11 +24,16 @@ final class AdminSessionCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func configureUI() {
+}
+
+// MARK: - UI
+private extension AdminSessionCell {
+
+    func configureUI() {
         backgroundColor = .white
     }
 
-    private func configureLayout() {
+    func configureLayout() {
 
     }
 

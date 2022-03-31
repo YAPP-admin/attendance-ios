@@ -27,6 +27,7 @@ final class AdminBottomSheetView: UIView {
 
 }
 
+// MARK: - UI
 private extension AdminBottomSheetView {
 
     func configureUI() {

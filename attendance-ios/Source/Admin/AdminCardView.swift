@@ -59,6 +59,7 @@ final class AdminCardView: UIView {
 
 }
 
+// MARK: - UI
 private extension AdminCardView {
 
     func configureUI() {

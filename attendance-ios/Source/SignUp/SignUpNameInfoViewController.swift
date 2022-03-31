@@ -192,6 +192,11 @@ private extension SignUpNameInfoViewController {
         textField.inputAccessoryView = accessoryView
     }
 
+}
+
+// MARK: - UI
+private extension SignUpNameInfoViewController {
+
     func activateButtons() {
         nextButton.isEnabled = true
         keyboardNextButton.isEnabled = true

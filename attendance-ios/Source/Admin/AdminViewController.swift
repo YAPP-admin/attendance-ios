@@ -151,7 +151,6 @@ private extension AdminViewController {
     func goToGradeVC() {
         let gradeVC = AdminGradeViewController(viewModel: viewModel)
         navigationItem.backButtonTitle = ""
-        navigationItem.title = "누적 출결 점수"
         navigationController?.navigationBar.tintColor = .gray_800
         navigationController?.pushViewController(gradeVC, animated: true)
     }
@@ -159,7 +158,6 @@ private extension AdminViewController {
     func goToManagementVC() {
         let managementVC = AdminManagementViewController(viewModel: viewModel)
         navigationItem.backButtonTitle = ""
-        navigationItem.title = "YAPP 오리엔테이션"
         navigationController?.navigationBar.tintColor = .gray_800
         navigationController?.pushViewController(managementVC, animated: true)
     }
@@ -171,6 +169,11 @@ private extension AdminViewController {
     func setupDelegate() {
 
     }
+
+}
+
+// MARK: - UI
+private extension AdminViewController {
 
     func configureUI() {
         view.backgroundColor = .white

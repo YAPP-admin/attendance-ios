@@ -35,23 +35,46 @@ final class AdminManagementViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        bindSubviews()
         bindViewModel()
+
         setupDelegate()
+        setupNavigationTitle()
+
         configureUI()
         configureLayout()
     }
 
 }
 
-private extension AdminManagementViewController {
+// MARK: - Bind
+extension AdminManagementViewController {
+
+    func bindSubviews() {
+
+    }
 
     func bindViewModel() {
 
     }
 
+}
+
+// MARK: - etc
+private extension AdminManagementViewController {
+
     func setupDelegate() {
 
     }
+
+    func setupNavigationTitle() {
+        navigationItem.title = "YAPP 오리엔테이션"
+    }
+
+}
+
+// MARK: - UI
+private extension AdminManagementViewController {
 
     func configureUI() {
         view.backgroundColor = .white
