@@ -43,7 +43,7 @@ final class BaseViewModel: ViewModel {
 
     init() {
         logoutWithKakao()
-        
+
         input.tapLogin
             .subscribe(onNext: { [weak self] _ in
                 self?.loginWithKakao()

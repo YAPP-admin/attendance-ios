@@ -7,12 +7,10 @@
 
 import Foundation
 
-struct Member {
+struct Member: Codable {
     let id: Int
     let name: String
-    let position: String
     let team: Team
-    let isAdmin: Bool
     let attendances: [Attendance]
 }
 
@@ -30,36 +28,46 @@ struct Session: Codable {
     }
 }
 
-enum PositionType {
-    case frontend
-    case backend
-    case designer
-    case projectManager
+struct Team: Codable {
+    var platform: PlatformType
+    var teamNumber: Int
 }
 
-struct Team {
-    let platform: PlatformType
-    let teamNumber: Int
-}
-
-struct Attendance {
+struct Attendance: Codable {
     let sesstionId: Int
     let attendanceType: AttendanceType
 }
 
-enum PlatformType {
-    case android
-    case ios
-    case web
+enum PlatformType: String, Codable {
+    case allRounder = "All-Rounder"
+    case android = "Android"
+    case ios = "iOS"
+    case web = "Web"
+
+    enum CodingKeys: String, CodingKey {
+        case allRounder = "All-Rounder"
+        case android = "Android"
+        case ios = "iOS"
+        case web = "Web"
+    }
 }
 
-enum AttendanceType: Int {
+enum AttendanceType: Int, Codable {
     case notMentionedAbsence
     case absence
     case attendance
     case notMentionedTardy
     case tardy
-    case empty
+
+    var text: String {
+        switch self {
+        case .notMentionedAbsence: return "미통보 결석"
+        case .absence: return "결석"
+        case .attendance: return "출석"
+        case .notMentionedTardy: return "미통보 지각"
+        case .tardy: return "지각"
+        }
+    }
 
     var point: Int {
         switch self {
@@ -68,7 +76,6 @@ enum AttendanceType: Int {
         case .attendance: return 0
         case .notMentionedTardy: return -10
         case .tardy: return -5
-        case .empty: return 0
         }
     }
 }

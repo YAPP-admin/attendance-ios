@@ -5,8 +5,6 @@
 //  Created by leeesangheee on 2022/03/03.
 //
 
-import FirebaseFirestore
-import KakaoSDKUser
 import RxCocoa
 import RxSwift
 import SnapKit
@@ -120,7 +118,7 @@ final class SignUpTeamInfoViewController: UIViewController {
 private extension SignUpTeamInfoViewController {
 
     func bindViewModel() {
-        viewModel.input.team
+        viewModel.input.platform
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] _ in
                 self?.teamCollectionView.reloadData()
@@ -134,10 +132,10 @@ private extension SignUpTeamInfoViewController {
             })
             .disposed(by: disposeBag)
 
-        viewModel.output.showTeamList
+        // TODO: - 애니메이션 추가
+        viewModel.output.showTeamCount
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] _ in
-                // TODO: - 이후 애니메이션 추가
                 self?.subTitleLabel.isHidden = false
                 self?.teamCollectionView.isHidden = false
             })
@@ -149,13 +147,20 @@ private extension SignUpTeamInfoViewController {
                 self?.activateButton()
             })
             .disposed(by: disposeBag)
+
+        viewModel.output.goToHome
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] _ in
+                self?.goToHome()
+            })
+            .disposed(by: disposeBag)
     }
 
     func bindButton() {
         okButton.rx.controlEvent([.touchUpInside])
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
-                self?.registerInfo()
+                self?.viewModel.registerInfo()
             }).disposed(by: disposeBag)
 
         backButton.rx.controlEvent([.touchUpInside])
@@ -170,31 +175,6 @@ private extension SignUpTeamInfoViewController {
                 self?.alertView.isHidden.toggle()
                 self?.goToLogin()
             }).disposed(by: disposeBag)
-    }
-
-    func registerInfo() {
-        guard let config = try? viewModel.output.config.value(),
-              let name = try? viewModel.input.name.value(),
-              let team = try? viewModel.input.team.value(),
-              let teamNumber = try? viewModel.input.teamNumber.value() else { return }
-        let generation = config.generation
-
-        let db = Firestore.firestore()
-        let docRef = db.collection("member").document("\(generation)th").collection("members")
-
-        UserApi.shared.me { user, error in
-            guard let user = user, let userId = user.id else { return }
-            docRef.document(UUID().uuidString).setData([
-                "id": userId,
-                "isAdmin": false,
-                "name": name,
-                "position": team,
-                "team": "\(team) \(teamNumber)"
-            ]) { [weak self] error in
-                guard error == nil else { return }
-                self?.goToHome()
-            }
-        }
     }
 
 }
@@ -213,13 +193,13 @@ extension SignUpTeamInfoViewController: UICollectionViewDelegateFlowLayout, UICo
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let teams = try? viewModel.output.configTeams.value() else { return 0 }
+        guard let platforms = try? viewModel.output.configTeams.value() else { return 0 }
 
         switch collectionView {
-        case positionCollectionView: return teams.count
+        case positionCollectionView: return platforms.count
         case teamCollectionView:
-            guard let team = try? viewModel.input.team.value(),
-                  let countString = teams.filter({ $0.team == team}).first?.count,
+            guard let platform = try? viewModel.input.platform.value(),
+                  let countString = platforms.filter({ $0.team == platform.rawValue }).first?.count,
                   let count = Int(countString) else { break }
             return count
         default: return 0
@@ -230,14 +210,14 @@ extension SignUpTeamInfoViewController: UICollectionViewDelegateFlowLayout, UICo
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SignUpCollectionViewCell.identifier, for: indexPath) as? SignUpCollectionViewCell,
-              let teams = try? viewModel.output.configTeams.value(),
-              let teamNumber = try? viewModel.input.teamNumber.value() else { return UICollectionViewCell() }
+                let teams = try? viewModel.output.configTeams.value() else { return UICollectionViewCell() }
 
         switch collectionView {
         case positionCollectionView:
             cell.configureUI(text: teams[indexPath.row].team)
         case teamCollectionView:
             cell.configureUI(text: "\(indexPath.row+1)팀")
+            guard let teamNumber = try? viewModel.input.teamNumber.value() else { break }
             cell.configureUI(isSelected: teamNumber == indexPath.row+1)
         default: break
         }
@@ -272,12 +252,14 @@ extension SignUpTeamInfoViewController: UICollectionViewDelegateFlowLayout, UICo
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let teams = try? viewModel.output.configTeams.value().map({ $0.team }) else { return }
-
-        guard let cell = collectionView.cellForItem(at: indexPath) as? SignUpCollectionViewCell else { return }
+        guard let platforms = try? viewModel.output.configTeams.value().map({ $0.team }),
+              let cell = collectionView.cellForItem(at: indexPath) as? SignUpCollectionViewCell else { return }
         switch collectionView {
-        case positionCollectionView: viewModel.input.team.onNext(teams[indexPath.row])
-        case teamCollectionView: viewModel.input.teamNumber.onNext(indexPath.row+1)
+        case positionCollectionView:
+            let platform = PlatformType(rawValue: platforms[indexPath.row])
+            viewModel.input.platform.onNext(platform)
+        case teamCollectionView:
+            viewModel.input.teamNumber.onNext(indexPath.row+1)
         default: break
         }
         cell.configureSelectedUI()

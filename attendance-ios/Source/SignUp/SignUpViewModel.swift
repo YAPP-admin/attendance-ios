@@ -5,7 +5,9 @@
 //  Created by leeesangheee on 2022/03/08.
 //
 
+import FirebaseFirestore
 import FirebaseRemoteConfig
+import KakaoSDKUser
 import RxCocoa
 import RxSwift
 import UIKit
@@ -13,9 +15,9 @@ import UIKit
 final class SignUpViewModel: ViewModel {
 
     struct Input {
-        let name = BehaviorSubject<String>(value: "")
-        let team = BehaviorSubject<String>(value: "")
-        let teamNumber = BehaviorSubject<Int>(value: 0)
+        let name = BehaviorSubject<String?>(value: nil)
+        let platform = BehaviorSubject<PlatformType?>(value: nil)
+        let teamNumber = BehaviorSubject<Int?>(value: nil)
     }
 
     struct Output {
@@ -25,8 +27,10 @@ final class SignUpViewModel: ViewModel {
         let generation = BehaviorSubject<Int>(value: 0)
 
         let isNameTextFieldValid = BehaviorSubject(value: false)
-        let showTeamList = PublishRelay<Void>()
+        let showTeamCount = PublishRelay<Void>()
+
         let complete = PublishRelay<Void>()
+        let goToHome = PublishRelay<Void>()
     }
 
     let input = Input()
@@ -38,12 +42,12 @@ final class SignUpViewModel: ViewModel {
 
         input.name
             .subscribe(onNext: { [weak self] name in
-                self?.output.isNameTextFieldValid.onNext(!name.isEmpty)
+                self?.output.isNameTextFieldValid.onNext(name?.isEmpty == false)
             }).disposed(by: disposeBag)
 
-        input.team
+        input.platform
             .subscribe(onNext: { [weak self] _ in
-                self?.output.showTeamList.accept(())
+                self?.output.showTeamCount.accept(())
             }).disposed(by: disposeBag)
 
         input.teamNumber
@@ -85,6 +89,43 @@ private extension SignUpViewModel {
                 self.output.configTeams.onNext(configTeams)
             }
         }
+    }
+
+}
+
+extension SignUpViewModel {
+
+    func registerInfo() {
+        guard let name = try? input.name.value(),
+              let platform = try? input.platform.value(),
+              let teamNumber = try? input.teamNumber.value() else { return }
+
+        let db = Firestore.firestore()
+        let docRef = db.collection("member")
+
+        UserApi.shared.me { [weak self] user, error in
+            guard let self = self, let user = user, let userId = user.id else { return }
+
+            docRef.document("\(userId)").setData([
+                "id": userId,
+                "name": name,
+                "team": ["platform": platform.rawValue, "teamNumber": teamNumber],
+                "attendances": self.makeEmptyAttendances()
+            ]) { [weak self] error in
+                guard error == nil else { return }
+                self?.output.goToHome.accept(())
+            }
+        }
+    }
+
+    private func makeEmptyAttendances() -> [[String: Any]] {
+        var attendances: [[String: Any]] = []
+        let sessionCount = 20
+        for id in 0..<sessionCount {
+            let empty: [String: Any] = ["sessionId": id, "attendanceType": ["text": "미통보 결석", "point": -20]]
+            attendances.append(empty)
+        }
+        return attendances
     }
 
 }
