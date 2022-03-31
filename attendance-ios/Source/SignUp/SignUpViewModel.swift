@@ -95,7 +95,7 @@ private extension SignUpViewModel {
 
 extension SignUpViewModel {
 
-    // TODO: - 파이어베이스에 유저 저장
+    // TODO: - 파이어베이스에 유저 정보 저장
     func registerInfo() {
         guard let name = try? input.name.value(),
               let platform = try? input.platform.value(),
@@ -107,7 +107,8 @@ extension SignUpViewModel {
         UserApi.shared.me { [weak self] user, error in
             guard let self = self, let user = user, let userId = user.id else { return }
             let team = Team(platform: platform, teamNumber: teamNumber)
-            let member = Member(id: userId, name: name, team: team, attendances: Attendance.defaults)
+            let member = Member(id: Int(userId), name: name, team: team, attendances: Attendance.defaults)
+            print("member: \(member)")
 
             docRef.document("\(userId)").setData([
                 "id": userId,
