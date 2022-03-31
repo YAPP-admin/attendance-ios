@@ -95,7 +95,6 @@ private extension SignUpViewModel {
 
 extension SignUpViewModel {
 
-    // TODO: - 파이어베이스에 유저 정보 저장
     func registerInfo() {
         guard let name = try? input.name.value(),
               let platform = try? input.platform.value(),
@@ -106,15 +105,12 @@ extension SignUpViewModel {
 
         UserApi.shared.me { [weak self] user, error in
             guard let self = self, let user = user, let userId = user.id else { return }
-            let team = Team(platform: platform, teamNumber: teamNumber)
-            let member = Member(id: Int(userId), name: name, team: team, attendances: Attendance.defaults)
-            print("member: \(member)")
 
             docRef.document("\(userId)").setData([
                 "id": userId,
                 "name": name,
-                "team": ["platform": "iOS", "teamNumber": 1],
-                "attendances": ["sessionId": 0, "attendanceType": ["text": "미통보 결석", "point": -20]]
+                "team": ["platform": platform.rawValue, "teamNumber": teamNumber],
+                "attendances": self.makeEmptyAttendances()
             ]) { [weak self] error in
                 guard error == nil else { return }
                 self?.output.goToHome.accept(())
@@ -122,15 +118,12 @@ extension SignUpViewModel {
         }
     }
 
-}
-
-fileprivate extension Attendance {
-
-    static var defaults: [Attendance] {
+    private func makeEmptyAttendances() -> [[String: Any]] {
+        var attendances: [[String: Any]] = []
         let sessionCount = 20
-        var attendances: [Attendance] = []
         for id in 0..<sessionCount {
-            attendances.append(Attendance(sesstionId: id, attendanceType: .notMentionedAbsence))
+            let empty: [String: Any] = ["sessionId": id, "attendanceType": ["text": "미통보 결석", "point": -20]]
+            attendances.append(empty)
         }
         return attendances
     }
