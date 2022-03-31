@@ -25,7 +25,7 @@ final class AdminCardView: UIView {
     private let label: UILabel = {
         let label = UILabel()
         label.text = "20기 누적 출결 점수"
-        label.font = .Pretendard(type: .Bold, size: 18)
+        label.font = .Pretendard(type: .bold, size: 18)
         label.textColor = .gray_1200
         return label
     }()
@@ -33,7 +33,7 @@ final class AdminCardView: UIView {
     private let subLabel: UILabel = {
         let label = UILabel()
         label.text = "누적 점수 확인하기"
-        label.font = .Pretendard(type: .Medium, size: 16)
+        label.font = .Pretendard(type: .medium, size: 16)
         label.textColor = .yapp_orange
         return label
     }()

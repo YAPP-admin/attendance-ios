@@ -15,10 +15,11 @@ final class AdminTodayView: UIView {
         static let cornerRadius: CGFloat = 12
     }
 
+    // TODO: - 오늘 날짜로 text 설정
     private let label: UILabel = {
         let label = UILabel()
         label.text = "02.07 오늘"
-        label.font = .Pretendard(type: .Bold, size: 18)
+        label.font = .Pretendard(type: .bold, size: 18)
         label.textColor = .gray_1200
         return label
     }()

@@ -22,7 +22,7 @@ final class AdminViewController: UIViewController {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "출결 관리"
-        label.font = .Pretendard(type: .Bold, size: 24)
+        label.font = .Pretendard(type: .bold, size: 24)
         label.textColor = .gray_1200
         label.numberOfLines = 0
         return label
