@@ -81,7 +81,6 @@ private extension AdminViewController {
     }
 
     func goToGradeVC() {
-        print("goToGradeVC")
         let gradeVC = AdminGradeViewController(viewModel: viewModel)
         navigationItem.backButtonTitle = ""
         navigationController?.navigationBar.tintColor = .gray_800

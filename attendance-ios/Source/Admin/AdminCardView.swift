@@ -19,6 +19,8 @@ final class AdminCardView: UIView {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.spacing = 4
+        stackView.alignment = .fill
+        stackView.distribution = .fill
         return stackView
     }()
 
