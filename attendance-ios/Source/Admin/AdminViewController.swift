@@ -17,6 +17,7 @@ final class AdminViewController: UIViewController {
         static let verticalPadding: CGFloat = 28
         static let dividerViewHeight: CGFloat = 12
         static let todayViewHeight: CGFloat = 65
+        static let cellHeight: CGFloat = 60
     }
 
     private let titleLabel: UILabel = {
@@ -55,12 +56,15 @@ final class AdminViewController: UIViewController {
         bindViewModel()
 
         setupDelegate()
+        setupCollectionView()
+
         configureUI()
         configureLayout()
     }
 
 }
 
+// MARK: - Bind
 private extension AdminViewController {
 
     func bindSubviews() {
@@ -90,6 +94,40 @@ private extension AdminViewController {
             .bind(onNext: goToManagementVC)
             .disposed(by: disposeBag)
     }
+
+}
+
+// MARK: - CollectionView
+extension AdminViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+
+    private func setupCollectionView() {
+        sessionCollectionView.delegate = self
+
+        sessionCollectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: UICollectionViewCell.identifier)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        20
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = UICollectionViewCell()
+        cell.backgroundColor = .white
+        return cell
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        .init(width: view.bounds.width, height: Constants.cellHeight)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(indexPath.row)
+    }
+
+}
+
+// MARK: - etc
+private extension AdminViewController {
 
     func goToGradeVC() {
         let gradeVC = AdminGradeViewController(viewModel: viewModel)
