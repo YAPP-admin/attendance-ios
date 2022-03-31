@@ -39,16 +39,16 @@ struct Attendance: Codable {
 }
 
 enum PlatformType: String, Codable {
+    case allRounder = "All-Rounder"
     case android = "Android"
     case ios = "iOS"
     case web = "Web"
-    case allRounder = "All-Rounder"
 
     enum CodingKeys: String, CodingKey {
+        case allRounder = "All-Rounder"
         case android = "Android"
         case ios = "iOS"
         case web = "Web"
-        case allRounder = "All-Rounder"
     }
 }
 
