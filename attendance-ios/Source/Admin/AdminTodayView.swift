@@ -22,6 +22,16 @@ final class AdminTodayView: UIView {
         return label
     }()
 
+    private let stackView: UIStackView = {
+        let view = UIStackView()
+        view.axis = .horizontal
+        view.spacing = Constants.padding
+        view.alignment = .fill
+        view.distribution = .fillEqually
+        view.backgroundColor = .systemYellow
+        return view
+    }()
+
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .Pretendard(type: .semiBold, size: 18)
@@ -29,14 +39,7 @@ final class AdminTodayView: UIView {
         return label
     }()
 
-    private let stackView: UIStackView = {
-        let view = UIStackView()
-        view.axis = .horizontal
-        view.spacing = 0
-        return view
-    }()
-
-    private let manageButton: UIButton = {
+    let managementButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .yapp_orange
         button.setTitle("관리", for: .normal)
@@ -77,19 +80,18 @@ extension AdminTodayView {
 private extension AdminTodayView {
 
     func configureUI() {
-        backgroundColor = .gray_200
     }
 
     func configureLayout() {
         addSubviews([todayLabel, stackView])
-        stackView.addSubviews([titleLabel, manageButton])
+        stackView.addSubviews([titleLabel, managementButton])
 
         todayLabel.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.left.right.equalToSuperview()
         }
         stackView.snp.makeConstraints {
-            $0.top.equalTo(todayLabel.snp.bottom)
+            $0.top.equalTo(todayLabel.snp.bottom).offset(Constants.padding)
             $0.bottom.equalToSuperview()
             $0.left.right.equalToSuperview()
         }

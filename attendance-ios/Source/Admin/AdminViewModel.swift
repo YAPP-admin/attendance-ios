@@ -13,10 +13,12 @@ final class AdminViewModel: ViewModel {
 
     struct Input {
         let tapCardView = PublishRelay<Void>()
+        let tapManagementButton = PublishRelay<Void>()
     }
 
     struct Output {
         let goToGradeVC = PublishRelay<Void>()
+        let goToManagementVC = PublishRelay<Void>()
     }
 
     let input = Input()
@@ -28,10 +30,11 @@ final class AdminViewModel: ViewModel {
             .subscribe(onNext: { [weak self] _ in
                 self?.output.goToGradeVC.accept(())
             }).disposed(by: disposeBag)
+
+        input.tapManagementButton
+            .subscribe(onNext: { [weak self] _ in
+                self?.output.goToManagementVC.accept(())
+            }).disposed(by: disposeBag)
     }
-
-}
-
-private extension AdminViewModel {
 
 }

@@ -20,7 +20,7 @@ final class AdminCardView: UIView {
         stackView.axis = .vertical
         stackView.spacing = 4
         stackView.alignment = .fill
-        stackView.distribution = .fill
+        stackView.distribution = .fillEqually
         return stackView
     }()
 

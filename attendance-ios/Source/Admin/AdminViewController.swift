@@ -71,6 +71,12 @@ private extension AdminViewController {
             .bind(onNext: { [weak self] _ in
                 self?.viewModel.input.tapCardView.accept(())
             }).disposed(by: disposeBag)
+
+        todayView.managementButton.rx.controlEvent([.touchUpInside])
+            .asObservable()
+            .subscribe(onNext: { [weak self] _ in
+                self?.viewModel.input.tapManagementButton.accept(())
+            }).disposed(by: disposeBag)
     }
 
     func bindViewModel() {
@@ -78,13 +84,27 @@ private extension AdminViewController {
             .observe(on: MainScheduler.instance)
             .bind(onNext: goToGradeVC)
             .disposed(by: disposeBag)
+
+        viewModel.output.goToManagementVC
+            .observe(on: MainScheduler.instance)
+            .bind(onNext: goToManagementVC)
+            .disposed(by: disposeBag)
     }
 
     func goToGradeVC() {
         let gradeVC = AdminGradeViewController(viewModel: viewModel)
         navigationItem.backButtonTitle = ""
+        navigationItem.title = "누적 출결 점수"
         navigationController?.navigationBar.tintColor = .gray_800
         navigationController?.pushViewController(gradeVC, animated: true)
+    }
+
+    func goToManagementVC() {
+        let managementVC = AdminManagementViewController(viewModel: viewModel)
+        navigationItem.backButtonTitle = ""
+        navigationItem.title = "YAPP 오리엔테이션"
+        navigationController?.navigationBar.tintColor = .gray_800
+        navigationController?.pushViewController(managementVC, animated: true)
     }
 
     func setupDelegate() {
