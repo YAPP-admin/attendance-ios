@@ -15,10 +15,8 @@ final class AdminTodayView: UIView {
         static let cornerRadius: CGFloat = 12
     }
 
-    // TODO: - 오늘 날짜로 text 설정
-    private let label: UILabel = {
+    private let todayLabel: UILabel = {
         let label = UILabel()
-        label.text = "02.07 오늘"
         label.font = .Pretendard(type: .bold, size: 18)
         label.textColor = .gray_1200
         return label
@@ -26,6 +24,7 @@ final class AdminTodayView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        configureTodayLabel()
         configureUI()
         configureLayout()
     }
@@ -36,7 +35,18 @@ final class AdminTodayView: UIView {
 
 }
 
+extension AdminTodayView {
+
+    // TODO: - 다음 세션 날짜로 업데이트
+    func configureTodayLabel() {
+        let todayString = "02.07"
+        todayLabel.text = "\(todayString) 오늘"
+    }
+
+}
+
 private extension AdminTodayView {
+
 
     func configureUI() {
         backgroundColor = .gray_200
