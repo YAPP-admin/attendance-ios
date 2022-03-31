@@ -30,6 +30,7 @@
 		5E9CC7BC27D0F79E006D8B12 /* SignUpCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9CC7BB27D0F79D006D8B12 /* SignUpCollectionViewCell.swift */; };
 		5EA97D8827DBA621004E2330 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA97D8727DBA621004E2330 /* Models.swift */; };
 		5EA97D8A27DBB06A004E2330 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA97D8927DBB06A004E2330 /* Config.swift */; };
+		5EAA79D527F5D6B400BC7397 /* AdminTodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA79D427F5D6B400BC7397 /* AdminTodayView.swift */; };
 		5EE25B2427C7CB700065B816 /* bg_buong.html in Resources */ = {isa = PBXBuildFile; fileRef = 5EE25B2327C7CB700065B816 /* bg_buong.html */; };
 		5EE54FEE27DA469700294120 /* splash_login.html in Resources */ = {isa = PBXBuildFile; fileRef = 5EE54FED27DA469700294120 /* splash_login.html */; };
 		5EE54FF027DA469A00294120 /* splash_main.html in Resources */ = {isa = PBXBuildFile; fileRef = 5EE54FEF27DA469A00294120 /* splash_main.html */; };
@@ -76,6 +77,7 @@
 		5E9CC7BB27D0F79D006D8B12 /* SignUpCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpCollectionViewCell.swift; sourceTree = "<group>"; };
 		5EA97D8727DBA621004E2330 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		5EA97D8927DBB06A004E2330 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		5EAA79D427F5D6B400BC7397 /* AdminTodayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminTodayView.swift; sourceTree = "<group>"; };
 		5EE25B2327C7CB700065B816 /* bg_buong.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = bg_buong.html; sourceTree = "<group>"; };
 		5EE54FED27DA469700294120 /* splash_login.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = splash_login.html; sourceTree = "<group>"; };
 		5EE54FEF27DA469A00294120 /* splash_main.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = splash_main.html; sourceTree = "<group>"; };
@@ -174,6 +176,7 @@
 				5E7AEF2727E222C30059FB3A /* AdminGradeViewController.swift */,
 				5E7AEF2927E223040059FB3A /* AdminManagementViewController.swift */,
 				5E7AEF2527E21E4C0059FB3A /* AdminCardView.swift */,
+				5EAA79D427F5D6B400BC7397 /* AdminTodayView.swift */,
 			);
 			path = Admin;
 			sourceTree = "<group>";
@@ -513,6 +516,7 @@
 				5E7AEF2A27E223040059FB3A /* AdminManagementViewController.swift in Sources */,
 				5E6179AC27C670D500B1A835 /* UITextField.swift in Sources */,
 				5EF69EA527A7DAF8007E9735 /* SceneDelegate.swift in Sources */,
+				5EAA79D527F5D6B400BC7397 /* AdminTodayView.swift in Sources */,
 				5E7AEF2627E21E4C0059FB3A /* AdminCardView.swift in Sources */,
 				5E7AEF2427E21D680059FB3A /* AdminViewModel.swift in Sources */,
 			);
