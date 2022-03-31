@@ -25,8 +25,8 @@ final class SignUpCollectionViewCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configureLayout()
         configureUI()
+        configureLayout()
     }
 
     required init?(coder aDecoder: NSCoder) {

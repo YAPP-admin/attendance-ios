@@ -137,7 +137,6 @@ private extension SignUpTeamInfoViewController {
         viewModel.output.showTeamList
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] _ in
-                // TODO: - 이후 애니메이션 추가
                 self?.subTitleLabel.isHidden = false
                 self?.teamCollectionView.isHidden = false
             })

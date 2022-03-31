@@ -36,6 +36,7 @@
 		5EAA79D727F5ED7B00BC7397 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA79D627F5ED7B00BC7397 /* UIView.swift */; };
 		5EAA79D927F5EE1900BC7397 /* UIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA79D827F5EE1900BC7397 /* UIStackView.swift */; };
 		5EAA79DB27F601ED00BC7397 /* AdminBottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA79DA27F601ED00BC7397 /* AdminBottomSheetView.swift */; };
+		5EAA79DD27F6045E00BC7397 /* AdminSessionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA79DC27F6045E00BC7397 /* AdminSessionCell.swift */; };
 		5EE25B2427C7CB700065B816 /* bg_buong.html in Resources */ = {isa = PBXBuildFile; fileRef = 5EE25B2327C7CB700065B816 /* bg_buong.html */; };
 		5EE54FEE27DA469700294120 /* splash_login.html in Resources */ = {isa = PBXBuildFile; fileRef = 5EE54FED27DA469700294120 /* splash_login.html */; };
 		5EE54FF027DA469A00294120 /* splash_main.html in Resources */ = {isa = PBXBuildFile; fileRef = 5EE54FEF27DA469A00294120 /* splash_main.html */; };
@@ -88,6 +89,7 @@
 		5EAA79D627F5ED7B00BC7397 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		5EAA79D827F5EE1900BC7397 /* UIStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStackView.swift; sourceTree = "<group>"; };
 		5EAA79DA27F601ED00BC7397 /* AdminBottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminBottomSheetView.swift; sourceTree = "<group>"; };
+		5EAA79DC27F6045E00BC7397 /* AdminSessionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminSessionCell.swift; sourceTree = "<group>"; };
 		5EE25B2327C7CB700065B816 /* bg_buong.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = bg_buong.html; sourceTree = "<group>"; };
 		5EE54FED27DA469700294120 /* splash_login.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = splash_login.html; sourceTree = "<group>"; };
 		5EE54FEF27DA469A00294120 /* splash_main.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = splash_main.html; sourceTree = "<group>"; };
@@ -190,6 +192,7 @@
 				5E7AEF2527E21E4C0059FB3A /* AdminCardView.swift */,
 				5EAA79D427F5D6B400BC7397 /* AdminTodayView.swift */,
 				5EAA79DA27F601ED00BC7397 /* AdminBottomSheetView.swift */,
+				5EAA79DC27F6045E00BC7397 /* AdminSessionCell.swift */,
 			);
 			path = Admin;
 			sourceTree = "<group>";
@@ -504,6 +507,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5E9CC7BA27D0F57A006D8B12 /* UICollectionViewCell.swift in Sources */,
+				5EAA79DD27F6045E00BC7397 /* AdminSessionCell.swift in Sources */,
 				5E63BC9B27BBE90F0024FCE3 /* SignUpNameInfoViewController.swift in Sources */,
 				5EAA79D927F5EE1900BC7397 /* UIStackView.swift in Sources */,
 				5EA97D8A27DBB06A004E2330 /* Config.swift in Sources */,

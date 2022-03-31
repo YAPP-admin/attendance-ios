@@ -35,6 +35,7 @@ final class AdminViewController: UIViewController {
         view.backgroundColor = .background_base
         return view
     }()
+
     private let cardView = AdminCardView()
     private let todayView = AdminTodayView()
 
@@ -43,7 +44,7 @@ final class AdminViewController: UIViewController {
         layout.scrollDirection = .vertical
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.backgroundColor = .gray_200
+        collectionView.backgroundColor = .yapp_orange
         return collectionView
     }()
 
@@ -103,7 +104,7 @@ extension AdminViewController: UICollectionViewDelegateFlowLayout, UICollectionV
     private func setupCollectionView() {
         sessionCollectionView.delegate = self
 
-        sessionCollectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: UICollectionViewCell.identifier)
+        sessionCollectionView.register(AdminSessionCell.self, forCellWithReuseIdentifier: AdminSessionCell.identifier)
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -111,13 +112,12 @@ extension AdminViewController: UICollectionViewDelegateFlowLayout, UICollectionV
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = UICollectionViewCell()
-        cell.backgroundColor = .white
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AdminSessionCell.identifier, for: indexPath) as? AdminSessionCell else { return UICollectionViewCell() }
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        .init(width: view.bounds.width, height: Constants.cellHeight)
+        CGSize(width: 500, height: Constants.cellHeight)
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
