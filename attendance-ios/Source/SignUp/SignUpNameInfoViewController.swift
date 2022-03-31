@@ -92,10 +92,11 @@ final class SignUpNameInfoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         bindViewModel()
-        bindTextField()
-        bindButton()
+        bindSubviews()
+
         setupDelegate()
         setupTextField()
+        
         configureUI()
         configureLayout()
         configureAccessoryViewLayout()
@@ -121,15 +122,13 @@ private extension SignUpNameInfoViewController {
             .disposed(by: disposeBag)
     }
 
-    func bindTextField() {
+    func bindSubviews() {
         textField.rx.text
             .subscribe(onNext: { [weak self] text in
                 guard let text = text else { return }
                 self?.viewModel.input.name.onNext(text)
             }).disposed(by: disposeBag)
-    }
 
-    func bindButton() {
         nextButton.rx.controlEvent([.touchUpInside])
             .asObservable()
             .subscribe(onNext: { [weak self] _ in

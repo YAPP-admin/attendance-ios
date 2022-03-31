@@ -35,6 +35,7 @@ final class AdminGradeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        bindSubviews()
         bindViewModel()
         setupDelegate()
         configureUI()
@@ -44,6 +45,10 @@ final class AdminGradeViewController: UIViewController {
 }
 
 private extension AdminGradeViewController {
+
+    func bindSubviews() {
+
+    }
 
     func bindViewModel() {
 

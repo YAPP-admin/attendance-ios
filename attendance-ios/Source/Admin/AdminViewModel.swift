@@ -12,11 +12,11 @@ import UIKit
 final class AdminViewModel: ViewModel {
 
     struct Input {
-
+        let tapCardView = PublishRelay<Void>()
     }
 
     struct Output {
-
+        let goToGradeVC = PublishRelay<Void>()
     }
 
     let input = Input()
@@ -24,7 +24,10 @@ final class AdminViewModel: ViewModel {
     let disposeBag = DisposeBag()
 
     init() {
-
+        input.tapCardView
+            .subscribe(onNext: { [weak self] _ in
+                self?.output.goToGradeVC.accept(())
+            }).disposed(by: disposeBag)
     }
 
 }

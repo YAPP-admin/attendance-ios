@@ -122,14 +122,16 @@ private extension LoginViewController {
 
     func goToHomeVC() {
         let homeVC = HomeViewController()
-        homeVC.modalPresentationStyle = .fullScreen
-        present(homeVC, animated: true, completion: nil)
+        navigationItem.backButtonTitle = ""
+        navigationController?.navigationBar.tintColor = .gray_800
+        navigationController?.pushViewController(homeVC, animated: true)
     }
 
     func goToAdminVC() {
         let adminVC = AdminViewController()
-        adminVC.modalPresentationStyle = .fullScreen
-        present(adminVC, animated: true, completion: nil)
+        let navC = UINavigationController(rootViewController: adminVC)
+        navC.modalPresentationStyle = .fullScreen
+        self.present(navC, animated: true)
     }
 
     func setupDelegate() {

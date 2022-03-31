@@ -28,10 +28,10 @@ final class AdminViewController: UIViewController {
         return label
     }()
 
-    // TODO: - 배경색 Light/Background_base로 변경 필요
     private let dividerView: UIView = {
         let view = UIView()
         view.backgroundColor = .gray_200
+        view.backgroundColor = .background_base
         return view
     }()
     private let cardView = AdminCardView()
@@ -51,7 +51,9 @@ final class AdminViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        bindSubviews()
         bindViewModel()
+
         setupDelegate()
         configureUI()
         configureLayout()
@@ -61,8 +63,29 @@ final class AdminViewController: UIViewController {
 
 private extension AdminViewController {
 
-    func bindViewModel() {
+    func bindSubviews() {
+        let tapGesture = UITapGestureRecognizer()
+        cardView.addGestureRecognizer(tapGesture)
 
+        tapGesture.rx.event
+            .bind(onNext: { [weak self] _ in
+                self?.viewModel.input.tapCardView.accept(())
+            }).disposed(by: disposeBag)
+    }
+
+    func bindViewModel() {
+        viewModel.output.goToGradeVC
+            .observe(on: MainScheduler.instance)
+            .bind(onNext: goToGradeVC)
+            .disposed(by: disposeBag)
+    }
+
+    func goToGradeVC() {
+        print("goToGradeVC")
+        let gradeVC = AdminGradeViewController(viewModel: viewModel)
+        navigationItem.backButtonTitle = ""
+        navigationController?.navigationBar.tintColor = .gray_800
+        navigationController?.pushViewController(gradeVC, animated: true)
     }
 
     func setupDelegate() {

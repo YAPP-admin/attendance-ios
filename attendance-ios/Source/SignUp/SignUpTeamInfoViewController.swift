@@ -101,7 +101,7 @@ final class SignUpTeamInfoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         bindViewModel()
-        bindButton()
+        bindSubviews()
         setupDelegate()
         setupCollectionView()
         configureUI()
@@ -151,7 +151,7 @@ private extension SignUpTeamInfoViewController {
             .disposed(by: disposeBag)
     }
 
-    func bindButton() {
+    func bindSubviews() {
         okButton.rx.controlEvent([.touchUpInside])
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
