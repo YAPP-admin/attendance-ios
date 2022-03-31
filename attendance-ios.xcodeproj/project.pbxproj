@@ -33,6 +33,8 @@
 		5EA97D8827DBA621004E2330 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA97D8727DBA621004E2330 /* Models.swift */; };
 		5EA97D8A27DBB06A004E2330 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA97D8927DBB06A004E2330 /* Config.swift */; };
 		5EAA79D527F5D6B400BC7397 /* AdminTodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA79D427F5D6B400BC7397 /* AdminTodayView.swift */; };
+		5EAA79D727F5ED7B00BC7397 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA79D627F5ED7B00BC7397 /* UIView.swift */; };
+		5EAA79D927F5EE1900BC7397 /* UIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA79D827F5EE1900BC7397 /* UIStackView.swift */; };
 		5EE25B2427C7CB700065B816 /* bg_buong.html in Resources */ = {isa = PBXBuildFile; fileRef = 5EE25B2327C7CB700065B816 /* bg_buong.html */; };
 		5EE54FEE27DA469700294120 /* splash_login.html in Resources */ = {isa = PBXBuildFile; fileRef = 5EE54FED27DA469700294120 /* splash_login.html */; };
 		5EE54FF027DA469A00294120 /* splash_main.html in Resources */ = {isa = PBXBuildFile; fileRef = 5EE54FEF27DA469A00294120 /* splash_main.html */; };
@@ -82,6 +84,8 @@
 		5EA97D8727DBA621004E2330 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		5EA97D8927DBB06A004E2330 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		5EAA79D427F5D6B400BC7397 /* AdminTodayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminTodayView.swift; sourceTree = "<group>"; };
+		5EAA79D627F5ED7B00BC7397 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
+		5EAA79D827F5EE1900BC7397 /* UIStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStackView.swift; sourceTree = "<group>"; };
 		5EE25B2327C7CB700065B816 /* bg_buong.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = bg_buong.html; sourceTree = "<group>"; };
 		5EE54FED27DA469700294120 /* splash_login.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = splash_login.html; sourceTree = "<group>"; };
 		5EE54FEF27DA469A00294120 /* splash_main.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = splash_main.html; sourceTree = "<group>"; };
@@ -304,6 +308,8 @@
 				52BCA07127C4D3DF001BF86F /* UIFont.swift */,
 				5E6179AB27C670D500B1A835 /* UITextField.swift */,
 				5E9CC7B927D0F57A006D8B12 /* UICollectionViewCell.swift */,
+				5EAA79D627F5ED7B00BC7397 /* UIView.swift */,
+				5EAA79D827F5EE1900BC7397 /* UIStackView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -496,6 +502,7 @@
 			files = (
 				5E9CC7BA27D0F57A006D8B12 /* UICollectionViewCell.swift in Sources */,
 				5E63BC9B27BBE90F0024FCE3 /* SignUpNameInfoViewController.swift in Sources */,
+				5EAA79D927F5EE1900BC7397 /* UIStackView.swift in Sources */,
 				5EA97D8A27DBB06A004E2330 /* Config.swift in Sources */,
 				5E9CC7BC27D0F79E006D8B12 /* SignUpCollectionViewCell.swift in Sources */,
 				5E7AEF2227E212690059FB3A /* AdminViewController.swift in Sources */,
@@ -524,6 +531,7 @@
 				5E7AEF2A27E223040059FB3A /* AdminManagementViewController.swift in Sources */,
 				5E6179AC27C670D500B1A835 /* UITextField.swift in Sources */,
 				5EF69EA527A7DAF8007E9735 /* SceneDelegate.swift in Sources */,
+				5EAA79D727F5ED7B00BC7397 /* UIView.swift in Sources */,
 				5EAA79D527F5D6B400BC7397 /* AdminTodayView.swift in Sources */,
 				5E7AEF2627E21E4C0059FB3A /* AdminCardView.swift in Sources */,
 				5E7AEF2427E21D680059FB3A /* AdminViewModel.swift in Sources */,

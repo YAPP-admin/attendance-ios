@@ -158,11 +158,7 @@ private extension LoginViewController {
     }
 
     func configureLayout() {
-        view.addSubview(titleLabel)
-        view.addSubview(webView)
-        view.addSubview(loginButton)
-        view.addSubview(splashView)
-        view.addSubview(secretAdminButton)
+        view.addSubviews([titleLabel, webView, loginButton, splashView, secretAdminButton])
 
         webView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(80)

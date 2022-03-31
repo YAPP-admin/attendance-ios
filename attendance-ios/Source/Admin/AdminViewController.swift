@@ -74,11 +74,7 @@ private extension AdminViewController {
     }
 
     func configureLayout() {
-        view.addSubview(cardView)
-        view.addSubview(dividerView)
-        view.addSubview(titleLabel)
-        view.addSubview(todayView)
-        view.addSubview(sessionCollectionView)
+        view.addSubviews([cardView, dividerView, titleLabel, todayView, sessionCollectionView])
 
         cardView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(105)

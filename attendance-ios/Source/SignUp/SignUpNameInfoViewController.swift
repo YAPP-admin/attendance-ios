@@ -212,11 +212,7 @@ private extension SignUpNameInfoViewController {
     }
 
     func configureLayout() {
-        view.addSubview(backButton)
-        view.addSubview(titleLabel)
-        view.addSubview(subTitleLabel)
-        view.addSubview(textField)
-        view.addSubview(nextButton)
+        view.addSubviews([backButton, titleLabel, subTitleLabel, textField, nextButton])
 
         backButton.snp.makeConstraints {
             $0.top.equalToSuperview().offset(56)

@@ -344,12 +344,7 @@ private extension SignUpTeamInfoViewController {
     }
 
     func configureLayout() {
-        view.addSubview(backButton)
-        view.addSubview(titleLabel)
-        view.addSubview(positionCollectionView)
-        view.addSubview(subTitleLabel)
-        view.addSubview(teamCollectionView)
-        view.addSubview(okButton)
+        view.addSubviews([backButton, titleLabel, positionCollectionView, subTitleLabel, teamCollectionView, okButton])
 
         backButton.snp.makeConstraints {
             $0.top.equalToSuperview().offset(56)

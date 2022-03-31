@@ -109,12 +109,8 @@ private extension AlertView {
 
     func configureLayout() {
         addSubview(containerView)
-        containerView.addSubview(label)
-        containerView.addSubview(subLabel)
-        containerView.addSubview(stackView)
-
-        stackView.addArrangedSubview(leftButton)
-        stackView.addArrangedSubview(rightButton)
+        containerView.addSubviews([label, subLabel, stackView])
+        stackView.addArrangedSubviews([leftButton, rightButton])
 
         containerView.snp.makeConstraints {
             $0.left.right.equalToSuperview().inset(Constants.margin)

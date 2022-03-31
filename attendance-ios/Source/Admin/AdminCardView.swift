@@ -40,7 +40,7 @@ final class AdminCardView: UIView {
 
     private let imageView: UIImageView = {
         let view = UIImageView()
-        view.image = UIImage(named: "illust_check_grade")
+        view.image = UIImage(named: "illust_manager_home")
         view.contentMode = .scaleAspectFit
         return view
     }()
@@ -65,18 +65,14 @@ private extension AdminCardView {
     }
 
     func configureLayout() {
-        addSubview(stackView)
-        addSubview(imageView)
-        stackView.addArrangedSubview(label)
-        stackView.addArrangedSubview(subLabel)
+        addSubviews([stackView, imageView])
+        stackView.addArrangedSubviews([label, subLabel])
 
         stackView.snp.makeConstraints {
             $0.top.bottom.left.right.equalToSuperview().inset(Constants.padding)
         }
         imageView.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.right.bottom.equalToSuperview()
-            $0.width.equalTo(140)
+            $0.top.bottom.left.right.equalToSuperview()
         }
     }
 
