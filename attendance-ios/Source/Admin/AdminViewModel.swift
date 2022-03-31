@@ -14,11 +14,13 @@ final class AdminViewModel: ViewModel {
     struct Input {
         let tapCardView = PublishRelay<Void>()
         let tapManagementButton = PublishRelay<Void>()
+        let tapSettingButton = PublishRelay<Void>()
     }
 
     struct Output {
         let goToGradeVC = PublishRelay<Void>()
         let goToManagementVC = PublishRelay<Void>()
+        let goToSettingVC = PublishRelay<Void>()
     }
 
     let input = Input()
@@ -26,6 +28,10 @@ final class AdminViewModel: ViewModel {
     let disposeBag = DisposeBag()
 
     init() {
+        subscribeInputs()
+    }
+
+    private func subscribeInputs() {
         input.tapCardView
             .subscribe(onNext: { [weak self] _ in
                 self?.output.goToGradeVC.accept(())
@@ -34,6 +40,11 @@ final class AdminViewModel: ViewModel {
         input.tapManagementButton
             .subscribe(onNext: { [weak self] _ in
                 self?.output.goToManagementVC.accept(())
+            }).disposed(by: disposeBag)
+
+        input.tapSettingButton
+            .subscribe(onNext: { [weak self] _ in
+                self?.output.goToSettingVC.accept(())
             }).disposed(by: disposeBag)
     }
 

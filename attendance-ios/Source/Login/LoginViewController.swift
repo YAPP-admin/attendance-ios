@@ -61,8 +61,11 @@ final class LoginViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        bindSubviews()
         bindViewModel()
+
         setupDelegate()
+
         configureSplashView()
         configureWebView()
         configureUI()
@@ -71,6 +74,7 @@ final class LoginViewController: UIViewController {
 
 }
 
+// MARK: - Splash
 extension LoginViewController: WKNavigationDelegate {
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
@@ -83,9 +87,10 @@ extension LoginViewController: WKNavigationDelegate {
 
 }
 
+// MARK: - Bind
 private extension LoginViewController {
 
-    func bindViewModel() {
+    func bindSubviews() {
         loginButton.rx.tap
             .throttle(.seconds(3), latest: false, scheduler: MainScheduler.instance)
             .bind(to: viewModel.input.tapLogin)
@@ -96,7 +101,9 @@ private extension LoginViewController {
                 self?.goToAdminVC()
             }
             .disposed(by: disposeBag)
+    }
 
+    func bindViewModel() {
         viewModel.output.goToSignUp
             .observe(on: MainScheduler.instance)
             .bind(onNext: goToSignUpNameVC)
@@ -112,6 +119,10 @@ private extension LoginViewController {
             .bind(onNext: goToAdminVC)
             .disposed(by: disposeBag)
     }
+
+}
+
+private extension LoginViewController {
 
     func goToSignUpNameVC() {
         let signUpNameInfoVC = SignUpNameInfoViewController()

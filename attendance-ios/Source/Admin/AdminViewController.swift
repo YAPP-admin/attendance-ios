@@ -20,6 +20,14 @@ final class AdminViewController: UIViewController {
         static let cellHeight: CGFloat = 60
     }
 
+    private let settingButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .clear
+        button.setImage(UIImage(named: "setting"), for: .normal)
+        button.contentEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        return button
+    }()
+
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "출결 관리"
@@ -82,6 +90,12 @@ private extension AdminViewController {
             .subscribe(onNext: { [weak self] _ in
                 self?.viewModel.input.tapManagementButton.accept(())
             }).disposed(by: disposeBag)
+
+        settingButton.rx.controlEvent([.touchUpInside])
+            .asObservable()
+            .subscribe(onNext: { [weak self] _ in
+                self?.viewModel.input.tapSettingButton.accept(())
+            }).disposed(by: disposeBag)
     }
 
     func bindViewModel() {
@@ -93,6 +107,11 @@ private extension AdminViewController {
         viewModel.output.goToManagementVC
             .observe(on: MainScheduler.instance)
             .bind(onNext: goToManagementVC)
+            .disposed(by: disposeBag)
+
+        viewModel.output.goToSettingVC
+            .observe(on: MainScheduler.instance)
+            .bind(onNext: goToSettingVC)
             .disposed(by: disposeBag)
     }
 
@@ -145,6 +164,10 @@ private extension AdminViewController {
         navigationController?.pushViewController(managementVC, animated: true)
     }
 
+    func goToSettingVC() {
+        print("goToSettingVC")
+    }
+
     func setupDelegate() {
 
     }
@@ -154,8 +177,13 @@ private extension AdminViewController {
     }
 
     func configureLayout() {
-        view.addSubviews([cardView, dividerView, titleLabel, todayView, sessionCollectionView])
+        view.addSubviews([settingButton, cardView, dividerView, titleLabel, todayView, sessionCollectionView])
 
+        settingButton.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(Constants.verticalPadding)
+            $0.right.equalToSuperview().inset(Constants.horizontalPadding)
+            $0.width.height.equalTo(44)
+        }
         cardView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(105)
             $0.left.right.equalToSuperview().inset(Constants.horizontalPadding)

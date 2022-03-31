@@ -91,12 +91,12 @@ final class SignUpNameInfoViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        bindViewModel()
         bindSubviews()
+        bindViewModel()
 
         setupDelegate()
         setupTextField()
-        
+
         configureUI()
         configureLayout()
         configureAccessoryViewLayout()
@@ -112,15 +112,6 @@ final class SignUpNameInfoViewController: UIViewController {
 
 // MARK: - Bind
 private extension SignUpNameInfoViewController {
-
-    func bindViewModel() {
-        viewModel.output.isNameTextFieldValid
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] isValid in
-                isValid ? self?.activateButtons() : self?.deactivateButtons()
-            })
-            .disposed(by: disposeBag)
-    }
 
     func bindSubviews() {
         textField.rx.text
@@ -153,6 +144,15 @@ private extension SignUpNameInfoViewController {
                 self?.alertView.isHidden.toggle()
                 self?.goToLogin()
             }).disposed(by: disposeBag)
+    }
+
+    func bindViewModel() {
+        viewModel.output.isNameTextFieldValid
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] isValid in
+                isValid ? self?.activateButtons() : self?.deactivateButtons()
+            })
+            .disposed(by: disposeBag)
     }
 
 }

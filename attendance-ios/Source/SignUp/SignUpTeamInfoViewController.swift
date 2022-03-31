@@ -100,10 +100,12 @@ final class SignUpTeamInfoViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        bindViewModel()
         bindSubviews()
+        bindViewModel()
+
         setupDelegate()
         setupCollectionView()
+
         configureUI()
         configureLayout()
         configureAlertViewLayout()
@@ -118,6 +120,27 @@ final class SignUpTeamInfoViewController: UIViewController {
 
 // MARK: - Bind
 private extension SignUpTeamInfoViewController {
+
+    func bindSubviews() {
+        okButton.rx.controlEvent([.touchUpInside])
+            .asObservable()
+            .subscribe(onNext: { [weak self] _ in
+                self?.registerInfo()
+            }).disposed(by: disposeBag)
+
+        backButton.rx.controlEvent([.touchUpInside])
+            .asObservable()
+            .subscribe(onNext: { [weak self] _ in
+                self?.alertView.isHidden.toggle()
+            }).disposed(by: disposeBag)
+
+        alertView.rightButton.rx.controlEvent([.touchUpInside])
+            .asObservable()
+            .subscribe(onNext: { [weak self] _ in
+                self?.alertView.isHidden.toggle()
+                self?.goToLogin()
+            }).disposed(by: disposeBag)
+    }
 
     func bindViewModel() {
         viewModel.input.team
@@ -148,27 +171,6 @@ private extension SignUpTeamInfoViewController {
                 self?.activateButton()
             })
             .disposed(by: disposeBag)
-    }
-
-    func bindSubviews() {
-        okButton.rx.controlEvent([.touchUpInside])
-            .asObservable()
-            .subscribe(onNext: { [weak self] _ in
-                self?.registerInfo()
-            }).disposed(by: disposeBag)
-
-        backButton.rx.controlEvent([.touchUpInside])
-            .asObservable()
-            .subscribe(onNext: { [weak self] _ in
-                self?.alertView.isHidden.toggle()
-            }).disposed(by: disposeBag)
-
-        alertView.rightButton.rx.controlEvent([.touchUpInside])
-            .asObservable()
-            .subscribe(onNext: { [weak self] _ in
-                self?.alertView.isHidden.toggle()
-                self?.goToLogin()
-            }).disposed(by: disposeBag)
     }
 
     func registerInfo() {

@@ -44,7 +44,10 @@ final class BaseViewModel: ViewModel {
 
     init() {
         logoutWithKakao()
+        subscribeInputs()
+    }
 
+    private func subscribeInputs() {
         input.tapLogin
             .subscribe(onNext: { [weak self] _ in
                 self?.loginWithKakao()
@@ -53,6 +56,7 @@ final class BaseViewModel: ViewModel {
 
 }
 
+// MARK: - Login
 private extension BaseViewModel {
 
     func loginWithKakao() {
