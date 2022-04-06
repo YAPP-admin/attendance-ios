@@ -81,3 +81,9 @@ enum AttendanceType: Int, Codable {
         }
     }
 }
+
+enum NeedToAttendType: String {
+    case needAttendance = "NEED_ATTENDANCE"
+    case dontNeedAttendance = "DONT_NEED_ATTENDANCE"
+    case dayOff = "DAY_OFF"
+}
