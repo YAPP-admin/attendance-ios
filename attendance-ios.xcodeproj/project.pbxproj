@@ -37,6 +37,7 @@
 		5EAA79D927F5EE1900BC7397 /* UIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA79D827F5EE1900BC7397 /* UIStackView.swift */; };
 		5EAA79DB27F601ED00BC7397 /* AdminBottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA79DA27F601ED00BC7397 /* AdminBottomSheetView.swift */; };
 		5EAA79DD27F6045E00BC7397 /* AdminSessionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA79DC27F6045E00BC7397 /* AdminSessionCell.swift */; };
+		5EAA79F927FDD84C00BC7397 /* AdminMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA79F827FDD84C00BC7397 /* AdminMessageView.swift */; };
 		5EE25B2427C7CB700065B816 /* bg_buong.html in Resources */ = {isa = PBXBuildFile; fileRef = 5EE25B2327C7CB700065B816 /* bg_buong.html */; };
 		5EE54FEE27DA469700294120 /* splash_login.html in Resources */ = {isa = PBXBuildFile; fileRef = 5EE54FED27DA469700294120 /* splash_login.html */; };
 		5EE54FF027DA469A00294120 /* splash_main.html in Resources */ = {isa = PBXBuildFile; fileRef = 5EE54FEF27DA469A00294120 /* splash_main.html */; };
@@ -90,6 +91,7 @@
 		5EAA79D827F5EE1900BC7397 /* UIStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStackView.swift; sourceTree = "<group>"; };
 		5EAA79DA27F601ED00BC7397 /* AdminBottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminBottomSheetView.swift; sourceTree = "<group>"; };
 		5EAA79DC27F6045E00BC7397 /* AdminSessionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminSessionCell.swift; sourceTree = "<group>"; };
+		5EAA79F827FDD84C00BC7397 /* AdminMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminMessageView.swift; sourceTree = "<group>"; };
 		5EE25B2327C7CB700065B816 /* bg_buong.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = bg_buong.html; sourceTree = "<group>"; };
 		5EE54FED27DA469700294120 /* splash_login.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = splash_login.html; sourceTree = "<group>"; };
 		5EE54FEF27DA469A00294120 /* splash_main.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = splash_main.html; sourceTree = "<group>"; };
@@ -189,6 +191,7 @@
 				5EAA79F427FDD7B100BC7397 /* Main */,
 				5EAA79F527FDD7B800BC7397 /* Grade */,
 				5EAA79F627FDD7BE00BC7397 /* Management */,
+				5EAA79F727FDD82900BC7397 /* Common */,
 			);
 			path = Admin;
 			sourceTree = "<group>";
@@ -228,6 +231,14 @@
 				5EAA79DA27F601ED00BC7397 /* AdminBottomSheetView.swift */,
 			);
 			path = Management;
+			sourceTree = "<group>";
+		};
+		5EAA79F727FDD82900BC7397 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				5EAA79F827FDD84C00BC7397 /* AdminMessageView.swift */,
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 		5EE25B2527C7CBA10065B816 /* Image */ = {
@@ -566,6 +577,7 @@
 				5EAA79D727F5ED7B00BC7397 /* UIView.swift in Sources */,
 				5EAA79D527F5D6B400BC7397 /* AdminTodayView.swift in Sources */,
 				5E7AEF2627E21E4C0059FB3A /* AdminCardView.swift in Sources */,
+				5EAA79F927FDD84C00BC7397 /* AdminMessageView.swift in Sources */,
 				5E7AEF2427E21D680059FB3A /* AdminViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

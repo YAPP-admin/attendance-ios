@@ -14,7 +14,10 @@ final class AdminGradeViewController: UIViewController {
 
     enum Constants {
         static let padding: CGFloat = 24
+        static let topPadding: CGFloat = 100
     }
+
+    private let adminMesasgeView = AdminMessageView()
 
     private let viewModel: AdminViewModel
     private var disposeBag = DisposeBag()
@@ -78,10 +81,17 @@ private extension AdminGradeViewController {
 
     func configureUI() {
         view.backgroundColor = .white
+        adminMesasgeView.configureLabel("점수가 실시간으로 반영되고 있어요")
     }
 
     func configureLayout() {
+        view.addSubviews([adminMesasgeView])
 
+        adminMesasgeView.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(Constants.topPadding)
+            $0.left.right.equalToSuperview().inset(Constants.padding)
+            $0.height.equalTo(48)
+        }
     }
 
 }

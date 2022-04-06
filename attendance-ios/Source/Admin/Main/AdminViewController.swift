@@ -15,6 +15,7 @@ final class AdminViewController: UIViewController {
     enum Constants {
         static let horizontalPadding: CGFloat = 24
         static let verticalPadding: CGFloat = 28
+        static let topPadding: CGFloat = 100
         static let dividerViewHeight: CGFloat = 12
         static let todayViewHeight: CGFloat = 65
         static let cellHeight: CGFloat = 60
@@ -202,7 +203,7 @@ private extension AdminViewController {
         cardView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(80)
             $0.left.right.equalToSuperview().inset(Constants.horizontalPadding)
-            $0.height.equalTo(100)
+            $0.height.equalTo(Constants.topPadding)
         }
         dividerView.snp.makeConstraints {
             $0.top.equalTo(cardView.snp.bottom).offset(Constants.verticalPadding)
