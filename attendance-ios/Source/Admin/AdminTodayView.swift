@@ -13,6 +13,7 @@ final class AdminTodayView: UIView {
     enum Constants {
         static let padding: CGFloat = 6
         static let cornerRadius: CGFloat = 8
+        static let buttonHeight: CGFloat = 33
     }
 
     private let todayLabel: UILabel = {
@@ -28,7 +29,7 @@ final class AdminTodayView: UIView {
         view.spacing = Constants.padding
         view.alignment = .fill
         view.distribution = .fillEqually
-        view.backgroundColor = .systemYellow
+        view.backgroundColor = .systemGray
         return view
     }()
 
@@ -44,7 +45,6 @@ final class AdminTodayView: UIView {
         button.backgroundColor = .yapp_orange
         button.setTitle("관리", for: .normal)
         button.titleLabel?.font = .Pretendard(type: .regular, size: 14)
-        button.backgroundColor = .yapp_orange
         button.layer.cornerRadius = Constants.cornerRadius
         return button
     }()
@@ -52,6 +52,7 @@ final class AdminTodayView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureTodayLabel()
+        configureTitleLabel()
         configureUI()
         configureLayout()
     }
@@ -62,16 +63,16 @@ final class AdminTodayView: UIView {
 
 }
 
+// TODO: - 다음 세션 정보로 업데이트
 extension AdminTodayView {
 
-    // TODO: - 다음 세션 정보로 업데이트
     func configureTodayLabel() {
         let todayString = "02.07"
         todayLabel.text = "\(todayString) 오늘"
     }
 
     func configureTitleLabel() {
-        let titleString = "YAPP 오리엔테이션"
+        let titleString = "휴얍"
         titleLabel.text = titleString
     }
 
@@ -81,20 +82,19 @@ extension AdminTodayView {
 private extension AdminTodayView {
 
     func configureUI() {
+        backgroundColor = .systemGroupedBackground
     }
 
     func configureLayout() {
         addSubviews([todayLabel, stackView])
-        stackView.addSubviews([titleLabel, managementButton])
 
         todayLabel.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.left.right.equalToSuperview()
         }
         stackView.snp.makeConstraints {
-            $0.top.equalTo(todayLabel.snp.bottom).offset(Constants.padding)
-            $0.bottom.equalToSuperview()
-            $0.left.right.equalToSuperview()
+            $0.bottom.left.right.equalToSuperview()
+            $0.height.equalTo(Constants.buttonHeight)
         }
     }
 

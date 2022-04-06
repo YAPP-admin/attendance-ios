@@ -39,7 +39,6 @@ final class AdminViewController: UIViewController {
 
     private let dividerView: UIView = {
         let view = UIView()
-        view.backgroundColor = .gray_200
         view.backgroundColor = .background_base
         return view
     }()
@@ -52,7 +51,7 @@ final class AdminViewController: UIViewController {
         layout.scrollDirection = .vertical
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.backgroundColor = .yapp_orange
+        collectionView.backgroundColor = .systemGroupedBackground
         return collectionView
     }()
 
@@ -188,7 +187,7 @@ private extension AdminViewController {
             $0.width.height.equalTo(44)
         }
         cardView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(105)
+            $0.top.equalToSuperview().offset(80)
             $0.left.right.equalToSuperview().inset(Constants.horizontalPadding)
             $0.height.equalTo(100)
         }

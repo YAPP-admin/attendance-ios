@@ -69,7 +69,6 @@ private extension AdminGradeViewController {
 
     func setupNavigationTitle() {
         navigationItem.title = "누적 출결 점수"
-
     }
 
 }
