@@ -16,7 +16,8 @@ final class SignUpViewModel: ViewModel {
 
     struct Input {
         let name = BehaviorSubject<String?>(value: nil)
-        let platform = BehaviorSubject<PlatformType?>(value: nil)
+        let position = BehaviorSubject<PositionType?>(value: nil)
+        let teamType = BehaviorSubject<TeamType?>(value: nil)
         let teamNumber = BehaviorSubject<Int?>(value: nil)
     }
 
@@ -45,7 +46,7 @@ final class SignUpViewModel: ViewModel {
                 self?.output.isNameTextFieldValid.onNext(name?.isEmpty == false)
             }).disposed(by: disposeBag)
 
-        input.platform
+        input.teamType
             .subscribe(onNext: { [weak self] _ in
                 self?.output.showTeamCount.accept(())
             }).disposed(by: disposeBag)
@@ -97,7 +98,8 @@ extension SignUpViewModel {
 
     func registerInfo() {
         guard let name = try? input.name.value(),
-              let platform = try? input.platform.value(),
+              let position = try? input.position.value(),
+              let teamType = try? input.teamType.value(),
               let teamNumber = try? input.teamNumber.value() else { return }
 
         let db = Firestore.firestore()
@@ -109,7 +111,8 @@ extension SignUpViewModel {
             docRef.document("\(userId)").setData([
                 "id": userId,
                 "name": name,
-                "team": ["platform": platform.rawValue, "teamNumber": teamNumber],
+                "position": position.rawValue,
+                "team": ["number": teamNumber, "type": teamType.rawValue],
                 "attendances": self.makeEmptyAttendances()
             ]) { [weak self] error in
                 guard error == nil else { return }

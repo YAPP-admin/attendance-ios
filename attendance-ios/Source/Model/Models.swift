@@ -10,6 +10,7 @@ import Foundation
 struct Member: Codable {
     let id: Int
     let name: String
+    let position: PositionType
     let team: Team
     let attendances: [Attendance]
 }
@@ -17,20 +18,38 @@ struct Member: Codable {
 struct Session: Codable {
     let sessionId: Int
     let title: String
-    let date: String // yyyy-mm-dd
+    let date: String // yyyy-mm-dd hh:mm:ss
     let description: String
+    let isOff: Bool
 
     enum CodingKeys: String, CodingKey {
         case sessionId = "session_id"
         case title
         case date
         case description
+        case isOff = "is_off"
     }
 }
 
+enum PositionType: String, Codable {
+    case android = "DEV_ANDROID"
+    case web = "DEV_WEB"
+    case ios = "DEV_IOS"
+    case server = "DEV_SEVER"
+    case designer = "DESIGNER"
+    case projectManager = "PROJECT_MANAGER"
+}
+
 struct Team: Codable {
-    var platform: PlatformType
-    var teamNumber: Int
+    var type: TeamType
+    var number: Int
+}
+
+enum TeamType: String, Codable {
+    case android = "ANDROID"
+    case ios = "IOS"
+    case web = "WEB"
+    case allRounder = "ALL_ROUNDER"
 }
 
 struct Attendance: Codable {
@@ -38,44 +57,27 @@ struct Attendance: Codable {
     let attendanceType: AttendanceType
 }
 
-enum PlatformType: String, Codable {
-    case allRounder = "All-Rounder"
-    case android = "Android"
-    case ios = "iOS"
-    case web = "Web"
-
-    enum CodingKeys: String, CodingKey {
-        case allRounder = "All-Rounder"
-        case android = "Android"
-        case ios = "iOS"
-        case web = "Web"
-    }
-}
-
 enum AttendanceType: Int, Codable {
-    case notMentionedAbsence
     case absence
-    case attendance
-    case notMentionedTardy
     case tardy
+    case attendance
+    case attendanceMarked
 
     var text: String {
         switch self {
-        case .notMentionedAbsence: return "미통보 결석"
         case .absence: return "결석"
-        case .attendance: return "출석"
-        case .notMentionedTardy: return "미통보 지각"
         case .tardy: return "지각"
+        case .attendance: return "출석"
+        case .attendanceMarked: return "출석 인정"
         }
     }
 
     var point: Int {
         switch self {
-        case .notMentionedAbsence: return -20
         case .absence: return -10
-        case .attendance: return 0
-        case .notMentionedTardy: return -10
         case .tardy: return -5
+        case .attendance: return 0
+        case .attendanceMarked: return 0
         }
     }
 }

@@ -39,7 +39,7 @@ final class SignUpTeamInfoViewController: UIViewController {
         return label
     }()
 
-    private let positionCollectionView: UICollectionView = {
+    private let teamTypeCollectionView: UICollectionView = {
         let layout = CollectionViewLeftAlignFlowLayout()
         layout.scrollDirection = .vertical
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -47,7 +47,7 @@ final class SignUpTeamInfoViewController: UIViewController {
         return collectionView
     }()
 
-    private let teamCollectionView: UICollectionView = {
+    private let teamNumberCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -118,17 +118,17 @@ final class SignUpTeamInfoViewController: UIViewController {
 private extension SignUpTeamInfoViewController {
 
     func bindViewModel() {
-        viewModel.input.platform
+        viewModel.input.teamType
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] _ in
-                self?.teamCollectionView.reloadData()
+                self?.teamTypeCollectionView.reloadData()
             })
             .disposed(by: disposeBag)
 
         viewModel.input.teamNumber
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] _ in
-                self?.teamCollectionView.reloadData()
+                self?.teamNumberCollectionView.reloadData()
             })
             .disposed(by: disposeBag)
 
@@ -137,7 +137,7 @@ private extension SignUpTeamInfoViewController {
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] _ in
                 self?.subTitleLabel.isHidden = false
-                self?.teamCollectionView.isHidden = false
+                self?.teamNumberCollectionView.isHidden = false
             })
             .disposed(by: disposeBag)
 
@@ -183,23 +183,23 @@ private extension SignUpTeamInfoViewController {
 extension SignUpTeamInfoViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
 
     private func setupCollectionView() {
-        positionCollectionView.delegate = self
-        positionCollectionView.dataSource = self
-        teamCollectionView.delegate = self
-        teamCollectionView.dataSource = self
+        teamTypeCollectionView.delegate = self
+        teamTypeCollectionView.dataSource = self
+        teamNumberCollectionView.delegate = self
+        teamNumberCollectionView.dataSource = self
 
-        positionCollectionView.register(SignUpCollectionViewCell.self, forCellWithReuseIdentifier: SignUpCollectionViewCell.identifier)
-        teamCollectionView.register(SignUpCollectionViewCell.self, forCellWithReuseIdentifier: SignUpCollectionViewCell.identifier)
+        teamTypeCollectionView.register(SignUpCollectionViewCell.self, forCellWithReuseIdentifier: SignUpCollectionViewCell.identifier)
+        teamNumberCollectionView.register(SignUpCollectionViewCell.self, forCellWithReuseIdentifier: SignUpCollectionViewCell.identifier)
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let platforms = try? viewModel.output.configTeams.value() else { return 0 }
+        guard let teamTypes = try? viewModel.output.configTeams.value() else { return 0 }
 
         switch collectionView {
-        case positionCollectionView: return platforms.count
-        case teamCollectionView:
-            guard let platform = try? viewModel.input.platform.value(),
-                  let countString = platforms.filter({ $0.team == platform.rawValue }).first?.count,
+        case teamTypeCollectionView: return teamTypes.count
+        case teamNumberCollectionView:
+            guard let teamType = try? viewModel.input.teamType.value(),
+                  let countString = teamTypes.filter({ $0.team == teamType.rawValue }).first?.count,
                   let count = Int(countString) else { break }
             return count
         default: return 0
@@ -213,9 +213,9 @@ extension SignUpTeamInfoViewController: UICollectionViewDelegateFlowLayout, UICo
                 let teams = try? viewModel.output.configTeams.value() else { return UICollectionViewCell() }
 
         switch collectionView {
-        case positionCollectionView:
+        case teamTypeCollectionView:
             cell.configureUI(text: teams[indexPath.row].team)
-        case teamCollectionView:
+        case teamNumberCollectionView:
             cell.configureUI(text: "\(indexPath.row+1)팀")
             guard let teamNumber = try? viewModel.input.teamNumber.value() else { break }
             cell.configureUI(isSelected: teamNumber == indexPath.row+1)
@@ -230,10 +230,10 @@ extension SignUpTeamInfoViewController: UICollectionViewDelegateFlowLayout, UICo
         var text = ""
 
         switch collectionView {
-        case positionCollectionView:
+        case teamTypeCollectionView:
             guard let teams = try? viewModel.output.configTeams.value() else { break }
             text = teams[indexPath.row].team
-        case teamCollectionView: text = "\(indexPath.row+1)팀"
+        case teamNumberCollectionView: text = "\(indexPath.row+1)팀"
         default: ()
         }
 
@@ -252,13 +252,13 @@ extension SignUpTeamInfoViewController: UICollectionViewDelegateFlowLayout, UICo
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let platforms = try? viewModel.output.configTeams.value().map({ $0.team }),
+        guard let teamTypes = try? viewModel.output.configTeams.value().map({ $0.team }),
               let cell = collectionView.cellForItem(at: indexPath) as? SignUpCollectionViewCell else { return }
         switch collectionView {
-        case positionCollectionView:
-            let platform = PlatformType(rawValue: platforms[indexPath.row])
-            viewModel.input.platform.onNext(platform)
-        case teamCollectionView:
+        case teamTypeCollectionView:
+            let teamType = TeamType(rawValue: teamTypes[indexPath.row])
+            viewModel.input.teamType.onNext(teamType)
+        case teamNumberCollectionView:
             viewModel.input.teamNumber.onNext(indexPath.row+1)
         default: break
         }
@@ -328,9 +328,9 @@ private extension SignUpTeamInfoViewController {
     func configureLayout() {
         view.addSubview(backButton)
         view.addSubview(titleLabel)
-        view.addSubview(positionCollectionView)
+        view.addSubview(teamTypeCollectionView)
         view.addSubview(subTitleLabel)
-        view.addSubview(teamCollectionView)
+        view.addSubview(teamNumberCollectionView)
         view.addSubview(okButton)
 
         backButton.snp.makeConstraints {
@@ -342,17 +342,17 @@ private extension SignUpTeamInfoViewController {
             $0.top.equalToSuperview().offset(120)
             $0.left.right.equalToSuperview().inset(Constants.padding)
         }
-        positionCollectionView.snp.makeConstraints {
+        teamTypeCollectionView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(28)
             $0.left.equalToSuperview().inset(Constants.padding)
             $0.right.equalToSuperview().inset(Constants.padding*4)
             $0.height.equalTo(Constants.cellHeight*2+Constants.cellSpacing)
         }
         subTitleLabel.snp.makeConstraints {
-            $0.top.equalTo(positionCollectionView.snp.bottom).offset(32)
+            $0.top.equalTo(teamTypeCollectionView.snp.bottom).offset(32)
             $0.left.right.equalToSuperview().inset(Constants.padding)
         }
-        teamCollectionView.snp.makeConstraints {
+        teamNumberCollectionView.snp.makeConstraints {
             $0.top.equalTo(subTitleLabel.snp.bottom).offset(10)
             $0.left.right.equalToSuperview().inset(Constants.padding)
             $0.height.equalTo(Constants.cellHeight)
