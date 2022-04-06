@@ -34,6 +34,14 @@ final class AdminManagementViewController: UIViewController {
         return button
     }()
 
+    private let bottomSheetTestButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("바텀 시트 테스트", for: .normal)
+        button.backgroundColor = .yapp_orange
+        button.layer.cornerRadius = 12
+        return button
+    }()
+
     private let viewModel: AdminViewModel
     private var disposeBag = DisposeBag()
 
@@ -81,6 +89,12 @@ extension AdminManagementViewController {
             .subscribe(onNext: { [weak self] _ in
                 self?.navigationController?.popViewController(animated: true)
             }).disposed(by: disposeBag)
+
+        bottomSheetTestButton.rx.controlEvent([.touchUpInside])
+            .asObservable()
+            .subscribe(onNext: { [weak self] _ in
+                print("바텀 시트 보여주기")
+            }).disposed(by: disposeBag)
     }
 
     func bindViewModel() {
@@ -114,10 +128,15 @@ private extension AdminManagementViewController {
     }
 
     func configureLayout() {
-        view.addSubviews([adminMesasgeView])
+        view.addSubviews([adminMesasgeView, bottomSheetTestButton])
 
         adminMesasgeView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(Constants.topPadding)
+            $0.left.right.equalToSuperview().inset(Constants.padding)
+            $0.height.equalTo(48)
+        }
+        bottomSheetTestButton.snp.makeConstraints {
+            $0.top.equalTo(adminMesasgeView.snp.bottom).offset(Constants.topPadding)
             $0.left.right.equalToSuperview().inset(Constants.padding)
             $0.height.equalTo(48)
         }
