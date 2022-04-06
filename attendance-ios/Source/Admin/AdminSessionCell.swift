@@ -27,7 +27,7 @@ final class AdminSessionCell: UICollectionViewCell {
         let label = UILabel()
         label.font = .Pretendard(type: .regular, size: 16)
         label.textColor = .gray_1200
-        label.text = "01.01"
+        label.text = "01.01      오리엔테이션"
         return label
     }()
 
