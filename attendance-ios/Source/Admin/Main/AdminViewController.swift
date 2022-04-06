@@ -152,6 +152,7 @@ extension AdminViewController: UICollectionViewDelegateFlowLayout, UICollectionV
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(indexPath.row)
+        goToManagementVC()
     }
 
 }

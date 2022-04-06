@@ -186,13 +186,9 @@
 			isa = PBXGroup;
 			children = (
 				5E7AEF2327E21D680059FB3A /* AdminViewModel.swift */,
-				5E7AEF2127E212690059FB3A /* AdminViewController.swift */,
-				5E7AEF2727E222C30059FB3A /* AdminGradeViewController.swift */,
-				5E7AEF2927E223040059FB3A /* AdminManagementViewController.swift */,
-				5E7AEF2527E21E4C0059FB3A /* AdminCardView.swift */,
-				5EAA79D427F5D6B400BC7397 /* AdminTodayView.swift */,
-				5EAA79DA27F601ED00BC7397 /* AdminBottomSheetView.swift */,
-				5EAA79DC27F6045E00BC7397 /* AdminSessionCell.swift */,
+				5EAA79F427FDD7B100BC7397 /* Main */,
+				5EAA79F527FDD7B800BC7397 /* Grade */,
+				5EAA79F627FDD7BE00BC7397 /* Management */,
 			);
 			path = Admin;
 			sourceTree = "<group>";
@@ -204,6 +200,34 @@
 				5EA97D8927DBB06A004E2330 /* Config.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		5EAA79F427FDD7B100BC7397 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				5E7AEF2127E212690059FB3A /* AdminViewController.swift */,
+				5E7AEF2527E21E4C0059FB3A /* AdminCardView.swift */,
+				5EAA79D427F5D6B400BC7397 /* AdminTodayView.swift */,
+				5EAA79DC27F6045E00BC7397 /* AdminSessionCell.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		5EAA79F527FDD7B800BC7397 /* Grade */ = {
+			isa = PBXGroup;
+			children = (
+				5E7AEF2727E222C30059FB3A /* AdminGradeViewController.swift */,
+			);
+			path = Grade;
+			sourceTree = "<group>";
+		};
+		5EAA79F627FDD7BE00BC7397 /* Management */ = {
+			isa = PBXGroup;
+			children = (
+				5E7AEF2927E223040059FB3A /* AdminManagementViewController.swift */,
+				5EAA79DA27F601ED00BC7397 /* AdminBottomSheetView.swift */,
+			);
+			path = Management;
 			sourceTree = "<group>";
 		};
 		5EE25B2527C7CBA10065B816 /* Image */ = {
