@@ -60,7 +60,6 @@ final class AdminViewController: UIViewController {
         layout.scrollDirection = .vertical
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.backgroundColor = .systemGroupedBackground
         return collectionView
     }()
 
@@ -130,12 +129,12 @@ extension AdminViewController: UICollectionViewDelegateFlowLayout, UICollectionV
 
     private func setupCollectionView() {
         sessionCollectionView.delegate = self
-
+        sessionCollectionView.dataSource = self
         sessionCollectionView.register(AdminSessionCell.self, forCellWithReuseIdentifier: AdminSessionCell.identifier)
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        20
+        10
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -145,6 +144,10 @@ extension AdminViewController: UICollectionViewDelegateFlowLayout, UICollectionV
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         CGSize(width: view.bounds.width, height: Constants.cellHeight)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        0
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -221,7 +224,7 @@ private extension AdminViewController {
         sessionCollectionView.snp.makeConstraints {
             $0.top.equalTo(sessionTitleLabel.snp.bottom).offset(4)
             $0.left.right.equalToSuperview().inset(Constants.horizontalPadding)
-            $0.bottom.equalToSuperview().inset(48)
+            $0.bottom.equalToSuperview()
         }
     }
 

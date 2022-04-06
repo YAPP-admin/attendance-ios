@@ -12,12 +12,22 @@ final class AdminSessionCell: UICollectionViewCell {
 
     enum Constants {
         static let horizontalPadding: CGFloat = 24
+        static let buttonWidth: CGFloat = 22
     }
+
+    private let labelStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        stackView.distribution = .fillProportionally
+        return stackView
+    }()
 
     private let dateLabel: UILabel = {
         let label = UILabel()
         label.font = .Pretendard(type: .regular, size: 16)
         label.textColor = .gray_1200
+        label.text = "01.01"
         return label
     }()
 
@@ -25,13 +35,16 @@ final class AdminSessionCell: UICollectionViewCell {
         let label = UILabel()
         label.textColor = .gray_1200
         label.font = .Pretendard(type: .semiBold, size: 16)
+//        label.text = "오리엔테이션"
+        label.backgroundColor = .yellow
         return label
     }()
 
     private let arrowButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(systemName: "chevron.right"), for: .normal)
+        button.setImage(UIImage(named: "cheron_right"), for: .normal)
         button.tintColor = .gray_600
+        button.imageView?.contentMode = .scaleAspectFit
         return button
     }()
 
@@ -55,21 +68,20 @@ private extension AdminSessionCell {
     }
 
     func configureLayout() {
-        addSubviews([dateLabel, titleLabel, arrowButton])
+        addSubviews([labelStackView, arrowButton])
 
-        dateLabel.snp.makeConstraints {
+        labelStackView.snp.makeConstraints {
+            $0.top.bottom.equalToSuperview()
             $0.left.equalToSuperview().inset(Constants.horizontalPadding)
-            $0.centerY.equalToSuperview()
-        }
-        titleLabel.snp.makeConstraints {
-            $0.left.equalTo(dateLabel).inset(24)
-            $0.centerY.equalToSuperview()
+            $0.right.equalToSuperview().inset(50)
         }
         arrowButton.snp.makeConstraints {
             $0.right.equalToSuperview().inset(Constants.horizontalPadding)
-            $0.width.height.equalTo(12)
+            $0.width.height.equalTo(Constants.buttonWidth)
             $0.centerY.equalToSuperview()
         }
+
+        labelStackView.addArrangedSubviews([dateLabel, titleLabel])
     }
 
 }
