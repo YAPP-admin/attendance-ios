@@ -14,8 +14,23 @@ final class AdminGradeViewController: UIViewController {
 
     enum Constants {
         static let padding: CGFloat = 24
-        static let topPadding: CGFloat = 100
+        static let topPadding: CGFloat = 116
     }
+
+    private let navigationTitleLabel: UILabel = {
+        let label = UILabel()
+        label.font = .Pretendard(type: .regular, size: 18)
+        label.textColor = .gray_1200
+        label.numberOfLines = 1
+        label.textAlignment = .center
+        return label
+    }()
+
+    private let navigationBackButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "back"), for: .normal)
+        return button
+    }()
 
     private let adminMesasgeView = AdminMessageView()
 
@@ -43,9 +58,16 @@ final class AdminGradeViewController: UIViewController {
 
         setupDelegate()
         setupNavigationTitle()
+        setupMessage()
 
         configureUI()
         configureLayout()
+        configureNavigationLayout()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationItem.hidesBackButton = true
     }
 
 }
@@ -54,7 +76,11 @@ final class AdminGradeViewController: UIViewController {
 extension AdminGradeViewController {
 
     func bindSubviews() {
-
+        navigationBackButton.rx.controlEvent([.touchUpInside])
+            .asObservable()
+            .subscribe(onNext: { [weak self] _ in
+                self?.navigationController?.popViewController(animated: true)
+            }).disposed(by: disposeBag)
     }
 
     func bindViewModel() {
@@ -71,7 +97,11 @@ private extension AdminGradeViewController {
     }
 
     func setupNavigationTitle() {
-        navigationItem.title = "누적 출결 점수"
+        navigationTitleLabel.text = "누적 출결 점수"
+    }
+
+    func setupMessage() {
+        adminMesasgeView.configureLabel("10명이 출석했어요")
     }
 
 }
@@ -91,6 +121,21 @@ private extension AdminGradeViewController {
             $0.top.equalToSuperview().offset(Constants.topPadding)
             $0.left.right.equalToSuperview().inset(Constants.padding)
             $0.height.equalTo(48)
+        }
+    }
+
+    func configureNavigationLayout() {
+        view.addSubviews([navigationTitleLabel, navigationBackButton])
+
+        navigationTitleLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(56)
+            $0.centerX.equalToSuperview()
+            $0.left.right.equalToSuperview().inset(60)
+        }
+        navigationBackButton.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(56)
+            $0.left.equalToSuperview().offset(Constants.padding)
+            $0.width.height.equalTo(24)
         }
     }
 
