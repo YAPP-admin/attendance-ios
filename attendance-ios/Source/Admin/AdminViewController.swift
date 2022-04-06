@@ -46,6 +46,15 @@ final class AdminViewController: UIViewController {
     private let cardView = AdminCardView()
     private let todayView = AdminTodayView()
 
+    private let sessionTitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "전체 보기"
+        label.font = .Pretendard(type: .medium, size: 14)
+        label.textColor = .gray_600
+        label.numberOfLines = 0
+        return label
+    }()
+
     private let sessionCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -135,7 +144,7 @@ extension AdminViewController: UICollectionViewDelegateFlowLayout, UICollectionV
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(width: 500, height: Constants.cellHeight)
+        CGSize(width: view.bounds.width, height: Constants.cellHeight)
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -179,7 +188,7 @@ private extension AdminViewController {
     }
 
     func configureLayout() {
-        view.addSubviews([settingButton, cardView, dividerView, titleLabel, todayView, sessionCollectionView])
+        view.addSubviews([settingButton, cardView, dividerView, titleLabel, todayView, sessionTitleLabel, sessionCollectionView])
 
         settingButton.snp.makeConstraints {
             $0.top.equalToSuperview().inset(Constants.verticalPadding)
@@ -205,8 +214,12 @@ private extension AdminViewController {
             $0.left.right.equalToSuperview().inset(Constants.horizontalPadding)
             $0.height.equalTo(Constants.todayViewHeight)
         }
-        sessionCollectionView.snp.makeConstraints {
+        sessionTitleLabel.snp.makeConstraints {
             $0.top.equalTo(todayView.snp.bottom).offset(Constants.verticalPadding)
+            $0.left.right.equalToSuperview().inset(Constants.horizontalPadding)
+        }
+        sessionCollectionView.snp.makeConstraints {
+            $0.top.equalTo(sessionTitleLabel.snp.bottom).offset(4)
             $0.left.right.equalToSuperview().inset(Constants.horizontalPadding)
             $0.bottom.equalToSuperview().inset(48)
         }
