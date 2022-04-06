@@ -14,7 +14,10 @@ final class AdminManagementViewController: UIViewController {
 
     enum Constants {
         static let padding: CGFloat = 24
+        static let topPadding: CGFloat = 100
     }
+
+    private let adminMesasgeView = AdminMessageView()
 
     private let viewModel: AdminViewModel
     private var disposeBag = DisposeBag()
@@ -78,10 +81,17 @@ private extension AdminManagementViewController {
 
     func configureUI() {
         view.backgroundColor = .white
+        adminMesasgeView.configureLabel("10명이 출석했어요")
     }
 
     func configureLayout() {
+        view.addSubviews([adminMesasgeView])
 
+        adminMesasgeView.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(Constants.topPadding)
+            $0.left.right.equalToSuperview().inset(Constants.padding)
+            $0.height.equalTo(48)
+        }
     }
 
 }
