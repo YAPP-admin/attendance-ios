@@ -143,7 +143,7 @@ private extension SignUpTeamViewController {
         viewModel.output.complete
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] _ in
-                self?.activateButton()
+                self?.activateNextButton()
             })
             .disposed(by: disposeBag)
 
@@ -309,12 +309,12 @@ private extension SignUpTeamViewController {
 
     }
 
-    func activateButton() {
+    func activateNextButton() {
         okButton.isEnabled = true
         okButton.backgroundColor = UIColor.yapp_orange
     }
 
-    func deactivateButton() {
+    func deactivateNextButton() {
         okButton.isEnabled = false
         okButton.backgroundColor = UIColor.gray_400
     }

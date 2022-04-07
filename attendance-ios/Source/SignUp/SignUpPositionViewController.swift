@@ -164,7 +164,10 @@ extension SignUpPositionViewController: UICollectionViewDelegateFlowLayout, UICo
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) as? SignUpCollectionViewCell else { return }
+        let positionType = PositionType.allCases[indexPath.row]
+        viewModel.input.positionType.onNext(positionType)
         cell.didSelect()
+        activateNextButton()
     }
 
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
@@ -198,12 +201,12 @@ private extension SignUpPositionViewController {
 
     }
 
-    func activateButton() {
+    func activateNextButton() {
         nextButton.isEnabled = true
         nextButton.backgroundColor = UIColor.yapp_orange
     }
 
-    func deactivateButton() {
+    func deactivateNextButton() {
         nextButton.isEnabled = false
         nextButton.backgroundColor = UIColor.gray_400
     }
