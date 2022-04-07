@@ -21,8 +21,8 @@
 		52C4CDE227D0C4D1005EDE78 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C4CDE127D0C4D1005EDE78 /* HomeViewModel.swift */; };
 		5E6179AC27C670D500B1A835 /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E6179AB27C670D500B1A835 /* UITextField.swift */; };
 		5E63BC9427BBD2AC0024FCE3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5E63BC9327BBD2AC0024FCE3 /* GoogleService-Info.plist */; };
-		5E63BC9B27BBE90F0024FCE3 /* SignUpNameInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E63BC9A27BBE90F0024FCE3 /* SignUpNameInfoViewController.swift */; };
-		5E9CC7B827D0ED2D006D8B12 /* SignUpTeamInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9CC7B727D0ED2D006D8B12 /* SignUpTeamInfoViewController.swift */; };
+		5E63BC9B27BBE90F0024FCE3 /* SignUpNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E63BC9A27BBE90F0024FCE3 /* SignUpNameViewController.swift */; };
+		5E9CC7B827D0ED2D006D8B12 /* SignUpTeamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9CC7B727D0ED2D006D8B12 /* SignUpTeamViewController.swift */; };
 		5E9CC7BA27D0F57A006D8B12 /* UICollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9CC7B927D0F57A006D8B12 /* UICollectionViewCell.swift */; };
 		5E9CC7BC27D0F79E006D8B12 /* SignUpCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9CC7BB27D0F79D006D8B12 /* SignUpCollectionViewCell.swift */; };
 		5EA97D8827DBA621004E2330 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA97D8727DBA621004E2330 /* Models.swift */; };
@@ -65,8 +65,8 @@
 		52C4CDE127D0C4D1005EDE78 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		5E6179AB27C670D500B1A835 /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
 		5E63BC9327BBD2AC0024FCE3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		5E63BC9A27BBE90F0024FCE3 /* SignUpNameInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpNameInfoViewController.swift; sourceTree = "<group>"; };
-		5E9CC7B727D0ED2D006D8B12 /* SignUpTeamInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpTeamInfoViewController.swift; sourceTree = "<group>"; };
+		5E63BC9A27BBE90F0024FCE3 /* SignUpNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpNameViewController.swift; sourceTree = "<group>"; };
+		5E9CC7B727D0ED2D006D8B12 /* SignUpTeamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpTeamViewController.swift; sourceTree = "<group>"; };
 		5E9CC7B927D0F57A006D8B12 /* UICollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionViewCell.swift; sourceTree = "<group>"; };
 		5E9CC7BB27D0F79D006D8B12 /* SignUpCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpCollectionViewCell.swift; sourceTree = "<group>"; };
 		5EA97D8727DBA621004E2330 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
@@ -188,8 +188,8 @@
 			isa = PBXGroup;
 			children = (
 				5EED02BC27D76D4200C52637 /* SignUpViewModel.swift */,
-				5E63BC9A27BBE90F0024FCE3 /* SignUpNameInfoViewController.swift */,
-				5E9CC7B727D0ED2D006D8B12 /* SignUpTeamInfoViewController.swift */,
+				5E63BC9A27BBE90F0024FCE3 /* SignUpNameViewController.swift */,
+				5E9CC7B727D0ED2D006D8B12 /* SignUpTeamViewController.swift */,
 				5E9CC7BB27D0F79D006D8B12 /* SignUpCollectionViewCell.swift */,
 			);
 			path = SignUp;
@@ -472,7 +472,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5E9CC7BA27D0F57A006D8B12 /* UICollectionViewCell.swift in Sources */,
-				5E63BC9B27BBE90F0024FCE3 /* SignUpNameInfoViewController.swift in Sources */,
+				5E63BC9B27BBE90F0024FCE3 /* SignUpNameViewController.swift in Sources */,
 				5EA97D8A27DBB06A004E2330 /* Config.swift in Sources */,
 				5E9CC7BC27D0F79E006D8B12 /* SignUpCollectionViewCell.swift in Sources */,
 				5EF69ED427A83BCE007E9735 /* DetailViewController.swift in Sources */,
@@ -491,7 +491,7 @@
 				297E958327CFAC0A00452222 /* QRViewModel.swift in Sources */,
 				5EF69EDB27AAB0BC007E9735 /* PolicyUnitView.swift in Sources */,
 				52BCA07027C4D393001BF86F /* TextStyle.swift in Sources */,
-				5E9CC7B827D0ED2D006D8B12 /* SignUpTeamInfoViewController.swift in Sources */,
+				5E9CC7B827D0ED2D006D8B12 /* SignUpTeamViewController.swift in Sources */,
 				5EF69EA727A7DAF8007E9735 /* LoginViewController.swift in Sources */,
 				5EED02BD27D76D4200C52637 /* SignUpViewModel.swift in Sources */,
 				5EF69EA327A7DAF8007E9735 /* AppDelegate.swift in Sources */,
@@ -648,7 +648,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = T53Y7GLJ7K;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "attendance-ios/Resource/Info.plist";
 				INFOPLIST_KEY_NSCameraUsageDescription = "YAPP이 카메라 사용을 요청합니다";
@@ -678,7 +678,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = T53Y7GLJ7K;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "attendance-ios/Resource/Info.plist";
 				INFOPLIST_KEY_NSCameraUsageDescription = "YAPP이 카메라 사용을 요청합니다";

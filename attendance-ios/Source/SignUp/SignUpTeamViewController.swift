@@ -1,5 +1,5 @@
 //
-//  SignUpTeamInfoViewController.swift
+//  SignUpTeamViewController.swift
 //  attendance-ios
 //
 //  Created by leeesangheee on 2022/03/03.
@@ -10,7 +10,7 @@ import RxSwift
 import SnapKit
 import UIKit
 
-final class SignUpTeamInfoViewController: UIViewController {
+final class SignUpTeamViewController: UIViewController {
 
     enum Constants {
         static let padding: CGFloat = 24
@@ -115,7 +115,7 @@ final class SignUpTeamInfoViewController: UIViewController {
 }
 
 // MARK: - Bind
-private extension SignUpTeamInfoViewController {
+private extension SignUpTeamViewController {
 
     func bindViewModel() {
         viewModel.input.teamType
@@ -179,7 +179,7 @@ private extension SignUpTeamInfoViewController {
 }
 
 // MARK: - CollectionView
-extension SignUpTeamInfoViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+extension SignUpTeamViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
 
     private func setupCollectionView() {
         teamTypeCollectionView.delegate = self
@@ -294,7 +294,7 @@ extension SignUpTeamInfoViewController: UICollectionViewDelegateFlowLayout, UICo
 }
 
 // MARK: - etc
-private extension SignUpTeamInfoViewController {
+private extension SignUpTeamViewController {
 
     func goToHome() {
         let homeVC = HomeViewController()
