@@ -30,6 +30,7 @@
 		5EAA79FB27FDE42500BC7397 /* Attendance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA79FA27FDE42500BC7397 /* Attendance.swift */; };
 		5EAA7A0527FF225B00BC7397 /* SignUpPositionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA7A0427FF225B00BC7397 /* SignUpPositionViewController.swift */; };
 		5EAA7A0727FF24CB00BC7397 /* CollectionViewLeftAlignFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA7A0627FF24CB00BC7397 /* CollectionViewLeftAlignFlowLayout.swift */; };
+		5EAA7A0A27FF2A2200BC7397 /* ConfigWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA7A0927FF2A2200BC7397 /* ConfigWorker.swift */; };
 		5EE25B2427C7CB700065B816 /* bg_buong.html in Resources */ = {isa = PBXBuildFile; fileRef = 5EE25B2327C7CB700065B816 /* bg_buong.html */; };
 		5EE54FEE27DA469700294120 /* splash_login.html in Resources */ = {isa = PBXBuildFile; fileRef = 5EE54FED27DA469700294120 /* splash_login.html */; };
 		5EE54FF027DA469A00294120 /* splash_main.html in Resources */ = {isa = PBXBuildFile; fileRef = 5EE54FEF27DA469A00294120 /* splash_main.html */; };
@@ -76,6 +77,7 @@
 		5EAA79FA27FDE42500BC7397 /* Attendance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Attendance.swift; sourceTree = "<group>"; };
 		5EAA7A0427FF225B00BC7397 /* SignUpPositionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpPositionViewController.swift; sourceTree = "<group>"; };
 		5EAA7A0627FF24CB00BC7397 /* CollectionViewLeftAlignFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewLeftAlignFlowLayout.swift; sourceTree = "<group>"; };
+		5EAA7A0927FF2A2200BC7397 /* ConfigWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigWorker.swift; sourceTree = "<group>"; };
 		5EE25B2327C7CB700065B816 /* bg_buong.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = bg_buong.html; sourceTree = "<group>"; };
 		5EE54FED27DA469700294120 /* splash_login.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = splash_login.html; sourceTree = "<group>"; };
 		5EE54FEF27DA469A00294120 /* splash_main.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = splash_main.html; sourceTree = "<group>"; };
@@ -178,6 +180,14 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		5EAA7A0827FF2A1100BC7397 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				5EAA7A0927FF2A2200BC7397 /* ConfigWorker.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
 		5EE25B2527C7CBA10065B816 /* Image */ = {
 			isa = PBXGroup;
 			children = (
@@ -254,6 +264,7 @@
 				5EF69ED227A83BC1007E9735 /* Detail */,
 				5EF69ED727AAAC88007E9735 /* Policy */,
 				5EF69EBE27A7DD8F007E9735 /* Extensions */,
+				5EAA7A0827FF2A1100BC7397 /* Utilities */,
 				5EF69EBB27A7DD57007E9735 /* System */,
 				5EF69EBC27A7DD68007E9735 /* Storyboards */,
 			);
@@ -497,6 +508,7 @@
 				5EF69ED927AAACBA007E9735 /* PolicyViewController.swift in Sources */,
 				297E958327CFAC0A00452222 /* QRViewModel.swift in Sources */,
 				5EF69EDB27AAB0BC007E9735 /* PolicyUnitView.swift in Sources */,
+				5EAA7A0A27FF2A2200BC7397 /* ConfigWorker.swift in Sources */,
 				52BCA07027C4D393001BF86F /* TextStyle.swift in Sources */,
 				5E9CC7B827D0ED2D006D8B12 /* SignUpTeamViewController.swift in Sources */,
 				5EF69EA727A7DAF8007E9735 /* LoginViewController.swift in Sources */,

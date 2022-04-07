@@ -23,7 +23,7 @@ final class SignUpViewModel: ViewModel {
 
     struct Output {
         let yappConfig = BehaviorSubject<YappConfig?>(value: nil)
-        let configTeams = BehaviorSubject<[ConfigTeam]>(value: [])
+        let configTeams = BehaviorSubject<[Team]>(value: [])
 
         let generation = BehaviorSubject<Int>(value: 0)
 
@@ -84,25 +84,24 @@ private extension SignUpViewModel {
 private extension SignUpViewModel {
 
     func setupConfig() {
-        let remoteConfig = RemoteConfig.remoteConfig()
-        let settings = RemoteConfigSettings()
-        settings.minimumFetchInterval = 0
-        remoteConfig.configSettings = settings
+        ConfigWorker.shared.decodeYappConfig { [weak self] result in
+            switch result {
+            case .success(let config): self?.output.yappConfig.onNext(config)
+            case .failure: ()
+            }
+        }
 
-        remoteConfig.fetch { [weak self] status, _ in
-            guard let self = self, status == .success else { return }
-            remoteConfig.activate { _, _ in
-                let decoder = JSONDecoder()
+        ConfigWorker.shared.decodeSelectTeams { [weak self] result in
+            switch result {
+            case .success(let teams): self?.output.configTeams.onNext(teams)
+            case .failure: ()
+            }
+        }
 
-                guard let configString = remoteConfig[Config.config.rawValue].stringValue,
-                      let configData = configString.data(using: .utf8),
-                      let config = try? decoder.decode(YappConfig.self, from: configData) else { return }
-                self.output.yappConfig.onNext(config)
-
-                guard let configTeamString = remoteConfig[Config.selectTeams.rawValue].stringValue,
-                      let configTeamData = configTeamString.data(using: .utf8),
-                      let configTeams = try? decoder.decode([ConfigTeam].self, from: configTeamData) else { return }
-                self.output.configTeams.onNext(configTeams)
+        ConfigWorker.shared.decodeMaginotlineTime { [weak self] result in
+            switch result {
+            case .success(let maginotlineTime): print("maginotlineTime: \(maginotlineTime)")
+            case .failure: ()
             }
         }
     }

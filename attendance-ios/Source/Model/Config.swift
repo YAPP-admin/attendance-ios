@@ -9,7 +9,7 @@ import Foundation
 
 enum Config: String {
     case sessionList = "attendance_session_list"
-    case config = "config"
+    case yappConfig = "config"
     case selectTeams = "attendance_select_teams"
     case maginotlineTime = "attendance_maginotline_time"
 }
@@ -25,9 +25,4 @@ struct YappConfig: Codable {
         case adminPassword = "admin_password"
     }
 
-}
-
-struct ConfigTeam: Codable {
-    let team: String
-    let number: Int
 }

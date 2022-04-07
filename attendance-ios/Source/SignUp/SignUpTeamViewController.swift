@@ -198,7 +198,7 @@ extension SignUpTeamViewController: UICollectionViewDelegateFlowLayout, UICollec
         case teamTypeCollectionView: return teamTypes.count
         case teamNumberCollectionView:
             guard let teamType = try? viewModel.input.teamType.value(),
-                  let number = teamTypes.filter({ $0.team == teamType.rawValue }).first?.number else { break }
+                  let number = teamTypes.filter({ $0.type.rawValue == teamType.rawValue }).first?.number else { break }
             return number
         default: return 0
         }
@@ -212,7 +212,7 @@ extension SignUpTeamViewController: UICollectionViewDelegateFlowLayout, UICollec
 
         switch collectionView {
         case teamTypeCollectionView:
-            cell.configureUI(text: teams[indexPath.row].team)
+            cell.configureUI(text: teams[indexPath.row].type.rawValue)
         case teamNumberCollectionView:
             cell.configureUI(text: "\(indexPath.row+1)팀")
             guard let teamNumber = try? viewModel.input.teamNumber.value() else { break }
@@ -230,7 +230,7 @@ extension SignUpTeamViewController: UICollectionViewDelegateFlowLayout, UICollec
         switch collectionView {
         case teamTypeCollectionView:
             guard let teams = try? viewModel.output.configTeams.value() else { break }
-            text = teams[indexPath.row].team
+            text = teams[indexPath.row].type.rawValue
         case teamNumberCollectionView: text = "\(indexPath.row+1)팀"
         default: ()
         }
@@ -250,11 +250,11 @@ extension SignUpTeamViewController: UICollectionViewDelegateFlowLayout, UICollec
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let teamTypes = try? viewModel.output.configTeams.value().map({ $0.team }),
+        guard let teamTypes = try? viewModel.output.configTeams.value().map({ $0.type }),
               let cell = collectionView.cellForItem(at: indexPath) as? SignUpCollectionViewCell else { return }
         switch collectionView {
         case teamTypeCollectionView:
-            let teamType = TeamType(rawValue: teamTypes[indexPath.row])
+            let teamType = TeamType(rawValue: teamTypes[indexPath.row].rawValue)
             viewModel.input.teamType.onNext(teamType)
         case teamNumberCollectionView:
             viewModel.input.teamNumber.onNext(indexPath.row+1)
