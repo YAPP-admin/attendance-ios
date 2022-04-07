@@ -22,7 +22,7 @@ final class SignUpViewModel: ViewModel {
     }
 
     struct Output {
-        let config = BehaviorSubject<Config?>(value: nil)
+        let config = BehaviorSubject<YappConfig?>(value: nil)
         let configTeams = BehaviorSubject<[ConfigTeam]>(value: [])
 
         let generation = BehaviorSubject<Int>(value: 0)
@@ -65,13 +65,6 @@ final class SignUpViewModel: ViewModel {
 // MARK: - Config
 private extension SignUpViewModel {
 
-    enum ConfigKeys: String {
-        case sessionList = "attendance_session_list"
-        case config = "config"
-        case selectTeams = "attendance_select_teams"
-        case maginotlineTime = "attendance_maginotline_time"
-    }
-
     func setupConfig() {
         let remoteConfig = RemoteConfig.remoteConfig()
         let settings = RemoteConfigSettings()
@@ -83,12 +76,12 @@ private extension SignUpViewModel {
             remoteConfig.activate { _, _ in
                 let decoder = JSONDecoder()
 
-                guard let configString = remoteConfig[ConfigKeys.config.rawValue].stringValue,
+                guard let configString = remoteConfig[Config.config.rawValue].stringValue,
                       let configData = configString.data(using: .utf8),
-                      let config = try? decoder.decode(Config.self, from: configData) else { return }
+                      let config = try? decoder.decode(YappConfig.self, from: configData) else { return }
                 self.output.config.onNext(config)
 
-                guard let configTeamString = remoteConfig[ConfigKeys.selectTeams.rawValue].stringValue,
+                guard let configTeamString = remoteConfig[Config.selectTeams.rawValue].stringValue,
                       let configTeamData = configTeamString.data(using: .utf8),
                       let configTeams = try? decoder.decode([ConfigTeam].self, from: configTeamData) else { return }
                 self.output.configTeams.onNext(configTeams)
