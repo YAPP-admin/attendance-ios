@@ -198,9 +198,8 @@ extension SignUpTeamViewController: UICollectionViewDelegateFlowLayout, UICollec
         case teamTypeCollectionView: return teamTypes.count
         case teamNumberCollectionView:
             guard let teamType = try? viewModel.input.teamType.value(),
-                  let countString = teamTypes.filter({ $0.team == teamType.rawValue }).first?.count,
-                  let count = Int(countString) else { break }
-            return count
+                  let number = teamTypes.filter({ $0.team == teamType.rawValue }).first?.number else { break }
+            return number
         default: return 0
         }
 

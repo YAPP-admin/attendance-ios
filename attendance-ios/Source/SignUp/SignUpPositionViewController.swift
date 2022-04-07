@@ -106,7 +106,7 @@ private extension SignUpPositionViewController {
         nextButton.rx.controlEvent([.touchUpInside])
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
-                self?.viewModel.registerInfo()
+                self?.goToTeamVC()
             }).disposed(by: disposeBag)
 
         backButton.rx.controlEvent([.touchUpInside])
@@ -176,6 +176,13 @@ private extension SignUpPositionViewController {
 
     func goToLogin() {
         navigationController?.popToRootViewController(animated: true)
+    }
+
+    func goToTeamVC() {
+        let teamVC = SignUpTeamViewController(viewModel: viewModel)
+        navigationItem.backButtonTitle = ""
+        navigationController?.navigationBar.tintColor = .gray_800
+        navigationController?.pushViewController(teamVC, animated: true)
     }
 
     func setupDelegate() {

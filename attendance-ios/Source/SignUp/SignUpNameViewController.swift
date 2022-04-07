@@ -133,13 +133,13 @@ private extension SignUpNameViewController {
         nextButton.rx.controlEvent([.touchUpInside])
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
-                self?.goToTeamVC()
+                self?.goToPositionVC()
             }).disposed(by: disposeBag)
 
         keyboardNextButton.rx.controlEvent([.touchUpInside])
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
-                self?.goToTeamVC()
+                self?.goToPositionVC()
             }).disposed(by: disposeBag)
 
         backButton.rx.controlEvent([.touchUpInside])
@@ -178,11 +178,11 @@ private extension SignUpNameViewController {
         navigationController?.popToRootViewController(animated: true)
     }
 
-    func goToTeamVC() {
-        let teamVC = SignUpTeamViewController(viewModel: viewModel)
+    func goToPositionVC() {
+        let positionVC = SignUpPositionViewController(viewModel: viewModel)
         navigationItem.backButtonTitle = ""
         navigationController?.navigationBar.tintColor = .gray_800
-        navigationController?.pushViewController(teamVC, animated: true)
+        navigationController?.pushViewController(positionVC, animated: true)
     }
 
     func setupDelegate() {

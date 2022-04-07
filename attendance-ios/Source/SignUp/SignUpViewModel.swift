@@ -22,7 +22,7 @@ final class SignUpViewModel: ViewModel {
     }
 
     struct Output {
-        let config = BehaviorSubject<YappConfig?>(value: nil)
+        let yappConfig = BehaviorSubject<YappConfig?>(value: nil)
         let configTeams = BehaviorSubject<[ConfigTeam]>(value: [])
 
         let generation = BehaviorSubject<Int>(value: 0)
@@ -40,7 +40,16 @@ final class SignUpViewModel: ViewModel {
 
     init() {
         setupConfig()
+        bindInput()
+        bindOutput()
+    }
 
+}
+
+// MARK: - Bind
+private extension SignUpViewModel {
+
+    func bindInput() {
         input.name
             .subscribe(onNext: { [weak self] name in
                 self?.output.isNameTextFieldValid.onNext(name?.isEmpty == false)
@@ -54,6 +63,19 @@ final class SignUpViewModel: ViewModel {
         input.teamNumber
             .subscribe(onNext: { [weak self] _ in
                 self?.output.complete.accept(())
+            }).disposed(by: disposeBag)
+    }
+
+    // MARK: - 테스트를 위해 출력, 이후 삭제
+    func bindOutput() {
+        output.yappConfig
+            .subscribe(onNext: { [weak self] yappConfig in
+                print("yappConfig: \(yappConfig)")
+            }).disposed(by: disposeBag)
+
+        output.configTeams
+            .subscribe(onNext: { [weak self] configTeams in
+                print("configTeams: \(configTeams)")
             }).disposed(by: disposeBag)
     }
 
@@ -75,7 +97,7 @@ private extension SignUpViewModel {
                 guard let configString = remoteConfig[Config.config.rawValue].stringValue,
                       let configData = configString.data(using: .utf8),
                       let config = try? decoder.decode(YappConfig.self, from: configData) else { return }
-                self.output.config.onNext(config)
+                self.output.yappConfig.onNext(config)
 
                 guard let configTeamString = remoteConfig[Config.selectTeams.rawValue].stringValue,
                       let configTeamData = configTeamString.data(using: .utf8),
