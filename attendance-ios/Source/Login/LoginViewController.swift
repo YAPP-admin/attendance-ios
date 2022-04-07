@@ -54,13 +54,18 @@ final class LoginViewController: UIViewController {
         return button
     }()
 
+    private let secretAdminButton: UIButton = UIButton()
+
     private let viewModel = BaseViewModel()
     private var disposeBag = DisposeBag()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        bindSubviews()
         bindViewModel()
+
         setupDelegate()
+
         configureSplashView()
         configureWebView()
         configureUI()
@@ -69,6 +74,7 @@ final class LoginViewController: UIViewController {
 
 }
 
+// MARK: - Splash
 extension LoginViewController: WKNavigationDelegate {
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
@@ -81,14 +87,23 @@ extension LoginViewController: WKNavigationDelegate {
 
 }
 
+// MARK: - Bind
 private extension LoginViewController {
 
-    func bindViewModel() {
+    func bindSubviews() {
         loginButton.rx.tap
             .throttle(.seconds(3), latest: false, scheduler: MainScheduler.instance)
             .bind(to: viewModel.input.tapLogin)
             .disposed(by: disposeBag)
 
+        secretAdminButton.rx.tap
+            .bind { [weak self] _ in
+                self?.goToAdminVC()
+            }
+            .disposed(by: disposeBag)
+    }
+
+    func bindViewModel() {
         viewModel.output.goToSignUp
             .observe(on: MainScheduler.instance)
             .bind(onNext: goToSignUpNameVC)
@@ -98,7 +113,16 @@ private extension LoginViewController {
             .observe(on: MainScheduler.instance)
             .bind(onNext: goToHomeVC)
             .disposed(by: disposeBag)
+
+        viewModel.output.goToAdmin
+            .observe(on: MainScheduler.instance)
+            .bind(onNext: goToAdminVC)
+            .disposed(by: disposeBag)
     }
+
+}
+
+private extension LoginViewController {
 
     func goToSignUpNameVC() {
         let signUpNameVC = SignUpNameViewController()
@@ -109,14 +133,27 @@ private extension LoginViewController {
 
     func goToHomeVC() {
         let homeVC = HomeViewController()
-        homeVC.modalPresentationStyle = .fullScreen
-        present(homeVC, animated: true, completion: nil)
+        navigationItem.backButtonTitle = ""
+        navigationController?.navigationBar.tintColor = .gray_800
+        navigationController?.pushViewController(homeVC, animated: true)
+    }
+
+    func goToAdminVC() {
+        let adminVC = AdminViewController()
+        let navC = UINavigationController(rootViewController: adminVC)
+        navC.modalPresentationStyle = .fullScreen
+        self.present(navC, animated: true)
     }
 
     func setupDelegate() {
         webView.navigationDelegate = self
         splashView.navigationDelegate = self
     }
+
+}
+
+// MARK: - UI
+private extension LoginViewController {
 
     func configureWebView() {
         guard let filePath = Bundle.main.path(forResource: "bg_buong", ofType: "html"),
@@ -139,10 +176,7 @@ private extension LoginViewController {
     }
 
     func configureLayout() {
-        view.addSubview(titleLabel)
-        view.addSubview(webView)
-        view.addSubview(loginButton)
-        view.addSubview(splashView)
+        view.addSubviews([titleLabel, webView, loginButton, splashView, secretAdminButton])
 
         webView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(80)
@@ -162,6 +196,10 @@ private extension LoginViewController {
             $0.top.equalToSuperview()
             $0.bottom.equalToSuperview().inset(40)
             $0.left.right.equalToSuperview().inset(10)
+        }
+        secretAdminButton.snp.makeConstraints {
+            $0.top.left.equalTo(view.safeAreaLayoutGuide)
+            $0.width.height.equalTo(100)
         }
     }
 

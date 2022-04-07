@@ -91,11 +91,12 @@ final class SignUpNameViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        bindSubviews()
         bindViewModel()
-        bindTextField()
-        bindButton()
+
         setupDelegate()
         setupTextField()
+
         configureUI()
         configureLayout()
         configureAccessoryViewLayout()
@@ -112,24 +113,13 @@ final class SignUpNameViewController: UIViewController {
 // MARK: - Bind
 private extension SignUpNameViewController {
 
-    func bindViewModel() {
-        viewModel.output.isNameTextFieldValid
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] isValid in
-                isValid ? self?.activateButtons() : self?.deactivateButtons()
-            })
-            .disposed(by: disposeBag)
-    }
-
-    func bindTextField() {
+    func bindSubviews() {
         textField.rx.text
             .subscribe(onNext: { [weak self] text in
                 guard let text = text else { return }
                 self?.viewModel.input.name.onNext(text)
             }).disposed(by: disposeBag)
-    }
 
-    func bindButton() {
         nextButton.rx.controlEvent([.touchUpInside])
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
@@ -154,6 +144,15 @@ private extension SignUpNameViewController {
                 self?.alertView.isHidden.toggle()
                 self?.goToLogin()
             }).disposed(by: disposeBag)
+    }
+
+    func bindViewModel() {
+        viewModel.output.isNameTextFieldValid
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] isValid in
+                isValid ? self?.activateButtons() : self?.deactivateButtons()
+            })
+            .disposed(by: disposeBag)
     }
 
 }
@@ -192,6 +191,11 @@ private extension SignUpNameViewController {
     func setupTextField() {
         textField.inputAccessoryView = accessoryView
     }
+
+}
+
+// MARK: - UI
+private extension SignUpNameInfoViewController {
 
     func activateButtons() {
         nextButton.isEnabled = true

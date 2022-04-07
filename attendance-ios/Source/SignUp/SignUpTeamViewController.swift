@@ -5,6 +5,9 @@
 //  Created by leeesangheee on 2022/03/03.
 //
 
+import FirebaseFirestore
+import KakaoSDKAuth
+import KakaoSDKUser
 import RxCocoa
 import RxSwift
 import SnapKit
@@ -98,10 +101,12 @@ final class SignUpTeamViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        bindSubviews()
         bindViewModel()
-        bindButton()
+
         setupDelegate()
         setupCollectionView()
+
         configureUI()
         configureLayout()
         configureAlertViewLayout()
@@ -116,6 +121,27 @@ final class SignUpTeamViewController: UIViewController {
 
 // MARK: - Bind
 private extension SignUpTeamViewController {
+
+    func bindSubviews() {
+        okButton.rx.controlEvent([.touchUpInside])
+            .asObservable()
+            .subscribe(onNext: { [weak self] _ in
+                self?.registerInfo()
+            }).disposed(by: disposeBag)
+
+        backButton.rx.controlEvent([.touchUpInside])
+            .asObservable()
+            .subscribe(onNext: { [weak self] _ in
+                self?.alertView.isHidden.toggle()
+            }).disposed(by: disposeBag)
+
+        alertView.rightButton.rx.controlEvent([.touchUpInside])
+            .asObservable()
+            .subscribe(onNext: { [weak self] _ in
+                self?.alertView.isHidden.toggle()
+                self?.goToLogin()
+            }).disposed(by: disposeBag)
+    }
 
     func bindSubviews() {
         okButton.rx.controlEvent([.touchUpInside])
@@ -195,6 +221,32 @@ private extension SignUpTeamViewController {
                 self?.alertView.isHidden.toggle()
                 self?.goToLogin()
             }).disposed(by: disposeBag)
+    }
+
+    func registerInfo() {
+        guard let config = try? viewModel.output.config.value(),
+              let name = try? viewModel.input.name.value(),
+              let position = try? viewModel.input.position.value(),
+              let teamType = try? viewModel.input.teamType.value(),
+              let teamNumber = try? viewModel.input.teamNumber.value() else { return }
+        let generation = config.generation
+
+        let db = Firestore.firestore()
+        let docRef = db.collection("member").document("\(generation)th").collection("members")
+
+        UserApi.shared.me { user, error in
+            guard let user = user, let userId = user.id else { return }
+            docRef.document(UUID().uuidString).setData([
+                "id": userId,
+                "isAdmin": false,
+                "name": name,
+                "position": position,
+                "team": "\(teamType.rawValue) \(teamNumber)"
+            ]) { [weak self] error in
+                guard error == nil else { return }
+                self?.goToHome()
+            }
+        }
     }
 
 }
@@ -323,6 +375,10 @@ private extension SignUpTeamViewController {
     func setupDelegate() {
 
     }
+}
+
+// MARK: - UI
+private extension SignUpTeamInfoViewController {
 
     func activateNextButton() {
         okButton.isEnabled = true
