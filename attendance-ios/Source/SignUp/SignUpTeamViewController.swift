@@ -105,6 +105,9 @@ final class SignUpTeamViewController: UIViewController {
         configureUI()
         configureLayout()
         configureAlertViewLayout()
+
+        // TODO: - 테스트를 위해 추가, 이후 삭제
+        teamNumberCollectionView.backgroundColor = .systemYellow
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -192,18 +195,18 @@ extension SignUpTeamViewController: UICollectionViewDelegateFlowLayout, UICollec
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let teamTypes = try? viewModel.output.configTeams.value() else { return 0 }
+        guard let teams = try? viewModel.output.configTeams.value() else { return 0 }
 
         switch collectionView {
-        case teamTypeCollectionView: return teamTypes.count
+        case teamTypeCollectionView: return teams.count
         case teamNumberCollectionView:
-            guard let teamType = try? viewModel.input.teamType.value(),
-                  let number = teamTypes.filter({ $0.type.rawValue == teamType.rawValue }).first?.number else { break }
-            return number
+            guard let teamType = try? viewModel.input.teamType.value() else { return 0 }
+            print("teamType: \(teamType)")
+            guard let team = teams.first(where: { $0.type == teamType }) else { return 0 }
+            print("team: \(team)")
+            return team.number
         default: return 0
         }
-
-        return 0
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -250,14 +253,11 @@ extension SignUpTeamViewController: UICollectionViewDelegateFlowLayout, UICollec
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let teamTypes = try? viewModel.output.configTeams.value().map({ $0.type }),
+        guard let teams = try? viewModel.output.configTeams.value(),
               let cell = collectionView.cellForItem(at: indexPath) as? SignUpCollectionViewCell else { return }
         switch collectionView {
-        case teamTypeCollectionView:
-            let teamType = TeamType(rawValue: teamTypes[indexPath.row].rawValue)
-            viewModel.input.teamType.onNext(teamType)
-        case teamNumberCollectionView:
-            viewModel.input.teamNumber.onNext(indexPath.row+1)
+        case teamTypeCollectionView: viewModel.input.teamType.onNext(teams[indexPath.row].type)
+        case teamNumberCollectionView: viewModel.input.teamNumber.onNext(indexPath.row+1)
         default: break
         }
         cell.didSelect()
