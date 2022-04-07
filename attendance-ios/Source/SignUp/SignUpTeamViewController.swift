@@ -117,6 +117,27 @@ final class SignUpTeamViewController: UIViewController {
 // MARK: - Bind
 private extension SignUpTeamViewController {
 
+    func bindSubviews() {
+        okButton.rx.controlEvent([.touchUpInside])
+            .asObservable()
+            .subscribe(onNext: { [weak self] _ in
+                self?.registerInfo()
+            }).disposed(by: disposeBag)
+
+        backButton.rx.controlEvent([.touchUpInside])
+            .asObservable()
+            .subscribe(onNext: { [weak self] _ in
+                self?.alertView.isHidden.toggle()
+            }).disposed(by: disposeBag)
+
+        alertView.rightButton.rx.controlEvent([.touchUpInside])
+            .asObservable()
+            .subscribe(onNext: { [weak self] _ in
+                self?.alertView.isHidden.toggle()
+                self?.goToLogin()
+            }).disposed(by: disposeBag)
+    }
+
     func bindViewModel() {
         viewModel.input.teamType
             .observe(on: MainScheduler.instance)
