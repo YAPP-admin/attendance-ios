@@ -132,8 +132,7 @@ private extension SignUpTeamInfoViewController {
             })
             .disposed(by: disposeBag)
 
-        // TODO: - 애니메이션 추가
-        viewModel.output.showTeamCount
+        viewModel.output.showTeamNumber
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] _ in
                 self?.subTitleLabel.isHidden = false
