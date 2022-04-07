@@ -41,12 +41,12 @@ enum PositionType: String, CaseIterable, Codable {
 
     var shortValue: String {
         switch self {
-        case .android: return "Android"
-        case .web: return "Web"
-        case .ios: return "iOS"
-        case .server: return "Server"
-        case .designer: return "UX/UI Design"
         case .projectManager: return "PM"
+        case .designer: return "UX/UI Design"
+        case .android: return "Android"
+        case .ios: return "iOS"
+        case .web: return "Web"
+        case .server: return "Server"
         }
     }
 }
@@ -61,4 +61,13 @@ enum TeamType: String, Codable {
     case ios = "iOS"
     case web = "Web"
     case allRounder = "All-Rounder"
+
+    var upperCase: String {
+        switch self {
+        case .android: return "ANDROID"
+        case .ios: return "IOS"
+        case .web: return "WEB"
+        case .allRounder: return "ALL_ROUNDER"
+        }
+    }
 }
