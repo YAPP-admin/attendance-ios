@@ -7,68 +7,47 @@
 
 import Foundation
 
-struct Member {
+struct Member: Codable {
     let id: Int
     let name: String
-    let position: String
+    let position: PositionType
     let team: Team
-    let isAdmin: Bool
     let attendances: [Attendance]
 }
 
 struct Session: Codable {
     let sessionId: Int
     let title: String
-    let date: String // yyyy-mm-dd
+    let date: String // yyyy-mm-dd hh:mm:ss
     let description: String
+    let type: NeedToAttendType
 
     enum CodingKeys: String, CodingKey {
         case sessionId = "session_id"
         case title
         case date
         case description
+        case type
     }
 }
 
-enum PositionType {
-    case frontend
-    case backend
-    case designer
-    case projectManager
+enum PositionType: String, Codable {
+    case android = "DEV_ANDROID"
+    case web = "DEV_WEB"
+    case ios = "DEV_IOS"
+    case server = "DEV_SEVER"
+    case designer = "DESIGNER"
+    case projectManager = "PROJECT_MANAGER"
 }
 
-struct Team {
-    let platform: PlatformType
-    let teamNumber: Int
+struct Team: Codable {
+    var type: TeamType
+    var number: Int
 }
 
-struct Attendance {
-    let sesstionId: Int
-    let attendanceType: AttendanceType
-}
-
-enum PlatformType {
-    case android
-    case ios
-    case web
-}
-
-enum AttendanceType: Int {
-    case notMentionedAbsence
-    case absence
-    case attendance
-    case notMentionedTardy
-    case tardy
-    case empty
-
-    var point: Int {
-        switch self {
-        case .notMentionedAbsence: return -20
-        case .absence: return -10
-        case .attendance: return 0
-        case .notMentionedTardy: return -10
-        case .tardy: return -5
-        case .empty: return 0
-        }
-    }
+enum TeamType: String, Codable {
+    case android = "ANDROID"
+    case ios = "IOS"
+    case web = "WEB"
+    case allRounder = "ALL_ROUNDER"
 }

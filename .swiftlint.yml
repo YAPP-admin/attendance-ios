@@ -4,6 +4,7 @@ excluded:
 disabled_rules:
   - legacy_constructor
   - identifier_name
+  - switch_case_alignment
 
 type_body_length:
   warning: 500

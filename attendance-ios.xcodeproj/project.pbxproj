@@ -32,6 +32,7 @@
 		5E9CC7BC27D0F79E006D8B12 /* SignUpCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9CC7BB27D0F79D006D8B12 /* SignUpCollectionViewCell.swift */; };
 		5EA97D8827DBA621004E2330 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA97D8727DBA621004E2330 /* Models.swift */; };
 		5EA97D8A27DBB06A004E2330 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA97D8927DBB06A004E2330 /* Config.swift */; };
+		5EAA79FB27FDE42500BC7397 /* Attendance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA79FA27FDE42500BC7397 /* Attendance.swift */; };
 		5EAA79D527F5D6B400BC7397 /* AdminTodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA79D427F5D6B400BC7397 /* AdminTodayView.swift */; };
 		5EAA79D727F5ED7B00BC7397 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA79D627F5ED7B00BC7397 /* UIView.swift */; };
 		5EAA79D927F5EE1900BC7397 /* UIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA79D827F5EE1900BC7397 /* UIStackView.swift */; };
@@ -86,6 +87,7 @@
 		5E9CC7BB27D0F79D006D8B12 /* SignUpCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpCollectionViewCell.swift; sourceTree = "<group>"; };
 		5EA97D8727DBA621004E2330 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		5EA97D8927DBB06A004E2330 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		5EAA79FA27FDE42500BC7397 /* Attendance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Attendance.swift; sourceTree = "<group>"; };
 		5EAA79D427F5D6B400BC7397 /* AdminTodayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminTodayView.swift; sourceTree = "<group>"; };
 		5EAA79D627F5ED7B00BC7397 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		5EAA79D827F5EE1900BC7397 /* UIStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStackView.swift; sourceTree = "<group>"; };
@@ -200,6 +202,7 @@
 			isa = PBXGroup;
 			children = (
 				5EA97D8727DBA621004E2330 /* Models.swift */,
+				5EAA79FA27FDE42500BC7397 /* Attendance.swift */,
 				5EA97D8927DBB06A004E2330 /* Config.swift */,
 			);
 			path = Model;
@@ -554,6 +557,7 @@
 				52C4CDE027D0B1D1005EDE78 /* HomeBottomTabView.swift in Sources */,
 				297E957F27CFA68600452222 /* QRViewController.swift in Sources */,
 				527657F727C384AE0080DA32 /* UIViewController.swift in Sources */,
+				5EAA79FB27FDE42500BC7397 /* Attendance.swift in Sources */,
 				5EF69EC427A7F8B0007E9735 /* UILabel.swift in Sources */,
 				5EF69EC627A7FA40007E9735 /* UIColor.swift in Sources */,
 				5EF69ECB27A81E56007E9735 /* HomeViewController.swift in Sources */,
