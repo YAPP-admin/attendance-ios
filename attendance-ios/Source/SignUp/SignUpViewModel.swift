@@ -40,7 +40,10 @@ final class SignUpViewModel: ViewModel {
 
     init() {
         setupConfig()
+        subscribeInputs()
+    }
 
+    private func subscribeInputs() {
         input.name
             .subscribe(onNext: { [weak self] name in
                 self?.output.isNameTextFieldValid.onNext(name?.isEmpty == false)
@@ -59,6 +62,7 @@ final class SignUpViewModel: ViewModel {
 
 }
 
+// MARK: - Config
 private extension SignUpViewModel {
 
     func setupConfig() {

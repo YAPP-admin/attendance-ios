@@ -91,11 +91,12 @@ final class SignUpNameInfoViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        bindSubviews()
         bindViewModel()
-        bindTextField()
-        bindButton()
+
         setupDelegate()
         setupTextField()
+
         configureUI()
         configureLayout()
         configureAccessoryViewLayout()
@@ -112,24 +113,13 @@ final class SignUpNameInfoViewController: UIViewController {
 // MARK: - Bind
 private extension SignUpNameInfoViewController {
 
-    func bindViewModel() {
-        viewModel.output.isNameTextFieldValid
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] isValid in
-                isValid ? self?.activateButtons() : self?.deactivateButtons()
-            })
-            .disposed(by: disposeBag)
-    }
-
-    func bindTextField() {
+    func bindSubviews() {
         textField.rx.text
             .subscribe(onNext: { [weak self] text in
                 guard let text = text else { return }
                 self?.viewModel.input.name.onNext(text)
             }).disposed(by: disposeBag)
-    }
 
-    func bindButton() {
         nextButton.rx.controlEvent([.touchUpInside])
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
@@ -154,6 +144,15 @@ private extension SignUpNameInfoViewController {
                 self?.alertView.isHidden.toggle()
                 self?.goToLogin()
             }).disposed(by: disposeBag)
+    }
+
+    func bindViewModel() {
+        viewModel.output.isNameTextFieldValid
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] isValid in
+                isValid ? self?.activateButtons() : self?.deactivateButtons()
+            })
+            .disposed(by: disposeBag)
     }
 
 }
@@ -193,6 +192,11 @@ private extension SignUpNameInfoViewController {
         textField.inputAccessoryView = accessoryView
     }
 
+}
+
+// MARK: - UI
+private extension SignUpNameInfoViewController {
+
     func activateButtons() {
         nextButton.isEnabled = true
         keyboardNextButton.isEnabled = true
@@ -212,11 +216,7 @@ private extension SignUpNameInfoViewController {
     }
 
     func configureLayout() {
-        view.addSubview(backButton)
-        view.addSubview(titleLabel)
-        view.addSubview(subTitleLabel)
-        view.addSubview(textField)
-        view.addSubview(nextButton)
+        view.addSubviews([backButton, titleLabel, subTitleLabel, textField, nextButton])
 
         backButton.snp.makeConstraints {
             $0.top.equalToSuperview().offset(56)

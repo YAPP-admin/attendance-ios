@@ -35,6 +35,7 @@ final class BaseViewModel: ViewModel {
 
         let goToSignUp = PublishRelay<Void>()
         let goToHome = PublishRelay<Void>()
+        let goToAdmin = PublishRelay<Void>()
     }
 
     let input = Input()
@@ -43,7 +44,10 @@ final class BaseViewModel: ViewModel {
 
     init() {
         logoutWithKakao()
+        subscribeInputs()
+    }
 
+    private func subscribeInputs() {
         input.tapLogin
             .subscribe(onNext: { [weak self] _ in
                 self?.loginWithKakao()
@@ -52,6 +56,7 @@ final class BaseViewModel: ViewModel {
 
 }
 
+// MARK: - Login
 private extension BaseViewModel {
 
     func loginWithKakao() {

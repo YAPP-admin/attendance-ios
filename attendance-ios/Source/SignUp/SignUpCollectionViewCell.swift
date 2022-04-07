@@ -25,8 +25,8 @@ final class SignUpCollectionViewCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configureLayout()
         configureUI()
+        configureLayout()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -51,12 +51,17 @@ final class SignUpCollectionViewCell: UICollectionViewCell {
         backgroundColor = UIColor.gray_200
     }
 
-    private func configureUI() {
+}
+
+// MARK: - UI
+private extension SignUpCollectionViewCell {
+
+    func configureUI() {
         backgroundColor = .gray_200
         layer.cornerRadius = bounds.height/2
     }
 
-    private func configureLayout() {
+    func configureLayout() {
         addSubview(positionLabel)
 
         positionLabel.snp.makeConstraints {
