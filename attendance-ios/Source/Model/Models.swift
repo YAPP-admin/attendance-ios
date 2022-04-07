@@ -31,13 +31,24 @@ struct Session: Codable {
     }
 }
 
-enum PositionType: String, Codable {
-    case android = "DEV_ANDROID"
-    case web = "DEV_WEB"
-    case ios = "DEV_IOS"
-    case server = "DEV_SEVER"
-    case designer = "DESIGNER"
+enum PositionType: String, CaseIterable, Codable {
     case projectManager = "PROJECT_MANAGER"
+    case designer = "DESIGNER"
+    case android = "DEV_ANDROID"
+    case ios = "DEV_IOS"
+    case web = "DEV_WEB"
+    case server = "DEV_SEVER"
+
+    var shortValue: String {
+        switch self {
+        case .android: return "Android"
+        case .web: return "Web"
+        case .ios: return "iOS"
+        case .server: return "Server"
+        case .designer: return "UX/UI Design"
+        case .projectManager: return "PM"
+        }
+    }
 }
 
 struct Team: Codable {

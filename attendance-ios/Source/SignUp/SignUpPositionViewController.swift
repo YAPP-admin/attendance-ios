@@ -136,15 +136,22 @@ extension SignUpPositionViewController: UICollectionViewDelegateFlowLayout, UICo
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 0
+        PositionType.allCases.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return UICollectionViewCell()
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SignUpCollectionViewCell.identifier, for: indexPath) as? SignUpCollectionViewCell else { return UICollectionViewCell() }
+        cell.configureUI(text: PositionType.allCases[indexPath.row].shortValue)
+        return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return .zero
+        let dummyCell = SignUpCollectionViewCell(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: Constants.cellHeight))
+        let text = PositionType.allCases[indexPath.row].shortValue
+        dummyCell.configureUI(text: text)
+        dummyCell.layoutIfNeeded()
+        let estimatedSize = dummyCell.systemLayoutSizeFitting(CGSize(width: 80, height: Constants.cellHeight))
+        return estimatedSize
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -156,11 +163,13 @@ extension SignUpPositionViewController: UICollectionViewDelegateFlowLayout, UICo
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-
+        guard let cell = collectionView.cellForItem(at: indexPath) as? SignUpCollectionViewCell else { return }
+        cell.didSelect()
     }
 
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-
+        guard let cell = collectionView.cellForItem(at: indexPath) as? SignUpCollectionViewCell else { return }
+        cell.didDeselect()
     }
 
 }
@@ -204,10 +213,7 @@ private extension SignUpPositionViewController {
     }
 
     func configureLayout() {
-        view.addSubview(backButton)
-        view.addSubview(titleLabel)
-        view.addSubview(collectionView)
-        view.addSubview(nextButton)
+        view.addSubviews([backButton, titleLabel, collectionView, nextButton])
 
         backButton.snp.makeConstraints {
             $0.top.equalToSuperview().offset(56)
@@ -221,8 +227,8 @@ private extension SignUpPositionViewController {
         collectionView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(28)
             $0.left.equalToSuperview().inset(Constants.padding)
-            $0.right.equalToSuperview().inset(Constants.padding*4)
-            $0.height.equalTo(Constants.cellHeight*2+Constants.cellSpacing)
+            $0.right.equalToSuperview().inset(Constants.padding*6)
+            $0.height.equalTo(Constants.cellHeight*3+Constants.cellSpacing*2)
         }
         nextButton.snp.makeConstraints {
             $0.left.right.equalToSuperview().inset(Constants.padding)

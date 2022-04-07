@@ -260,12 +260,12 @@ extension SignUpTeamViewController: UICollectionViewDelegateFlowLayout, UICollec
             viewModel.input.teamNumber.onNext(indexPath.row+1)
         default: break
         }
-        cell.configureSelectedUI()
+        cell.didSelect()
     }
 
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) as? SignUpCollectionViewCell else { return }
-        cell.configureDeselectedUI()
+        cell.didDeselect()
     }
 
     final class CollectionViewLeftAlignFlowLayout: UICollectionViewFlowLayout {
@@ -324,12 +324,7 @@ private extension SignUpTeamViewController {
     }
 
     func configureLayout() {
-        view.addSubview(backButton)
-        view.addSubview(titleLabel)
-        view.addSubview(teamTypeCollectionView)
-        view.addSubview(subTitleLabel)
-        view.addSubview(teamNumberCollectionView)
-        view.addSubview(okButton)
+        view.addSubviews([backButton, titleLabel, teamTypeCollectionView, subTitleLabel, teamNumberCollectionView, okButton])
 
         backButton.snp.makeConstraints {
             $0.top.equalToSuperview().offset(56)
