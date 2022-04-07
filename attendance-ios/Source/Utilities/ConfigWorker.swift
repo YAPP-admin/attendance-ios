@@ -62,14 +62,12 @@ final class ConfigWorker {
         }
     }
 
-    /// 출석 체크 시간값을 반환합니다.
+    /// 출석 체크 시간 값을 반환합니다.
     func decodeMaginotlineTime(completion: @escaping (Result<String, Error>) -> Void) {
         remoteConfig.fetch { [weak self] status, _ in
             guard let self = self, status == .success else { return }
             self.remoteConfig.activate { _, _ in
-                guard let configString = self.remoteConfig[Config.maginotlineTime.rawValue].stringValue,
-                      let configData = configString.data(using: .utf8),
-                      let maginotlineTime = try? JSONDecoder().decode(String.self, from: configData) else { return }
+                guard let maginotlineTime = self.remoteConfig[Config.maginotlineTime.rawValue].stringValue else { return }
                 completion(.success(maginotlineTime))
             }
         }

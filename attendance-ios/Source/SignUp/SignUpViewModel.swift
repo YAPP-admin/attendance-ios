@@ -97,13 +97,6 @@ private extension SignUpViewModel {
             case .failure: ()
             }
         }
-
-        ConfigWorker.shared.decodeMaginotlineTime { [weak self] result in
-            switch result {
-            case .success(let maginotlineTime): print("maginotlineTime: \(maginotlineTime)")
-            case .failure: ()
-            }
-        }
     }
 
 }
