@@ -105,9 +105,6 @@ final class SignUpTeamViewController: UIViewController {
         configureUI()
         configureLayout()
         configureAlertViewLayout()
-
-        // TODO: - 테스트를 위해 추가, 이후 삭제
-        teamNumberCollectionView.backgroundColor = .systemYellow
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -124,7 +121,7 @@ private extension SignUpTeamViewController {
         viewModel.input.teamType
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] _ in
-                self?.teamTypeCollectionView.reloadData()
+                self?.teamNumberCollectionView.reloadData()
             })
             .disposed(by: disposeBag)
 
@@ -200,10 +197,7 @@ extension SignUpTeamViewController: UICollectionViewDelegateFlowLayout, UICollec
         switch collectionView {
         case teamTypeCollectionView: return teams.count
         case teamNumberCollectionView:
-            guard let teamType = try? viewModel.input.teamType.value() else { return 0 }
-            print("teamType: \(teamType)")
-            guard let team = teams.first(where: { $0.type == teamType }) else { return 0 }
-            print("team: \(team)")
+            guard let teamType = try? viewModel.input.teamType.value(), let team = teams.first(where: { $0.type == teamType }) else { return 0 }
             return team.number
         default: return 0
         }
