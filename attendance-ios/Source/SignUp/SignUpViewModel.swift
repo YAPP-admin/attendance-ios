@@ -19,6 +19,8 @@ final class SignUpViewModel: ViewModel {
         let positionType = BehaviorSubject<PositionType?>(value: nil)
         let teamType = BehaviorSubject<TeamType?>(value: nil)
         let teamNumber = BehaviorSubject<Int?>(value: nil)
+
+        let registerInfo = PublishRelay<Void>()
     }
 
     struct Output {
@@ -43,7 +45,27 @@ final class SignUpViewModel: ViewModel {
     init() {
         setupConfig()
         bindInput()
-        bindOutput()
+    }
+
+}
+
+// MARK: - Config
+private extension SignUpViewModel {
+
+    func setupConfig() {
+        configWorker.decodeYappConfig { [weak self] result in
+            switch result {
+            case .success(let config): self?.output.yappConfig.onNext(config)
+            case .failure: ()
+            }
+        }
+
+        configWorker.decodeSelectTeams { [weak self] result in
+            switch result {
+            case .success(let teams): self?.output.configTeams.onNext(teams)
+            case .failure: ()
+            }
+        }
     }
 
 }
@@ -66,40 +88,11 @@ private extension SignUpViewModel {
             .subscribe(onNext: { [weak self] _ in
                 self?.output.complete.accept(())
             }).disposed(by: disposeBag)
-    }
 
-    // MARK: - 테스트를 위해 출력, 이후 삭제
-    func bindOutput() {
-        output.yappConfig
-            .subscribe(onNext: { yappConfig in
-                print("yappConfig: \(String(describing: yappConfig))")
+        input.registerInfo
+            .subscribe(onNext: { [weak self] _ in
+                self?.registerInfo()
             }).disposed(by: disposeBag)
-
-        output.configTeams
-            .subscribe(onNext: { configTeams in
-                print("configTeams: \(configTeams)")
-            }).disposed(by: disposeBag)
-    }
-
-}
-
-// MARK: - Config
-private extension SignUpViewModel {
-
-    func setupConfig() {
-        configWorker.decodeYappConfig { [weak self] result in
-            switch result {
-            case .success(let config): self?.output.yappConfig.onNext(config)
-            case .failure: ()
-            }
-        }
-
-        configWorker.decodeSelectTeams { [weak self] result in
-            switch result {
-            case .success(let teams): self?.output.configTeams.onNext(teams)
-            case .failure: ()
-            }
-        }
     }
 
 }

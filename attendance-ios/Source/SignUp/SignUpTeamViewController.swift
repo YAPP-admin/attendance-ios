@@ -126,7 +126,7 @@ private extension SignUpTeamViewController {
         okButton.rx.controlEvent([.touchUpInside])
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
-                self?.registerInfo()
+                self?.viewModel.input.registerInfo.accept(())
             }).disposed(by: disposeBag)
 
         backButton.rx.controlEvent([.touchUpInside])
@@ -200,32 +200,6 @@ private extension SignUpTeamViewController {
                 self?.alertView.isHidden.toggle()
                 self?.goToLogin()
             }).disposed(by: disposeBag)
-    }
-
-    func registerInfo() {
-        guard let config = try? viewModel.output.yappConfig.value(),
-              let name = try? viewModel.input.name.value(),
-              let position = try? viewModel.input.positionType.value(),
-              let teamType = try? viewModel.input.teamType.value(),
-              let teamNumber = try? viewModel.input.teamNumber.value() else { return }
-        let generation = config.generation
-
-        let db = Firestore.firestore()
-        let docRef = db.collection("member").document("\(generation)th").collection("members")
-
-        UserApi.shared.me { user, error in
-            guard let user = user, let userId = user.id else { return }
-            docRef.document(UUID().uuidString).setData([
-                "id": userId,
-                "isAdmin": false,
-                "name": name,
-                "position": position,
-                "team": "\(teamType.rawValue) \(teamNumber)"
-            ]) { [weak self] error in
-                guard error == nil else { return }
-                self?.goToHome()
-            }
-        }
     }
 
 }
