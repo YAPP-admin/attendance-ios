@@ -24,7 +24,6 @@ struct YappConfig: Codable {
         case sessionCount = "session_count"
         case adminPassword = "admin_password"
     }
-
 }
 
 struct ConfigTeam: Codable {
