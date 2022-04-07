@@ -119,7 +119,7 @@ extension SignUpViewModel {
                 "id": userId,
                 "name": name,
                 "position": positionType.rawValue,
-                "team": ["number": teamNumber, "type": teamType.rawValue],
+                "team": ["number": teamNumber, "type": teamType.upperCase],
                 "attendances": self.makeEmptyAttendances()
             ]) { [weak self] error in
                 guard error == nil else { return }
@@ -132,7 +132,7 @@ extension SignUpViewModel {
         var attendances: [[String: Any]] = []
         let sessionCount = 20
         for id in 0..<sessionCount {
-            let empty: [String: Any] = ["sessionId": id, "attendanceType": ["text": "미통보 결석", "point": -20]]
+            let empty: [String: Any] = ["sessionId": id, "attendanceType": ["text": "결석", "point": -20]]
             attendances.append(empty)
         }
         return attendances
