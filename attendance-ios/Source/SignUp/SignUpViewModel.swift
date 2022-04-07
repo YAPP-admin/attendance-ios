@@ -28,7 +28,7 @@ final class SignUpViewModel: ViewModel {
         let generation = BehaviorSubject<Int>(value: 0)
 
         let isNameTextFieldValid = BehaviorSubject(value: false)
-        let showTeamCount = PublishRelay<Void>()
+        let showTeamNumber = PublishRelay<Void>()
 
         let complete = PublishRelay<Void>()
         let goToHome = PublishRelay<Void>()
@@ -51,7 +51,7 @@ final class SignUpViewModel: ViewModel {
 
         input.teamType
             .subscribe(onNext: { [weak self] _ in
-                self?.output.showTeamCount.accept(())
+                self?.output.showTeamNumber.accept(())
             }).disposed(by: disposeBag)
 
         input.teamNumber

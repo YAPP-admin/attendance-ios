@@ -5,6 +5,9 @@
 //  Created by leeesangheee on 2022/03/03.
 //
 
+import FirebaseFirestore
+import KakaoSDKAuth
+import KakaoSDKUser
 import RxCocoa
 import RxSwift
 import SnapKit
@@ -155,8 +158,7 @@ private extension SignUpTeamInfoViewController {
             })
             .disposed(by: disposeBag)
 
-        // TODO: - 애니메이션 추가
-        viewModel.output.showTeamCount
+        viewModel.output.showTeamNumber
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] _ in
                 self?.subTitleLabel.isHidden = false
@@ -198,10 +200,13 @@ private extension SignUpTeamInfoViewController {
                 self?.alertView.isHidden.toggle()
                 self?.goToLogin()
             }).disposed(by: disposeBag)
+    }
+
     func registerInfo() {
         guard let config = try? viewModel.output.config.value(),
               let name = try? viewModel.input.name.value(),
-              let team = try? viewModel.input.team.value(),
+              let position = try? viewModel.input.position.value(),
+              let teamType = try? viewModel.input.teamType.value(),
               let teamNumber = try? viewModel.input.teamNumber.value() else { return }
         let generation = config.generation
 
@@ -214,8 +219,8 @@ private extension SignUpTeamInfoViewController {
                 "id": userId,
                 "isAdmin": false,
                 "name": name,
-                "position": team,
-                "team": "\(team) \(teamNumber)"
+                "position": position,
+                "team": "\(teamType.rawValue) \(teamNumber)"
             ]) { [weak self] error in
                 guard error == nil else { return }
                 self?.goToHome()
@@ -376,7 +381,7 @@ private extension SignUpTeamInfoViewController {
     }
 
     func configureLayout() {
-        view.addSubviews([backButton, titleLabel, positionCollectionView, subTitleLabel, teamCollectionView, okButton])
+        view.addSubviews([backButton, titleLabel, teamTypeCollectionView, subTitleLabel, teamNumberCollectionView, okButton])
 
         backButton.snp.makeConstraints {
             $0.top.equalToSuperview().offset(56)
