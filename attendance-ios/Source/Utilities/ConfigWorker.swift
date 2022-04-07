@@ -11,8 +11,6 @@ import FirebaseRemoteConfig
 /// Firebase의 Config를 관리하는 클래스입니다.
 final class ConfigWorker {
 
-    static let shared = ConfigWorker()
-
     private let remoteConfig: RemoteConfig = {
         let remoteConfig = RemoteConfig.remoteConfig()
         let settings = RemoteConfigSettings()
@@ -20,8 +18,6 @@ final class ConfigWorker {
         remoteConfig.configSettings = settings
         return remoteConfig
     }()
-
-    private init() {}
 
     /// YAPP 세션 리스트를 반환합니다.
     func decodeSessionList(completion: @escaping (Result<[Session], Error>) -> Void) {

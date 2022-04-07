@@ -38,6 +38,8 @@ final class SignUpViewModel: ViewModel {
     let output = Output()
     let disposeBag = DisposeBag()
 
+    private let configWorker = ConfigWorker()
+
     init() {
         setupConfig()
         bindInput()
@@ -84,14 +86,14 @@ private extension SignUpViewModel {
 private extension SignUpViewModel {
 
     func setupConfig() {
-        ConfigWorker.shared.decodeYappConfig { [weak self] result in
+        configWorker.decodeYappConfig { [weak self] result in
             switch result {
             case .success(let config): self?.output.yappConfig.onNext(config)
             case .failure: ()
             }
         }
 
-        ConfigWorker.shared.decodeSelectTeams { [weak self] result in
+        configWorker.decodeSelectTeams { [weak self] result in
             switch result {
             case .success(let teams): self?.output.configTeams.onNext(teams)
             case .failure: ()
