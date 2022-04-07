@@ -29,5 +29,5 @@ struct YappConfig: Codable {
 
 struct ConfigTeam: Codable {
     let team: String
-    let count: String
+    let number: Int
 }

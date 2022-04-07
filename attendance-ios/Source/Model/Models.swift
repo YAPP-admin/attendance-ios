@@ -46,8 +46,8 @@ struct Team: Codable {
 }
 
 enum TeamType: String, Codable {
-    case android = "ANDROID"
-    case ios = "IOS"
-    case web = "WEB"
-    case allRounder = "ALL_ROUNDER"
+    case android = "Android"
+    case ios = "iOS"
+    case web = "Web"
+    case allRounder = "All-Rounder"
 }
