@@ -195,7 +195,7 @@ private extension SignUpNameViewController {
 }
 
 // MARK: - UI
-private extension SignUpNameInfoViewController {
+private extension SignUpNameViewController {
 
     func activateButtons() {
         nextButton.isEnabled = true

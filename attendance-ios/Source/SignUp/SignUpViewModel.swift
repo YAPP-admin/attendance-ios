@@ -51,7 +51,7 @@ final class SignUpViewModel: ViewModel {
 // MARK: - Bind
 private extension SignUpViewModel {
 
-    private func subscribeInputs() {
+    func bindInput() {
         input.name
             .subscribe(onNext: { [weak self] name in
                 self?.output.isNameTextFieldValid.onNext(name?.isEmpty == false)
@@ -71,12 +71,12 @@ private extension SignUpViewModel {
     // MARK: - 테스트를 위해 출력, 이후 삭제
     func bindOutput() {
         output.yappConfig
-            .subscribe(onNext: { [weak self] yappConfig in
-                print("yappConfig: \(yappConfig)")
+            .subscribe(onNext: { yappConfig in
+                print("yappConfig: \(String(describing: yappConfig))")
             }).disposed(by: disposeBag)
 
         output.configTeams
-            .subscribe(onNext: { [weak self] configTeams in
+            .subscribe(onNext: { configTeams in
                 print("configTeams: \(configTeams)")
             }).disposed(by: disposeBag)
     }

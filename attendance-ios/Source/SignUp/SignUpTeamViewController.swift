@@ -43,7 +43,7 @@ final class SignUpTeamViewController: UIViewController {
     }()
 
     private let teamTypeCollectionView: UICollectionView = {
-        let layout = CollectionViewLeftAlignFlowLayout()
+        let layout = CollectionViewLeftAlignFlowLayout(cellSpacing: Constants.cellSpacing)
         layout.scrollDirection = .vertical
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.showsVerticalScrollIndicator = false
@@ -143,27 +143,6 @@ private extension SignUpTeamViewController {
             }).disposed(by: disposeBag)
     }
 
-    func bindSubviews() {
-        okButton.rx.controlEvent([.touchUpInside])
-            .asObservable()
-            .subscribe(onNext: { [weak self] _ in
-                self?.registerInfo()
-            }).disposed(by: disposeBag)
-
-        backButton.rx.controlEvent([.touchUpInside])
-            .asObservable()
-            .subscribe(onNext: { [weak self] _ in
-                self?.alertView.isHidden.toggle()
-            }).disposed(by: disposeBag)
-
-        alertView.rightButton.rx.controlEvent([.touchUpInside])
-            .asObservable()
-            .subscribe(onNext: { [weak self] _ in
-                self?.alertView.isHidden.toggle()
-                self?.goToLogin()
-            }).disposed(by: disposeBag)
-    }
-
     func bindViewModel() {
         viewModel.input.teamType
             .observe(on: MainScheduler.instance)
@@ -224,9 +203,9 @@ private extension SignUpTeamViewController {
     }
 
     func registerInfo() {
-        guard let config = try? viewModel.output.config.value(),
+        guard let config = try? viewModel.output.yappConfig.value(),
               let name = try? viewModel.input.name.value(),
-              let position = try? viewModel.input.position.value(),
+              let position = try? viewModel.input.positionType.value(),
               let teamType = try? viewModel.input.teamType.value(),
               let teamNumber = try? viewModel.input.teamNumber.value() else { return }
         let generation = config.generation
@@ -335,28 +314,6 @@ extension SignUpTeamViewController: UICollectionViewDelegateFlowLayout, UICollec
         cell.didDeselect()
     }
 
-    final class CollectionViewLeftAlignFlowLayout: UICollectionViewFlowLayout {
-
-        override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-            guard let attributes = super.layoutAttributesForElements(in: rect) else { return nil }
-            self.minimumLineSpacing = Constants.cellSpacing
-            var leftMargin = sectionInset.left
-            var maxY: CGFloat = -1.0
-
-            attributes.forEach { attribute in
-                if attribute.frame.origin.y >= maxY {
-                    leftMargin = sectionInset.left
-                }
-                attribute.frame.origin.x = leftMargin
-                leftMargin += attribute.frame.width + Constants.cellSpacing
-                maxY = max(attribute.frame.maxY, maxY)
-            }
-
-            return attributes
-        }
-
-    }
-
 }
 
 // MARK: - etc
@@ -378,7 +335,7 @@ private extension SignUpTeamViewController {
 }
 
 // MARK: - UI
-private extension SignUpTeamInfoViewController {
+private extension SignUpTeamViewController {
 
     func activateNextButton() {
         okButton.isEnabled = true
