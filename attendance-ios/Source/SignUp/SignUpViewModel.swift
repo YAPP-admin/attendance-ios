@@ -16,14 +16,16 @@ final class SignUpViewModel: ViewModel {
 
     struct Input {
         let name = BehaviorSubject<String?>(value: nil)
-        let position = BehaviorSubject<PositionType?>(value: nil)
+        let positionType = BehaviorSubject<PositionType?>(value: nil)
         let teamType = BehaviorSubject<TeamType?>(value: nil)
         let teamNumber = BehaviorSubject<Int?>(value: nil)
+
+        let registerInfo = PublishRelay<Void>()
     }
 
     struct Output {
-        let config = BehaviorSubject<YappConfig?>(value: nil)
-        let configTeams = BehaviorSubject<[ConfigTeam]>(value: [])
+        let yappConfig = BehaviorSubject<YappConfig?>(value: nil)
+        let configTeams = BehaviorSubject<[Team]>(value: [])
 
         let generation = BehaviorSubject<Int>(value: 0)
 
@@ -38,12 +40,40 @@ final class SignUpViewModel: ViewModel {
     let output = Output()
     let disposeBag = DisposeBag()
 
+    private let configWorker = ConfigWorker()
+
     init() {
         setupConfig()
-        subscribeInputs()
+        bindInput()
     }
 
-    private func subscribeInputs() {
+}
+
+// MARK: - Config
+private extension SignUpViewModel {
+
+    func setupConfig() {
+        configWorker.decodeYappConfig { [weak self] result in
+            switch result {
+            case .success(let config): self?.output.yappConfig.onNext(config)
+            case .failure: ()
+            }
+        }
+
+        configWorker.decodeSelectTeams { [weak self] result in
+            switch result {
+            case .success(let teams): self?.output.configTeams.onNext(teams)
+            case .failure: ()
+            }
+        }
+    }
+
+}
+
+// MARK: - Bind
+private extension SignUpViewModel {
+
+    func bindInput() {
         input.name
             .subscribe(onNext: { [weak self] name in
                 self?.output.isNameTextFieldValid.onNext(name?.isEmpty == false)
@@ -58,35 +88,11 @@ final class SignUpViewModel: ViewModel {
             .subscribe(onNext: { [weak self] _ in
                 self?.output.complete.accept(())
             }).disposed(by: disposeBag)
-    }
 
-}
-
-// MARK: - Config
-private extension SignUpViewModel {
-
-    func setupConfig() {
-        let remoteConfig = RemoteConfig.remoteConfig()
-        let settings = RemoteConfigSettings()
-        settings.minimumFetchInterval = 0
-        remoteConfig.configSettings = settings
-
-        remoteConfig.fetch { [weak self] status, _ in
-            guard let self = self, status == .success else { return }
-            remoteConfig.activate { _, _ in
-                let decoder = JSONDecoder()
-
-                guard let configString = remoteConfig[Config.config.rawValue].stringValue,
-                      let configData = configString.data(using: .utf8),
-                      let config = try? decoder.decode(YappConfig.self, from: configData) else { return }
-                self.output.config.onNext(config)
-
-                guard let configTeamString = remoteConfig[Config.selectTeams.rawValue].stringValue,
-                      let configTeamData = configTeamString.data(using: .utf8),
-                      let configTeams = try? decoder.decode([ConfigTeam].self, from: configTeamData) else { return }
-                self.output.configTeams.onNext(configTeams)
-            }
-        }
+        input.registerInfo
+            .subscribe(onNext: { [weak self] _ in
+                self?.registerInfo()
+            }).disposed(by: disposeBag)
     }
 
 }
@@ -95,7 +101,7 @@ extension SignUpViewModel {
 
     func registerInfo() {
         guard let name = try? input.name.value(),
-              let position = try? input.position.value(),
+              let positionType = try? input.positionType.value(),
               let teamType = try? input.teamType.value(),
               let teamNumber = try? input.teamNumber.value() else { return }
 
@@ -108,8 +114,8 @@ extension SignUpViewModel {
             docRef.document("\(userId)").setData([
                 "id": userId,
                 "name": name,
-                "position": position.rawValue,
-                "team": ["number": teamNumber, "type": teamType.rawValue],
+                "position": positionType.rawValue,
+                "team": ["number": teamNumber, "type": teamType.upperCase],
                 "attendances": self.makeEmptyAttendances()
             ]) { [weak self] error in
                 guard error == nil else { return }
@@ -122,7 +128,7 @@ extension SignUpViewModel {
         var attendances: [[String: Any]] = []
         let sessionCount = 20
         for id in 0..<sessionCount {
-            let empty: [String: Any] = ["sessionId": id, "attendanceType": ["text": "미통보 결석", "point": -20]]
+            let empty: [String: Any] = ["sessionId": id, "attendanceType": ["text": "결석", "point": -20]]
             attendances.append(empty)
         }
         return attendances

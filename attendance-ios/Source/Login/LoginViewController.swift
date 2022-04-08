@@ -125,10 +125,10 @@ private extension LoginViewController {
 private extension LoginViewController {
 
     func goToSignUpNameVC() {
-        let signUpNameInfoVC = SignUpNameInfoViewController()
+        let signUpNameVC = SignUpNameViewController()
         navigationItem.backButtonTitle = ""
         navigationController?.navigationBar.tintColor = .gray_800
-        navigationController?.pushViewController(signUpNameInfoVC, animated: true)
+        navigationController?.pushViewController(signUpNameVC, animated: true)
     }
 
     func goToHomeVC() {

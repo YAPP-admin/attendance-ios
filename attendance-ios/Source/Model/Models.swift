@@ -31,13 +31,24 @@ struct Session: Codable {
     }
 }
 
-enum PositionType: String, Codable {
-    case android = "DEV_ANDROID"
-    case web = "DEV_WEB"
-    case ios = "DEV_IOS"
-    case server = "DEV_SEVER"
-    case designer = "DESIGNER"
+enum PositionType: String, CaseIterable, Codable {
     case projectManager = "PROJECT_MANAGER"
+    case designer = "DESIGNER"
+    case android = "DEV_ANDROID"
+    case ios = "DEV_IOS"
+    case web = "DEV_WEB"
+    case server = "DEV_SEVER"
+
+    var shortValue: String {
+        switch self {
+        case .projectManager: return "PM"
+        case .designer: return "UX/UI Design"
+        case .android: return "Android"
+        case .ios: return "iOS"
+        case .web: return "Web"
+        case .server: return "Server"
+        }
+    }
 }
 
 struct Team: Codable {
@@ -46,8 +57,17 @@ struct Team: Codable {
 }
 
 enum TeamType: String, Codable {
-    case android = "ANDROID"
-    case ios = "IOS"
-    case web = "WEB"
-    case allRounder = "ALL_ROUNDER"
+    case android = "Android"
+    case ios = "iOS"
+    case web = "Web"
+    case allRounder = "All-Rounder"
+
+    var upperCase: String {
+        switch self {
+        case .android: return "ANDROID"
+        case .ios: return "IOS"
+        case .web: return "WEB"
+        case .allRounder: return "ALL_ROUNDER"
+        }
+    }
 }

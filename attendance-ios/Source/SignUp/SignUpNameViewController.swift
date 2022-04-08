@@ -1,5 +1,5 @@
 //
-//  SignUpNameInfoViewController.swift
+//  SignUpNameViewController.swift
 //  attendance-ios
 //
 //  Created by leeesangheee on 2022/02/23.
@@ -10,7 +10,7 @@ import RxSwift
 import SnapKit
 import UIKit
 
-final class SignUpNameInfoViewController: UIViewController {
+final class SignUpNameViewController: UIViewController {
 
     enum Constants {
         static let padding: CGFloat = 24
@@ -111,7 +111,7 @@ final class SignUpNameInfoViewController: UIViewController {
 }
 
 // MARK: - Bind
-private extension SignUpNameInfoViewController {
+private extension SignUpNameViewController {
 
     func bindSubviews() {
         textField.rx.text
@@ -123,13 +123,13 @@ private extension SignUpNameInfoViewController {
         nextButton.rx.controlEvent([.touchUpInside])
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
-                self?.goToTeamInfo()
+                self?.goToPositionVC()
             }).disposed(by: disposeBag)
 
         keyboardNextButton.rx.controlEvent([.touchUpInside])
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
-                self?.goToTeamInfo()
+                self?.goToPositionVC()
             }).disposed(by: disposeBag)
 
         backButton.rx.controlEvent([.touchUpInside])
@@ -158,7 +158,7 @@ private extension SignUpNameInfoViewController {
 }
 
 // MARK: - TextField
-extension SignUpNameInfoViewController: UITextFieldDelegate {
+extension SignUpNameViewController: UITextFieldDelegate {
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
@@ -171,17 +171,17 @@ extension SignUpNameInfoViewController: UITextFieldDelegate {
 }
 
 // MARK: - etc
-private extension SignUpNameInfoViewController {
+private extension SignUpNameViewController {
 
     func goToLogin() {
         navigationController?.popToRootViewController(animated: true)
     }
 
-    func goToTeamInfo() {
-        let teamInfoVC = SignUpTeamInfoViewController(viewModel: viewModel)
+    func goToPositionVC() {
+        let positionVC = SignUpPositionViewController(viewModel: viewModel)
         navigationItem.backButtonTitle = ""
         navigationController?.navigationBar.tintColor = .gray_800
-        navigationController?.pushViewController(teamInfoVC, animated: true)
+        navigationController?.pushViewController(positionVC, animated: true)
     }
 
     func setupDelegate() {
@@ -195,7 +195,7 @@ private extension SignUpNameInfoViewController {
 }
 
 // MARK: - UI
-private extension SignUpNameInfoViewController {
+private extension SignUpNameViewController {
 
     func activateButtons() {
         nextButton.isEnabled = true

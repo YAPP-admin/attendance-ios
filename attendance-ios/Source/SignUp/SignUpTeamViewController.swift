@@ -1,5 +1,5 @@
 //
-//  SignUpTeamInfoViewController.swift
+//  SignUpTeamViewController.swift
 //  attendance-ios
 //
 //  Created by leeesangheee on 2022/03/03.
@@ -13,7 +13,7 @@ import RxSwift
 import SnapKit
 import UIKit
 
-final class SignUpTeamInfoViewController: UIViewController {
+final class SignUpTeamViewController: UIViewController {
 
     enum Constants {
         static let padding: CGFloat = 24
@@ -43,7 +43,7 @@ final class SignUpTeamInfoViewController: UIViewController {
     }()
 
     private let teamTypeCollectionView: UICollectionView = {
-        let layout = CollectionViewLeftAlignFlowLayout()
+        let layout = CollectionViewLeftAlignFlowLayout(cellSpacing: Constants.cellSpacing)
         layout.scrollDirection = .vertical
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.showsVerticalScrollIndicator = false
@@ -120,13 +120,13 @@ final class SignUpTeamInfoViewController: UIViewController {
 }
 
 // MARK: - Bind
-private extension SignUpTeamInfoViewController {
+private extension SignUpTeamViewController {
 
     func bindSubviews() {
         okButton.rx.controlEvent([.touchUpInside])
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
-                self?.registerInfo()
+                self?.viewModel.input.registerInfo.accept(())
             }).disposed(by: disposeBag)
 
         backButton.rx.controlEvent([.touchUpInside])
@@ -147,7 +147,7 @@ private extension SignUpTeamInfoViewController {
         viewModel.input.teamType
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] _ in
-                self?.teamTypeCollectionView.reloadData()
+                self?.teamNumberCollectionView.reloadData()
             })
             .disposed(by: disposeBag)
 
@@ -169,7 +169,7 @@ private extension SignUpTeamInfoViewController {
         viewModel.output.complete
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] _ in
-                self?.activateButton()
+                self?.activateNextButton()
             })
             .disposed(by: disposeBag)
 
@@ -202,36 +202,10 @@ private extension SignUpTeamInfoViewController {
             }).disposed(by: disposeBag)
     }
 
-    func registerInfo() {
-        guard let config = try? viewModel.output.config.value(),
-              let name = try? viewModel.input.name.value(),
-              let position = try? viewModel.input.position.value(),
-              let teamType = try? viewModel.input.teamType.value(),
-              let teamNumber = try? viewModel.input.teamNumber.value() else { return }
-        let generation = config.generation
-
-        let db = Firestore.firestore()
-        let docRef = db.collection("member").document("\(generation)th").collection("members")
-
-        UserApi.shared.me { user, error in
-            guard let user = user, let userId = user.id else { return }
-            docRef.document(UUID().uuidString).setData([
-                "id": userId,
-                "isAdmin": false,
-                "name": name,
-                "position": position,
-                "team": "\(teamType.rawValue) \(teamNumber)"
-            ]) { [weak self] error in
-                guard error == nil else { return }
-                self?.goToHome()
-            }
-        }
-    }
-
 }
 
 // MARK: - CollectionView
-extension SignUpTeamInfoViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+extension SignUpTeamViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
 
     private func setupCollectionView() {
         teamTypeCollectionView.delegate = self
@@ -244,19 +218,15 @@ extension SignUpTeamInfoViewController: UICollectionViewDelegateFlowLayout, UICo
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let teamTypes = try? viewModel.output.configTeams.value() else { return 0 }
+        guard let teams = try? viewModel.output.configTeams.value() else { return 0 }
 
         switch collectionView {
-        case teamTypeCollectionView: return teamTypes.count
+        case teamTypeCollectionView: return teams.count
         case teamNumberCollectionView:
-            guard let teamType = try? viewModel.input.teamType.value(),
-                  let countString = teamTypes.filter({ $0.team == teamType.rawValue }).first?.count,
-                  let count = Int(countString) else { break }
-            return count
+            guard let teamType = try? viewModel.input.teamType.value(), let team = teams.first(where: { $0.type == teamType }) else { return 0 }
+            return team.number
         default: return 0
         }
-
-        return 0
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -265,7 +235,7 @@ extension SignUpTeamInfoViewController: UICollectionViewDelegateFlowLayout, UICo
 
         switch collectionView {
         case teamTypeCollectionView:
-            cell.configureUI(text: teams[indexPath.row].team)
+            cell.configureUI(text: teams[indexPath.row].type.rawValue)
         case teamNumberCollectionView:
             cell.configureUI(text: "\(indexPath.row+1)팀")
             guard let teamNumber = try? viewModel.input.teamNumber.value() else { break }
@@ -283,7 +253,7 @@ extension SignUpTeamInfoViewController: UICollectionViewDelegateFlowLayout, UICo
         switch collectionView {
         case teamTypeCollectionView:
             guard let teams = try? viewModel.output.configTeams.value() else { break }
-            text = teams[indexPath.row].team
+            text = teams[indexPath.row].type.rawValue
         case teamNumberCollectionView: text = "\(indexPath.row+1)팀"
         default: ()
         }
@@ -303,50 +273,25 @@ extension SignUpTeamInfoViewController: UICollectionViewDelegateFlowLayout, UICo
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let teamTypes = try? viewModel.output.configTeams.value().map({ $0.team }),
+        guard let teams = try? viewModel.output.configTeams.value(),
               let cell = collectionView.cellForItem(at: indexPath) as? SignUpCollectionViewCell else { return }
         switch collectionView {
-        case teamTypeCollectionView:
-            let teamType = TeamType(rawValue: teamTypes[indexPath.row])
-            viewModel.input.teamType.onNext(teamType)
-        case teamNumberCollectionView:
-            viewModel.input.teamNumber.onNext(indexPath.row+1)
+        case teamTypeCollectionView: viewModel.input.teamType.onNext(teams[indexPath.row].type)
+        case teamNumberCollectionView: viewModel.input.teamNumber.onNext(indexPath.row+1)
         default: break
         }
-        cell.configureSelectedUI()
+        cell.didSelect()
     }
 
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) as? SignUpCollectionViewCell else { return }
-        cell.configureDeselectedUI()
-    }
-
-    final class CollectionViewLeftAlignFlowLayout: UICollectionViewFlowLayout {
-
-        override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-            guard let attributes = super.layoutAttributesForElements(in: rect) else { return nil }
-            self.minimumLineSpacing = Constants.cellSpacing
-            var leftMargin = sectionInset.left
-            var maxY: CGFloat = -1.0
-
-            attributes.forEach { attribute in
-                if attribute.frame.origin.y >= maxY {
-                    leftMargin = sectionInset.left
-                }
-                attribute.frame.origin.x = leftMargin
-                leftMargin += attribute.frame.width + Constants.cellSpacing
-                maxY = max(attribute.frame.maxY, maxY)
-            }
-
-            return attributes
-        }
-
+        cell.didDeselect()
     }
 
 }
 
 // MARK: - etc
-private extension SignUpTeamInfoViewController {
+private extension SignUpTeamViewController {
 
     func goToHome() {
         let homeVC = HomeViewController()
@@ -364,14 +309,14 @@ private extension SignUpTeamInfoViewController {
 }
 
 // MARK: - UI
-private extension SignUpTeamInfoViewController {
+private extension SignUpTeamViewController {
 
-    func activateButton() {
+    func activateNextButton() {
         okButton.isEnabled = true
         okButton.backgroundColor = UIColor.yapp_orange
     }
 
-    func deactivateButton() {
+    func deactivateNextButton() {
         okButton.isEnabled = false
         okButton.backgroundColor = UIColor.gray_400
     }
