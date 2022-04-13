@@ -19,31 +19,29 @@
 		52BCA07227C4D3DF001BF86F /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BCA07127C4D3DF001BF86F /* UIFont.swift */; };
 		52C4CDE027D0B1D1005EDE78 /* HomeBottomTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C4CDDF27D0B1D1005EDE78 /* HomeBottomTabView.swift */; };
 		52C4CDE227D0C4D1005EDE78 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C4CDE127D0C4D1005EDE78 /* HomeViewModel.swift */; };
+		5E3D7691280717090067286A /* AdminGradeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3D7690280717090067286A /* AdminGradeCell.swift */; };
 		5E6179AC27C670D500B1A835 /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E6179AB27C670D500B1A835 /* UITextField.swift */; };
 		5E63BC9427BBD2AC0024FCE3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5E63BC9327BBD2AC0024FCE3 /* GoogleService-Info.plist */; };
+		5E63BC9B27BBE90F0024FCE3 /* SignUpNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E63BC9A27BBE90F0024FCE3 /* SignUpNameViewController.swift */; };
 		5E7AEF2227E212690059FB3A /* AdminViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7AEF2127E212690059FB3A /* AdminViewController.swift */; };
 		5E7AEF2427E21D680059FB3A /* AdminViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7AEF2327E21D680059FB3A /* AdminViewModel.swift */; };
 		5E7AEF2627E21E4C0059FB3A /* AdminCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7AEF2527E21E4C0059FB3A /* AdminCardView.swift */; };
 		5E7AEF2827E222C30059FB3A /* AdminGradeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7AEF2727E222C30059FB3A /* AdminGradeViewController.swift */; };
 		5E7AEF2A27E223040059FB3A /* AdminManagementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7AEF2927E223040059FB3A /* AdminManagementViewController.swift */; };
-		5E63BC9B27BBE90F0024FCE3 /* SignUpNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E63BC9A27BBE90F0024FCE3 /* SignUpNameViewController.swift */; };
 		5E9CC7BA27D0F57A006D8B12 /* UICollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9CC7B927D0F57A006D8B12 /* UICollectionViewCell.swift */; };
 		5E9CC7BC27D0F79E006D8B12 /* SignUpCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9CC7BB27D0F79D006D8B12 /* SignUpCollectionViewCell.swift */; };
 		5EA97D8827DBA621004E2330 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA97D8727DBA621004E2330 /* Models.swift */; };
 		5EA97D8A27DBB06A004E2330 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA97D8927DBB06A004E2330 /* Config.swift */; };
-		5EAA79FB27FDE42500BC7397 /* Attendance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA79FA27FDE42500BC7397 /* Attendance.swift */; };
-		5EAA7A0727FF24CB00BC7397 /* CollectionViewLeftAlignFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA7A0627FF24CB00BC7397 /* CollectionViewLeftAlignFlowLayout.swift */; };
-		5EAA7A0A27FF2A2200BC7397 /* ConfigWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA7A0927FF2A2200BC7397 /* ConfigWorker.swift */; };
-		5EAA7A0C27FF338800BC7397 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA7A0B27FF338800BC7397 /* UIView.swift */; };
-		5EAA79D527F5D6B400BC7397 /* AdminTodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA79D427F5D6B400BC7397 /* AdminTodayView.swift */; };
 		5EAA79D527F5D6B400BC7397 /* AdminTodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA79D427F5D6B400BC7397 /* AdminTodayView.swift */; };
 		5EAA79D727F5ED7B00BC7397 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA79D627F5ED7B00BC7397 /* UIView.swift */; };
 		5EAA79D927F5EE1900BC7397 /* UIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA79D827F5EE1900BC7397 /* UIStackView.swift */; };
 		5EAA79DB27F601ED00BC7397 /* AdminBottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA79DA27F601ED00BC7397 /* AdminBottomSheetView.swift */; };
 		5EAA79DD27F6045E00BC7397 /* AdminSessionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA79DC27F6045E00BC7397 /* AdminSessionCell.swift */; };
 		5EAA79F927FDD84C00BC7397 /* AdminMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA79F827FDD84C00BC7397 /* AdminMessageView.swift */; };
+		5EAA79FB27FDE42500BC7397 /* Attendance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA79FA27FDE42500BC7397 /* Attendance.swift */; };
 		5EAA7A0727FF24CB00BC7397 /* CollectionViewLeftAlignFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA7A0627FF24CB00BC7397 /* CollectionViewLeftAlignFlowLayout.swift */; };
 		5EAA7A0A27FF2A2200BC7397 /* ConfigWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA7A0927FF2A2200BC7397 /* ConfigWorker.swift */; };
+		5EAA7A0C27FF338800BC7397 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		5EAA7A0E27FF441600BC7397 /* SignUpPositionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA7A0D27FF441600BC7397 /* SignUpPositionViewController.swift */; };
 		5EAA7A1027FF443200BC7397 /* SignUpTeamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA7A0F27FF443200BC7397 /* SignUpTeamViewController.swift */; };
 		5EE25B2427C7CB700065B816 /* bg_buong.html in Resources */ = {isa = PBXBuildFile; fileRef = 5EE25B2327C7CB700065B816 /* bg_buong.html */; };
@@ -81,25 +79,26 @@
 		52BCA07127C4D3DF001BF86F /* UIFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFont.swift; sourceTree = "<group>"; };
 		52C4CDDF27D0B1D1005EDE78 /* HomeBottomTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeBottomTabView.swift; sourceTree = "<group>"; };
 		52C4CDE127D0C4D1005EDE78 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		5E3D7690280717090067286A /* AdminGradeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminGradeCell.swift; sourceTree = "<group>"; };
 		5E6179AB27C670D500B1A835 /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
 		5E63BC9327BBD2AC0024FCE3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		5E63BC9A27BBE90F0024FCE3 /* SignUpNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpNameViewController.swift; sourceTree = "<group>"; };
 		5E7AEF2127E212690059FB3A /* AdminViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminViewController.swift; sourceTree = "<group>"; };
 		5E7AEF2327E21D680059FB3A /* AdminViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminViewModel.swift; sourceTree = "<group>"; };
 		5E7AEF2527E21E4C0059FB3A /* AdminCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminCardView.swift; sourceTree = "<group>"; };
 		5E7AEF2727E222C30059FB3A /* AdminGradeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminGradeViewController.swift; sourceTree = "<group>"; };
 		5E7AEF2927E223040059FB3A /* AdminManagementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminManagementViewController.swift; sourceTree = "<group>"; };
-		5E63BC9A27BBE90F0024FCE3 /* SignUpNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpNameViewController.swift; sourceTree = "<group>"; };
 		5E9CC7B927D0F57A006D8B12 /* UICollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionViewCell.swift; sourceTree = "<group>"; };
 		5E9CC7BB27D0F79D006D8B12 /* SignUpCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpCollectionViewCell.swift; sourceTree = "<group>"; };
 		5EA97D8727DBA621004E2330 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		5EA97D8927DBB06A004E2330 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
-		5EAA79FA27FDE42500BC7397 /* Attendance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Attendance.swift; sourceTree = "<group>"; };
 		5EAA79D427F5D6B400BC7397 /* AdminTodayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminTodayView.swift; sourceTree = "<group>"; };
 		5EAA79D627F5ED7B00BC7397 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		5EAA79D827F5EE1900BC7397 /* UIStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStackView.swift; sourceTree = "<group>"; };
 		5EAA79DA27F601ED00BC7397 /* AdminBottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminBottomSheetView.swift; sourceTree = "<group>"; };
 		5EAA79DC27F6045E00BC7397 /* AdminSessionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminSessionCell.swift; sourceTree = "<group>"; };
 		5EAA79F827FDD84C00BC7397 /* AdminMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminMessageView.swift; sourceTree = "<group>"; };
+		5EAA79FA27FDE42500BC7397 /* Attendance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Attendance.swift; sourceTree = "<group>"; };
 		5EAA7A0627FF24CB00BC7397 /* CollectionViewLeftAlignFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewLeftAlignFlowLayout.swift; sourceTree = "<group>"; };
 		5EAA7A0927FF2A2200BC7397 /* ConfigWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigWorker.swift; sourceTree = "<group>"; };
 		5EAA7A0D27FF441600BC7397 /* SignUpPositionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpPositionViewController.swift; sourceTree = "<group>"; };
@@ -218,14 +217,6 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		5EAA7A0827FF2A1100BC7397 /* Utilities */ = {
-			isa = PBXGroup;
-			children = (
-				5EAA7A0927FF2A2200BC7397 /* ConfigWorker.swift */,
-                );
-            path = Main;
-            sourceTree = "<group>";
-        };
 		5EAA79F427FDD7B100BC7397 /* Main */ = {
 			isa = PBXGroup;
 			children = (
@@ -241,6 +232,7 @@
 			isa = PBXGroup;
 			children = (
 				5E7AEF2727E222C30059FB3A /* AdminGradeViewController.swift */,
+				5E3D7690280717090067286A /* AdminGradeCell.swift */,
 			);
 			path = Grade;
 			sourceTree = "<group>";
@@ -260,8 +252,8 @@
 				5EAA79F827FDD84C00BC7397 /* AdminMessageView.swift */,
 			);
 			path = Common;
-            sourceTree = "<group>";
-        };
+			sourceTree = "<group>";
+		};
 		5EAA7A0827FF2A1100BC7397 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
@@ -381,7 +373,6 @@
 				52BCA07127C4D3DF001BF86F /* UIFont.swift */,
 				5E6179AB27C670D500B1A835 /* UITextField.swift */,
 				5E9CC7B927D0F57A006D8B12 /* UICollectionViewCell.swift */,
-				5EAA7A0B27FF338800BC7397 /* UIView.swift */,
 				5EAA79D627F5ED7B00BC7397 /* UIView.swift */,
 				5EAA79D827F5EE1900BC7397 /* UIStackView.swift */,
 			);
@@ -574,10 +565,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5EAA7A0C27FF338800BC7397 /* UIView.swift in Sources */,
+				5EAA7A0C27FF338800BC7397 /* (null) in Sources */,
 				5E9CC7BA27D0F57A006D8B12 /* UICollectionViewCell.swift in Sources */,
 				5EAA79DD27F6045E00BC7397 /* AdminSessionCell.swift in Sources */,
-				5E63BC9B27BBE90F0024FCE3 /* SignUpNameInfoViewController.swift in Sources */,
+				5E63BC9B27BBE90F0024FCE3 /* SignUpNameViewController.swift in Sources */,
 				5EAA79D927F5EE1900BC7397 /* UIStackView.swift in Sources */,
 				5E63BC9B27BBE90F0024FCE3 /* SignUpNameViewController.swift in Sources */,
 				5EAA7A0E27FF441600BC7397 /* SignUpPositionViewController.swift in Sources */,
@@ -599,6 +590,7 @@
 				5EF69ED927AAACBA007E9735 /* PolicyViewController.swift in Sources */,
 				5E7AEF2827E222C30059FB3A /* AdminGradeViewController.swift in Sources */,
 				297E958327CFAC0A00452222 /* QRViewModel.swift in Sources */,
+				5E3D7691280717090067286A /* AdminGradeCell.swift in Sources */,
 				5EF69EDB27AAB0BC007E9735 /* PolicyUnitView.swift in Sources */,
 				5EAA7A1027FF443200BC7397 /* SignUpTeamViewController.swift in Sources */,
 				5EAA7A0A27FF2A2200BC7397 /* ConfigWorker.swift in Sources */,

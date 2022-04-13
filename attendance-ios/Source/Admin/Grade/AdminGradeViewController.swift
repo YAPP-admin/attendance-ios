@@ -13,8 +13,10 @@ import UIKit
 final class AdminGradeViewController: UIViewController {
 
     enum Constants {
-        static let padding: CGFloat = 24
+        static let horizontalPadding: CGFloat = 24
+        static let verticalPadding: CGFloat = 28
         static let topPadding: CGFloat = 116
+        static let cellHeight: CGFloat = 60
     }
 
     private let navigationTitleLabel: UILabel = {
@@ -33,6 +35,14 @@ final class AdminGradeViewController: UIViewController {
     }()
 
     private let adminMesasgeView = AdminMessageView()
+
+    private let teamCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.showsVerticalScrollIndicator = false
+        return collectionView
+    }()
 
     private let viewModel: AdminViewModel
     private var disposeBag = DisposeBag()
@@ -57,6 +67,7 @@ final class AdminGradeViewController: UIViewController {
         bindViewModel()
 
         setupDelegate()
+        setupCollectionView()
         setupNavigationTitle()
         setupMessage()
 
@@ -106,6 +117,38 @@ private extension AdminGradeViewController {
 
 }
 
+// MARK: - CollectionView
+extension AdminGradeViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+
+    private func setupCollectionView() {
+        teamCollectionView.delegate = self
+        teamCollectionView.dataSource = self
+        teamCollectionView.register(AdminGradeCell.self, forCellWithReuseIdentifier: AdminGradeCell.identifier)
+    }
+
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        1
+    }
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        4
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AdminGradeCell.identifier, for: indexPath) as? AdminGradeCell else { return UICollectionViewCell() }
+        return cell
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        CGSize(width: view.bounds.width-Constants.horizontalPadding*2, height: Constants.cellHeight)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        0
+    }
+
+}
+
 // MARK: - UI
 private extension AdminGradeViewController {
 
@@ -115,12 +158,17 @@ private extension AdminGradeViewController {
     }
 
     func configureLayout() {
-        view.addSubviews([adminMesasgeView])
+        view.addSubviews([adminMesasgeView, teamCollectionView])
 
         adminMesasgeView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(Constants.topPadding)
-            $0.left.right.equalToSuperview().inset(Constants.padding)
+            $0.left.right.equalToSuperview().inset(Constants.horizontalPadding)
             $0.height.equalTo(48)
+        }
+        teamCollectionView.snp.makeConstraints {
+            $0.top.equalTo(adminMesasgeView.snp.bottom).offset(Constants.verticalPadding)
+            $0.left.right.equalToSuperview()
+            $0.bottom.equalToSuperview()
         }
     }
 
@@ -134,7 +182,7 @@ private extension AdminGradeViewController {
         }
         navigationBackButton.snp.makeConstraints {
             $0.top.equalToSuperview().offset(56)
-            $0.left.equalToSuperview().offset(Constants.padding)
+            $0.left.equalToSuperview().offset(Constants.horizontalPadding)
             $0.width.height.equalTo(24)
         }
     }

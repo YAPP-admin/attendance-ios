@@ -5,6 +5,8 @@
 //  Created by leeesangheee on 2022/04/01.
 //
 
+import RxCocoa
+import RxSwift
 import SnapKit
 import UIKit
 
@@ -24,9 +26,13 @@ final class AdminBottomSheetView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        addTapGesture()
+
         configureUI()
         configureLayout()
     }
+
+    private var disposeBag = DisposeBag()
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -44,6 +50,16 @@ final class AdminBottomSheetView: UIView {
 
 // MARK: - UI
 extension AdminBottomSheetView {
+
+    func addTapGesture() {
+        let tapGesture = UITapGestureRecognizer()
+        addGestureRecognizer(tapGesture)
+
+        tapGesture.rx.event
+            .bind(onNext: { [weak self] _ in
+                self?.removeFromSuperview()
+            }).disposed(by: disposeBag)
+    }
 
     private func configureUI() {
         backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.4)
