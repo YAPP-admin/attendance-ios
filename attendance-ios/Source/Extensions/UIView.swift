@@ -15,4 +15,19 @@ extension UIView {
         }
     }
 
+    func setCornerRadius(corners: UIRectCorner, radius: CGFloat) {
+        let path = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: corners, cornerRadii: .init(width: radius, height: radius))
+        let mask = CAShapeLayer()
+        mask.path = path.cgPath
+        self.layer.mask = mask
+    }
+
+    func setTopCornerRadius(radius: CGFloat) {
+        setCornerRadius(corners: [.topLeft, .topRight], radius: radius)
+    }
+
+    func setBottomCornerRadius(radius: CGFloat) {
+        setCornerRadius(corners: [.bottomLeft, .bottomRight], radius: radius)
+    }
+
 }
