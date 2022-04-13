@@ -42,6 +42,8 @@ final class AdminManagementViewController: UIViewController {
         return button
     }()
 
+    private let bottomSheetView = AdminBottomSheetView()
+
     private let viewModel: AdminViewModel
     private var disposeBag = DisposeBag()
 
@@ -93,7 +95,7 @@ extension AdminManagementViewController {
         bottomSheetTestButton.rx.controlEvent([.touchUpInside])
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
-                print("바텀 시트 보여주기")
+                self?.showBottomSheet()
             }).disposed(by: disposeBag)
     }
 
@@ -154,6 +156,14 @@ private extension AdminManagementViewController {
             $0.top.equalToSuperview().offset(56)
             $0.left.equalToSuperview().offset(Constants.padding)
             $0.width.height.equalTo(24)
+        }
+    }
+
+    func showBottomSheet() {
+        view.addSubview(bottomSheetView)
+
+        bottomSheetView.snp.makeConstraints {
+            $0.top.bottom.left.right.equalToSuperview()
         }
     }
 
