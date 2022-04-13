@@ -13,7 +13,7 @@ final class AdminTodayView: UIView {
     enum Constants {
         static let padding: CGFloat = 6
         static let cornerRadius: CGFloat = 8
-        static let buttonHeight: CGFloat = 33
+        static let buttonSize: CGSize = .init(width: 57, height: 33)
     }
 
     private let todayLabel: UILabel = {
@@ -26,10 +26,8 @@ final class AdminTodayView: UIView {
     private let stackView: UIStackView = {
         let view = UIStackView()
         view.axis = .horizontal
-        view.spacing = Constants.padding
         view.alignment = .fill
         view.distribution = .fillEqually
-        view.backgroundColor = .systemGray
         return view
     }()
 
@@ -44,17 +42,18 @@ final class AdminTodayView: UIView {
         let button = UIButton()
         button.backgroundColor = .yapp_orange
         button.setTitle("관리", for: .normal)
-        button.titleLabel?.font = .Pretendard(type: .regular, size: 14)
+        button.titleLabel?.font = .Pretendard(type: .semiBold, size: 14)
         button.layer.cornerRadius = Constants.cornerRadius
         return button
     }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        configureUI()
+        addSubViews()
+        configureLayout()
         configureTodayLabel()
         configureTitleLabel()
-        configureUI()
-        configureLayout()
     }
 
     required init?(coder: NSCoder) {
@@ -63,7 +62,6 @@ final class AdminTodayView: UIView {
 
 }
 
-// TODO: - 다음 세션 정보로 업데이트
 extension AdminTodayView {
 
     func configureTodayLabel() {
@@ -82,20 +80,27 @@ extension AdminTodayView {
 private extension AdminTodayView {
 
     func configureUI() {
-        backgroundColor = .systemGroupedBackground
+
+    }
+
+    func addSubViews() {
+        addSubviews([todayLabel, stackView])
+//        stackView.addArrangedSubviews([managementButton])
     }
 
     func configureLayout() {
-        addSubviews([todayLabel, stackView])
-
         todayLabel.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.left.right.equalToSuperview()
+            $0.top.left.right.equalToSuperview()
+            $0.height.equalTo(20)
         }
-        stackView.snp.makeConstraints {
-            $0.bottom.left.right.equalToSuperview()
-            $0.height.equalTo(Constants.buttonHeight)
-        }
+//        stackView.snp.makeConstraints {
+//            $0.top.equalTo(todayLabel.snp.bottom)
+//            $0.bottom.left.right.equalToSuperview()
+//        }
+//        managementButton.snp.makeConstraints {
+//            $0.top.equalTo(todayLabel.snp.bottom)
+//            $0.bottom.left.right.equalToSuperview()
+//        }
     }
 
 }
