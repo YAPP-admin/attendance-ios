@@ -5,9 +5,6 @@
 //  Created by leeesangheee on 2022/03/08.
 //
 
-import FirebaseFirestore
-import FirebaseRemoteConfig
-import KakaoSDKUser
 import RxCocoa
 import RxSwift
 import UIKit
@@ -108,12 +105,10 @@ extension SignUpViewModel {
 
         let newUser = FirebaseNewUser(name: name, positionType: positionType, teamType: teamType, teamNumber: teamNumber)
 
-        func registerInfo() {
-            firebaseWorker.registerInfo(newUser: newUser) { [weak self] result in
-                switch result {
-                case .success: self?.output.goToHome.accept(())
-                case .failure: ()
-                }
+        firebaseWorker.registerInfo(newUser: newUser) { [weak self] result in
+            switch result {
+            case .success: self?.output.goToHome.accept(())
+            case .failure: ()
             }
         }
     }

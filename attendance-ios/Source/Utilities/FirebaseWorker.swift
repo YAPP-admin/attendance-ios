@@ -12,6 +12,8 @@ import UIKit
 
 final class FirebaseWorker {
 
+    private let docRef = Firestore.firestore().collection("member")
+
 }
 
 struct FirebaseNewUser {
@@ -21,24 +23,30 @@ struct FirebaseNewUser {
     let teamNumber: Int
 }
 
+// MARK: -
+extension FirebaseWorker {
+
+}
+
+// MARK: - Register
 extension FirebaseWorker {
 
     func registerInfo(newUser: FirebaseNewUser, completion: @escaping (Result<Void, Error>) -> Void) {
-        let db = Firestore.firestore()
-        let docRef = db.collection("member")
-
         UserApi.shared.me { [weak self] user, error in
             guard let self = self, let user = user, let userId = user.id else { return }
 
-            docRef.document("\(userId)").setData([
+            self.docRef.document("\(userId)").setData([
                 "id": userId,
                 "name": newUser.name,
                 "position": newUser.positionType.rawValue,
                 "team": ["number": newUser.teamNumber, "type": newUser.teamType.upperCase],
                 "attendances": self.makeEmptyAttendances()
             ]) { error in
-                guard error == nil else { return }
-                completion(.success(()))
+                guard let error = error else {
+                    completion(.success(()))
+                    return
+                }
+                completion(.failure(error))
             }
         }
     }
@@ -51,6 +59,19 @@ extension FirebaseWorker {
             attendances.append(empty)
         }
         return attendances
+    }
+
+}
+
+// MARK: - Delete
+extension FirebaseWorker {
+
+    func deleteUserInfo() {
+        print("📌1")
+        UserApi.shared.me { [weak self] user, _ in
+            guard let self = self, let user = user, let userId = user.id else { return }
+            self.docRef.document("\(userId)").delete()
+        }
     }
 
 }
