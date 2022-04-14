@@ -133,6 +133,7 @@ extension LoginViewController: ASAuthorizationControllerPresentationContextProvi
             print("familyName : \(fullName?.familyName ?? "")")
             print("givenName : \(fullName?.givenName ?? "")")
             print("email : \(email ?? "")")
+            viewModel.output.goToSignUp.accept(())
         default: break
         }
     }
