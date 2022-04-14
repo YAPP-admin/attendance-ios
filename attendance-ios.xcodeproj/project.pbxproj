@@ -23,6 +23,7 @@
 		5E63BC9427BBD2AC0024FCE3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5E63BC9327BBD2AC0024FCE3 /* GoogleService-Info.plist */; };
 		5E63BC9B27BBE90F0024FCE3 /* SignUpNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E63BC9A27BBE90F0024FCE3 /* SignUpNameViewController.swift */; };
 		5E6ACB3A2808648700ADF2BB /* FirebaseWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E6ACB392808648700ADF2BB /* FirebaseWorker.swift */; };
+		5E6ACB3C28086A7300ADF2BB /* KakaoLoginWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E6ACB3B28086A7200ADF2BB /* KakaoLoginWorker.swift */; };
 		5E7AEF2227E212690059FB3A /* AdminViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7AEF2127E212690059FB3A /* AdminViewController.swift */; };
 		5E7AEF2427E21D680059FB3A /* AdminViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7AEF2327E21D680059FB3A /* AdminViewModel.swift */; };
 		5E7AEF2627E21E4C0059FB3A /* AdminCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7AEF2527E21E4C0059FB3A /* AdminCardView.swift */; };
@@ -83,6 +84,7 @@
 		5E63BC9327BBD2AC0024FCE3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5E63BC9A27BBE90F0024FCE3 /* SignUpNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpNameViewController.swift; sourceTree = "<group>"; };
 		5E6ACB392808648700ADF2BB /* FirebaseWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseWorker.swift; sourceTree = "<group>"; };
+		5E6ACB3B28086A7200ADF2BB /* KakaoLoginWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginWorker.swift; sourceTree = "<group>"; };
 		5E7AEF2127E212690059FB3A /* AdminViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminViewController.swift; sourceTree = "<group>"; };
 		5E7AEF2327E21D680059FB3A /* AdminViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminViewModel.swift; sourceTree = "<group>"; };
 		5E7AEF2527E21E4C0059FB3A /* AdminCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminCardView.swift; sourceTree = "<group>"; };
@@ -256,6 +258,7 @@
 		5EAA7A0827FF2A1100BC7397 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				5E6ACB3B28086A7200ADF2BB /* KakaoLoginWorker.swift */,
 				5EAA7A0927FF2A2200BC7397 /* ConfigWorker.swift */,
 				5E6ACB392808648700ADF2BB /* FirebaseWorker.swift */,
 			);
@@ -608,6 +611,7 @@
 				5EAA79D527F5D6B400BC7397 /* AdminTodayView.swift in Sources */,
 				5E7AEF2627E21E4C0059FB3A /* AdminCardView.swift in Sources */,
 				5EAA79F927FDD84C00BC7397 /* AdminMessageView.swift in Sources */,
+				5E6ACB3C28086A7300ADF2BB /* KakaoLoginWorker.swift in Sources */,
 				5E7AEF2427E21D680059FB3A /* AdminViewModel.swift in Sources */,
 				5EAA7A0727FF24CB00BC7397 /* CollectionViewLeftAlignFlowLayout.swift in Sources */,
 			);

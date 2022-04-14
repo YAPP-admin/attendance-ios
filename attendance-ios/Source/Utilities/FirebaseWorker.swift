@@ -16,6 +16,7 @@ final class FirebaseWorker {
 
 }
 
+// MARK: - Register
 struct FirebaseNewUser {
     let name: String
     let positionType: PositionType
@@ -23,12 +24,6 @@ struct FirebaseNewUser {
     let teamNumber: Int
 }
 
-// MARK: -
-extension FirebaseWorker {
-
-}
-
-// MARK: - Register
 extension FirebaseWorker {
 
     func registerInfo(newUser: FirebaseNewUser, completion: @escaping (Result<Void, Error>) -> Void) {
