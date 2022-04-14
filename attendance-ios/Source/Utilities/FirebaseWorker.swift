@@ -57,11 +57,17 @@ extension FirebaseWorker {
 // MARK: - Delete
 extension FirebaseWorker {
 
+    /// 카카오톡으로 로그인한 유저의 문서를 삭제합니다.
     func deleteUserInfo() {
         UserApi.shared.me { [weak self] user, _ in
             guard let self = self, let userId = user?.id else { return }
-            self.docRef.document("\(userId)").delete()
+            self.deleteDocument(id: String(userId))
         }
+    }
+
+    /// 문서를 삭제합니다.
+    func deleteDocument(id: String) {
+        docRef.document(id).delete()
     }
 
 }
@@ -89,8 +95,13 @@ extension FirebaseWorker {
         }
     }
 
-    func getDocument() {
-
+    func hasDocument(id: String, completion: @escaping (Result<Bool, Error>) -> Void) {
+        getDocumentIdList { result in
+            switch result {
+            case .success(let list): completion(.success(list.contains(id)))
+            case .failure(let error): completion(.failure(error))
+            }
+        }
     }
 
 }

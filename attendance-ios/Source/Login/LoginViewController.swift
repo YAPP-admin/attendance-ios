@@ -148,13 +148,12 @@ private extension LoginViewController {
 private extension LoginViewController {
 
     func goToSignUpNameVC() {
-        guard let appleId = try? viewModel.output.appleId.value(),
-              let kakaoTalkId = try? viewModel.output.kakaoTalkId.value() else { return }
+        guard let kakaoTalkId = try? viewModel.output.kakaoTalkId.value(), let appleId = try? viewModel.output.appleId.value() else { return }
 
         let signUpViewModel = SignUpViewModel()
         let signUpNameVC = SignUpNameViewController(viewModel: signUpViewModel)
-        signUpViewModel.input.appleId.onNext(appleId)
         signUpViewModel.input.kakaoTalkId.onNext(kakaoTalkId)
+        signUpViewModel.input.appleId.onNext(appleId)
 
         navigationItem.backButtonTitle = ""
         navigationController?.navigationBar.tintColor = .gray_800

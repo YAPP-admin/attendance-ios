@@ -12,8 +12,8 @@ import UIKit
 final class SignUpViewModel: ViewModel {
 
     struct Input {
-        let appleId = BehaviorSubject<String>(value: "")
         let kakaoTalkId = BehaviorSubject<String>(value: "")
+        let appleId = BehaviorSubject<String>(value: "")
 
         let name = BehaviorSubject<String?>(value: nil)
         let positionType = BehaviorSubject<PositionType?>(value: nil)
@@ -55,14 +55,14 @@ final class SignUpViewModel: ViewModel {
 private extension SignUpViewModel {
 
     func bindInput() {
-        input.appleId
-            .subscribe(onNext: { [weak self] id in
-                print("appleId: \(id)")
-            }).disposed(by: disposeBag)
-
         input.kakaoTalkId
             .subscribe(onNext: { [weak self] id in
                 print("kakaoTalkId: \(id)")
+            }).disposed(by: disposeBag)
+
+        input.appleId
+            .subscribe(onNext: { [weak self] id in
+                print("appleId: \(id)")
             }).disposed(by: disposeBag)
 
         input.name
@@ -130,6 +130,17 @@ extension SignUpViewModel {
 
         let newUser = FirebaseNewUser(name: name, positionType: positionType, teamType: teamType, teamNumber: teamNumber)
 
+        if kakaoTalkId.isEmpty == false, appleId.isEmpty == false {
+            firebaseWorker.hasDocument(id: kakaoTalkId) { result in
+                switch result {
+                case .success(let hasDocument):
+                    if hasDocument == false {
+                        // TODO: - appId에 해당하는 문서를 찾아 kakaoTalkId로 변경한다.
+                    }
+                case .failure: ()
+                }
+            }
+        }
 
         if kakaoTalkId.isEmpty == false {
             firebaseWorker.registerInfo(id: kakaoTalkId, newUser: newUser) { [weak self] result in

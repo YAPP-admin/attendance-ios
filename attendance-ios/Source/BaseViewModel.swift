@@ -28,8 +28,8 @@ final class BaseViewModel: ViewModel {
     }
 
     struct Output {
-        let appleId = BehaviorSubject<String>(value: "")
         let kakaoTalkId = BehaviorSubject<String>(value: "")
+        let appleId = BehaviorSubject<String>(value: "")
         let accessToken = PublishSubject<String>()
 
         let goToSignUp = PublishRelay<Void>()
@@ -46,33 +46,22 @@ final class BaseViewModel: ViewModel {
     private let userDefaultsWorker = UserDefaultsWorker()
 
     init() {
+        checkUserDefaults()
+
         logoutWithKakao() // TODO: - 테스트를 위해 추가함, 이후 삭제 필요
 
         subscribeInput()
-        subscribeOutput()
     }
 
     private func subscribeInput() {
-        input.tapAppleLogin
-            .subscribe(onNext: { [weak self] _ in
-                self?.loginWithApple()
-            }).disposed(by: disposeBag)
-
         input.tapKakaoTalkLogin
             .subscribe(onNext: { [weak self] _ in
                 self?.loginWithKakao()
             }).disposed(by: disposeBag)
-    }
 
-    private func subscribeOutput() {
-        output.appleId
+        input.tapAppleLogin
             .subscribe(onNext: { [weak self] _ in
-                self?.checkUserDefaults()
-            }).disposed(by: disposeBag)
-
-        output.kakaoTalkId
-            .subscribe(onNext: { [weak self] _ in
-                self?.checkUserDefaults()
+                self?.loginWithApple()
             }).disposed(by: disposeBag)
     }
 
@@ -82,35 +71,21 @@ final class BaseViewModel: ViewModel {
 private extension BaseViewModel {
 
     func checkUserDefaults() {
-        if userDefaultsWorker.hasId() == true {
-            self.output.goToHome.accept(())
-        }
-        self.output.goToSignUp.accept(())
+        checkKakaoId()
+        checkAppleId()
+        output.goToSignUp.accept(())
     }
 
-    func checkFirebase() {
-        if let kakaoTalkId = userDefaultsWorker.kakaoTalkId() {
-            firebaseWorker.checkIsExistingUser(id: kakaoTalkId) { isExisting in
-                guard isExisting == true else { return }
-                self.output.goToHome.accept(())
-            }
-        }
-        if let appleId = userDefaultsWorker.appleId() {
-            firebaseWorker.checkIsExistingUser(id: appleId) { isExisting in
-                guard isExisting == true else { return }
-                self.output.goToHome.accept(())
-            }
-        }
+    func checkKakaoId() {
+        guard let kakaoTalkId = userDefaultsWorker.kakaoTalkId() else { return }
+        output.kakaoTalkId.onNext(kakaoTalkId)
+        output.goToHome.accept(())
     }
 
-}
-
-// MARK: - Apple Login
-// LoginViewController에 있음, 뷰모델로 이동 필요
-private extension BaseViewModel {
-
-    func loginWithApple() {
-
+    func checkAppleId() {
+        guard let appleId = userDefaultsWorker.appleId() else { return }
+        output.appleId.onNext(appleId)
+        output.goToHome.accept(())
     }
 
 }
@@ -132,6 +107,16 @@ private extension BaseViewModel {
 
     func logoutWithKakao() {
         kakaoLoginWorker.logoutWithKakao()
+    }
+
+}
+
+// MARK: - Apple Login
+// LoginViewController에 있음, 뷰모델로 이동 필요
+private extension BaseViewModel {
+
+    func loginWithApple() {
+
     }
 
 }
