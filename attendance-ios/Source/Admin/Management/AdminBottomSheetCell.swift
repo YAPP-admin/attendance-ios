@@ -41,6 +41,14 @@ final class AdminBottomSheetCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    func didSelect() {
+        backgroundColor = .gray_200
+    }
+
+    func didDeselect() {
+        backgroundColor = .white
+    }
+
 //    func updateLabel(_ attendance: String) {
 //        attendanceLabel.text = attendance
 //    }

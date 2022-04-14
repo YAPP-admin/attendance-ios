@@ -208,7 +208,13 @@ extension AdminManagementViewController: UICollectionViewDelegateFlowLayout, UIC
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath.row)
+        guard let cell = collectionView.cellForItem(at: indexPath) as? AdminBottomSheetCell else { return }
+        cell.didSelect()
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? AdminBottomSheetCell else { return }
+        cell.didDeselect()
     }
 
 }
