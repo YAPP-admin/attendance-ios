@@ -73,7 +73,7 @@ private extension BaseViewModel {
     }
 
     func logoutWithKakao() {
-        kakaoLoginWorker.logoutWithKakao { _ in }
+        kakaoLoginWorker.logoutWithKakao()
     }
 
 }

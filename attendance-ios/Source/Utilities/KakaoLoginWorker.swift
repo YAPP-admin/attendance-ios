@@ -23,7 +23,6 @@ final class KakaoLoginWorker {
 extension KakaoLoginWorker {
 }
 
-
 // MARK: - Login
 extension KakaoLoginWorker {
 
@@ -55,6 +54,17 @@ extension KakaoLoginWorker {
             }, onError: { error in
                 completion(.failure(error))
             }).disposed(by: disposeBag)
+    }
+
+}
+
+// MARK: - Logout
+extension KakaoLoginWorker {
+
+    func logoutWithKakao() {
+        UserApi.shared.rx.logout()
+            .subscribe()
+            .disposed(by: disposeBag)
     }
 
     func logoutWithKakao(completion: @escaping (Result<Void, Error>) -> Void) {
