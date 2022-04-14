@@ -70,25 +70,31 @@ extension FirebaseWorker {
 
 }
 
-// MARK: - Check User
+// MARK: - Read
 extension FirebaseWorker {
 
-    func isExistingUser(completion: @escaping (Result<Bool, Error>) -> Void) {
-        UserApi.shared.me { [weak self] user, error in
-            guard let self = self, let userId = user?.id else { return }
-            let document = self.docRef.document("\(userId)")
+    func getDocumentIdList(completion: @escaping (Result<[String], Error>) -> Void) {
+        docRef.getDocuments { snapshot, error in
+            if let error = error {
+                completion(.failure(error))
+            }
+            guard let documents = snapshot?.documents else { return }
+            let idList = documents.map { $0.data() }.compactMap { $0["id"] as? String }
+            completion(.success(idList))
+        }
+    }
 
-            document.getDocument { (document, error) in
-                if let error = error {
-                    completion(.failure(error))
-                }
-                if let document = document, document.exists {
-                    completion(.success(true))
-                } else {
-                    completion(.success(false))
-                }
+    func checkIsExistingUser(id: String, completion: @escaping (Bool) -> Void) {
+        getDocumentIdList { result in
+            switch result {
+            case .success(let idList): completion(idList.contains(id))
+            case .failure: completion(false)
             }
         }
+    }
+
+    func getDocument() {
+
     }
 
 }

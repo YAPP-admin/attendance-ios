@@ -6,11 +6,7 @@
 //
 
 import Foundation
-import KakaoSDKAuth
-import KakaoSDKUser
 import RxCocoa
-import RxKakaoSDKAuth
-import RxKakaoSDKUser
 import RxSwift
 
 protocol ViewModel {
@@ -53,6 +49,7 @@ final class BaseViewModel: ViewModel {
         checkLoginId()
         logoutWithKakao() // TODO: - 테스트를 위해 추가함, 이후 삭제 필요
         subscribeInput()
+        subscribeOutput()
     }
 
     private func subscribeInput() {
@@ -67,23 +64,50 @@ final class BaseViewModel: ViewModel {
             }).disposed(by: disposeBag)
     }
 
+    private func subscribeOutput() {
+        output.appleId
+            .subscribe(onNext: { [weak self] id in
+                self?.checkIsExistingUser(id: id)
+            }).disposed(by: disposeBag)
+
+        output.kakaoTalkId
+            .subscribe(onNext: { [weak self] id in
+                self?.checkIsExistingUser(id: id)
+            }).disposed(by: disposeBag)
+    }
+
 }
 
 // MARK: - Login
 private extension BaseViewModel {
 
     func checkLoginId() {
-        // TODO: - 파베 문서 있는지 추가 확인
-        if userDefaultsWorker.hasLoginId() == true {
-            output.goToHome.accept(())
+        if let kakaoTalkId = userDefaultsWorker.kakaoTalkId() {
+            firebaseWorker.checkIsExistingUser(id: kakaoTalkId) { isExisting in
+                guard isExisting == true else { return }
+                self.output.goToHome.accept(())
+            }
         }
+        if let appleId = userDefaultsWorker.appleId() {
+            firebaseWorker.checkIsExistingUser(id: appleId) { isExisting in
+                guard isExisting == true else { return }
+                self.output.goToHome.accept(())
+            }
+        }
+    }
 
+    func checkIsExistingUser(id: String) {
+        firebaseWorker.checkIsExistingUser(id: id) { isExisting in
+            guard isExisting == true else { return }
+            self.output.goToHome.accept(())
+        }
     }
 
 }
 
 // MARK: - Apple Login
-extension BaseViewModel {
+// LoginViewController에 있음, 뷰모델로 이동 필요
+private extension BaseViewModel {
 
     func loginWithApple() {
 
@@ -96,19 +120,12 @@ private extension BaseViewModel {
 
     func loginWithKakao() {
         kakaoLoginWorker.loginWithKakao { [weak self] result in
+            guard let self = self else { return }
             switch result {
             case .success(let accessToken):
-                self?.firebaseWorker.isExistingUser { result in
-                    switch result {
-                    case .success(let isExisting):
-                        self?.output.accessToken.onNext(accessToken)
-                        if isExisting == true {
-                            self?.output.goToHome.accept(())
-                        } else {
-                            self?.output.goToSignUp.accept(())
-                        }
-                    case .failure: ()
-                    }
+                self.output.accessToken.onNext(accessToken)
+                if self.userDefaultsWorker.hasId() == true {
+                    self.output.goToHome.accept(())
                 }
             case .failure: ()
             }
