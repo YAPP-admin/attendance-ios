@@ -12,6 +12,9 @@ import UIKit
 final class SignUpViewModel: ViewModel {
 
     struct Input {
+        let appleId = BehaviorSubject<String>(value: "")
+        let kakaoTalkId = BehaviorSubject<String>(value: "")
+
         let name = BehaviorSubject<String?>(value: nil)
         let positionType = BehaviorSubject<PositionType?>(value: nil)
         let teamType = BehaviorSubject<TeamType?>(value: nil)
@@ -39,10 +42,56 @@ final class SignUpViewModel: ViewModel {
 
     private let configWorker = ConfigWorker()
     private let firebaseWorker = FirebaseWorker()
+    private let userDefaultsWorker = UserDefaultsWorker()
 
     init() {
-        setupConfig()
         bindInput()
+        setupConfig()
+    }
+
+}
+
+// MARK: - Bind
+private extension SignUpViewModel {
+
+    func bindInput() {
+        input.appleId
+            .subscribe(onNext: { [weak self] id in
+                print("appleId: \(id)")
+            }).disposed(by: disposeBag)
+
+        input.kakaoTalkId
+            .subscribe(onNext: { [weak self] id in
+                print("kakaoTalkId: \(id)")
+            }).disposed(by: disposeBag)
+
+        input.name
+            .subscribe(onNext: { [weak self] name in
+                self?.output.isNameTextFieldValid.onNext(name?.isEmpty == false)
+            }).disposed(by: disposeBag)
+
+        input.teamType
+            .subscribe(onNext: { [weak self] _ in
+                self?.output.showTeamNumber.accept(())
+            }).disposed(by: disposeBag)
+
+        input.teamNumber
+            .subscribe(onNext: { [weak self] _ in
+                self?.output.complete.accept(())
+            }).disposed(by: disposeBag)
+
+        input.registerInfo
+            .subscribe(onNext: { [weak self] _ in
+                self?.registerInfo()
+            }).disposed(by: disposeBag)
+    }
+
+    func setLoginId() {
+        guard let appleId = try? input.appleId.value(),
+              let kakaoTalkId = try? input.kakaoTalkId.value() else { return }
+
+        userDefaultsWorker.set(appleId, forKey: .appleId)
+        userDefaultsWorker.set(kakaoTalkId, forKey: .kakaoTalkId)
     }
 
 }
@@ -68,33 +117,7 @@ private extension SignUpViewModel {
 
 }
 
-// MARK: - Bind
-private extension SignUpViewModel {
-
-    func bindInput() {
-        input.name
-            .subscribe(onNext: { [weak self] name in
-                self?.output.isNameTextFieldValid.onNext(name?.isEmpty == false)
-            }).disposed(by: disposeBag)
-
-        input.teamType
-            .subscribe(onNext: { [weak self] _ in
-                self?.output.showTeamNumber.accept(())
-            }).disposed(by: disposeBag)
-
-        input.teamNumber
-            .subscribe(onNext: { [weak self] _ in
-                self?.output.complete.accept(())
-            }).disposed(by: disposeBag)
-
-        input.registerInfo
-            .subscribe(onNext: { [weak self] _ in
-                self?.registerInfo()
-            }).disposed(by: disposeBag)
-    }
-
-}
-
+// MARK: - Register
 extension SignUpViewModel {
 
     func registerInfo() {

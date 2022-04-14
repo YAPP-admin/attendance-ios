@@ -29,12 +29,11 @@ final class BaseViewModel: ViewModel {
     struct Input {
         let tapAppleLogin = PublishRelay<Void>()
         let tapKakaoTalkLogin = PublishRelay<Void>()
-
-        let appleId = BehaviorSubject<String>(value: "")
-        let kakaoTalkId = BehaviorSubject<String>(value: "")
     }
 
     struct Output {
+        let appleId = BehaviorSubject<String>(value: "")
+        let kakaoTalkId = BehaviorSubject<String>(value: "")
         let accessToken = PublishSubject<String>()
 
         let goToSignUp = PublishRelay<Void>()
@@ -48,6 +47,7 @@ final class BaseViewModel: ViewModel {
 
     private let kakaoLoginWorker = KakaoLoginWorker()
     private let firebaseWorker = FirebaseWorker()
+    private let userDefaultsWorker = UserDefaultsWorker()
 
     init() {
         checkLoginId()
@@ -65,18 +65,6 @@ final class BaseViewModel: ViewModel {
             .subscribe(onNext: { [weak self] _ in
                 self?.loginWithKakao()
             }).disposed(by: disposeBag)
-
-        input.appleId
-            .subscribe(onNext: { [weak self] id in
-                self?.userDefaultsWorker.set(id, forKey: .appleId)
-                self?.output.goToSignUp.accept(())
-            }).disposed(by: disposeBag)
-
-        input.kakaoTalkId
-            .subscribe(onNext: { [weak self] id in
-                self?.userDefaultsWorker.set(id, forKey: .kakaoTalkId)
-                self?.output.goToSignUp.accept(())
-            }).disposed(by: disposeBag)
     }
 
 }
@@ -89,6 +77,7 @@ private extension BaseViewModel {
         if userDefaultsWorker.hasLoginId() == true {
             output.goToHome.accept(())
         }
+
     }
 
 }

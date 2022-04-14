@@ -105,45 +105,6 @@ extension LoginViewController: WKNavigationDelegate {
 
 }
 
-// MARK: - Apple Login
-extension LoginViewController: ASAuthorizationControllerPresentationContextProviding {
-
-    func loginWithApple() {
-        let appleIDProvider = ASAuthorizationAppleIDProvider()
-        let request = appleIDProvider.createRequest()
-        request.requestedScopes = [.fullName, .email]
-
-        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
-        authorizationController.delegate = self
-        authorizationController.presentationContextProvider = self
-        authorizationController.performRequests()
-    }
-
-    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
-        self.view.window!
-    }
-
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
-        switch authorization.credential {
-        case let appleIDCredential as ASAuthorizationAppleIDCredential:
-            let userIdentifier = appleIDCredential.user
-            let fullName = appleIDCredential.fullName
-            let email = appleIDCredential.email
-            print("id : \(userIdentifier)")
-            print("familyName : \(fullName?.familyName ?? "")")
-            print("givenName : \(fullName?.givenName ?? "")")
-            print("email : \(email ?? "")")
-            viewModel.input.appleId.onNext(userIdentifier)
-        default: break
-        }
-    }
-
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-
-    }
-
-}
-
 // MARK: - Bind
 private extension LoginViewController {
 
@@ -187,7 +148,14 @@ private extension LoginViewController {
 private extension LoginViewController {
 
     func goToSignUpNameVC() {
-        let signUpNameVC = SignUpNameViewController()
+        guard let appleId = try? viewModel.output.appleId.value(),
+              let kakaoTalkId = try? viewModel.output.kakaoTalkId.value() else { return }
+
+        let signUpViewModel = SignUpViewModel()
+        let signUpNameVC = SignUpNameViewController(viewModel: signUpViewModel)
+        signUpViewModel.input.appleId.onNext(appleId)
+        signUpViewModel.input.kakaoTalkId.onNext(kakaoTalkId)
+
         navigationItem.backButtonTitle = ""
         navigationController?.navigationBar.tintColor = .gray_800
         navigationController?.pushViewController(signUpNameVC, animated: true)
@@ -268,6 +236,45 @@ private extension LoginViewController {
             $0.top.left.equalTo(view.safeAreaLayoutGuide)
             $0.width.height.equalTo(100)
         }
+    }
+
+}
+
+// MARK: - Apple Login
+extension LoginViewController: ASAuthorizationControllerPresentationContextProviding {
+
+    func loginWithApple() {
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        let request = appleIDProvider.createRequest()
+        request.requestedScopes = [.fullName, .email]
+
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        authorizationController.delegate = self
+        authorizationController.presentationContextProvider = self
+        authorizationController.performRequests()
+    }
+
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        self.view.window!
+    }
+
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        switch authorization.credential {
+        case let appleIDCredential as ASAuthorizationAppleIDCredential:
+            let userIdentifier = appleIDCredential.user
+            let fullName = appleIDCredential.fullName
+            let email = appleIDCredential.email
+            print("id : \(userIdentifier)")
+            print("familyName : \(fullName?.familyName ?? "")")
+            print("givenName : \(fullName?.givenName ?? "")")
+            print("email : \(email ?? "")")
+            viewModel.output.appleId.onNext(userIdentifier)
+        default: break
+        }
+    }
+
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+
     }
 
 }

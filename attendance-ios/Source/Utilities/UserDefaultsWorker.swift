@@ -21,6 +21,11 @@ final class UserDefaultsWorker {
         defaults.set(value, forKey: key.rawValue)
     }
 
+    func set(_ value: String, forKey key: UserDefaultsKey) {
+        guard value.isEmpty == false else { return }
+        defaults.set(value, forKey: key.rawValue)
+    }
+
     // MARK: - Read
     func read(forKey key: UserDefaultsKey) -> Bool {
         defaults.bool(forKey: key.rawValue)

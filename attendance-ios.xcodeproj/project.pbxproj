@@ -261,8 +261,8 @@
 		5EAA7A0827FF2A1100BC7397 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				5E6ACB3B28086A7200ADF2BB /* KakaoLoginWorker.swift */,
 				5EAA7A0927FF2A2200BC7397 /* ConfigWorker.swift */,
+				5E6ACB3B28086A7200ADF2BB /* KakaoLoginWorker.swift */,
 				5E6ACB392808648700ADF2BB /* FirebaseWorker.swift */,
 				5E6ACB40280894F800ADF2BB /* UserDefaultsWorker.swift */,
 			);

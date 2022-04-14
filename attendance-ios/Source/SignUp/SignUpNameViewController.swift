@@ -87,7 +87,16 @@ final class SignUpNameViewController: UIViewController {
     }()
 
     private var disposeBag = DisposeBag()
-    private let viewModel = SignUpViewModel()
+    private let viewModel: SignUpViewModel
+
+    init(viewModel: SignUpViewModel) {
+        self.viewModel = viewModel
+        super.init()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
