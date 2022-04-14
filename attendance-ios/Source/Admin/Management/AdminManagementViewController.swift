@@ -17,10 +17,10 @@ final class AdminManagementViewController: UIViewController {
         static let topPadding: CGFloat = 116
         static let bottomSheetHeight: CGFloat = 300
         static let bottomSheetCornerRadius: CGFloat = 20
+        static let bottomSheetCellHeight: CGFloat = 52
     }
 
-    private let adminMesasgeView = AdminMessageView()
-
+    // MARK: Navigation
     private let navigationTitleLabel: UILabel = {
         let label = UILabel()
         label.font = .Pretendard(type: .regular, size: 18)
@@ -35,6 +35,8 @@ final class AdminManagementViewController: UIViewController {
         button.setImage(UIImage(named: "back"), for: .normal)
         return button
     }()
+
+    private let adminMesasgeView = AdminMessageView()
 
     // MARK: - BottomSheet
     private let bottomSheetTestButton: UIButton = {
@@ -55,6 +57,14 @@ final class AdminManagementViewController: UIViewController {
         let view = UIView()
         view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.4)
         return view
+    }()
+
+    private let collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.showsVerticalScrollIndicator = false
+        return collectionView
     }()
 
     private let viewModel: AdminViewModel
@@ -80,6 +90,7 @@ final class AdminManagementViewController: UIViewController {
         bindViewModel()
 
         setupDelegate()
+        setupCollectionView()
         addTapGestureToBottomSheetBackground()
         setupNavigationTitle()
         setupMessage()
@@ -120,6 +131,88 @@ extension AdminManagementViewController {
 
 }
 
+// MARL: - BottomSheet
+private extension AdminManagementViewController {
+
+    func addTapGestureToBottomSheetBackground() {
+        let tapGesture = UITapGestureRecognizer()
+            backgroundView.addGestureRecognizer(tapGesture)
+
+        tapGesture.rx.event
+            .bind(onNext: { [weak self] _ in
+                self?.hideBottomSheet()
+            }).disposed(by: disposeBag)
+    }
+
+    func showBottomSheet() {
+        view.addSubviews([backgroundView, bottomSheetView])
+        bottomSheetView.addSubview(collectionView)
+
+        backgroundView.snp.makeConstraints {
+            $0.top.bottom.left.right.equalToSuperview()
+        }
+        bottomSheetView.snp.makeConstraints {
+            $0.bottom.equalToSuperview().offset(Constants.bottomSheetCornerRadius)
+            $0.left.right.equalToSuperview()
+            $0.height.equalTo(Constants.bottomSheetHeight)
+        }
+        collectionView.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(Constants.padding)
+            $0.left.right.equalToSuperview()
+            $0.height.equalTo(Constants.bottomSheetCellHeight*4)
+        }
+    }
+
+    func animateBottomSheet() {
+
+    }
+
+    func hideBottomSheet() {
+        backgroundView.removeFromSuperview()
+        bottomSheetView.removeFromSuperview()
+    }
+
+    func configureBottomSheetUI() {
+        bottomSheetView.layer.cornerRadius = Constants.bottomSheetCornerRadius
+    }
+
+}
+
+// MARK: - CollectionView
+extension AdminManagementViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+
+    private func setupCollectionView() {
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.register(AdminBottomSheetCell.self, forCellWithReuseIdentifier: AdminBottomSheetCell.identifier)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        AttendanceType.allCases.count
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AdminBottomSheetCell.identifier, for: indexPath) as? AdminBottomSheetCell else { return UICollectionViewCell() }
+        let attendance = AttendanceType.allCases[indexPath.row].text
+        print(attendance)
+//        cell.updateLabel(attendance)
+        return cell
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        CGSize(width: collectionView.bounds.width, height: Constants.bottomSheetCellHeight)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        0
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(indexPath.row)
+    }
+
+}
+
 // MARK: - etc
 private extension AdminManagementViewController {
 
@@ -133,46 +226,6 @@ private extension AdminManagementViewController {
 
     func setupMessage() {
         adminMesasgeView.configureLabel("10명이 출석했어요")
-    }
-
-}
-
-// MARL: - BottomSheet
-private extension AdminManagementViewController {
-
-    func addTapGestureToBottomSheetBackground() {
-        let tapGesture = UITapGestureRecognizer()
-            backgroundView.addGestureRecognizer(tapGesture)
-
-        tapGesture.rx.event
-            .bind(onNext: { [weak self] _ in
-                self?.backgroundView.removeFromSuperview()
-            }).disposed(by: disposeBag)
-    }
-
-    func showBottomSheet() {
-        view.addSubviews([backgroundView, bottomSheetView])
-
-        backgroundView.snp.makeConstraints {
-            $0.top.bottom.left.right.equalToSuperview()
-        }
-        bottomSheetView.snp.makeConstraints {
-            $0.bottom.equalToSuperview().offset(Constants.bottomSheetCornerRadius)
-            $0.left.right.equalToSuperview()
-            $0.height.equalTo(Constants.bottomSheetHeight)
-        }
-    }
-
-    func animateBottomSheet() {
-
-    }
-
-    func hideBottomSheet() {
-
-    }
-
-    func configureBottomSheetUI() {
-        bottomSheetView.layer.cornerRadius = Constants.bottomSheetCornerRadius
     }
 
 }
