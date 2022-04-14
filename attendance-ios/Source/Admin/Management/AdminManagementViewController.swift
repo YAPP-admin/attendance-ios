@@ -15,6 +15,8 @@ final class AdminManagementViewController: UIViewController {
     enum Constants {
         static let padding: CGFloat = 24
         static let topPadding: CGFloat = 116
+        static let bottomSheetHeight: CGFloat = 300
+        static let bottomSheetCornerRadius: CGFloat = 20
     }
 
     private let adminMesasgeView = AdminMessageView()
@@ -34,6 +36,7 @@ final class AdminManagementViewController: UIViewController {
         return button
     }()
 
+    // MARK: - BottomSheet
     private let bottomSheetTestButton: UIButton = {
         let button = UIButton()
         button.setTitle("바텀 시트 테스트", for: .normal)
@@ -42,7 +45,17 @@ final class AdminManagementViewController: UIViewController {
         return button
     }()
 
-    private let bottomSheetView = AdminBottomSheetView()
+    private let bottomSheetView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        return view
+    }()
+
+    private let backgroundView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.4)
+        return view
+    }()
 
     private let viewModel: AdminViewModel
     private var disposeBag = DisposeBag()
@@ -67,10 +80,12 @@ final class AdminManagementViewController: UIViewController {
         bindViewModel()
 
         setupDelegate()
+        addTapGestureToBottomSheetBackground()
         setupNavigationTitle()
         setupMessage()
 
         configureUI()
+        configureBottomSheetUI()
         configureLayout()
         configureNavigationLayout()
     }
@@ -122,6 +137,46 @@ private extension AdminManagementViewController {
 
 }
 
+// MARL: - BottomSheet
+private extension AdminManagementViewController {
+
+    func addTapGestureToBottomSheetBackground() {
+        let tapGesture = UITapGestureRecognizer()
+            backgroundView.addGestureRecognizer(tapGesture)
+
+        tapGesture.rx.event
+            .bind(onNext: { [weak self] _ in
+                self?.backgroundView.removeFromSuperview()
+            }).disposed(by: disposeBag)
+    }
+
+    func showBottomSheet() {
+        view.addSubviews([backgroundView, bottomSheetView])
+
+        backgroundView.snp.makeConstraints {
+            $0.top.bottom.left.right.equalToSuperview()
+        }
+        bottomSheetView.snp.makeConstraints {
+            $0.bottom.equalToSuperview().offset(Constants.bottomSheetCornerRadius)
+            $0.left.right.equalToSuperview()
+            $0.height.equalTo(Constants.bottomSheetHeight)
+        }
+    }
+
+    func animateBottomSheet() {
+
+    }
+
+    func hideBottomSheet() {
+
+    }
+
+    func configureBottomSheetUI() {
+        bottomSheetView.layer.cornerRadius = Constants.bottomSheetCornerRadius
+    }
+
+}
+
 // MARK: - UI
 private extension AdminManagementViewController {
 
@@ -159,12 +214,12 @@ private extension AdminManagementViewController {
         }
     }
 
-    func showBottomSheet() {
-        view.addSubview(bottomSheetView)
-
-        bottomSheetView.snp.makeConstraints {
-            $0.top.bottom.left.right.equalToSuperview()
-        }
-    }
+//    func showBottomSheet() {
+//        view.addSubview(bottomSheetView)
+//
+//        bottomSheetView.snp.makeConstraints {
+//            $0.top.bottom.left.right.equalToSuperview()
+//        }
+//    }
 
 }
