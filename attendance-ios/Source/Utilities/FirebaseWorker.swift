@@ -62,10 +62,31 @@ extension FirebaseWorker {
 extension FirebaseWorker {
 
     func deleteUserInfo() {
-        print("📌1")
         UserApi.shared.me { [weak self] user, _ in
-            guard let self = self, let user = user, let userId = user.id else { return }
+            guard let self = self, let userId = user?.id else { return }
             self.docRef.document("\(userId)").delete()
+        }
+    }
+
+}
+
+// MARK: -
+extension FirebaseWorker {
+
+    func isUserAlreadySignIn(completion: @escaping (Result<Void, Error>) -> Void) {
+        UserApi.shared.me { [weak self] user, error in
+            guard let userId = user?.id else { return }
+            guard let self = self else { return }
+            let document = self.docRef.document("\(userId)")
+
+            document.getDocument { (document, error) in
+                if let error = error {
+                    completion(.failure(error))
+                }
+                if let document = document, document.exists {
+                    completion(.success(()))
+                }
+            }
         }
     }
 

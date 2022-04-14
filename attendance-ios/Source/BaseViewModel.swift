@@ -43,6 +43,7 @@ final class BaseViewModel: ViewModel {
     let disposeBag = DisposeBag()
 
     private let kakaoLoginWorker = KakaoLoginWorker()
+    private let firebaseWorker = FirebaseWorker()
 
     init() {
         logoutWithKakao()
@@ -65,8 +66,14 @@ private extension BaseViewModel {
         kakaoLoginWorker.loginWithKakao { [weak self] result in
             switch result {
             case .success(let accessToken):
-                self?.output.accessToken.onNext(accessToken)
-                self?.output.goToSignUp.accept(())
+                self?.firebaseWorker.isUserAlreadySignIn { result in
+                    switch result {
+                    case .success: print("📌success")
+                    case .failure(let error): print("error: \(error)")
+                    }
+                }
+//                self?.output.accessToken.onNext(accessToken)
+//                self?.output.goToSignUp.accept(())
             case .failure: ()
             }
         }

@@ -19,10 +19,6 @@ final class KakaoLoginWorker {
 
 }
 
-// MARK: - User
-extension KakaoLoginWorker {
-}
-
 // MARK: - Login
 extension KakaoLoginWorker {
 
