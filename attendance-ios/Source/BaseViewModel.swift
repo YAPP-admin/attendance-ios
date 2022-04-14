@@ -42,6 +42,9 @@ final class BaseViewModel: ViewModel {
     let output = Output()
     let disposeBag = DisposeBag()
 
+    private let kakaoLoginWorker = KakaoLoginWorker()
+    private let firebaseWorker = FirebaseWorker()
+
     init() {
         logoutWithKakao()
         subscribeInputs()
@@ -60,40 +63,28 @@ final class BaseViewModel: ViewModel {
 private extension BaseViewModel {
 
     func loginWithKakao() {
-        if UserApi.isKakaoTalkLoginAvailable() {
-            loginWithKakaoTalk()
-        } else {
-            loginWithKakaoAccount()
+        kakaoLoginWorker.loginWithKakao { [weak self] result in
+            switch result {
+            case .success(let accessToken):
+                self?.firebaseWorker.isExistingUser { result in
+                    switch result {
+                    case .success(let isExisting):
+                        self?.output.accessToken.onNext(accessToken)
+                        if isExisting == true {
+                            self?.output.goToHome.accept(())
+                        } else {
+                            self?.output.goToSignUp.accept(())
+                        }
+                    case .failure: ()
+                    }
+                }
+            case .failure: ()
+            }
         }
     }
 
-    func loginWithKakaoTalk() {
-        UserApi.shared.rx.loginWithKakaoTalk()
-            .subscribe(onNext: { [weak self] oauthToken in
-                self?.output.accessToken.onNext(oauthToken.accessToken)
-                self?.output.goToSignUp.accept(())
-            }, onError: { error in
-                print(error)
-            }).disposed(by: disposeBag)
-    }
-
-    func loginWithKakaoAccount() {
-        UserApi.shared.rx.loginWithKakaoAccount()
-            .subscribe(onNext: { [weak self] oauthToken in
-                self?.output.accessToken.onNext(oauthToken.accessToken)
-                self?.output.goToSignUp.accept(())
-            }, onError: { error in
-                print(error)
-            }).disposed(by: disposeBag)
-    }
-
     func logoutWithKakao() {
-        UserApi.shared.rx.logout()
-            .subscribe(onCompleted: {
-                print("로그아웃 성공")
-            }, onError: {error in
-                print(error)
-            }).disposed(by: disposeBag)
+        kakaoLoginWorker.logoutWithKakao()
     }
 
 }
