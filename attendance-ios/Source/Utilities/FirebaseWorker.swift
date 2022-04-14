@@ -70,13 +70,12 @@ extension FirebaseWorker {
 
 }
 
-// MARK: -
+// MARK: - Check User
 extension FirebaseWorker {
 
-    func isUserAlreadySignIn(completion: @escaping (Result<Void, Error>) -> Void) {
+    func isExistingUser(completion: @escaping (Result<Bool, Error>) -> Void) {
         UserApi.shared.me { [weak self] user, error in
-            guard let userId = user?.id else { return }
-            guard let self = self else { return }
+            guard let self = self, let userId = user?.id else { return }
             let document = self.docRef.document("\(userId)")
 
             document.getDocument { (document, error) in
@@ -84,7 +83,9 @@ extension FirebaseWorker {
                     completion(.failure(error))
                 }
                 if let document = document, document.exists {
-                    completion(.success(()))
+                    completion(.success(true))
+                } else {
+                    completion(.success(false))
                 }
             }
         }

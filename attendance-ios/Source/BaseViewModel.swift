@@ -66,14 +66,18 @@ private extension BaseViewModel {
         kakaoLoginWorker.loginWithKakao { [weak self] result in
             switch result {
             case .success(let accessToken):
-                self?.firebaseWorker.isUserAlreadySignIn { result in
+                self?.firebaseWorker.isExistingUser { result in
                     switch result {
-                    case .success: print("📌success")
-                    case .failure(let error): print("error: \(error)")
+                    case .success(let isExisting):
+                        self?.output.accessToken.onNext(accessToken)
+                        if isExisting == true {
+                            self?.output.goToHome.accept(())
+                        } else {
+                            self?.output.goToSignUp.accept(())
+                        }
+                    case .failure: ()
                     }
                 }
-//                self?.output.accessToken.onNext(accessToken)
-//                self?.output.goToSignUp.accept(())
             case .failure: ()
             }
         }
