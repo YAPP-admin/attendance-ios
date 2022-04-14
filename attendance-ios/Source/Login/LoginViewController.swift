@@ -4,13 +4,14 @@
 //  Created by leeesangheee on 2022/01/31.
 //
 
+import AuthenticationServices
 import RxCocoa
 import RxSwift
 import SnapKit
 import UIKit
 import WebKit
 
-final class LoginViewController: UIViewController {
+final class LoginViewController: UIViewController, ASAuthorizationControllerDelegate {
 
     enum Constants {
         static let padding: CGFloat = 24
@@ -104,13 +105,56 @@ extension LoginViewController: WKNavigationDelegate {
 
 }
 
+// MARK: - Apple Login
+extension LoginViewController: ASAuthorizationControllerPresentationContextProviding {
+
+    func loginWithApple() {
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        let request = appleIDProvider.createRequest()
+        request.requestedScopes = [.fullName, .email]
+
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        authorizationController.delegate = self
+        authorizationController.presentationContextProvider = self
+        authorizationController.performRequests()
+    }
+
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        self.view.window!
+    }
+
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        switch authorization.credential {
+        case let appleIDCredential as ASAuthorizationAppleIDCredential:
+            let userIdentifier = appleIDCredential.user
+            let fullName = appleIDCredential.fullName
+            let email = appleIDCredential.email
+            print("id : \(userIdentifier)")
+            print("familyName : \(fullName?.familyName ?? "")")
+            print("givenName : \(fullName?.givenName ?? "")")
+            print("email : \(email ?? "")")
+        default: break
+        }
+    }
+
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+
+    }
+
+}
+
 // MARK: - Bind
 private extension LoginViewController {
 
     func bindSubviews() {
+        appleLoginButton.rx.tap
+            .throttle(.seconds(3), latest: false, scheduler: MainScheduler.instance)
+            .bind(onNext: loginWithApple)
+            .disposed(by: disposeBag)
+
         kakaoLoginButton.rx.tap
             .throttle(.seconds(3), latest: false, scheduler: MainScheduler.instance)
-            .bind(to: viewModel.input.tapLogin)
+            .bind(to: viewModel.input.tapKakaoLogin)
             .disposed(by: disposeBag)
 
         secretAdminButton.rx.tap

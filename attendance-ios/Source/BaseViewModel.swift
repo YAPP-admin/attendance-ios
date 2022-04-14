@@ -27,7 +27,8 @@ protocol ViewModel {
 final class BaseViewModel: ViewModel {
 
     struct Input {
-        let tapLogin = PublishRelay<Void>()
+        let tapAppleLogin = PublishRelay<Void>()
+        let tapKakaoLogin = PublishRelay<Void>()
     }
 
     struct Output {
@@ -48,7 +49,12 @@ final class BaseViewModel: ViewModel {
     }
 
     private func subscribeInputs() {
-        input.tapLogin
+        input.tapAppleLogin
+            .subscribe(onNext: { [weak self] _ in
+                self?.loginWithApple()
+            }).disposed(by: disposeBag)
+
+        input.tapKakaoLogin
             .subscribe(onNext: { [weak self] _ in
                 self?.loginWithKakao()
             }).disposed(by: disposeBag)
@@ -56,7 +62,16 @@ final class BaseViewModel: ViewModel {
 
 }
 
-// MARK: - Login
+// MARK: - Apple Login
+extension BaseViewModel {
+
+    func loginWithApple() {
+
+    }
+
+}
+
+// MARK: - Kakao Login
 private extension BaseViewModel {
 
     func loginWithKakao() {
