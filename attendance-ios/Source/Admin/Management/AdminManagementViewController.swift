@@ -144,6 +144,7 @@ private extension AdminManagementViewController {
             }).disposed(by: disposeBag)
     }
 
+    // TODO: - 애니메이션
     func showBottomSheet() {
         view.addSubviews([backgroundView, bottomSheetView])
         bottomSheetView.addSubview(collectionView)
@@ -161,10 +162,6 @@ private extension AdminManagementViewController {
             $0.left.right.equalToSuperview()
             $0.height.equalTo(Constants.bottomSheetCellHeight*4)
         }
-    }
-
-    func animateBottomSheet() {
-
     }
 
     func hideBottomSheet() {
@@ -194,7 +191,6 @@ extension AdminManagementViewController: UICollectionViewDelegateFlowLayout, UIC
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AdminBottomSheetCell.identifier, for: indexPath) as? AdminBottomSheetCell else { return UICollectionViewCell() }
         let attendance = AttendanceType.allCases[indexPath.row].text
-        print(attendance)
         cell.updateLabel(attendance)
         return cell
     }
@@ -210,6 +206,8 @@ extension AdminManagementViewController: UICollectionViewDelegateFlowLayout, UIC
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) as? AdminBottomSheetCell else { return }
         cell.didSelect()
+        let attendanceType = AttendanceType.allCases[indexPath.row]
+        viewModel.output.attendanceType.onNext(attendanceType)
         hideBottomSheet()
     }
 
