@@ -133,7 +133,7 @@ extension LoginViewController: ASAuthorizationControllerPresentationContextProvi
             print("familyName : \(fullName?.familyName ?? "")")
             print("givenName : \(fullName?.givenName ?? "")")
             print("email : \(email ?? "")")
-            viewModel.output.goToSignUp.accept(())
+            viewModel.input.appleId.onNext(userIdentifier)
         default: break
         }
     }
@@ -155,7 +155,7 @@ private extension LoginViewController {
 
         kakaoLoginButton.rx.tap
             .throttle(.seconds(3), latest: false, scheduler: MainScheduler.instance)
-            .bind(to: viewModel.input.tapKakaoLogin)
+            .bind(to: viewModel.input.tapKakaoTalkLogin)
             .disposed(by: disposeBag)
 
         secretAdminButton.rx.tap

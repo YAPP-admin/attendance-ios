@@ -46,3 +46,17 @@ final class UserDefaultsWorker {
     }
 
 }
+
+extension UserDefaultsWorker {
+
+    func hasLoginId() -> Bool {
+        let appleId: String? = read(forKey: .appleId)
+        let kakaoTalkId: String? = read(forKey: .kakaoTalkId)
+
+        if appleId == nil, kakaoTalkId == nil {
+            return false
+        }
+        return true
+    }
+
+}

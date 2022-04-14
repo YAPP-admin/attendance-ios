@@ -28,7 +28,10 @@ final class BaseViewModel: ViewModel {
 
     struct Input {
         let tapAppleLogin = PublishRelay<Void>()
-        let tapKakaoLogin = PublishRelay<Void>()
+        let tapKakaoTalkLogin = PublishRelay<Void>()
+
+        let appleId = BehaviorSubject<String>(value: "")
+        let kakaoTalkId = BehaviorSubject<String>(value: "")
     }
 
     struct Output {
@@ -43,21 +46,48 @@ final class BaseViewModel: ViewModel {
     let output = Output()
     let disposeBag = DisposeBag()
 
+    private let userDefaultsWorker = UserDefaultsWorker()
+
     init() {
-        logoutWithKakao()
-        subscribeInputs()
+        checkLoginId()
+        logoutWithKakao() // TODO: - 테스트를 위해 추가함, 이후 삭제 필요
+        subscribeInput()
     }
 
-    private func subscribeInputs() {
+    private func subscribeInput() {
         input.tapAppleLogin
             .subscribe(onNext: { [weak self] _ in
                 self?.loginWithApple()
             }).disposed(by: disposeBag)
 
-        input.tapKakaoLogin
+        input.tapKakaoTalkLogin
             .subscribe(onNext: { [weak self] _ in
                 self?.loginWithKakao()
             }).disposed(by: disposeBag)
+
+        input.appleId
+            .subscribe(onNext: { [weak self] id in
+                self?.userDefaultsWorker.set(id, forKey: .appleId)
+                self?.output.goToSignUp.accept(())
+            }).disposed(by: disposeBag)
+
+        input.kakaoTalkId
+            .subscribe(onNext: { [weak self] id in
+                self?.userDefaultsWorker.set(id, forKey: .kakaoTalkId)
+                self?.output.goToSignUp.accept(())
+            }).disposed(by: disposeBag)
+    }
+
+}
+
+// MARK: - Login
+private extension BaseViewModel {
+
+    func checkLoginId() {
+        // TODO: - 파베 문서 있는지 추가 확인
+        if userDefaultsWorker.hasLoginId() == true {
+            output.goToHome.accept(())
+        }
     }
 
 }
