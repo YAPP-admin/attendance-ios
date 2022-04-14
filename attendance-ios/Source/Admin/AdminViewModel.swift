@@ -18,8 +18,6 @@ final class AdminViewModel: ViewModel {
     }
 
     struct Output {
-        let attendanceType = BehaviorSubject<AttendanceType?>(value: nil)
-
         let goToGradeVC = PublishRelay<Void>()
         let goToManagementVC = PublishRelay<Void>()
         let goToSettingVC = PublishRelay<Void>()

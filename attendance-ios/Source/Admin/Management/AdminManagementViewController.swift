@@ -207,7 +207,7 @@ extension AdminManagementViewController: UICollectionViewDelegateFlowLayout, UIC
         guard let cell = collectionView.cellForItem(at: indexPath) as? AdminBottomSheetCell else { return }
         cell.didSelect()
         let attendanceType = AttendanceType.allCases[indexPath.row]
-        viewModel.output.attendanceType.onNext(attendanceType)
+        print("attendanceType: \(attendanceType)")
         hideBottomSheet()
     }
 
