@@ -5,9 +5,6 @@
 //  Created by leeesangheee on 2022/03/08.
 //
 
-import FirebaseFirestore
-import FirebaseRemoteConfig
-import KakaoSDKUser
 import RxCocoa
 import RxSwift
 import UIKit
@@ -41,6 +38,7 @@ final class SignUpViewModel: ViewModel {
     let disposeBag = DisposeBag()
 
     private let configWorker = ConfigWorker()
+    private let firebaseWorker = FirebaseWorker()
 
     init() {
         setupConfig()
@@ -105,33 +103,14 @@ extension SignUpViewModel {
               let teamType = try? input.teamType.value(),
               let teamNumber = try? input.teamNumber.value() else { return }
 
-        let db = Firestore.firestore()
-        let docRef = db.collection("member")
+        let newUser = FirebaseNewUser(name: name, positionType: positionType, teamType: teamType, teamNumber: teamNumber)
 
-        UserApi.shared.me { [weak self] user, error in
-            guard let self = self, let user = user, let userId = user.id else { return }
-
-            docRef.document("\(userId)").setData([
-                "id": userId,
-                "name": name,
-                "position": positionType.rawValue,
-                "team": ["number": teamNumber, "type": teamType.upperCase],
-                "attendances": self.makeEmptyAttendances()
-            ]) { [weak self] error in
-                guard error == nil else { return }
-                self?.output.goToHome.accept(())
+        firebaseWorker.registerInfo(newUser: newUser) { [weak self] result in
+            switch result {
+            case .success: self?.output.goToHome.accept(())
+            case .failure: ()
             }
         }
-    }
-
-    private func makeEmptyAttendances() -> [[String: Any]] {
-        var attendances: [[String: Any]] = []
-        let sessionCount = 20
-        for id in 0..<sessionCount {
-            let empty: [String: Any] = ["sessionId": id, "attendanceType": ["text": "결석", "point": -20]]
-            attendances.append(empty)
-        }
-        return attendances
     }
 
 }
