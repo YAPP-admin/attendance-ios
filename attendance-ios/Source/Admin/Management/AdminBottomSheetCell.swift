@@ -49,9 +49,9 @@ final class AdminBottomSheetCell: UICollectionViewCell {
         backgroundColor = .white
     }
 
-//    func updateLabel(_ attendance: String) {
-//        attendanceLabel.text = attendance
-//    }
+    func updateLabel(_ attendance: String) {
+        attendanceLabel.text = attendance
+    }
 
 }
 

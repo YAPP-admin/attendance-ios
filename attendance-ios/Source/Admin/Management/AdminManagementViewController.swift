@@ -195,7 +195,7 @@ extension AdminManagementViewController: UICollectionViewDelegateFlowLayout, UIC
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AdminBottomSheetCell.identifier, for: indexPath) as? AdminBottomSheetCell else { return UICollectionViewCell() }
         let attendance = AttendanceType.allCases[indexPath.row].text
         print(attendance)
-//        cell.updateLabel(attendance)
+        cell.updateLabel(attendance)
         return cell
     }
 
@@ -210,6 +210,7 @@ extension AdminManagementViewController: UICollectionViewDelegateFlowLayout, UIC
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) as? AdminBottomSheetCell else { return }
         cell.didSelect()
+        hideBottomSheet()
     }
 
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
