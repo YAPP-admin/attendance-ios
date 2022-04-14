@@ -46,8 +46,8 @@ final class BaseViewModel: ViewModel {
     private let userDefaultsWorker = UserDefaultsWorker()
 
     init() {
-        checkLoginId()
         logoutWithKakao() // TODO: - 테스트를 위해 추가함, 이후 삭제 필요
+
         subscribeInput()
         subscribeOutput()
     }
@@ -66,13 +66,13 @@ final class BaseViewModel: ViewModel {
 
     private func subscribeOutput() {
         output.appleId
-            .subscribe(onNext: { [weak self] id in
-                self?.checkIsExistingUser(id: id)
+            .subscribe(onNext: { [weak self] _ in
+                self?.checkUserDefaults()
             }).disposed(by: disposeBag)
 
         output.kakaoTalkId
-            .subscribe(onNext: { [weak self] id in
-                self?.checkIsExistingUser(id: id)
+            .subscribe(onNext: { [weak self] _ in
+                self?.checkUserDefaults()
             }).disposed(by: disposeBag)
     }
 
@@ -81,7 +81,7 @@ final class BaseViewModel: ViewModel {
 // MARK: - Login
 private extension BaseViewModel {
 
-    func checkLoginId() {
+    func checkFirebase() {
         if let kakaoTalkId = userDefaultsWorker.kakaoTalkId() {
             firebaseWorker.checkIsExistingUser(id: kakaoTalkId) { isExisting in
                 guard isExisting == true else { return }
@@ -96,11 +96,11 @@ private extension BaseViewModel {
         }
     }
 
-    func checkIsExistingUser(id: String) {
-        firebaseWorker.checkIsExistingUser(id: id) { isExisting in
-            guard isExisting == true else { return }
+    func checkUserDefaults() {
+        if userDefaultsWorker.hasId() == true {
             self.output.goToHome.accept(())
         }
+        self.output.goToSignUp.accept(())
     }
 
 }
@@ -124,9 +124,7 @@ private extension BaseViewModel {
             switch result {
             case .success(let accessToken):
                 self.output.accessToken.onNext(accessToken)
-                if self.userDefaultsWorker.hasId() == true {
-                    self.output.goToHome.accept(())
-                }
+                self.checkUserDefaults()
             case .failure: ()
             }
         }

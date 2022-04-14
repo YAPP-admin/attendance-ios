@@ -52,6 +52,7 @@ final class UserDefaultsWorker {
 
 }
 
+// MARK: - LoginId
 extension UserDefaultsWorker {
 
     func hasId() -> Bool {
@@ -64,6 +65,14 @@ extension UserDefaultsWorker {
 
     func kakaoTalkId() -> String? {
         read(forKey: .kakaoTalkId)
+    }
+
+    func removeAppleId() {
+        remove(forKey: .appleId)
+    }
+
+    func removeKakaoTalkId() {
+        remove(forKey: .kakaoTalkId)
     }
 
 }
