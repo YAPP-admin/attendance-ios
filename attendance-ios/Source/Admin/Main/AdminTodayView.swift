@@ -28,6 +28,7 @@ final class AdminTodayView: UIView {
         view.axis = .horizontal
         view.alignment = .fill
         view.distribution = .fillEqually
+        view.backgroundColor = .systemGroupedBackground
         return view
     }()
 
@@ -50,7 +51,6 @@ final class AdminTodayView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
-        addSubViews()
         configureLayout()
         configureTodayLabel()
         configureTitleLabel()
@@ -83,24 +83,18 @@ private extension AdminTodayView {
 
     }
 
-    func addSubViews() {
+    func configureLayout() {
         addSubviews([todayLabel, stackView])
 //        stackView.addArrangedSubviews([managementButton])
-    }
 
-    func configureLayout() {
         todayLabel.snp.makeConstraints {
             $0.top.left.right.equalToSuperview()
             $0.height.equalTo(20)
         }
-//        stackView.snp.makeConstraints {
-//            $0.top.equalTo(todayLabel.snp.bottom)
-//            $0.bottom.left.right.equalToSuperview()
-//        }
-//        managementButton.snp.makeConstraints {
-//            $0.top.equalTo(todayLabel.snp.bottom)
-//            $0.bottom.left.right.equalToSuperview()
-//        }
+        stackView.snp.makeConstraints {
+            $0.top.equalTo(todayLabel.snp.bottom)
+            $0.bottom.left.right.equalToSuperview()
+        }
     }
 
 }
