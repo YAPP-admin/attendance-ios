@@ -26,23 +26,19 @@ struct FirebaseNewUser {
 
 extension FirebaseWorker {
 
-    func registerInfo(newUser: FirebaseNewUser, completion: @escaping (Result<Void, Error>) -> Void) {
-        UserApi.shared.me { [weak self] user, error in
-            guard let self = self, let user = user, let userId = user.id else { return }
-
-            self.docRef.document("\(userId)").setData([
-                "id": userId,
-                "name": newUser.name,
-                "position": newUser.positionType.rawValue,
-                "team": ["number": newUser.teamNumber, "type": newUser.teamType.upperCase],
-                "attendances": self.makeEmptyAttendances()
-            ]) { error in
-                guard let error = error else {
-                    completion(.success(()))
-                    return
-                }
-                completion(.failure(error))
+    func registerInfo(id: String, newUser: FirebaseNewUser, completion: @escaping (Result<Void, Error>) -> Void) {
+        docRef.document("\(id)").setData([
+            "id": id,
+            "name": newUser.name,
+            "position": newUser.positionType.rawValue,
+            "team": ["number": newUser.teamNumber, "type": newUser.teamType.upperCase],
+            "attendances": self.makeEmptyAttendances()
+        ]) { error in
+            guard let error = error else {
+                completion(.success(()))
+                return
             }
+            completion(.failure(error))
         }
     }
 

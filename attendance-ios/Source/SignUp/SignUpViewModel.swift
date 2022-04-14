@@ -121,17 +121,29 @@ private extension SignUpViewModel {
 extension SignUpViewModel {
 
     func registerInfo() {
-        guard let name = try? input.name.value(),
+        guard let appleId = try? input.appleId.value(),
+              let kakaoTalkId = try? input.kakaoTalkId.value(),
+              let name = try? input.name.value(),
               let positionType = try? input.positionType.value(),
               let teamType = try? input.teamType.value(),
               let teamNumber = try? input.teamNumber.value() else { return }
 
         let newUser = FirebaseNewUser(name: name, positionType: positionType, teamType: teamType, teamNumber: teamNumber)
 
-        firebaseWorker.registerInfo(newUser: newUser) { [weak self] result in
-            switch result {
-            case .success: self?.output.goToHome.accept(())
-            case .failure: ()
+
+        if kakaoTalkId.isEmpty == false {
+            firebaseWorker.registerInfo(id: kakaoTalkId, newUser: newUser) { [weak self] result in
+                switch result {
+                case .success: self?.output.goToHome.accept(())
+                case .failure: ()
+                }
+            }
+        } else if appleId.isEmpty == false {
+            firebaseWorker.registerInfo(id: appleId, newUser: newUser) { [weak self] result in
+                switch result {
+                case .success: self?.output.goToHome.accept(())
+                case .failure: ()
+                }
             }
         }
     }

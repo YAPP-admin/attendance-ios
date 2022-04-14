@@ -78,8 +78,15 @@ final class BaseViewModel: ViewModel {
 
 }
 
-// MARK: - Login
+// MARK: - Check
 private extension BaseViewModel {
+
+    func checkUserDefaults() {
+        if userDefaultsWorker.hasId() == true {
+            self.output.goToHome.accept(())
+        }
+        self.output.goToSignUp.accept(())
+    }
 
     func checkFirebase() {
         if let kakaoTalkId = userDefaultsWorker.kakaoTalkId() {
@@ -94,13 +101,6 @@ private extension BaseViewModel {
                 self.output.goToHome.accept(())
             }
         }
-    }
-
-    func checkUserDefaults() {
-        if userDefaultsWorker.hasId() == true {
-            self.output.goToHome.accept(())
-        }
-        self.output.goToSignUp.accept(())
     }
 
 }
