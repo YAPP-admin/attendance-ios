@@ -12,7 +12,7 @@ import UIKit
 
 final class FirebaseWorker {
 
-    private let docRef = Firestore.firestore().collection("member")
+    private let memberDocRef = Firestore.firestore().collection("member")
 
 }
 
@@ -27,7 +27,7 @@ struct FirebaseNewUser {
 extension FirebaseWorker {
 
     func registerInfo(id: String, newUser: FirebaseNewUser, completion: @escaping (Result<Void, Error>) -> Void) {
-        docRef.document("\(id)").setData([
+        memberDocRef.document("\(id)").setData([
             "id": id,
             "name": newUser.name,
             "position": newUser.positionType.rawValue,
@@ -58,7 +58,7 @@ extension FirebaseWorker {
 extension FirebaseWorker {
 
     /// 카카오톡으로 로그인한 유저의 문서를 삭제합니다.
-    func deleteUserInfo() {
+    func deleteKakaoTalkUserInfo() {
         UserApi.shared.me { [weak self] user, _ in
             guard let self = self, let userId = user?.id else { return }
             self.deleteDocument(id: String(userId))
@@ -67,7 +67,7 @@ extension FirebaseWorker {
 
     /// 문서를 삭제합니다.
     func deleteDocument(id: String) {
-        docRef.document(id).delete()
+        memberDocRef.document(id).delete()
     }
 
 }
@@ -75,8 +75,9 @@ extension FirebaseWorker {
 // MARK: - Read
 extension FirebaseWorker {
 
-    func getDocumentIdList(completion: @escaping (Result<[String], Error>) -> Void) {
-        docRef.getDocuments { snapshot, error in
+    /// 맴버 문서 id 배열을 반환합니다.
+    func getMemberDocumentIdList(completion: @escaping (Result<[String], Error>) -> Void) {
+        memberDocRef.getDocuments { snapshot, error in
             if let error = error {
                 completion(.failure(error))
             }
@@ -86,8 +87,9 @@ extension FirebaseWorker {
         }
     }
 
-    func checkIsExistingUser(id: String, completion: @escaping (Bool) -> Void) {
-        getDocumentIdList { result in
+    /// 이미 가입한 유저인지 확인합니다.
+    func checkIsRegisteredUser(id: String, completion: @escaping (Bool) -> Void) {
+        getMemberDocumentIdList { result in
             switch result {
             case .success(let idList): completion(idList.contains(id))
             case .failure: completion(false)
@@ -95,13 +97,9 @@ extension FirebaseWorker {
         }
     }
 
-    func hasDocument(id: String, completion: @escaping (Result<Bool, Error>) -> Void) {
-        getDocumentIdList { result in
-            switch result {
-            case .success(let list): completion(.success(list.contains(id)))
-            case .failure(let error): completion(.failure(error))
-            }
-        }
+    /// 문서를 반환합니다.
+    func getDocument() {
+
     }
 
 }

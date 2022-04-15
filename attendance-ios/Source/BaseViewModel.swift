@@ -95,10 +95,16 @@ private extension BaseViewModel {
                 self.kakaoLoginWorker.userId { [weak self] id in
                     guard let self = self else { return }
                     let stringId = String(id)
-                    self.userDefaultsWorker.setKakaoTalkId(id: stringId)
                     self.output.kakaoAccessToken.onNext(accessToken)
                     self.output.kakaoTalkId.onNext(stringId)
-                    self.output.goToHome.accept(())
+                    self.firebaseWorker.checkIsRegisteredUser(id: stringId) { isRegistered in
+                        guard isRegistered == true else {
+                            self.output.goToSignUp.accept(())
+                            return
+                        }
+                        self.userDefaultsWorker.setKakaoTalkId(id: stringId)
+                        self.output.goToHome.accept(())
+                    }
                 }
             case .failure: ()
             }
@@ -120,12 +126,12 @@ extension BaseViewModel {
         switch authorization.credential {
         case let appleIDCredential as ASAuthorizationAppleIDCredential:
             let userIdentifier = appleIDCredential.user
-            let fullName = appleIDCredential.fullName
-            let email = appleIDCredential.email
-            print("📌appleId : \(userIdentifier)")
-            print("📌familyName : \(fullName?.familyName ?? "")")
-            print("📌givenName : \(fullName?.givenName ?? "")")
-            print("📌email : \(email ?? "")")
+//            let fullName = appleIDCredential.fullName
+//            let email = appleIDCredential.email
+//            print("📌appleId : \(userIdentifier)")
+//            print("📌familyName : \(fullName?.familyName ?? "")")
+//            print("📌givenName : \(fullName?.givenName ?? "")")
+//            print("📌email : \(email ?? "")")
             output.appleId.onNext(userIdentifier)
         default: break
         }

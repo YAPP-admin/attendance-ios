@@ -130,16 +130,17 @@ extension SignUpViewModel {
 
         let newUser = FirebaseNewUser(name: name, positionType: positionType, teamType: teamType, teamNumber: teamNumber)
 
+        // TODO: - getDocument 함수 만들기
         if kakaoTalkId.isEmpty == false, appleId.isEmpty == false {
-            firebaseWorker.hasDocument(id: kakaoTalkId) { result in
-                switch result {
-                case .success(let hasDocument):
-                    if hasDocument == false {
-                        // TODO: - appId에 해당하는 문서를 찾아 kakaoTalkId로 변경한다.
-                    }
-                case .failure: ()
-                }
-            }
+//            firebaseWorker.checkIsRegisteredUser(id: kakaoTalkId) { isRegistered in
+//                switch result {
+//                case .success(let hasDocument):
+//                    if hasDocument == false {
+//                        // TODO: - appId에 해당하는 문서를 찾아 kakaoTalkId로 변경한다.
+//                    }
+//                case .failure: ()
+//                }
+//            }
         }
 
         if kakaoTalkId.isEmpty == false {
