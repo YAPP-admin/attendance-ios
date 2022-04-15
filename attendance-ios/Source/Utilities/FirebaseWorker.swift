@@ -6,13 +6,14 @@
 //
 
 import FirebaseFirestore
+import FirebaseFirestoreSwift
 import FirebaseRemoteConfig
 import KakaoSDKUser
 import UIKit
 
 final class FirebaseWorker {
 
-    private let memberDocRef = Firestore.firestore().collection("member")
+    private let memberCollectionRef = Firestore.firestore().collection("member")
 
 }
 
@@ -27,7 +28,7 @@ struct FirebaseNewUser {
 extension FirebaseWorker {
 
     func registerKakaoUserInfo(id: Int, newUser: FirebaseNewUser, completion: @escaping (Result<Void, Error>) -> Void) {
-        memberDocRef.document("\(id)").setData([
+        memberCollectionRef.document("\(id)").setData([
             "id": id,
             "name": newUser.name,
             "position": newUser.positionType.rawValue,
@@ -43,7 +44,7 @@ extension FirebaseWorker {
     }
 
     func registerAppleUserInfo(id: String, newUser: FirebaseNewUser, completion: @escaping (Result<Void, Error>) -> Void) {
-        memberDocRef.document("\(id)").setData([
+        memberCollectionRef.document("\(id)").setData([
             "id": Int.random(in: 1000000000..<10000000000),
             "name": newUser.name,
             "position": newUser.positionType.rawValue,
@@ -83,7 +84,7 @@ extension FirebaseWorker {
 
     /// 문서를 삭제합니다.
     func deleteDocument(id: String) {
-        memberDocRef.document(id).delete()
+        memberCollectionRef.document(id).delete()
     }
 
 }
@@ -93,7 +94,7 @@ extension FirebaseWorker {
 
     /// 멤버 문서 id 배열을 반환합니다.
     func getMemberDocumentIdList(completion: @escaping (Result<[String], Error>) -> Void) {
-        memberDocRef.getDocuments { snapshot, error in
+        memberCollectionRef.getDocuments { snapshot, error in
             if let error = error {
                 completion(.failure(error))
             }
@@ -113,16 +114,31 @@ extension FirebaseWorker {
         }
     }
 
-    /// 멤버 문서를 반환합니다.
-    func getMemberDocument(id: String, completion: @escaping (Result<String, Error>) -> Void) {
-        let ref = memberDocRef.whereField(id, isEqualTo: "")
-        ref.getDocuments { snapshot, error in
+    /// 문서 이름을 애플 아이디에서 카카오톡 아이디로 변경합니다.
+    func changeDocumentName(_ appleId: String, to kakaoId: String, completion: @escaping (Result<Attendance, Error>) -> Void) {
+        let docRef = memberCollectionRef.document(appleId)
+        docRef.getDocument { [weak self] snapshot, error in
             if let error = error {
                 completion(.failure(error))
             }
-            guard let document = snapshot?.documents.first else { return }
-            print("📌document: \(document)")
+            guard let self = self, let data = snapshot?.data(), let newId = Int(kakaoId) else { return }
+            print("📌data: \(data)")
+            print("📌newId: \(newId)")
+
+            // TODO: - 임의의 FirebaseNewUser 정보로 변경 필요
+            let newUser = FirebaseNewUser(name: "기존 애플 유저 파일 이동 테스트", positionType: .ios, teamType: .ios, teamNumber: 1)
+            self.registerKakaoUserInfo(id: newId, newUser: newUser) { result in
+                switch result {
+                case .success: self.deleteDocument(id: appleId)
+                case .failure: ()
+                }
+            }
+
         }
+    }
+
+    func changeDocumentName(id: String) {
+
     }
 
 }

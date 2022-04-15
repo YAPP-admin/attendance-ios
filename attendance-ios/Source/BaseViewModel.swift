@@ -95,31 +95,33 @@ private extension BaseViewModel {
             case .success(let accessToken):
                 self.kakaoLoginWorker.userId { [weak self] id in
                     guard let self = self else { return }
-                    let stringId = String(id)
+                    let kakaoId = String(id)
                     self.output.kakaoAccessToken.onNext(accessToken)
-                    self.output.kakaoTalkId.onNext(stringId)
+                    self.output.kakaoTalkId.onNext(kakaoId)
 
                     print("📌카카오톡 로그인 시도중")
 
                     // TODO: - 애플 로그인 id값이 있으면 문서 수정하고 홈으로 이동
                     if let appleId = try? self.output.appleId.value() {
-                        self.firebaseWorker.getMemberDocument(id: appleId) { result in
+                        print("📌appleId: \(appleId)")
+
+                        self.firebaseWorker.changeDocumentName(appleId, to: kakaoId) { result in
                             switch result {
-                            case .success(let word): print("📌word: \(word)")
-                            case .failure: ()
+                            case .success(let word): print("📌문서 불러오기: \(word)")
+                            case .failure: print("📌문서 불러오기 실패")
                             }
                         }
                     }
 
                     // MARK: - 이미 가입한 카카오톡 유저인지 확인
-                    self.firebaseWorker.checkIsRegisteredUser(id: stringId) { isRegistered in
+                    self.firebaseWorker.checkIsRegisteredUser(id: kakaoId) { isRegistered in
                         guard isRegistered == true else {
-                            print("📌가입하지 않은 카카오톡 유저 \(stringId)")
+                            print("📌가입하지 않은 카카오톡 유저 \(kakaoId)")
                             self.output.goToSignUp.accept(())
                             return
                         }
                         print("📌이미 가입한 카카오톡 유저")
-                        self.userDefaultsWorker.setKakaoTalkId(id: stringId)
+                        self.userDefaultsWorker.setKakaoTalkId(id: kakaoId)
                         self.output.goToHome.accept(())
 
                     }
