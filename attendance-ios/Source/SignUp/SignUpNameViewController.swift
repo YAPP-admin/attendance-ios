@@ -91,7 +91,7 @@ final class SignUpNameViewController: UIViewController {
 
     init(viewModel: SignUpViewModel) {
         self.viewModel = viewModel
-        super.init()
+        super.init(nibName: nil, bundle: nil)
     }
 
     required init?(coder: NSCoder) {
