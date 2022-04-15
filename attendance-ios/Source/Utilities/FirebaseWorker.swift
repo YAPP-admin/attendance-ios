@@ -98,7 +98,7 @@ extension FirebaseWorker {
                 completion(.failure(error))
             }
             guard let documents = snapshot?.documents else { return }
-            let idList = documents.map { $0.data() }.compactMap { $0["id"] as? String }
+            let idList = documents.map { $0.documentID }
             completion(.success(idList))
         }
     }

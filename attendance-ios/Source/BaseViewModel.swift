@@ -46,7 +46,7 @@ final class BaseViewModel: ViewModel {
     private let userDefaultsWorker = UserDefaultsWorker()
 
     init() {
-        // TODO: - 테스트를 위해 추가
+        // TODO: - 테스트를 위해 추가, 이후 삭제
         logoutWithKakao()
         //
 

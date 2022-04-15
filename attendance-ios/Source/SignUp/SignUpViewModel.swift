@@ -123,7 +123,9 @@ extension SignUpViewModel {
         } else if appleId.isEmpty == false {
             firebaseWorker.registerAppleUserInfo(id: appleId, newUser: newUser) { [weak self] result in
                 switch result {
-                case .success: self?.output.goToHome.accept(())
+                case .success:
+                    self?.userDefaultsWorker.setAppleId(id: appleId)
+                    self?.output.goToHome.accept(())
                 case .failure: ()
                 }
             }
