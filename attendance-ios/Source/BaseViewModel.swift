@@ -46,8 +46,10 @@ final class BaseViewModel: ViewModel {
     private let userDefaultsWorker = UserDefaultsWorker()
 
     init() {
-        // TODO: - 테스트를 위해 로그아웃함
+        // TODO: - 테스트를 위해 추가
         logoutWithKakao()
+        //
+
         checkLoginId()
 
         subscribeInput()
@@ -92,9 +94,11 @@ private extension BaseViewModel {
             case .success(let accessToken):
                 self.kakaoLoginWorker.userId { [weak self] id in
                     guard let self = self else { return }
-                    print("📌id: \(id)")
+                    let stringId = String(id)
+                    self.userDefaultsWorker.setKakaoTalkId(id: stringId)
                     self.output.kakaoAccessToken.onNext(accessToken)
-                    self.userDefaultsWorker.setKakaoTalkId(id: String(id))
+                    self.output.kakaoTalkId.onNext(stringId)
+                    self.output.goToHome.accept(())
                 }
             case .failure: ()
             }
@@ -102,7 +106,9 @@ private extension BaseViewModel {
     }
 
     func logoutWithKakao() {
+        print("📌logoutWithKakao")
         kakaoLoginWorker.logoutWithKakao()
+        userDefaultsWorker.removeKakaoTalkId()
     }
 
 }
@@ -116,7 +122,7 @@ extension BaseViewModel {
             let userIdentifier = appleIDCredential.user
             let fullName = appleIDCredential.fullName
             let email = appleIDCredential.email
-            print("📌id : \(userIdentifier)")
+            print("📌appleId : \(userIdentifier)")
             print("📌familyName : \(fullName?.familyName ?? "")")
             print("📌givenName : \(fullName?.givenName ?? "")")
             print("📌email : \(email ?? "")")
