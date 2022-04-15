@@ -98,13 +98,30 @@ private extension BaseViewModel {
                     let stringId = String(id)
                     self.output.kakaoAccessToken.onNext(accessToken)
                     self.output.kakaoTalkId.onNext(stringId)
+
+                    print("📌카카오톡 로그인 시도중")
+
+                    // TODO: - 애플 로그인 id값이 있으면 문서 수정하고 홈으로 이동
+                    if let appleId = try? self.output.appleId.value() {
+                        self.firebaseWorker.getMemberDocument(id: appleId) { result in
+                            switch result {
+                            case .success(let word): print("📌word: \(word)")
+                            case .failure: ()
+                            }
+                        }
+                    }
+
+                    // MARK: - 이미 가입한 카카오톡 유저인지 확인
                     self.firebaseWorker.checkIsRegisteredUser(id: stringId) { isRegistered in
                         guard isRegistered == true else {
+                            print("📌가입하지 않은 카카오톡 유저 \(stringId)")
                             self.output.goToSignUp.accept(())
                             return
                         }
+                        print("📌이미 가입한 카카오톡 유저")
                         self.userDefaultsWorker.setKakaoTalkId(id: stringId)
                         self.output.goToHome.accept(())
+
                     }
                 }
             case .failure: ()
