@@ -24,14 +24,13 @@ protocol ViewModel {
 final class BaseViewModel: ViewModel {
 
     struct Input {
-//        let tapAppleLogin = PublishRelay<Void>()
         let tapKakaoTalkLogin = PublishRelay<Void>()
     }
 
     struct Output {
+        let kakaoAccessToken = PublishSubject<String>()
         let kakaoTalkId = BehaviorSubject<String>(value: "")
         let appleId = BehaviorSubject<String>(value: "")
-        let accessToken = PublishSubject<String>()
 
         let goToSignUp = PublishRelay<Void>()
         let goToHome = PublishRelay<Void>()
@@ -47,7 +46,8 @@ final class BaseViewModel: ViewModel {
     private let userDefaultsWorker = UserDefaultsWorker()
 
     init() {
-        logoutWithKakao() // TODO: - 테스트 위해 추가
+        // TODO: - 테스트를 위해 로그아웃함
+        logoutWithKakao()
         checkLoginId()
 
         subscribeInput()
@@ -58,11 +58,6 @@ final class BaseViewModel: ViewModel {
             .subscribe(onNext: { [weak self] _ in
                 self?.loginWithKakao()
             }).disposed(by: disposeBag)
-
-//        input.tapAppleLogin
-//            .subscribe(onNext: { [weak self] _ in
-//                self?.loginWithApple()
-//            }).disposed(by: disposeBag)
     }
 
 }
@@ -98,7 +93,7 @@ private extension BaseViewModel {
                 self.kakaoLoginWorker.userId { [weak self] id in
                     guard let self = self else { return }
                     print("📌id: \(id)")
-                    self.output.accessToken.onNext(accessToken)
+                    self.output.kakaoAccessToken.onNext(accessToken)
                     self.userDefaultsWorker.setKakaoTalkId(id: String(id))
                 }
             case .failure: ()

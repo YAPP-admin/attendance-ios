@@ -123,6 +123,18 @@ private extension LoginViewController {
     }
 
     func bindViewModel() {
+        viewModel.output.kakaoTalkId
+            .subscribe(onNext: { [weak self] id in
+                guard id.isEmpty == false else { return }
+                self?.goToHomeVC()
+            }).disposed(by: disposeBag)
+
+        viewModel.output.appleId
+            .subscribe(onNext: { [weak self] id in
+                guard id.isEmpty == false else { return }
+                self?.goToHomeVC()
+            }).disposed(by: disposeBag)
+
         viewModel.output.goToSignUp
             .observe(on: MainScheduler.instance)
             .bind(onNext: goToSignUpNameVC)
