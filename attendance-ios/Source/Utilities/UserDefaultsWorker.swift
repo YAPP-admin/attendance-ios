@@ -16,7 +16,7 @@ final class UserDefaultsWorker {
 
     private let defaults = UserDefaults.standard
 
-    // MARK: - Create, Update
+    // MARK: - Set
     func set(_ value: Any?, forKey key: UserDefaultsKey) {
         defaults.set(value, forKey: key.rawValue)
     }
@@ -26,16 +26,16 @@ final class UserDefaultsWorker {
         defaults.set(value, forKey: key.rawValue)
     }
 
-    // MARK: - Read
-    func read(forKey key: UserDefaultsKey) -> Bool {
+    // MARK: - Get
+    func get(forKey key: UserDefaultsKey) -> Bool {
         defaults.bool(forKey: key.rawValue)
     }
 
-    func read(forKey key: UserDefaultsKey) -> Int {
+    func get(forKey key: UserDefaultsKey) -> Int {
         defaults.integer(forKey: key.rawValue)
     }
 
-    func read(forKey key: UserDefaultsKey) -> String? {
+    func get(forKey key: UserDefaultsKey) -> String? {
         defaults.string(forKey: key.rawValue)
     }
 
@@ -65,12 +65,20 @@ extension UserDefaultsWorker {
         return false
     }
 
+    func setKakaoTalkId(id: String) {
+        set(id, forKey: .kakaoTalkId)
+    }
+
+    func setAppleId(id: String) {
+        set(id, forKey: .appleId)
+    }
+
     func kakaoTalkId() -> String? {
-        read(forKey: .kakaoTalkId)
+        get(forKey: .kakaoTalkId)
     }
 
     func appleId() -> String? {
-        read(forKey: .appleId)
+        get(forKey: .appleId)
     }
 
     func removeKakaoTalkId() {

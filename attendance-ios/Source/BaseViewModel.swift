@@ -5,6 +5,7 @@
 //  Created by leeesangheee on 2022/01/31.
 //
 
+import AuthenticationServices
 import Foundation
 import RxCocoa
 import RxSwift
@@ -23,7 +24,7 @@ protocol ViewModel {
 final class BaseViewModel: ViewModel {
 
     struct Input {
-        let tapAppleLogin = PublishRelay<Void>()
+//        let tapAppleLogin = PublishRelay<Void>()
         let tapKakaoTalkLogin = PublishRelay<Void>()
     }
 
@@ -46,9 +47,8 @@ final class BaseViewModel: ViewModel {
     private let userDefaultsWorker = UserDefaultsWorker()
 
     init() {
-        checkUserDefaults()
-
-        logoutWithKakao() // TODO: - 테스트를 위해 추가함, 이후 삭제 필요
+        logoutWithKakao() // TODO: - 테스트 위해 추가
+        checkLoginId()
 
         subscribeInput()
     }
@@ -59,10 +59,10 @@ final class BaseViewModel: ViewModel {
                 self?.loginWithKakao()
             }).disposed(by: disposeBag)
 
-        input.tapAppleLogin
-            .subscribe(onNext: { [weak self] _ in
-                self?.loginWithApple()
-            }).disposed(by: disposeBag)
+//        input.tapAppleLogin
+//            .subscribe(onNext: { [weak self] _ in
+//                self?.loginWithApple()
+//            }).disposed(by: disposeBag)
     }
 
 }
@@ -70,22 +70,19 @@ final class BaseViewModel: ViewModel {
 // MARK: - Check
 private extension BaseViewModel {
 
-    func checkUserDefaults() {
-        checkKakaoId()
-        checkAppleId()
-        output.goToSignUp.accept(())
-    }
-
-    func checkKakaoId() {
-        guard let kakaoTalkId = userDefaultsWorker.kakaoTalkId() else { return }
-        output.kakaoTalkId.onNext(kakaoTalkId)
-        output.goToHome.accept(())
-    }
-
-    func checkAppleId() {
-        guard let appleId = userDefaultsWorker.appleId() else { return }
-        output.appleId.onNext(appleId)
-        output.goToHome.accept(())
+    func checkLoginId() {
+        if let kakaoTalkId = userDefaultsWorker.kakaoTalkId(), kakaoTalkId.isEmpty == false {
+            print("📌kakaoTalkId: \(kakaoTalkId)")
+            output.kakaoTalkId.onNext(kakaoTalkId)
+            output.goToHome.accept(())
+        } else if let appleId = userDefaultsWorker.appleId(), appleId.isEmpty == false {
+            print("📌appleId: \(appleId)")
+            output.appleId.onNext(appleId)
+            output.goToHome.accept(())
+        } else {
+            print("📌no id")
+            output.goToSignUp.accept(())
+        }
     }
 
 }
@@ -98,8 +95,12 @@ private extension BaseViewModel {
             guard let self = self else { return }
             switch result {
             case .success(let accessToken):
-                self.output.accessToken.onNext(accessToken)
-                self.checkUserDefaults()
+                self.kakaoLoginWorker.userId { [weak self] id in
+                    guard let self = self else { return }
+                    print("📌id: \(id)")
+                    self.output.accessToken.onNext(accessToken)
+                    self.userDefaultsWorker.setKakaoTalkId(id: String(id))
+                }
             case .failure: ()
             }
         }
@@ -112,11 +113,21 @@ private extension BaseViewModel {
 }
 
 // MARK: - Apple Login
-// LoginViewController에 있음, 뷰모델로 이동 필요
-private extension BaseViewModel {
+extension BaseViewModel {
 
-    func loginWithApple() {
-
+    func authorizationController(authorization: ASAuthorization) {
+        switch authorization.credential {
+        case let appleIDCredential as ASAuthorizationAppleIDCredential:
+            let userIdentifier = appleIDCredential.user
+            let fullName = appleIDCredential.fullName
+            let email = appleIDCredential.email
+            print("📌id : \(userIdentifier)")
+            print("📌familyName : \(fullName?.familyName ?? "")")
+            print("📌givenName : \(fullName?.givenName ?? "")")
+            print("📌email : \(email ?? "")")
+            output.appleId.onNext(userIdentifier)
+        default: break
+        }
     }
 
 }
