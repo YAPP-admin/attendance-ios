@@ -6,11 +6,7 @@
 //
 
 import Foundation
-import KakaoSDKAuth
-import KakaoSDKUser
 import RxCocoa
-import RxKakaoSDKAuth
-import RxKakaoSDKUser
 import RxSwift
 
 protocol ViewModel {
@@ -27,10 +23,13 @@ protocol ViewModel {
 final class BaseViewModel: ViewModel {
 
     struct Input {
-        let tapLogin = PublishRelay<Void>()
+        let tapAppleLogin = PublishRelay<Void>()
+        let tapKakaoTalkLogin = PublishRelay<Void>()
     }
 
     struct Output {
+        let kakaoTalkId = BehaviorSubject<String>(value: "")
+        let appleId = BehaviorSubject<String>(value: "")
         let accessToken = PublishSubject<String>()
 
         let goToSignUp = PublishRelay<Void>()
@@ -44,40 +43,63 @@ final class BaseViewModel: ViewModel {
 
     private let kakaoLoginWorker = KakaoLoginWorker()
     private let firebaseWorker = FirebaseWorker()
+    private let userDefaultsWorker = UserDefaultsWorker()
 
     init() {
-        logoutWithKakao()
-        subscribeInputs()
+        checkUserDefaults()
+
+        logoutWithKakao() // TODO: - 테스트를 위해 추가함, 이후 삭제 필요
+
+        subscribeInput()
     }
 
-    private func subscribeInputs() {
-        input.tapLogin
+    private func subscribeInput() {
+        input.tapKakaoTalkLogin
             .subscribe(onNext: { [weak self] _ in
                 self?.loginWithKakao()
+            }).disposed(by: disposeBag)
+
+        input.tapAppleLogin
+            .subscribe(onNext: { [weak self] _ in
+                self?.loginWithApple()
             }).disposed(by: disposeBag)
     }
 
 }
 
-// MARK: - Login
+// MARK: - Check
+private extension BaseViewModel {
+
+    func checkUserDefaults() {
+        checkKakaoId()
+        checkAppleId()
+        output.goToSignUp.accept(())
+    }
+
+    func checkKakaoId() {
+        guard let kakaoTalkId = userDefaultsWorker.kakaoTalkId() else { return }
+        output.kakaoTalkId.onNext(kakaoTalkId)
+        output.goToHome.accept(())
+    }
+
+    func checkAppleId() {
+        guard let appleId = userDefaultsWorker.appleId() else { return }
+        output.appleId.onNext(appleId)
+        output.goToHome.accept(())
+    }
+
+}
+
+// MARK: - Kakao Login
 private extension BaseViewModel {
 
     func loginWithKakao() {
         kakaoLoginWorker.loginWithKakao { [weak self] result in
+            guard let self = self else { return }
             switch result {
             case .success(let accessToken):
-                self?.firebaseWorker.isExistingUser { result in
-                    switch result {
-                    case .success(let isExisting):
-                        self?.output.accessToken.onNext(accessToken)
-                        if isExisting == true {
-                            self?.output.goToHome.accept(())
-                        } else {
-                            self?.output.goToSignUp.accept(())
-                        }
-                    case .failure: ()
-                    }
-                }
+                self.output.accessToken.onNext(accessToken)
+                self.checkUserDefaults()
             case .failure: ()
             }
         }
@@ -85,6 +107,16 @@ private extension BaseViewModel {
 
     func logoutWithKakao() {
         kakaoLoginWorker.logoutWithKakao()
+    }
+
+}
+
+// MARK: - Apple Login
+// LoginViewController에 있음, 뷰모델로 이동 필요
+private extension BaseViewModel {
+
+    func loginWithApple() {
+
     }
 
 }

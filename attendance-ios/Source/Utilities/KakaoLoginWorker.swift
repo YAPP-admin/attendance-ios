@@ -17,6 +17,14 @@ final class KakaoLoginWorker {
 
     private let disposeBag = DisposeBag()
 
+    /// 카카오톡 유저 id를 반환합니다.
+    func userId(completion: @escaping (Int64) -> Void) {
+        UserApi.shared.me { user, _ in
+            guard let userId = user?.id else { return }
+            completion(userId)
+        }
+    }
+
 }
 
 // MARK: - Login
@@ -34,6 +42,7 @@ extension KakaoLoginWorker {
         }
     }
 
+    /// 카카오톡 어플을 통해 로그인합니다.
     private func loginWithKakaoTalk(completion: @escaping (Result<String, Error>) -> Void) {
         UserApi.shared.rx.loginWithKakaoTalk()
             .subscribe(onNext: { oauthToken in
@@ -43,6 +52,7 @@ extension KakaoLoginWorker {
             }).disposed(by: disposeBag)
     }
 
+    /// 카카오톡 어플이 없는 경우, 카카오톡 계정을 통해 로그인합니다.
     private func loginWithKakaoAccount(completion: @escaping (Result<String, Error>) -> Void) {
         UserApi.shared.rx.loginWithKakaoAccount()
             .subscribe(onNext: { oauthToken in
