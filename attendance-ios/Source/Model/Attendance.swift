@@ -8,7 +8,7 @@
 import Foundation
 
 struct Attendance: Codable {
-    let sesstionId: Int
+    let sessionId: Int
     let type: AttendanceType
 }
 
