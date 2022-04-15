@@ -26,7 +26,7 @@ struct FirebaseNewUser {
 
 extension FirebaseWorker {
 
-    func registerInfo(id: String, newUser: FirebaseNewUser, completion: @escaping (Result<Void, Error>) -> Void) {
+    func registerInfo(id: Int, newUser: FirebaseNewUser, completion: @escaping (Result<Void, Error>) -> Void) {
         memberDocRef.document("\(id)").setData([
             "id": id,
             "name": newUser.name,
@@ -46,7 +46,7 @@ extension FirebaseWorker {
         var attendances: [[String: Any]] = []
         let sessionCount = 20
         for id in 0..<sessionCount {
-            let empty: [String: Any] = ["sessionId": id, "attendanceType": ["text": "결석", "point": -20]]
+            let empty: [String: Any] = ["sessionId": id, "type": ["text": "결석", "point": -20]]
             attendances.append(empty)
         }
         return attendances
