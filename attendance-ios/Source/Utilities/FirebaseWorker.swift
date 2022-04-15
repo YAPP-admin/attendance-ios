@@ -26,9 +26,25 @@ struct FirebaseNewUser {
 
 extension FirebaseWorker {
 
-    func registerInfo(id: Int, newUser: FirebaseNewUser, completion: @escaping (Result<Void, Error>) -> Void) {
+    func registerKakaoUserInfo(id: Int, newUser: FirebaseNewUser, completion: @escaping (Result<Void, Error>) -> Void) {
         memberDocRef.document("\(id)").setData([
             "id": id,
+            "name": newUser.name,
+            "position": newUser.positionType.rawValue,
+            "team": ["number": newUser.teamNumber, "type": newUser.teamType.upperCase],
+            "attendances": self.makeEmptyAttendances()
+        ]) { error in
+            guard let error = error else {
+                completion(.success(()))
+                return
+            }
+            completion(.failure(error))
+        }
+    }
+
+    func registerAppleUserInfo(id: String, newUser: FirebaseNewUser, completion: @escaping (Result<Void, Error>) -> Void) {
+        memberDocRef.document("\(id)").setData([
+            "id": Int.random(in: 1000000000..<10000000000),
             "name": newUser.name,
             "position": newUser.positionType.rawValue,
             "team": ["number": newUser.teamNumber, "type": newUser.teamType.upperCase],

@@ -72,12 +72,13 @@ private extension BaseViewModel {
             print("📌kakaoTalkId: \(kakaoTalkId)")
             output.kakaoTalkId.onNext(kakaoTalkId)
             output.goToHome.accept(())
+            return
         } else if let appleId = userDefaultsWorker.appleId(), appleId.isEmpty == false {
             print("📌appleId: \(appleId)")
             output.appleId.onNext(appleId)
             output.goToHome.accept(())
         } else {
-            print("📌no id")
+            print("📌UserDefaults에 저장된 id가 없음")
             output.goToSignUp.accept(())
         }
     }
@@ -111,8 +112,12 @@ private extension BaseViewModel {
         }
     }
 
+    func checkIsRegisteredUser(id: String) {
+
+    }
+
     func logoutWithKakao() {
-        print("📌logoutWithKakao")
+        print("📌카카오톡 로그아웃")
         kakaoLoginWorker.logoutWithKakao()
         userDefaultsWorker.removeKakaoTalkId()
     }
@@ -128,11 +133,17 @@ extension BaseViewModel {
             let userIdentifier = appleIDCredential.user
 //            let fullName = appleIDCredential.fullName
 //            let email = appleIDCredential.email
-//            print("📌appleId : \(userIdentifier)")
-//            print("📌familyName : \(fullName?.familyName ?? "")")
-//            print("📌givenName : \(fullName?.givenName ?? "")")
-//            print("📌email : \(email ?? "")")
             output.appleId.onNext(userIdentifier)
+            self.firebaseWorker.checkIsRegisteredUser(id: userIdentifier) { isRegistered in
+                guard isRegistered == true else {
+                    print("📌가입하지 않은 애플 유저")
+                    self.output.goToSignUp.accept(())
+                    return
+                }
+                print("📌이미 가입한 애플 유저")
+                self.userDefaultsWorker.setAppleId(id: userIdentifier)
+                self.output.goToHome.accept(())
+            }
         default: break
         }
     }

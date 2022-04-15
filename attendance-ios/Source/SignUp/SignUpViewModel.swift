@@ -55,16 +55,6 @@ final class SignUpViewModel: ViewModel {
 private extension SignUpViewModel {
 
     func bindInput() {
-        input.kakaoTalkId
-            .subscribe(onNext: { [weak self] id in
-                print("kakaoTalkId: \(id)")
-            }).disposed(by: disposeBag)
-
-        input.appleId
-            .subscribe(onNext: { [weak self] id in
-                print("appleId: \(id)")
-            }).disposed(by: disposeBag)
-
         input.name
             .subscribe(onNext: { [weak self] name in
                 self?.output.isNameTextFieldValid.onNext(name?.isEmpty == false)
@@ -84,14 +74,6 @@ private extension SignUpViewModel {
             .subscribe(onNext: { [weak self] _ in
                 self?.registerInfo()
             }).disposed(by: disposeBag)
-    }
-
-    func setLoginId() {
-        guard let appleId = try? input.appleId.value(),
-              let kakaoTalkId = try? input.kakaoTalkId.value() else { return }
-
-        userDefaultsWorker.set(appleId, forKey: .appleId)
-        userDefaultsWorker.set(kakaoTalkId, forKey: .kakaoTalkId)
     }
 
 }
@@ -130,28 +112,16 @@ extension SignUpViewModel {
 
         let newUser = FirebaseNewUser(name: name, positionType: positionType, teamType: teamType, teamNumber: teamNumber)
 
-        // TODO: - getDocument 함수 만들기
-        if kakaoTalkId.isEmpty == false, appleId.isEmpty == false {
-//            firebaseWorker.checkIsRegisteredUser(id: kakaoTalkId) { isRegistered in
-//                switch result {
-//                case .success(let hasDocument):
-//                    if hasDocument == false {
-//                        // TODO: - appId에 해당하는 문서를 찾아 kakaoTalkId로 변경한다.
-//                    }
-//                case .failure: ()
-//                }
-//            }
-        }
-
         if kakaoTalkId.isEmpty == false {
-            firebaseWorker.registerInfo(id: kakaoTalkId, newUser: newUser) { [weak self] result in
+            guard let id = Int(kakaoTalkId) else { return }
+            firebaseWorker.registerKakaoUserInfo(id: id, newUser: newUser) { [weak self] result in
                 switch result {
                 case .success: self?.output.goToHome.accept(())
                 case .failure: ()
                 }
             }
         } else if appleId.isEmpty == false {
-            firebaseWorker.registerInfo(id: appleId, newUser: newUser) { [weak self] result in
+            firebaseWorker.registerAppleUserInfo(id: appleId, newUser: newUser) { [weak self] result in
                 switch result {
                 case .success: self?.output.goToHome.accept(())
                 case .failure: ()
