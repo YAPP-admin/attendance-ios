@@ -53,37 +53,12 @@ final class BaseViewModel: ViewModel {
 
     init() {
         // TODO: - 테스트를 위해 추가, 이후 삭제
-        testDecode()
         logoutWithKakao()
         //
 
         checkLoginId()
 
         subscribeInput()
-    }
-
-    // TODO: - Member로 디코딩 후 changeDocumentName 함수 수정
-    func testDecode() {
-        print("📌testDecode start")
-
-        let memberCollectionRef = Firestore.firestore().collection("member")
-        let docId = "2134527254"
-
-        let docRef = memberCollectionRef.document(docId)
-        docRef.getDocument { [weak self] snapshot, error in
-            if let error = error {
-                print("📌error: \(error)")
-            }
-
-            guard let self = self, let data = snapshot?.data(), let newId = Int(docId) else { return }
-            print("📌data: \(data)")
-            print("📌newId: \(newId)")
-
-            if let member = try? snapshot?.data(as: Member.self) {
-                print("📌menber: \(member)")
-            }
-
-        }
     }
 
     private func subscribeInput() {
@@ -100,12 +75,10 @@ private extension BaseViewModel {
 
     func checkLoginId() {
         if let kakaoTalkId = userDefaultsWorker.kakaoTalkId(), kakaoTalkId.isEmpty == false {
-            print("📌kakaoTalkId: \(kakaoTalkId)")
             output.kakaoTalkId.onNext(kakaoTalkId)
             output.goToHome.accept(())
             return
         } else if let appleId = userDefaultsWorker.appleId(), appleId.isEmpty == false {
-            print("📌appleId: \(appleId)")
             output.appleId.onNext(appleId)
         } else {
             print("📌UserDefaults에 저장된 id가 없음")
@@ -129,15 +102,12 @@ private extension BaseViewModel {
                     self.output.kakaoAccessToken.onNext(accessToken)
                     self.output.kakaoTalkId.onNext(kakaoId)
 
-                    print("📌카카오톡 로그인 시도중")
-
-                    // TODO: - 애플 로그인 id값이 있으면 문서 수정하고 홈으로 이동
                     if let appleId = try? self.output.appleId.value() {
                         print("📌appleId: \(appleId)")
 
-                        self.firebaseWorker.changeDocumentName(appleId, to: kakaoId) { result in
+                        self.firebaseWorker.changeMemberDocumentName(appleId, to: kakaoId) { result in
                             switch result {
-                            case .success(let word): print("📌문서 불러오기: \(word)")
+                            case .success: print("📌문서 불러오기 성공")
                             case .failure: print("📌문서 불러오기 실패")
                             }
                         }

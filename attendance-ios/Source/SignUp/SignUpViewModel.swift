@@ -110,7 +110,7 @@ extension SignUpViewModel {
               let teamType = try? input.teamType.value(),
               let teamNumber = try? input.teamNumber.value() else { return }
 
-        let newUser = FirebaseNewUser(name: name, positionType: positionType, teamType: teamType, teamNumber: teamNumber)
+        let newUser = FirebaseNewMember(name: name, positionType: positionType, teamType: teamType, teamNumber: teamNumber)
 
         if kakaoTalkId.isEmpty == false {
             guard let id = Int(kakaoTalkId) else { return }

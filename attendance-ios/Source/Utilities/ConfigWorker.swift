@@ -45,6 +45,7 @@ final class ConfigWorker {
         }
     }
 
+    // TODO: - 
     /// 선택할 팀 배열을 반환합니다.
     func decodeSelectTeams(completion: @escaping (Result<[Team], Error>) -> Void) {
         remoteConfig.fetch { [weak self] status, _ in
