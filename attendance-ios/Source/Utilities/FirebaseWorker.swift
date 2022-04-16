@@ -32,7 +32,7 @@ extension FirebaseWorker {
             "id": id,
             "name": newUser.name,
             "position": newUser.positionType.rawValue,
-            "team": ["number": newUser.teamNumber, "type": newUser.teamType.upperCase],
+            "team": ["number": newUser.teamNumber, "type": newUser.teamType.rawValue],
             "attendances": self.makeEmptyAttendances()
         ]) { error in
             guard let error = error else {
@@ -48,7 +48,7 @@ extension FirebaseWorker {
             "id": Int.random(in: 1000000000..<10000000000),
             "name": newUser.name,
             "position": newUser.positionType.rawValue,
-            "team": ["number": newUser.teamNumber, "type": newUser.teamType.upperCase],
+            "team": ["number": newUser.teamNumber, "type": newUser.teamType.rawValue],
             "attendances": self.makeEmptyAttendances()
         ]) { error in
             guard let error = error else {
@@ -115,18 +115,22 @@ extension FirebaseWorker {
     }
 
     /// 문서 이름을 애플 아이디에서 카카오톡 아이디로 변경합니다.
-    func changeDocumentName(_ appleId: String, to kakaoId: String, completion: @escaping (Result<Attendance, Error>) -> Void) {
+    func changeDocumentName(_ appleId: String, to kakaoId: String, completion: @escaping (Result<Member, Error>) -> Void) {
         let docRef = memberCollectionRef.document(appleId)
         docRef.getDocument { [weak self] snapshot, error in
             if let error = error {
                 completion(.failure(error))
             }
             guard let self = self, let data = snapshot?.data(), let newId = Int(kakaoId) else { return }
-            print("📌data: \(data)")
             print("📌newId: \(newId)")
 
-            // TODO: - 임의의 FirebaseNewUser 정보로 변경 필요
-            let newUser = FirebaseNewUser(name: "기존 애플 유저 파일 이동 테스트", positionType: .ios, teamType: .ios, teamNumber: 1)
+            // TODO: - 문서의 Member 정보로 newUser 수정해 문서 생성하기
+            if let menber = try? snapshot?.data(as: Member.self) {
+                print("📌menber: \(menber)")
+            }
+            print("📌data: \(data)")
+
+            let newUser = FirebaseNewUser(name: "기존 애플 유저 파일명 변경", positionType: .ios, teamType: .ios, teamNumber: 1)
             self.registerKakaoUserInfo(id: newId, newUser: newUser) { result in
                 switch result {
                 case .success: self.deleteDocument(id: appleId)

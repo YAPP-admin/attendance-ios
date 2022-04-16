@@ -10,6 +10,12 @@ import Foundation
 import RxCocoa
 import RxSwift
 
+import FirebaseFirestore
+import FirebaseFirestoreSwift
+import FirebaseRemoteConfig
+import KakaoSDKUser
+import UIKit
+
 protocol ViewModel {
 
     associatedtype Input
@@ -47,12 +53,37 @@ final class BaseViewModel: ViewModel {
 
     init() {
         // TODO: - 테스트를 위해 추가, 이후 삭제
+        testDecode()
         logoutWithKakao()
         //
 
         checkLoginId()
 
         subscribeInput()
+    }
+
+    // TODO: - Member로 디코딩 후 changeDocumentName 함수 수정
+    func testDecode() {
+        print("📌testDecode start")
+
+        let memberCollectionRef = Firestore.firestore().collection("member")
+        let docId = "2134527254"
+
+        let docRef = memberCollectionRef.document(docId)
+        docRef.getDocument { [weak self] snapshot, error in
+            if let error = error {
+                print("📌error: \(error)")
+            }
+
+            guard let self = self, let data = snapshot?.data(), let newId = Int(docId) else { return }
+            print("📌data: \(data)")
+            print("📌newId: \(newId)")
+
+            if let member = try? snapshot?.data(as: Member.self) {
+                print("📌menber: \(member)")
+            }
+
+        }
     }
 
     private func subscribeInput() {
@@ -76,7 +107,6 @@ private extension BaseViewModel {
         } else if let appleId = userDefaultsWorker.appleId(), appleId.isEmpty == false {
             print("📌appleId: \(appleId)")
             output.appleId.onNext(appleId)
-            output.goToHome.accept(())
         } else {
             print("📌UserDefaults에 저장된 id가 없음")
             output.goToSignUp.accept(())

@@ -57,17 +57,51 @@ struct Team: Codable {
 }
 
 enum TeamType: String, Codable {
-    case android = "Android"
-    case ios = "iOS"
-    case web = "Web"
-    case allRounder = "All-Rounder"
+    case android = "ANDROID"
+    case ios = "IOS"
+    case web = "WEB"
+    case allRounder = "ALL_ROUNDER"
 
-    var upperCase: String {
+    var lowerCase: String {
         switch self {
-        case .android: return "ANDROID"
-        case .ios: return "IOS"
-        case .web: return "WEB"
-        case .allRounder: return "ALL_ROUNDER"
+        case .android: return "Android"
+        case .ios: return "iOS"
+        case .web: return "Web"
+        case .allRounder: return "All-Rounder"
         }
     }
+
 }
+
+//enum TeamType: String, Codable {
+//    case android
+//    case ios
+//    case web
+//    case allRounder
+//
+//    var upperCase: String {
+//        switch self {
+//        case .android: return "ANDROID"
+//        case .ios: return "IOS"
+//        case .web: return "WEB"
+//        case .allRounder: return "ALL_ROUNDER"
+//        }
+//    }
+//
+//    var lowerCase: String {
+//        switch self {
+//        case .android: return "Android"
+//        case .ios: return "iOS"
+//        case .web: return "Web"
+//        case .allRounder: return "All-Rounder"
+//        }
+//    }
+//
+//    enum CodingKeys: String, CodingKey {
+//        case android = "ANDROID"
+//        case ios = "IOS"
+//        case web = "WEB"
+//        case allRounder = "ALL_ROUNDER"
+//    }
+//
+//}
