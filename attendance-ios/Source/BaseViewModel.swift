@@ -81,7 +81,7 @@ private extension BaseViewModel {
         } else if let appleId = userDefaultsWorker.appleId(), appleId.isEmpty == false {
             output.appleId.onNext(appleId)
         } else {
-            print("📌UserDefaults에 저장된 id가 없음")
+            // MARK: - UserDefaults에 저장된 id가 없음
             output.goToSignUp.accept(())
         }
     }
@@ -102,25 +102,24 @@ private extension BaseViewModel {
                     self.output.kakaoAccessToken.onNext(accessToken)
                     self.output.kakaoTalkId.onNext(kakaoId)
 
+                    // MARK: - 애플 로그인을 통해 이미 가입한 유저라면 기존 문서 이름 변경
                     if let appleId = try? self.output.appleId.value() {
-                        print("📌appleId: \(appleId)")
-
                         self.firebaseWorker.changeMemberDocumentName(appleId, to: kakaoId) { result in
                             switch result {
-                            case .success: print("📌문서 불러오기 성공")
-                            case .failure: print("📌문서 불러오기 실패")
+                            case .success: self.output.goToHome.accept(())
+                            case .failure: self.output.goToSignUp.accept(())
                             }
                         }
                     }
 
                     // MARK: - 이미 가입한 카카오톡 유저인지 확인
                     self.firebaseWorker.checkIsRegisteredUser(id: kakaoId) { isRegistered in
+                        // MARK: - 가입하지 않은 카카오톡 유저
                         guard isRegistered == true else {
-                            print("📌가입하지 않은 카카오톡 유저 \(kakaoId)")
                             self.output.goToSignUp.accept(())
                             return
                         }
-                        print("📌이미 가입한 카카오톡 유저")
+                        // MARK: - 이미 가입한 카카오톡 유저
                         self.userDefaultsWorker.setKakaoTalkId(id: kakaoId)
                         self.output.goToHome.accept(())
 
@@ -136,7 +135,6 @@ private extension BaseViewModel {
     }
 
     func logoutWithKakao() {
-        print("📌카카오톡 로그아웃")
         kakaoLoginWorker.logoutWithKakao()
         userDefaultsWorker.removeKakaoTalkId()
     }
@@ -154,12 +152,12 @@ extension BaseViewModel {
 //            let email = appleIDCredential.email
             output.appleId.onNext(userIdentifier)
             self.firebaseWorker.checkIsRegisteredUser(id: userIdentifier) { isRegistered in
+                // MARK: - 가입하지 않은 애플 유저
                 guard isRegistered == true else {
-                    print("📌가입하지 않은 애플 유저")
                     self.output.goToSignUp.accept(())
                     return
                 }
-                print("📌이미 가입한 애플 유저")
+                // MARK: - 이미 가입한 애플 유저
                 self.userDefaultsWorker.setAppleId(id: userIdentifier)
                 self.output.goToHome.accept(())
             }
