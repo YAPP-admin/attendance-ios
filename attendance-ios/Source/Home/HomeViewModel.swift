@@ -12,10 +12,12 @@ import UIKit
 final class HomeViewModel: ViewModel {
     struct Input {
         let tapQR = PublishRelay<Void>()
+        let tapSetting = PublishRelay<Void>()
     }
 
     struct Output {
         var goToQR = PublishRelay<Void>()
+        var goToSetting = PublishRelay<Void>()
     }
 
     let input = Input()
@@ -26,6 +28,11 @@ final class HomeViewModel: ViewModel {
         input.tapQR
             .subscribe(onNext: { [weak self] _ in
                 self?.output.goToQR.accept(())
+            }).disposed(by: disposeBag)
+
+        input.tapSetting
+            .subscribe(onNext: { [weak self] _ in
+                self?.output.goToSetting.accept(())
             }).disposed(by: disposeBag)
     }
 }

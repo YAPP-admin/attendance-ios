@@ -13,6 +13,10 @@
 		296C7B0327C523450042B630 /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 296C7B0227C523450042B630 /* Pretendard-Medium.otf */; };
 		297E957F27CFA68600452222 /* QRViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297E957E27CFA68600452222 /* QRViewController.swift */; };
 		297E958327CFAC0A00452222 /* QRViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297E958227CFAC0A00452222 /* QRViewModel.swift */; };
+		5264EFF9280D5AC00026F560 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5264EFF8280D5AC00026F560 /* SettingViewController.swift */; };
+		5264EFFB280D5AE80026F560 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5264EFFA280D5AE80026F560 /* SettingViewModel.swift */; };
+		5264EFFD280D5B060026F560 /* SettingCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5264EFFC280D5B060026F560 /* SettingCellView.swift */; };
+		5264EFFF280D5B210026F560 /* SettingViewController+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5264EFFE280D5B210026F560 /* SettingViewController+UI.swift */; };
 		527657F727C384AE0080DA32 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527657F627C384AE0080DA32 /* UIViewController.swift */; };
 		527657FB27C387E40080DA32 /* UILabelWithRound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527657FA27C387E40080DA32 /* UILabelWithRound.swift */; };
 		52BCA07027C4D393001BF86F /* TextStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BCA06F27C4D393001BF86F /* TextStyle.swift */; };
@@ -75,6 +79,10 @@
 		296C7B0227C523450042B630 /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
 		297E957E27CFA68600452222 /* QRViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRViewController.swift; sourceTree = "<group>"; };
 		297E958227CFAC0A00452222 /* QRViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRViewModel.swift; sourceTree = "<group>"; };
+		5264EFF8280D5AC00026F560 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		5264EFFA280D5AE80026F560 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
+		5264EFFC280D5B060026F560 /* SettingCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCellView.swift; sourceTree = "<group>"; };
+		5264EFFE280D5B210026F560 /* SettingViewController+UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingViewController+UI.swift"; sourceTree = "<group>"; };
 		527657F627C384AE0080DA32 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		527657FA27C387E40080DA32 /* UILabelWithRound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabelWithRound.swift; sourceTree = "<group>"; };
 		52BCA06F27C4D393001BF86F /* TextStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStyle.swift; sourceTree = "<group>"; };
@@ -161,6 +169,17 @@
 				297E958227CFAC0A00452222 /* QRViewModel.swift */,
 			);
 			path = QR;
+			sourceTree = "<group>";
+		};
+		5264EFF7280D5AAD0026F560 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				5264EFF8280D5AC00026F560 /* SettingViewController.swift */,
+				5264EFFA280D5AE80026F560 /* SettingViewModel.swift */,
+				5264EFFC280D5B060026F560 /* SettingCellView.swift */,
+				5264EFFE280D5B210026F560 /* SettingViewController+UI.swift */,
+			);
+			path = Setting;
 			sourceTree = "<group>";
 		};
 		527657F827C387C00080DA32 /* Common */ = {
@@ -336,13 +355,14 @@
 		5EF69EBA27A7DD10007E9735 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				297E957D27CFA66C00452222 /* QR */,
 				527657F827C387C00080DA32 /* Common */,
 				5EF69EC127A7EFFF007E9735 /* BaseViewModel.swift */,
 				5EA97D8427DBA5C4004E2330 /* Model */,
 				5EF69EC027A7DDE1007E9735 /* Login */,
 				5EED02BE27D7832500C52637 /* SignUp */,
 				5EF69EC727A81E25007E9735 /* Home */,
+				5264EFF7280D5AAD0026F560 /* Setting */,
+				297E957D27CFA66C00452222 /* QR */,
 				5EF69ED227A83BC1007E9735 /* Detail */,
 				5EF69ED727AAAC88007E9735 /* Policy */,
 				5E7AEF2027E2125A0059FB3A /* Admin */,
@@ -598,6 +618,8 @@
 				52BCA07227C4D3DF001BF86F /* UIFont.swift in Sources */,
 				5EF69ED927AAACBA007E9735 /* PolicyViewController.swift in Sources */,
 				5E7AEF2827E222C30059FB3A /* AdminGradeViewController.swift in Sources */,
+				5264EFFF280D5B210026F560 /* SettingViewController+UI.swift in Sources */,
+				5264EFFD280D5B060026F560 /* SettingCellView.swift in Sources */,
 				297E958327CFAC0A00452222 /* QRViewModel.swift in Sources */,
 				5EF69EDB27AAB0BC007E9735 /* PolicyUnitView.swift in Sources */,
 				5EAA7A1027FF443200BC7397 /* SignUpTeamViewController.swift in Sources */,
@@ -608,6 +630,7 @@
 				5EF69EA327A7DAF8007E9735 /* AppDelegate.swift in Sources */,
 				5EED02C027D7854F00C52637 /* AlertView.swift in Sources */,
 				5EA97D8827DBA621004E2330 /* Models.swift in Sources */,
+				5264EFF9280D5AC00026F560 /* SettingViewController.swift in Sources */,
 				5E7AEF2A27E223040059FB3A /* AdminManagementViewController.swift in Sources */,
 				5E6179AC27C670D500B1A835 /* UITextField.swift in Sources */,
 				5EF69EA527A7DAF8007E9735 /* SceneDelegate.swift in Sources */,
@@ -615,6 +638,7 @@
 				5EAA79D727F5ED7B00BC7397 /* UIView.swift in Sources */,
 				5E6ACB3A2808648700ADF2BB /* FirebaseWorker.swift in Sources */,
 				5EAA79D527F5D6B400BC7397 /* AdminTodayView.swift in Sources */,
+				5264EFFB280D5AE80026F560 /* SettingViewModel.swift in Sources */,
 				5E7AEF2627E21E4C0059FB3A /* AdminCardView.swift in Sources */,
 				5EAA79F927FDD84C00BC7397 /* AdminMessageView.swift in Sources */,
 				5E6ACB3C28086A7300ADF2BB /* KakaoLoginWorker.swift in Sources */,

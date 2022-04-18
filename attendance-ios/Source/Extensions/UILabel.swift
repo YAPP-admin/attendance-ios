@@ -31,7 +31,7 @@ extension UILabel {
         self.attributedText = attributedString
     }
 
-    func font(_ textStyle: TextStyle) {
+    func style(_ textStyle: TextStyle) {
         self.font = textStyle.font
     }
 }
