@@ -5,9 +5,6 @@
 //  Created by leeesangheee on 2022/03/08.
 //
 
-import FirebaseFirestore
-import FirebaseRemoteConfig
-import KakaoSDKUser
 import RxCocoa
 import RxSwift
 import UIKit
@@ -15,6 +12,9 @@ import UIKit
 final class SignUpViewModel: ViewModel {
 
     struct Input {
+        let kakaoTalkId = BehaviorSubject<String>(value: "")
+        let appleId = BehaviorSubject<String>(value: "")
+
         let name = BehaviorSubject<String?>(value: nil)
         let positionType = BehaviorSubject<PositionType?>(value: nil)
         let teamType = BehaviorSubject<TeamType?>(value: nil)
@@ -41,31 +41,12 @@ final class SignUpViewModel: ViewModel {
     let disposeBag = DisposeBag()
 
     private let configWorker = ConfigWorker()
+    private let firebaseWorker = FirebaseWorker()
+    private let userDefaultsWorker = UserDefaultsWorker()
 
     init() {
-        setupConfig()
         bindInput()
-    }
-
-}
-
-// MARK: - Config
-private extension SignUpViewModel {
-
-    func setupConfig() {
-        configWorker.decodeYappConfig { [weak self] result in
-            switch result {
-            case .success(let config): self?.output.yappConfig.onNext(config)
-            case .failure: ()
-            }
-        }
-
-        configWorker.decodeSelectTeams { [weak self] result in
-            switch result {
-            case .success(let teams): self?.output.configTeams.onNext(teams)
-            case .failure: ()
-            }
-        }
+        setupConfig()
     }
 
 }
@@ -97,41 +78,58 @@ private extension SignUpViewModel {
 
 }
 
-extension SignUpViewModel {
+// MARK: - Config
+private extension SignUpViewModel {
 
-    func registerInfo() {
-        guard let name = try? input.name.value(),
-              let positionType = try? input.positionType.value(),
-              let teamType = try? input.teamType.value(),
-              let teamNumber = try? input.teamNumber.value() else { return }
+    func setupConfig() {
+        configWorker.decodeYappConfig { [weak self] result in
+            switch result {
+            case .success(let config): self?.output.yappConfig.onNext(config)
+            case .failure: ()
+            }
+        }
 
-        let db = Firestore.firestore()
-        let docRef = db.collection("member")
-
-        UserApi.shared.me { [weak self] user, error in
-            guard let self = self, let user = user, let userId = user.id else { return }
-
-            docRef.document("\(userId)").setData([
-                "id": userId,
-                "name": name,
-                "position": positionType.rawValue,
-                "team": ["number": teamNumber, "type": teamType.upperCase],
-                "attendances": self.makeEmptyAttendances()
-            ]) { [weak self] error in
-                guard error == nil else { return }
-                self?.output.goToHome.accept(())
+        configWorker.decodeSelectTeams { [weak self] result in
+            switch result {
+            case .success(let teams): self?.output.configTeams.onNext(teams)
+            case .failure: ()
             }
         }
     }
 
-    private func makeEmptyAttendances() -> [[String: Any]] {
-        var attendances: [[String: Any]] = []
-        let sessionCount = 20
-        for id in 0..<sessionCount {
-            let empty: [String: Any] = ["sessionId": id, "attendanceType": ["text": "결석", "point": -20]]
-            attendances.append(empty)
+}
+
+// MARK: - Register
+extension SignUpViewModel {
+
+    func registerInfo() {
+        guard let appleId = try? input.appleId.value(),
+              let kakaoTalkId = try? input.kakaoTalkId.value(),
+              let name = try? input.name.value(),
+              let positionType = try? input.positionType.value(),
+              let teamType = try? input.teamType.value(),
+              let teamNumber = try? input.teamNumber.value() else { return }
+
+        let newUser = FirebaseNewMember(name: name, positionType: positionType, teamType: teamType, teamNumber: teamNumber)
+
+        if kakaoTalkId.isEmpty == false {
+            guard let id = Int(kakaoTalkId) else { return }
+            firebaseWorker.registerKakaoUserInfo(id: id, newUser: newUser) { [weak self] result in
+                switch result {
+                case .success: self?.output.goToHome.accept(())
+                case .failure: ()
+                }
+            }
+        } else if appleId.isEmpty == false {
+            firebaseWorker.registerAppleUserInfo(id: appleId, newUser: newUser) { [weak self] result in
+                switch result {
+                case .success:
+                    self?.userDefaultsWorker.setAppleId(id: appleId)
+                    self?.output.goToHome.accept(())
+                case .failure: ()
+                }
+            }
         }
-        return attendances
     }
 
 }

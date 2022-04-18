@@ -8,11 +8,18 @@
 import Foundation
 
 struct Attendance: Codable {
-    let sesstionId: Int
+    let sessionId: Int
     let type: AttendanceType
 }
 
-enum AttendanceType: Int, Codable, CaseIterable {
+struct AttendanceType: Codable {
+    let point: Int
+    let text: String
+}
+
+enum AttendanceCase: Int, Codable {
+    case absence
+    case tardy
     case attendance
     case tardy
     case absence

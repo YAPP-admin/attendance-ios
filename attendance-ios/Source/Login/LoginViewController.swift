@@ -4,17 +4,21 @@
 //  Created by leeesangheee on 2022/01/31.
 //
 
+import AuthenticationServices
 import RxCocoa
 import RxSwift
 import SnapKit
 import UIKit
 import WebKit
 
-final class LoginViewController: UIViewController {
+final class LoginViewController: UIViewController, ASAuthorizationControllerDelegate {
 
     enum Constants {
         static let padding: CGFloat = 24
-        static let buttonSpacing: CGFloat = 6
+        static let buttonPadding: CGFloat = 6
+        static let buttonSpacing: CGFloat = 8
+        static let buttonHeight: CGFloat = 44
+        static let buttonBottomSpacing: CGFloat = 133
         static let cornerRadius: CGFloat = 12
         static let kakaoBlack: UIColor = UIColor(red: 25/255, green: 25/255, blue: 25/255, alpha: 1)
     }
@@ -39,22 +43,44 @@ final class LoginViewController: UIViewController {
         return label
     }()
 
-    private let loginButton: UIButton = {
+    private let appleLoginButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Apple로 로그인", for: .normal)
+        button.backgroundColor = .black
+        button.tintColor = .white
+        button.setTitleColor(UIColor.white, for: .normal)
+        button.titleLabel?.font = .Pretendard(type: .regular, size: 19)
+        button.setTitleColor(UIColor.white, for: .normal)
+        button.setImage(UIImage(systemName: "applelogo"), for: .normal) // 이미지 수정
+        button.titleEdgeInsets = .init(top: 0, left: Constants.buttonPadding/2, bottom: 0, right: -Constants.buttonPadding/2)
+        button.imageEdgeInsets = .init(top: 0, left: -Constants.buttonPadding/2, bottom: 0, right: Constants.buttonPadding/2)
+        button.layer.cornerRadius = Constants.cornerRadius
+        return button
+    }()
+
+    private let kakaoLoginButton: UIButton = {
         let button = UIButton()
         button.setTitle("카카오 로그인", for: .normal)
         button.backgroundColor = .yapp_kakao_yellow
-        button.titleLabel?.font = .Pretendard(type: .medium, size: 19)
-        button.setTitleColor(Constants.kakaoBlack, for: .normal)
-        button.setImage(UIImage(systemName: "bubble.left.fill"), for: .normal)
-        button.titleEdgeInsets = .init(top: 0, left: Constants.buttonSpacing/2, bottom: 0, right: -Constants.buttonSpacing/2)
-        button.imageEdgeInsets = .init(top: 0, left: -Constants.buttonSpacing/2, bottom: 0, right: Constants.buttonSpacing/2)
-        button.backgroundColor = .yapp_kakao_yellow
         button.tintColor = Constants.kakaoBlack
+        button.setTitleColor(Constants.kakaoBlack, for: .normal)
+        button.titleLabel?.font = .Pretendard(type: .regular, size: 19)
+        button.setImage(UIImage(named: "kakao_login"), for: .normal)
+        button.titleEdgeInsets = .init(top: 0, left: Constants.buttonPadding/2, bottom: 0, right: -Constants.buttonPadding/2)
+        button.imageEdgeInsets = .init(top: 0, left: -Constants.buttonPadding/2, bottom: 0, right: Constants.buttonPadding/2)
         button.layer.cornerRadius = Constants.cornerRadius
         return button
     }()
 
     private let secretAdminButton: UIButton = UIButton()
+
+    private let authorizationController: ASAuthorizationController = {
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        let request = appleIDProvider.createRequest()
+        request.requestedScopes = [.fullName, .email]
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        return authorizationController
+    }()
 
     private let viewModel = BaseViewModel()
     private var disposeBag = DisposeBag()
@@ -64,6 +90,7 @@ final class LoginViewController: UIViewController {
         bindSubviews()
         bindViewModel()
 
+        setupAppleLogin()
         setupDelegate()
 
         configureSplashView()
@@ -74,26 +101,18 @@ final class LoginViewController: UIViewController {
 
 }
 
-// MARK: - Splash
-extension LoginViewController: WKNavigationDelegate {
-
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        if webView == splashView {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                self.splashView.removeFromSuperview()
-            }
-        }
-    }
-
-}
-
 // MARK: - Bind
 private extension LoginViewController {
 
     func bindSubviews() {
-        loginButton.rx.tap
+        appleLoginButton.rx.tap
             .throttle(.seconds(3), latest: false, scheduler: MainScheduler.instance)
-            .bind(to: viewModel.input.tapLogin)
+            .bind(onNext: loginWithApple)
+            .disposed(by: disposeBag)
+
+        kakaoLoginButton.rx.tap
+            .throttle(.seconds(3), latest: false, scheduler: MainScheduler.instance)
+            .bind(to: viewModel.input.tapKakaoTalkLogin)
             .disposed(by: disposeBag)
 
         secretAdminButton.rx.tap
@@ -125,7 +144,13 @@ private extension LoginViewController {
 private extension LoginViewController {
 
     func goToSignUpNameVC() {
-        let signUpNameVC = SignUpNameViewController()
+        guard let kakaoTalkId = try? viewModel.output.kakaoTalkId.value(), let appleId = try? viewModel.output.appleId.value() else { return }
+
+        let signUpViewModel = SignUpViewModel()
+        let signUpNameVC = SignUpNameViewController(viewModel: signUpViewModel)
+        signUpViewModel.input.kakaoTalkId.onNext(kakaoTalkId)
+        signUpViewModel.input.appleId.onNext(appleId)
+
         navigationItem.backButtonTitle = ""
         navigationController?.navigationBar.tintColor = .gray_800
         navigationController?.pushViewController(signUpNameVC, animated: true)
@@ -148,6 +173,45 @@ private extension LoginViewController {
     func setupDelegate() {
         webView.navigationDelegate = self
         splashView.navigationDelegate = self
+    }
+
+}
+
+// MARK: - Apple Login
+extension LoginViewController: ASAuthorizationControllerPresentationContextProviding {
+
+    func setupAppleLogin() {
+        authorizationController.delegate = self
+        authorizationController.presentationContextProvider = self
+    }
+
+    func loginWithApple() {
+        authorizationController.performRequests()
+    }
+
+    func presentationAnchor(vc: UIViewController, for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        self.view.window!
+    }
+
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        viewModel.authorizationController(authorization: authorization)
+    }
+
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        self.view.window!
+    }
+
+}
+
+// MARK: - Splash
+extension LoginViewController: WKNavigationDelegate {
+
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        if webView == splashView {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                self.splashView.removeFromSuperview()
+            }
+        }
     }
 
 }
@@ -176,25 +240,30 @@ private extension LoginViewController {
     }
 
     func configureLayout() {
-        view.addSubviews([titleLabel, webView, loginButton, splashView, secretAdminButton])
+        view.addSubviews([titleLabel, webView, appleLoginButton, kakaoLoginButton, splashView, secretAdminButton])
 
         webView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(80)
+            $0.top.equalToSuperview().offset(40)
             $0.left.right.equalToSuperview().inset(68)
             $0.height.equalTo(view.bounds.width)
         }
         titleLabel.snp.makeConstraints {
-            $0.bottom.equalToSuperview().inset(180)
+            $0.top.equalTo(webView.snp.bottom)
             $0.left.right.equalToSuperview().inset(Constants.padding)
         }
-        loginButton.snp.makeConstraints {
-            $0.bottom.equalToSuperview().inset(57)
+        appleLoginButton.snp.makeConstraints {
+            $0.bottom.equalToSuperview().inset(Constants.buttonBottomSpacing)
             $0.left.right.equalToSuperview().inset(Constants.padding)
-            $0.height.equalTo(45)
+            $0.height.equalTo(Constants.buttonHeight)
+        }
+        kakaoLoginButton.snp.makeConstraints {
+            $0.top.equalTo(appleLoginButton.snp.bottom).offset(Constants.buttonSpacing)
+            $0.left.right.equalToSuperview().inset(Constants.padding)
+            $0.height.equalTo(Constants.buttonHeight)
         }
         splashView.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.bottom.equalToSuperview().inset(40)
+            $0.top.equalToSuperview().offset(40)
+            $0.bottom.equalToSuperview().inset(80)
             $0.left.right.equalToSuperview().inset(10)
         }
         secretAdminButton.snp.makeConstraints {

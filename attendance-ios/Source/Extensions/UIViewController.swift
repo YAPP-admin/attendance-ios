@@ -15,7 +15,7 @@ extension UIViewController {
         toastLabel.textColor = .white
         toastLabel.textAlignment = .center
         toastLabel.text = message
-		toastLabel.font(.Body2)
+		toastLabel.style(.Body2)
         toastLabel.numberOfLines = 0
         self.view.addSubview(toastLabel)
         toastLabel.snp.makeConstraints {

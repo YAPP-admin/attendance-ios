@@ -26,7 +26,7 @@ extension UIFont {
 			case .medium:
 				return "Pretendard-Medium"
 			case .semiBold:
-				return "Pretendard-Semi-Bold"
+				return "Pretendard-SemiBold"
             case .bold:
                 return "Pretendard-Bold"
             }

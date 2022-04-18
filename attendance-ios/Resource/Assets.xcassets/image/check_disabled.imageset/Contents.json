@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Property 1disabled.png",
+      "filename" : "check_disabled.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Property 1disabled@2x.png",
+      "filename" : "check_disabled@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Property 1disabled@3x.png",
+      "filename" : "check_disabled@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

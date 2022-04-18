@@ -57,10 +57,10 @@ struct Team: Codable {
 }
 
 enum TeamType: String, Codable {
-    case android = "Android"
-    case ios = "iOS"
-    case web = "Web"
-    case allRounder = "All-Rounder"
+    case android = "ANDROID"
+    case ios = "IOS"
+    case web = "WEB"
+    case allRounder = "ALL_ROUNDER"
 
     var upperCase: String {
         switch self {
@@ -70,4 +70,14 @@ enum TeamType: String, Codable {
         case .allRounder: return "ALL_ROUNDER"
         }
     }
+
+    var lowerCase: String {
+        switch self {
+        case .android: return "Android"
+        case .ios: return "iOS"
+        case .web: return "Web"
+        case .allRounder: return "All-Rounder"
+        }
+    }
+
 }
