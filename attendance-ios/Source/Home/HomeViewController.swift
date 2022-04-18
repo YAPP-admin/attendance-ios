@@ -17,13 +17,13 @@ final class HomeViewController: UIViewController {
         view.backgroundColor = .white.withAlphaComponent(0.8)
         return view
     }()
-	private let settingButton: UIButton = {
-		let button = UIButton()
-		button.backgroundColor = .clear
-		button.setImage(UIImage(named: "setting"), for: .normal)
-		button.contentEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-		return button
-	}()
+    private let settingButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .clear
+        button.setImage(UIImage(named: "setting"), for: .normal)
+        button.contentEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        return button
+    }()
     private lazy var tabView: HomeBottomTabView = {
         let view = HomeBottomTabView()
         return view
@@ -103,7 +103,7 @@ final class HomeViewController: UIViewController {
     }()
     private let contentsLabel: UILabel = {
         let label = UILabel()
-        label.text = "드디어 마지막 성과 공유를 하는 세션입니다!\n지금까지 하나의 팀으로서 열심히 작업한 결과물을 YAPP 전원에게 보여주세요 🎉\n\n드디어 마지막 성과 공유를 하는 세션입니다!\n지금까지 하나의 팀으로서 열심히 작업한 결과물을 YAPP 전원에게 보여주세요 🎉\n\n드디어 마지막 성과 공유를 하는 세션입니다!\n지금까지 하나의 팀으로서 열심히 작업한 결과물을 YAPP 전원에게 보여주세요 🎉\n\n드디어 마지막 성과 공유를 하는 세션입니다!\n지금까지 하나의 팀으로서 열심히 작업한 결과물을 YAPP 전원에게 보여주세요 🎉"
+        label.text = "드디어 마지막 성과 공유를 하는 세션입니다!\n지금까지 하나의 팀으로서 열심히 작업한 결과물을 YAPP 전원에게 보여주세요 🎉"
         label.font(.Body1)
         label.textColor = .gray_800
         label.numberOfLines = 0
@@ -187,7 +187,7 @@ final class HomeViewController: UIViewController {
         }
         contentsInfoView.snp.makeConstraints {
             $0.top.equalTo(bgView.snp.bottom).offset(-20)
-            $0.bottom.equalToSuperview()
+            $0.bottom.lessThanOrEqualToSuperview()
             $0.leading.trailing.equalToSuperview()
         }
 
@@ -221,6 +221,15 @@ final class HomeViewController: UIViewController {
             .observe(on: MainScheduler.instance)
             .bind(onNext: showQRVC)
             .disposed(by: disposeBag)
+
+        settingButton.rx.tap
+            .bind(to: viewModel.input.tapSetting)
+            .disposed(by: disposeBag)
+
+        viewModel.output.goToSetting
+            .observe(on: MainScheduler.instance)
+            .bind(onNext: showSettingVC)
+            .disposed(by: disposeBag)
     }
 
     func showQRVC() {
@@ -228,5 +237,9 @@ final class HomeViewController: UIViewController {
         vc.modalPresentationStyle = .overFullScreen
         self.present(vc, animated: true, completion: nil)
     }
-
+    
+    func showSettingVC() {
+        //            let vc = SettingViewController()
+        //            self.navigationController?.pushViewController(vc, animated: true)
+    }
 }
