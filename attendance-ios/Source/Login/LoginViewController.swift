@@ -74,6 +74,14 @@ final class LoginViewController: UIViewController, ASAuthorizationControllerDele
 
     private let secretAdminButton: UIButton = UIButton()
 
+    private let authorizationController: ASAuthorizationController = {
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        let request = appleIDProvider.createRequest()
+        request.requestedScopes = [.fullName, .email]
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        return authorizationController
+    }()
+
     private let viewModel = BaseViewModel()
     private var disposeBag = DisposeBag()
 
@@ -82,25 +90,13 @@ final class LoginViewController: UIViewController, ASAuthorizationControllerDele
         bindSubviews()
         bindViewModel()
 
+        setupAppleLogin()
         setupDelegate()
 
         configureSplashView()
         configureWebView()
         configureUI()
         configureLayout()
-    }
-
-}
-
-// MARK: - Splash
-extension LoginViewController: WKNavigationDelegate {
-
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        if webView == splashView {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                self.splashView.removeFromSuperview()
-            }
-        }
     }
 
 }
@@ -181,6 +177,45 @@ private extension LoginViewController {
 
 }
 
+// MARK: - Apple Login
+extension LoginViewController: ASAuthorizationControllerPresentationContextProviding {
+
+    func setupAppleLogin() {
+        authorizationController.delegate = self
+        authorizationController.presentationContextProvider = self
+    }
+
+    func loginWithApple() {
+        authorizationController.performRequests()
+    }
+
+    func presentationAnchor(vc: UIViewController, for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        self.view.window!
+    }
+
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        viewModel.authorizationController(authorization: authorization)
+    }
+
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        self.view.window!
+    }
+
+}
+
+// MARK: - Splash
+extension LoginViewController: WKNavigationDelegate {
+
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        if webView == splashView {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                self.splashView.removeFromSuperview()
+            }
+        }
+    }
+
+}
+
 // MARK: - UI
 private extension LoginViewController {
 
@@ -235,45 +270,6 @@ private extension LoginViewController {
             $0.top.left.equalTo(view.safeAreaLayoutGuide)
             $0.width.height.equalTo(100)
         }
-    }
-
-}
-
-// MARK: - Apple Login
-extension LoginViewController: ASAuthorizationControllerPresentationContextProviding {
-
-    func loginWithApple() {
-        let appleIDProvider = ASAuthorizationAppleIDProvider()
-        let request = appleIDProvider.createRequest()
-        request.requestedScopes = [.fullName, .email]
-
-        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
-        authorizationController.delegate = self
-        authorizationController.presentationContextProvider = self
-        authorizationController.performRequests()
-    }
-
-    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
-        self.view.window!
-    }
-
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
-        switch authorization.credential {
-        case let appleIDCredential as ASAuthorizationAppleIDCredential:
-            let userIdentifier = appleIDCredential.user
-            let fullName = appleIDCredential.fullName
-            let email = appleIDCredential.email
-            print("id : \(userIdentifier)")
-            print("familyName : \(fullName?.familyName ?? "")")
-            print("givenName : \(fullName?.givenName ?? "")")
-            print("email : \(email ?? "")")
-            viewModel.output.appleId.onNext(userIdentifier)
-        default: break
-        }
-    }
-
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-
     }
 
 }

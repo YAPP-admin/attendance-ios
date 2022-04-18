@@ -235,7 +235,7 @@ extension SignUpTeamViewController: UICollectionViewDelegateFlowLayout, UICollec
 
         switch collectionView {
         case teamTypeCollectionView:
-            cell.configureUI(text: teams[indexPath.row].type.rawValue)
+            cell.configureUI(text: teams[indexPath.row].type.lowerCase)
         case teamNumberCollectionView:
             cell.configureUI(text: "\(indexPath.row+1)팀")
             guard let teamNumber = try? viewModel.input.teamNumber.value() else { break }
@@ -253,7 +253,7 @@ extension SignUpTeamViewController: UICollectionViewDelegateFlowLayout, UICollec
         switch collectionView {
         case teamTypeCollectionView:
             guard let teams = try? viewModel.output.configTeams.value() else { break }
-            text = teams[indexPath.row].type.rawValue
+            text = teams[indexPath.row].type.lowerCase
         case teamNumberCollectionView: text = "\(indexPath.row+1)팀"
         default: ()
         }
