@@ -18,7 +18,7 @@ final class QRViewController: UIViewController {
 		label.textColor = .white
 		label.numberOfLines = 0
 		label.textAlignment = .center
-		label.font(.Body1)
+		label.style(.Body1)
 		return label
 	}()
 

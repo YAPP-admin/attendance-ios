@@ -36,7 +36,7 @@ final class HomeBottomTabView: UIView {
         let label = UILabel()
         label.textColor = .black
         // TODO: - font 정의 안되어있음
-        label.font(.Caption1)
+        label.style(.Caption1)
         label.text = "오늘 세션"
         label.textAlignment = .center
         return label
@@ -61,7 +61,7 @@ final class HomeBottomTabView: UIView {
         let label = UILabel()
         label.textColor = .gray_600
         // TODO: - font 정의 안되어있음
-        label.font(.Caption1)
+        label.style(.Caption1)
         label.text = "출결 확인"
         label.textAlignment = .center
         return label

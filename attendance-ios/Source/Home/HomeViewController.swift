@@ -75,7 +75,7 @@ final class HomeViewController: UIViewController {
     private let infoLabel: UILabel = {
         let label = UILabel()
         label.text = "아직 출석 전이에요"
-        label.font(.Body2)
+        label.style(.Body2)
         label.textColor = .gray_600
         return label
     }()
@@ -89,14 +89,14 @@ final class HomeViewController: UIViewController {
     private let dateLabel: UILabel = {
         let label = UILabel()
         label.text = "02.07"
-        label.font(.Body1)
+        label.style(.Body1)
         label.textColor = .gray_600
         return label
     }()
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "YAPP 3번째 데브 캠프\n및 성과 공유회"
-        label.font(.H1)
+        label.style(.H1)
         label.textColor = .gray_1000
         label.numberOfLines = 0
         return label
@@ -104,7 +104,7 @@ final class HomeViewController: UIViewController {
     private let contentsLabel: UILabel = {
         let label = UILabel()
         label.text = "드디어 마지막 성과 공유를 하는 세션입니다!\n지금까지 하나의 팀으로서 열심히 작업한 결과물을 YAPP 전원에게 보여주세요 🎉"
-        label.font(.Body1)
+        label.style(.Body1)
         label.textColor = .gray_800
         label.numberOfLines = 0
         return label
@@ -237,9 +237,9 @@ final class HomeViewController: UIViewController {
         vc.modalPresentationStyle = .overFullScreen
         self.present(vc, animated: true, completion: nil)
     }
-    
+
     func showSettingVC() {
-        //            let vc = SettingViewController()
-        //            self.navigationController?.pushViewController(vc, animated: true)
+        let vc = SettingViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
