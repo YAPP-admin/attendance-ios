@@ -13,7 +13,7 @@ import UIKit
 
 final class HomeBottomTabView: UIView {
     var type: HomeType
-    
+
     private let line: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(red: 0.91, green: 0.918, blue: 0.929, alpha: 1)
@@ -83,7 +83,7 @@ final class HomeBottomTabView: UIView {
 
     private let disposeBag = DisposeBag()
     let tapButton = PublishRelay<HomeType>()
-    
+
     init(_ type: HomeType) {
         self.type = type
         super.init(frame: .zero)

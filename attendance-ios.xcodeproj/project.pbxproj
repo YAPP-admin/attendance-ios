@@ -13,6 +13,8 @@
 		296C7B0327C523450042B630 /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 296C7B0227C523450042B630 /* Pretendard-Medium.otf */; };
 		297E957F27CFA68600452222 /* QRViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297E957E27CFA68600452222 /* QRViewController.swift */; };
 		297E958327CFAC0A00452222 /* QRViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297E958227CFAC0A00452222 /* QRViewModel.swift */; };
+		52578C39280EB55F00C0D569 /* HomeAttendanceCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52578C38280EB55F00C0D569 /* HomeAttendanceCheckViewController.swift */; };
+		52578C3B280EB74600C0D569 /* HomeMyScoreCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52578C3A280EB74600C0D569 /* HomeMyScoreCollectionViewCell.swift */; };
 		5264EFF9280D5AC00026F560 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5264EFF8280D5AC00026F560 /* SettingViewController.swift */; };
 		5264EFFB280D5AE80026F560 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5264EFFA280D5AE80026F560 /* SettingViewModel.swift */; };
 		5264EFFD280D5B060026F560 /* SettingCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5264EFFC280D5B060026F560 /* SettingCellView.swift */; };
@@ -79,6 +81,8 @@
 		296C7B0227C523450042B630 /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
 		297E957E27CFA68600452222 /* QRViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRViewController.swift; sourceTree = "<group>"; };
 		297E958227CFAC0A00452222 /* QRViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRViewModel.swift; sourceTree = "<group>"; };
+		52578C38280EB55F00C0D569 /* HomeAttendanceCheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeAttendanceCheckViewController.swift; sourceTree = "<group>"; };
+		52578C3A280EB74600C0D569 /* HomeMyScoreCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMyScoreCollectionViewCell.swift; sourceTree = "<group>"; };
 		5264EFF8280D5AC00026F560 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		5264EFFA280D5AE80026F560 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		5264EFFC280D5B060026F560 /* SettingCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCellView.swift; sourceTree = "<group>"; };
@@ -421,6 +425,8 @@
 				5EF69ECA27A81E56007E9735 /* HomeViewController.swift */,
 				52C4CDE127D0C4D1005EDE78 /* HomeViewModel.swift */,
 				52C4CDDF27D0B1D1005EDE78 /* HomeBottomTabView.swift */,
+				52578C38280EB55F00C0D569 /* HomeAttendanceCheckViewController.swift */,
+				52578C3A280EB74600C0D569 /* HomeMyScoreCollectionViewCell.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -625,6 +631,7 @@
 				5EAA7A1027FF443200BC7397 /* SignUpTeamViewController.swift in Sources */,
 				5EAA7A0A27FF2A2200BC7397 /* ConfigWorker.swift in Sources */,
 				52BCA07027C4D393001BF86F /* TextStyle.swift in Sources */,
+				52578C3B280EB74600C0D569 /* HomeMyScoreCollectionViewCell.swift in Sources */,
 				5EF69EA727A7DAF8007E9735 /* LoginViewController.swift in Sources */,
 				5EED02BD27D76D4200C52637 /* SignUpViewModel.swift in Sources */,
 				5EF69EA327A7DAF8007E9735 /* AppDelegate.swift in Sources */,
@@ -636,6 +643,7 @@
 				5EF69EA527A7DAF8007E9735 /* SceneDelegate.swift in Sources */,
 				5EAA79DB27F601ED00BC7397 /* AdminBottomSheetView.swift in Sources */,
 				5EAA79D727F5ED7B00BC7397 /* UIView.swift in Sources */,
+				52578C39280EB55F00C0D569 /* HomeAttendanceCheckViewController.swift in Sources */,
 				5E6ACB3A2808648700ADF2BB /* FirebaseWorker.swift in Sources */,
 				5EAA79D527F5D6B400BC7397 /* AdminTodayView.swift in Sources */,
 				5264EFFB280D5AE80026F560 /* SettingViewModel.swift in Sources */,

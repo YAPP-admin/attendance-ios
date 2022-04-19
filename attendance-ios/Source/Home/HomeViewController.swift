@@ -109,6 +109,7 @@ final class HomeViewController: UIViewController {
         label.numberOfLines = 0
         return label
     }()
+    private let attendanceView = HomeAttendanceCheckViewController()
 
     private let viewModel = HomeViewModel()
     private var disposeBag = DisposeBag()
@@ -117,6 +118,7 @@ final class HomeViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         navigationController?.isNavigationBarHidden = true
+        attendanceView.view.isHidden = true
 
         addSubViews()
         bind()
@@ -210,6 +212,15 @@ final class HomeViewController: UIViewController {
             $0.trailing.equalToSuperview().offset(-24)
             $0.bottom.equalToSuperview().offset(-40)
         }
+        
+        attendanceView.view.frame = self.view.frame
+        view.addSubview(attendanceView.view)
+        addChild(attendanceView)
+        attendanceView.view.snp.makeConstraints {
+            $0.top.equalTo(topView.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
+            $0.bottom.equalTo(tabView.snp.top)
+        }
     }
 
     func bind() {
@@ -241,8 +252,10 @@ final class HomeViewController: UIViewController {
                 switch type {
                 case .todaySession:
                     self?.scrollView.isHidden = false
+                    self?.attendanceView.view.isHidden = true
                 case .attendanceCheck:
                     self?.scrollView.isHidden = true
+                    self?.attendanceView.view.isHidden = false
                 }
                 self?.tabView.setHomeType(type)
             }).disposed(by: disposeBag)
