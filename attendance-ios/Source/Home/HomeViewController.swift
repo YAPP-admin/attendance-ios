@@ -25,7 +25,7 @@ final class HomeViewController: UIViewController {
         return button
     }()
     private lazy var tabView: HomeBottomTabView = {
-        let view = HomeBottomTabView()
+        let view = HomeBottomTabView(viewModel.homeType.value)
         return view
     }()
     private let scrollView: UIScrollView = {
@@ -230,6 +230,22 @@ final class HomeViewController: UIViewController {
             .observe(on: MainScheduler.instance)
             .bind(onNext: showSettingVC)
             .disposed(by: disposeBag)
+
+        tabView.tapButton
+            .subscribe(onNext: { [weak self] type in
+                self?.viewModel.homeType.accept(type)
+            }).disposed(by: disposeBag)
+
+        viewModel.homeType
+            .subscribe(onNext: { [weak self] type in
+                switch type {
+                case .todaySession:
+                    self?.scrollView.isHidden = false
+                case .attendanceCheck:
+                    self?.scrollView.isHidden = true
+                }
+                self?.tabView.setHomeType(type)
+            }).disposed(by: disposeBag)
     }
 
     func showQRVC() {

@@ -9,6 +9,11 @@ import RxCocoa
 import RxSwift
 import UIKit
 
+enum HomeType: Int {
+    case todaySession = 0
+    case attendanceCheck
+}
+
 final class HomeViewModel: ViewModel {
     struct Input {
         let tapQR = PublishRelay<Void>()
@@ -23,6 +28,7 @@ final class HomeViewModel: ViewModel {
     let input = Input()
     let output = Output()
     let disposeBag = DisposeBag()
+    var homeType = BehaviorRelay<HomeType>(value: .todaySession)
 
     init() {
         input.tapQR
