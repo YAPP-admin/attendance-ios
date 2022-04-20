@@ -212,12 +212,12 @@ final class HomeViewController: UIViewController {
             $0.trailing.equalToSuperview().offset(-24)
             $0.bottom.equalToSuperview().offset(-40)
         }
-        
+
         attendanceView.view.frame = self.view.frame
         view.addSubview(attendanceView.view)
         addChild(attendanceView)
         attendanceView.view.snp.makeConstraints {
-            $0.top.equalTo(topView.snp.bottom)
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalTo(tabView.snp.top)
         }
@@ -251,9 +251,11 @@ final class HomeViewController: UIViewController {
             .subscribe(onNext: { [weak self] type in
                 switch type {
                 case .todaySession:
+                    self?.topView.isHidden = false
                     self?.scrollView.isHidden = false
                     self?.attendanceView.view.isHidden = true
                 case .attendanceCheck:
+                    self?.topView.isHidden = true
                     self?.scrollView.isHidden = true
                     self?.attendanceView.view.isHidden = false
                 }

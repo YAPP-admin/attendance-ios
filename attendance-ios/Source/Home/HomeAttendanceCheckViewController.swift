@@ -20,14 +20,13 @@ final class HomeAttendanceCheckViewController: UIViewController {
         label.textAlignment = .center
         return label
     }()
-    private let collectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.register(HomeMyScoreCollectionViewCell.self, forCellWithReuseIdentifier: "HomeMyScoreCollectionViewCell")
-        collectionView.isPagingEnabled = false
-        collectionView.showsVerticalScrollIndicator = false
-        collectionView.backgroundColor = .white
-        return collectionView
+    private let tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.separatorStyle = .none
+        tableView.register(HomeAttendanceCheckTableViewCell.self, forCellReuseIdentifier: "HomeAttendanceCheckTableViewCell")
+        tableView.register(HomeTotalScoreTableViewCell.self, forCellReuseIdentifier: "HomeTotalScoreTableViewCell")
+        tableView.showsVerticalScrollIndicator = false
+        return tableView
     }()
 
     override func viewDidLoad() {
@@ -41,37 +40,48 @@ final class HomeAttendanceCheckViewController: UIViewController {
 
     func addSubViews() {
         view.addSubview(titleLabel)
-        view.addSubview(collectionView)
+        view.addSubview(tableView)
         titleLabel.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
         }
-        collectionView.snp.makeConstraints {
+        tableView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(11)
             $0.bottom.leading.trailing.equalToSuperview()
         }
     }
 
     func bindView() {
-        collectionView.dataSource = self
+        tableView.delegate = self
+        tableView.dataSource = self
     }
 }
 
-extension HomeAttendanceCheckViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+extension HomeAttendanceCheckViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
     }
 
-   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-       if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeMyScoreCollectionViewCell", for: indexPath) as? HomeMyScoreCollectionViewCell {
-           cell.backgroundColor = .yellow.withAlphaComponent(0.1)
-           return cell
-       }
-        return UICollectionViewCell()
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+}
+
+extension HomeAttendanceCheckViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 5
     }
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        return CGSize(width: UIScreen.main.bounds.width, height: 391)
-        let width = view.frame.width
-        return CGSize(width: width, height: 100)
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.row == 0 {
+            if let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTotalScoreTableViewCell", for: indexPath) as? HomeTotalScoreTableViewCell {
+                return cell
+            }
+        } else {
+            if let cell = tableView.dequeueReusableCell(withIdentifier: "HomeAttendanceCheckTableViewCell", for: indexPath) as? HomeAttendanceCheckTableViewCell {
+                
+                return cell
+            }
+        }
+        return UITableViewCell()
     }
 }
