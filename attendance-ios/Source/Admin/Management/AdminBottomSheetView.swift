@@ -21,7 +21,7 @@ final class AdminBottomSheetView: UIView {
         static let bottomSheetCellHeight: CGFloat = 52
     }
 
-    private let bottomSheetView: UIView = {
+    private let containerView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
         view.setTopCornerRadius(radius: Constants.cornerRadius)
@@ -36,17 +36,10 @@ final class AdminBottomSheetView: UIView {
         return collectionView
     }()
 
-    private let backgroundView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.4)
-        return view
-    }()
-
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupCollectionView()
         addTapGesture()
-        addTapGestureToBottomSheetBackground()
 
         configureUI()
         configureBottomSheetUI()
@@ -61,19 +54,10 @@ final class AdminBottomSheetView: UIView {
 
 }
 
+// MARK: - Animation
+// TODO: -
 private extension AdminBottomSheetView {
 
-    func addTapGestureToBottomSheetBackground() {
-        let tapGesture = UITapGestureRecognizer()
-            backgroundView.addGestureRecognizer(tapGesture)
-
-        tapGesture.rx.event
-            .bind(onNext: { [weak self] _ in
-                self?.hideBottomSheet()
-            }).disposed(by: disposeBag)
-    }
-
-    // TODO: - 애니메이션
     func showBottomSheet() {
 
     }
@@ -147,14 +131,14 @@ private extension AdminBottomSheetView {
     }
 
     func configureBottomSheetUI() {
-        bottomSheetView.layer.cornerRadius = Constants.bottomSheetCornerRadius
+        containerView.layer.cornerRadius = Constants.bottomSheetCornerRadius
     }
 
     func configureLayout() {
-        addSubview(bottomSheetView)
-        bottomSheetView.addSubview(collectionView)
+        addSubview(containerView)
+        containerView.addSubview(collectionView)
 
-        bottomSheetView.snp.makeConstraints {
+        containerView.snp.makeConstraints {
             $0.bottom.left.right.equalToSuperview()
             $0.height.equalTo(Constants.bottomSheetHeight)
         }
