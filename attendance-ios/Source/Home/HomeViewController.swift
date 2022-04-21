@@ -236,7 +236,6 @@ final class HomeViewController: UIViewController {
 
         viewModel.output.sessionList
             .subscribe(onNext: { [weak self] sessionList in
-                print("sessionList: \(sessionList)")
                 DispatchQueue.main.async {
                     self?.updateSessionInfo()
                 }
