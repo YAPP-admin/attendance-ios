@@ -88,14 +88,12 @@ final class HomeViewController: UIViewController {
     }()
     private let dateLabel: UILabel = {
         let label = UILabel()
-        label.text = "02.07"
         label.style(.Body1)
         label.textColor = .gray_600
         return label
     }()
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "YAPP 3번째 데브 캠프\n및 성과 공유회"
         label.style(.H1)
         label.textColor = .gray_1000
         label.numberOfLines = 0
@@ -103,7 +101,6 @@ final class HomeViewController: UIViewController {
     }()
     private let contentsLabel: UILabel = {
         let label = UILabel()
-        label.text = "드디어 마지막 성과 공유를 하는 세션입니다!\n지금까지 하나의 팀으로서 열심히 작업한 결과물을 YAPP 전원에게 보여주세요 🎉"
         label.style(.Body1)
         label.textColor = .gray_800
         label.numberOfLines = 0
@@ -237,6 +234,14 @@ final class HomeViewController: UIViewController {
             .bind(to: viewModel.input.tapSetting)
             .disposed(by: disposeBag)
 
+        viewModel.output.sessionList
+            .subscribe(onNext: { [weak self] sessionList in
+                print("sessionList: \(sessionList)")
+                DispatchQueue.main.async {
+                    self?.updateSessionInfo()
+                }
+            }).disposed(by: disposeBag)
+
         viewModel.output.goToSetting
             .observe(on: MainScheduler.instance)
             .bind(onNext: showSettingVC)
@@ -273,4 +278,21 @@ final class HomeViewController: UIViewController {
         let vc = SettingViewController()
         self.navigationController?.pushViewController(vc, animated: true)
     }
+
+    func updateSessionInfo() {
+        guard let sessionList = try? viewModel.output.sessionList.value(), let session = sessionList.todaySession() else { return }
+        dateLabel.text = session.date.date()?.mmdd() ?? ""
+        titleLabel.text = session.title
+        contentsLabel.text = session.description
+    }
+}
+
+private extension Array where Element == Session {
+
+    func todaySession() -> Session? {
+        guard let nowDate = Date().startDate() else { return nil }
+        lazy var sessions = self.filter { nowDate.isFuture(than: $0.date.date()) }
+        return sessions.first
+    }
+
 }

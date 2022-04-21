@@ -21,6 +21,7 @@ final class HomeViewModel: ViewModel {
     }
 
     struct Output {
+        let sessionList = BehaviorSubject<[Session]>(value: [])
         var goToQR = PublishRelay<Void>()
         var goToSetting = PublishRelay<Void>()
     }
@@ -28,6 +29,7 @@ final class HomeViewModel: ViewModel {
     let input = Input()
     let output = Output()
     let disposeBag = DisposeBag()
+    let configWorker = ConfigWorker()
     var homeType = BehaviorRelay<HomeType>(value: .todaySession)
     var list = [Attendance(sessionId: 1, type: AttendanceType(point: 10, text: "출석")), Attendance(sessionId: 1, type: AttendanceType(point: 10, text: "지각")),
                 Attendance(sessionId: 1, type: AttendanceType(point: 10, text: "출석 인정")), Attendance(sessionId: 1, type: AttendanceType(point: 10, text: "결석"))]
@@ -42,5 +44,12 @@ final class HomeViewModel: ViewModel {
             .subscribe(onNext: { [weak self] _ in
                 self?.output.goToSetting.accept(())
             }).disposed(by: disposeBag)
+
+        configWorker.decodeSessionList { [weak self] result in
+            switch result {
+            case .success(let list): self?.output.sessionList.onNext(list)
+            case .failure: ()
+            }
+        }
     }
 }

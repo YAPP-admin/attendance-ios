@@ -30,6 +30,8 @@
 		5E6179AC27C670D500B1A835 /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E6179AB27C670D500B1A835 /* UITextField.swift */; };
 		5E63BC9427BBD2AC0024FCE3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5E63BC9327BBD2AC0024FCE3 /* GoogleService-Info.plist */; };
 		5E63BC9B27BBE90F0024FCE3 /* SignUpNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E63BC9A27BBE90F0024FCE3 /* SignUpNameViewController.swift */; };
+		5E68F167281197810093B985 /* UIString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E68F166281197810093B985 /* UIString.swift */; };
+		5E68F169281197FB0093B985 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E68F168281197FB0093B985 /* Date.swift */; };
 		5E6ACB3A2808648700ADF2BB /* FirebaseWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E6ACB392808648700ADF2BB /* FirebaseWorker.swift */; };
 		5E6ACB3C28086A7300ADF2BB /* KakaoLoginWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E6ACB3B28086A7200ADF2BB /* KakaoLoginWorker.swift */; };
 		5E6ACB41280894F800ADF2BB /* UserDefaultsWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E6ACB40280894F800ADF2BB /* UserDefaultsWorker.swift */; };
@@ -100,6 +102,8 @@
 		5E6179AB27C670D500B1A835 /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
 		5E63BC9327BBD2AC0024FCE3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5E63BC9A27BBE90F0024FCE3 /* SignUpNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpNameViewController.swift; sourceTree = "<group>"; };
+		5E68F166281197810093B985 /* UIString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIString.swift; sourceTree = "<group>"; };
+		5E68F168281197FB0093B985 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		5E6ACB392808648700ADF2BB /* FirebaseWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseWorker.swift; sourceTree = "<group>"; };
 		5E6ACB3B28086A7200ADF2BB /* KakaoLoginWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginWorker.swift; sourceTree = "<group>"; };
 		5E6ACB3F2808791E00ADF2BB /* attendance-ios.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "attendance-ios.entitlements"; sourceTree = "<group>"; };
@@ -412,6 +416,8 @@
 				5E9CC7B927D0F57A006D8B12 /* UICollectionViewCell.swift */,
 				5EAA79D627F5ED7B00BC7397 /* UIView.swift */,
 				5EAA79D827F5EE1900BC7397 /* UIStackView.swift */,
+				5E68F166281197810093B985 /* UIString.swift */,
+				5E68F168281197FB0093B985 /* Date.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -621,6 +627,7 @@
 				527657FB27C387E40080DA32 /* UILabelWithRound.swift in Sources */,
 				52C4CDE027D0B1D1005EDE78 /* HomeBottomTabView.swift in Sources */,
 				297E957F27CFA68600452222 /* QRViewController.swift in Sources */,
+				5E68F169281197FB0093B985 /* Date.swift in Sources */,
 				527657F727C384AE0080DA32 /* UIViewController.swift in Sources */,
 				5EAA79FB27FDE42500BC7397 /* Attendance.swift in Sources */,
 				5EF69EC427A7F8B0007E9735 /* UILabel.swift in Sources */,
@@ -659,6 +666,7 @@
 				5EAA79F927FDD84C00BC7397 /* AdminMessageView.swift in Sources */,
 				5E6ACB3C28086A7300ADF2BB /* KakaoLoginWorker.swift in Sources */,
 				5E7AEF2427E21D680059FB3A /* AdminViewModel.swift in Sources */,
+				5E68F167281197810093B985 /* UIString.swift in Sources */,
 				5EAA7A0727FF24CB00BC7397 /* CollectionViewLeftAlignFlowLayout.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
