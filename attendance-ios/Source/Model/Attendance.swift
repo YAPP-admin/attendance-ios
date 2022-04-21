@@ -9,15 +9,15 @@ import Foundation
 
 struct Attendance: Codable {
     let sessionId: Int
-    let type: AttendanceType
+    let type: AttendanceData
 }
 
-struct AttendanceType: Codable {
+struct AttendanceData: Codable {
     let point: Int
     let text: String
 }
 
-enum AttendanceCase: Int, Codable {
+enum AttendanceType: Codable, CaseIterable {
     case absence
     case tardy
     case attendance
@@ -25,18 +25,18 @@ enum AttendanceCase: Int, Codable {
 
     var text: String {
         switch self {
-        case .absence: return "결석"
-        case .tardy: return "지각"
         case .attendance: return "출석"
+        case .tardy: return "지각"
+        case .absence: return "결석"
         case .attendanceMarked: return "출석 인정"
         }
     }
 
     var point: Int {
         switch self {
-        case .absence: return -20
-        case .tardy: return -10
         case .attendance: return 0
+        case .tardy: return -10
+        case .absence: return -20
         case .attendanceMarked: return 0
         }
     }
