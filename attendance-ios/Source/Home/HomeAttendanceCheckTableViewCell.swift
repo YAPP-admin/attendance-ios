@@ -79,8 +79,8 @@ final class HomeAttendanceCheckTableViewCell: BaseTableViewCell {
         }
         contentView.addSubview(vStackView)
         vStackView.snp.makeConstraints {
-            $0.top.equalTo(markImageView)
-            $0.leading.equalTo(markImageView.snp.trailing).offset(8)
+            $0.top.equalToSuperview().offset(24)
+            $0.leading.equalToSuperview().offset(52)
             $0.trailing.equalToSuperview().offset(-24)
             $0.bottom.equalToSuperview()
         }
@@ -91,6 +91,34 @@ final class HomeAttendanceCheckTableViewCell: BaseTableViewCell {
         vStackView.addArrangedSubview(contentLabel)
         hStackView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview()
+        }
+    }
+    
+    func updateUI(_ type: AttendanceType) {
+        if type.text == "출석" {
+            attendanceLabel.text = "출석"
+            attendanceLabel.textColor = .etc_green
+            markImageView.image = UIImage(named: "attendance")
+        } else if type.text == "지각" {
+            attendanceLabel.text = "지각"
+            attendanceLabel.textColor = .etc_yellow_font
+            markImageView.image = UIImage(named: "tardy")
+        } else if type.text == "결석" {
+            attendanceLabel.text = "결석"
+            attendanceLabel.textColor = .etc_red
+            markImageView.image = UIImage(named: "absence")
+        } else if type.text == "출석 인정" {
+            attendanceLabel.text = "출석 인정"
+            attendanceLabel.textColor = .etc_green
+            markImageView.image = UIImage(named: "attendance")
+        } else if type.text == "예정" {
+            attendanceLabel.text = "예정"
+            attendanceLabel.textColor = .gray_400
+            markImageView.image = nil
+        } else {
+            attendanceLabel.text = "쉬어가는 날"
+            attendanceLabel.textColor = .gray_400
+            markImageView.image = nil
         }
     }
 }

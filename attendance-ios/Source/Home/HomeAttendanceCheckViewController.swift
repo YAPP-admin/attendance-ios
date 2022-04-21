@@ -29,6 +29,8 @@ final class HomeAttendanceCheckViewController: UIViewController {
         return tableView
     }()
 
+    private let viewModel = HomeViewModel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -68,7 +70,7 @@ extension HomeAttendanceCheckViewController: UITableViewDelegate {
 
 extension HomeAttendanceCheckViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return viewModel.list.count + 1
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -78,7 +80,7 @@ extension HomeAttendanceCheckViewController: UITableViewDataSource {
             }
         } else {
             if let cell = tableView.dequeueReusableCell(withIdentifier: "HomeAttendanceCheckTableViewCell", for: indexPath) as? HomeAttendanceCheckTableViewCell {
-                
+                cell.updateUI(viewModel.list[indexPath.row - 1].type)
                 return cell
             }
         }

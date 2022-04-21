@@ -29,6 +29,8 @@ final class HomeViewModel: ViewModel {
     let output = Output()
     let disposeBag = DisposeBag()
     var homeType = BehaviorRelay<HomeType>(value: .todaySession)
+    var list = [Attendance(sessionId: 1, type: AttendanceType(point: 10, text: "출석")), Attendance(sessionId: 1, type: AttendanceType(point: 10, text: "지각")),
+                Attendance(sessionId: 1, type: AttendanceType(point: 10, text: "출석 인정")), Attendance(sessionId: 1, type: AttendanceType(point: 10, text: "결석"))]
 
     init() {
         input.tapQR
