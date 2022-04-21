@@ -15,9 +15,6 @@ final class AdminManagementViewController: UIViewController {
     enum Constants {
         static let padding: CGFloat = 24
         static let topPadding: CGFloat = 116
-        static let bottomSheetHeight: CGFloat = 300
-        static let bottomSheetCornerRadius: CGFloat = 20
-        static let bottomSheetCellHeight: CGFloat = 52
     }
 
     // MARK: Navigation
@@ -47,25 +44,7 @@ final class AdminManagementViewController: UIViewController {
         return button
     }()
 
-    private let bottomSheetView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .white
-        return view
-    }()
-
-    private let backgroundView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.4)
-        return view
-    }()
-
-    private let collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.showsVerticalScrollIndicator = false
-        return collectionView
-    }()
+    private let bottomSheetView = AdminBottomSheetView()
 
     private let viewModel: AdminViewModel
     private var disposeBag = DisposeBag()
@@ -90,13 +69,10 @@ final class AdminManagementViewController: UIViewController {
         bindViewModel()
 
         setupDelegate()
-        setupCollectionView()
-        addTapGestureToBottomSheetBackground()
         setupNavigationTitle()
         setupMessage()
 
         configureUI()
-        configureBottomSheetUI()
         configureLayout()
         configureNavigationLayout()
     }
@@ -131,89 +107,14 @@ extension AdminManagementViewController {
 
 }
 
-// MARL: - BottomSheet
+// MARK: - BottomSheet
 private extension AdminManagementViewController {
 
-    func addTapGestureToBottomSheetBackground() {
-        let tapGesture = UITapGestureRecognizer()
-            backgroundView.addGestureRecognizer(tapGesture)
-
-        tapGesture.rx.event
-            .bind(onNext: { [weak self] _ in
-                self?.hideBottomSheet()
-            }).disposed(by: disposeBag)
-    }
-
-    // TODO: - 애니메이션
     func showBottomSheet() {
-        view.addSubviews([backgroundView, bottomSheetView])
-        bottomSheetView.addSubview(collectionView)
-
-        backgroundView.snp.makeConstraints {
+        view.addSubview(bottomSheetView)
+        bottomSheetView.snp.makeConstraints {
             $0.top.bottom.left.right.equalToSuperview()
         }
-        bottomSheetView.snp.makeConstraints {
-            $0.bottom.equalToSuperview().offset(Constants.bottomSheetCornerRadius)
-            $0.left.right.equalToSuperview()
-            $0.height.equalTo(Constants.bottomSheetHeight)
-        }
-        collectionView.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(Constants.padding)
-            $0.left.right.equalToSuperview()
-            $0.height.equalTo(Constants.bottomSheetCellHeight*4)
-        }
-    }
-
-    func hideBottomSheet() {
-        backgroundView.removeFromSuperview()
-        bottomSheetView.removeFromSuperview()
-    }
-
-    func configureBottomSheetUI() {
-        bottomSheetView.layer.cornerRadius = Constants.bottomSheetCornerRadius
-    }
-
-}
-
-// MARK: - CollectionView
-extension AdminManagementViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
-
-    private func setupCollectionView() {
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.register(AdminBottomSheetCell.self, forCellWithReuseIdentifier: AdminBottomSheetCell.identifier)
-    }
-
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        AttendanceType.allCases.count
-    }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AdminBottomSheetCell.identifier, for: indexPath) as? AdminBottomSheetCell else { return UICollectionViewCell() }
-        let attendance = AttendanceType.allCases[indexPath.row].text
-        cell.updateLabel(attendance)
-        return cell
-    }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(width: collectionView.bounds.width, height: Constants.bottomSheetCellHeight)
-    }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        0
-    }
-
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let cell = collectionView.cellForItem(at: indexPath) as? AdminBottomSheetCell else { return }
-        cell.didSelect()
-        let attendanceType = AttendanceType.allCases[indexPath.row]
-        print("attendanceType: \(attendanceType)")
-        hideBottomSheet()
-    }
-
-    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        guard let cell = collectionView.cellForItem(at: indexPath) as? AdminBottomSheetCell else { return }
-        cell.didDeselect()
     }
 
 }
@@ -271,13 +172,5 @@ private extension AdminManagementViewController {
             $0.width.height.equalTo(24)
         }
     }
-
-//    func showBottomSheet() {
-//        view.addSubview(bottomSheetView)
-//
-//        bottomSheetView.snp.makeConstraints {
-//            $0.top.bottom.left.right.equalToSuperview()
-//        }
-//    }
 
 }

@@ -56,9 +56,10 @@ private extension AdminGradeCell {
             $0.left.equalToSuperview().offset(Constants.horizontalPadding)
             $0.centerY.equalToSuperview()
         }
-//        gradeLabel.snp.makeConstraints {
-//            $0.top.left.equalToSuperview()
-//        }
+        gradeLabel.snp.makeConstraints {
+            $0.right.equalToSuperview().offset(Constants.horizontalPadding)
+            $0.centerY.equalToSuperview()
+        }
     }
 
 }
