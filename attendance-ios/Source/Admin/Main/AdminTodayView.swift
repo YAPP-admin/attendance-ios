@@ -11,7 +11,6 @@ import UIKit
 final class AdminTodayView: UIView {
 
     enum Constants {
-        static let padding: CGFloat = 6
         static let cornerRadius: CGFloat = 8
         static let buttonSize: CGSize = .init(width: 57, height: 33)
     }
@@ -26,9 +25,9 @@ final class AdminTodayView: UIView {
     private let stackView: UIStackView = {
         let view = UIStackView()
         view.axis = .horizontal
+        view.spacing = 4
         view.alignment = .fill
-        view.distribution = .fillEqually
-        view.backgroundColor = .systemGroupedBackground
+        view.distribution = .fill
         return view
     }()
 
@@ -50,10 +49,10 @@ final class AdminTodayView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configureUI()
-        configureLayout()
         configureTodayLabel()
         configureTitleLabel()
+        configureUI()
+        configureLayout()
     }
 
     required init?(coder: NSCoder) {
@@ -80,20 +79,22 @@ extension AdminTodayView {
 private extension AdminTodayView {
 
     func configureUI() {
-
     }
 
     func configureLayout() {
         addSubviews([todayLabel, stackView])
-//        stackView.addArrangedSubviews([managementButton])
+        stackView.addArrangedSubviews([titleLabel, managementButton])
 
         todayLabel.snp.makeConstraints {
-            $0.top.left.right.equalToSuperview()
-            $0.height.equalTo(20)
+            $0.top.equalToSuperview()
+            $0.left.right.equalToSuperview()
         }
         stackView.snp.makeConstraints {
-            $0.top.equalTo(todayLabel.snp.bottom)
             $0.bottom.left.right.equalToSuperview()
+            $0.height.equalTo(Constants.buttonSize.height)
+        }
+        managementButton.snp.makeConstraints {
+            $0.width.equalTo(Constants.buttonSize.width)
         }
     }
 
