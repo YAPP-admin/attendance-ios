@@ -35,7 +35,7 @@ final class AdminManagementCell: UICollectionViewCell {
         button.setImage(UIImage(named: "arrowtriangle_down"), for: .normal)
         button.semanticContentAttribute = .forceRightToLeft
         button.titleEdgeInsets = .init(top: 0, left: -6, bottom: 0, right: -6)
-        button.imageEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 0)
+        button.imageEdgeInsets = .init(top: 0, left: 6, bottom: 0, right: 0)
         return button
     }()
 
