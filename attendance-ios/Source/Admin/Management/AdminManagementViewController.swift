@@ -124,7 +124,7 @@ extension AdminManagementViewController: UICollectionViewDelegateFlowLayout, UIC
     private func setupCollectionView() {
         teamCollectionView.delegate = self
         teamCollectionView.dataSource = self
-        teamCollectionView.register(AdminGradeCell.self, forCellWithReuseIdentifier: AdminGradeCell.identifier)
+        teamCollectionView.register(AdminManagementCell.self, forCellWithReuseIdentifier: AdminManagementCell.identifier)
     }
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -136,7 +136,7 @@ extension AdminManagementViewController: UICollectionViewDelegateFlowLayout, UIC
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AdminGradeCell.identifier, for: indexPath) as? AdminGradeCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AdminManagementCell.identifier, for: indexPath) as? AdminManagementCell else { return UICollectionViewCell() }
         return cell
     }
 

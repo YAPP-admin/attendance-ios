@@ -23,14 +23,15 @@
 		52BCA07227C4D3DF001BF86F /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BCA07127C4D3DF001BF86F /* UIFont.swift */; };
 		52C4CDE027D0B1D1005EDE78 /* HomeBottomTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C4CDDF27D0B1D1005EDE78 /* HomeBottomTabView.swift */; };
 		52C4CDE227D0C4D1005EDE78 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C4CDE127D0C4D1005EDE78 /* HomeViewModel.swift */; };
+		5E37B13D2813D13F0083CE23 /* AdminManagementCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E37B13C2813D13F0083CE23 /* AdminManagementCell.swift */; };
 		5E3D7691280717090067286A /* AdminGradeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3D7690280717090067286A /* AdminGradeCell.swift */; };
 		5E6179AC27C670D500B1A835 /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E6179AB27C670D500B1A835 /* UITextField.swift */; };
 		5E63BC9427BBD2AC0024FCE3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5E63BC9327BBD2AC0024FCE3 /* GoogleService-Info.plist */; };
 		5E63BC9B27BBE90F0024FCE3 /* SignUpNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E63BC9A27BBE90F0024FCE3 /* SignUpNameViewController.swift */; };
+		5E6ACB382808504800ADF2BB /* AdminBottomSheetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E6ACB372808504800ADF2BB /* AdminBottomSheetCell.swift */; };
 		5E6ACB3A2808648700ADF2BB /* FirebaseWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E6ACB392808648700ADF2BB /* FirebaseWorker.swift */; };
 		5E6ACB3C28086A7300ADF2BB /* KakaoLoginWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E6ACB3B28086A7200ADF2BB /* KakaoLoginWorker.swift */; };
 		5E6ACB41280894F800ADF2BB /* UserDefaultsWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E6ACB40280894F800ADF2BB /* UserDefaultsWorker.swift */; };
-		5E6ACB382808504800ADF2BB /* AdminBottomSheetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E6ACB372808504800ADF2BB /* AdminBottomSheetCell.swift */; };
 		5E7AEF2227E212690059FB3A /* AdminViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7AEF2127E212690059FB3A /* AdminViewController.swift */; };
 		5E7AEF2427E21D680059FB3A /* AdminViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7AEF2327E21D680059FB3A /* AdminViewModel.swift */; };
 		5E7AEF2627E21E4C0059FB3A /* AdminCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7AEF2527E21E4C0059FB3A /* AdminCardView.swift */; };
@@ -91,15 +92,16 @@
 		52BCA07127C4D3DF001BF86F /* UIFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFont.swift; sourceTree = "<group>"; };
 		52C4CDDF27D0B1D1005EDE78 /* HomeBottomTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeBottomTabView.swift; sourceTree = "<group>"; };
 		52C4CDE127D0C4D1005EDE78 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		5E37B13C2813D13F0083CE23 /* AdminManagementCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminManagementCell.swift; sourceTree = "<group>"; };
 		5E3D7690280717090067286A /* AdminGradeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminGradeCell.swift; sourceTree = "<group>"; };
 		5E6179AB27C670D500B1A835 /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
 		5E63BC9327BBD2AC0024FCE3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5E63BC9A27BBE90F0024FCE3 /* SignUpNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpNameViewController.swift; sourceTree = "<group>"; };
+		5E6ACB372808504800ADF2BB /* AdminBottomSheetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminBottomSheetCell.swift; sourceTree = "<group>"; };
 		5E6ACB392808648700ADF2BB /* FirebaseWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseWorker.swift; sourceTree = "<group>"; };
 		5E6ACB3B28086A7200ADF2BB /* KakaoLoginWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginWorker.swift; sourceTree = "<group>"; };
 		5E6ACB3F2808791E00ADF2BB /* attendance-ios.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "attendance-ios.entitlements"; sourceTree = "<group>"; };
 		5E6ACB40280894F800ADF2BB /* UserDefaultsWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsWorker.swift; sourceTree = "<group>"; };
-		5E6ACB372808504800ADF2BB /* AdminBottomSheetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminBottomSheetCell.swift; sourceTree = "<group>"; };
 		5E7AEF2127E212690059FB3A /* AdminViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminViewController.swift; sourceTree = "<group>"; };
 		5E7AEF2327E21D680059FB3A /* AdminViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminViewModel.swift; sourceTree = "<group>"; };
 		5E7AEF2527E21E4C0059FB3A /* AdminCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminCardView.swift; sourceTree = "<group>"; };
@@ -271,6 +273,7 @@
 				5E7AEF2927E223040059FB3A /* AdminManagementViewController.swift */,
 				5EAA79DA27F601ED00BC7397 /* AdminBottomSheetView.swift */,
 				5E6ACB372808504800ADF2BB /* AdminBottomSheetCell.swift */,
+				5E37B13C2813D13F0083CE23 /* AdminManagementCell.swift */,
 			);
 			path = Management;
 			sourceTree = "<group>";
@@ -619,6 +622,7 @@
 				5EAA79FB27FDE42500BC7397 /* Attendance.swift in Sources */,
 				5EF69EC427A7F8B0007E9735 /* UILabel.swift in Sources */,
 				5EF69EC627A7FA40007E9735 /* UIColor.swift in Sources */,
+				5E37B13D2813D13F0083CE23 /* AdminManagementCell.swift in Sources */,
 				5EF69ECB27A81E56007E9735 /* HomeViewController.swift in Sources */,
 				5EF69EC227A7EFFF007E9735 /* BaseViewModel.swift in Sources */,
 				52BCA07227C4D3DF001BF86F /* UIFont.swift in Sources */,
