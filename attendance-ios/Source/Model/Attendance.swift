@@ -18,9 +18,9 @@ struct AttendanceData: Codable {
 }
 
 enum AttendanceType: Int, Codable, CaseIterable {
-    case absence
-    case tardy
     case attendance
+    case tardy
+    case absence
     case attendanceMarked
 
     var text: String {
