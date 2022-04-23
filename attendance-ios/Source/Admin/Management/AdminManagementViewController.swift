@@ -13,8 +13,10 @@ import UIKit
 final class AdminManagementViewController: UIViewController {
 
     enum Constants {
-        static let padding: CGFloat = 24
+        static let horizontalPadding: CGFloat = 24
+        static let verticalPadding: CGFloat = 28
         static let topPadding: CGFloat = 116
+        static let cellHeight: CGFloat = 60
     }
 
     // MARK: Navigation
@@ -34,6 +36,14 @@ final class AdminManagementViewController: UIViewController {
     }()
 
     private let adminMesasgeView = AdminMessageView()
+
+    private let teamCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.showsVerticalScrollIndicator = false
+        return collectionView
+    }()
 
     // MARK: - BottomSheet
     private let bottomSheetTestButton: UIButton = {
@@ -69,6 +79,7 @@ final class AdminManagementViewController: UIViewController {
         bindViewModel()
 
         setupDelegate()
+        setupCollectionView()
         setupNavigationTitle()
         setupMessage()
 
@@ -107,11 +118,44 @@ extension AdminManagementViewController {
 
 }
 
+// MARK: - CollectionView
+extension AdminManagementViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+
+    private func setupCollectionView() {
+        teamCollectionView.delegate = self
+        teamCollectionView.dataSource = self
+        teamCollectionView.register(AdminGradeCell.self, forCellWithReuseIdentifier: AdminGradeCell.identifier)
+    }
+
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        1
+    }
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        4
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AdminGradeCell.identifier, for: indexPath) as? AdminGradeCell else { return UICollectionViewCell() }
+        return cell
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        CGSize(width: collectionView.bounds.width, height: Constants.cellHeight)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        0
+    }
+
+}
+
 // MARK: - BottomSheet
 private extension AdminManagementViewController {
 
     func showBottomSheet() {
-        view.addSubview(bottomSheetView)
+        view.addSubviews([bottomSheetView])
+
         bottomSheetView.snp.makeConstraints {
             $0.top.bottom.left.right.equalToSuperview()
         }
@@ -144,16 +188,21 @@ private extension AdminManagementViewController {
     }
 
     func configureLayout() {
-        view.addSubviews([adminMesasgeView, bottomSheetTestButton])
+        view.addSubviews([adminMesasgeView, teamCollectionView, bottomSheetTestButton])
 
         adminMesasgeView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(Constants.topPadding)
-            $0.left.right.equalToSuperview().inset(Constants.padding)
+            $0.left.right.equalToSuperview().inset(Constants.horizontalPadding)
             $0.height.equalTo(48)
         }
+        teamCollectionView.snp.makeConstraints {
+            $0.top.equalTo(adminMesasgeView.snp.bottom).offset(Constants.verticalPadding)
+            $0.left.right.equalToSuperview()
+            $0.bottom.equalToSuperview()
+        }
         bottomSheetTestButton.snp.makeConstraints {
-            $0.top.equalTo(adminMesasgeView.snp.bottom).offset(Constants.topPadding)
-            $0.left.right.equalToSuperview().inset(Constants.padding)
+            $0.bottom.equalToSuperview().inset(Constants.horizontalPadding)
+            $0.left.right.equalToSuperview().inset(Constants.horizontalPadding)
             $0.height.equalTo(48)
         }
     }
@@ -168,7 +217,7 @@ private extension AdminManagementViewController {
         }
         navigationBackButton.snp.makeConstraints {
             $0.top.equalToSuperview().offset(56)
-            $0.left.equalToSuperview().offset(Constants.padding)
+            $0.left.equalToSuperview().offset(Constants.horizontalPadding)
             $0.width.height.equalTo(24)
         }
     }
