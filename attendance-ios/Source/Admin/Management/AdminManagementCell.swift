@@ -24,7 +24,6 @@ final class AdminManagementCell: UICollectionViewCell {
         return label
     }()
 
-    // TODO: - 우측에 이미지 추가
     let attendanceButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .gray_200
@@ -32,6 +31,11 @@ final class AdminManagementCell: UICollectionViewCell {
         button.setTitleColor(UIColor.gray_800, for: .normal)
         button.titleLabel?.font = .Pretendard(type: .semiBold, size: 14)
         button.layer.cornerRadius = Constants.cornerRadius
+
+        button.setImage(UIImage(named: "arrowtriangle_down"), for: .normal)
+        button.semanticContentAttribute = .forceRightToLeft
+        button.titleEdgeInsets = .init(top: 0, left: -6, bottom: 0, right: -6)
+        button.imageEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 0)
         return button
     }()
 
