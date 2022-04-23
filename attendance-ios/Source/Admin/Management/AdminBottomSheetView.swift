@@ -52,20 +52,29 @@ final class AdminBottomSheetView: UIView {
 
 }
 
-// TODO: - 애니메이션 추가
 // MARK: - Animation
 private extension AdminBottomSheetView {
 
+    // TODO: - 애니메이션 안되는 문제 해결
     func showBottomSheet() {
-
+        UIView.animate(withDuration: 2, delay: 0, options: .curveEaseInOut, animations: { [weak self] in
+            self?.containerView.snp.updateConstraints {
+                $0.bottom.equalToSuperview().inset(0)
+            }
+            self?.containerView.layoutIfNeeded()
+        })
     }
 
     func hideBottomSheet() {
-//        bottomSheetView.snp.updateConstraints {
-//            $0.height.equalTo(273)
-//        }
+        UIView.animate(withDuration: 2, delay: 0, options: .curveEaseInOut, animations: { [weak self] in
+            self?.containerView.snp.updateConstraints {
+                $0.bottom.equalToSuperview().inset(-Constants.bottomSheetHeight)
+            }
+            self?.containerView.layoutIfNeeded()
+        }, completion: { [weak self] _ in
+            self?.removeFromSuperview()
+        })
     }
-
 }
 
 // MARK: - CollectionView
@@ -137,13 +146,16 @@ private extension AdminBottomSheetView {
         containerView.addSubview(collectionView)
 
         containerView.snp.makeConstraints {
-            $0.bottom.left.right.equalToSuperview()
+            $0.bottom.equalToSuperview().inset(-Constants.bottomSheetHeight)
+            $0.left.right.equalToSuperview()
             $0.height.equalTo(Constants.bottomSheetHeight)
         }
         collectionView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(Constants.topPadding)
             $0.left.right.bottom.equalToSuperview()
         }
+
+        showBottomSheet()
     }
 
 }
