@@ -12,6 +12,8 @@ final class AdminManagementCell: UICollectionViewCell {
 
     enum Constants {
         static let horizontalPadding: CGFloat = 24
+        static let cornerRadius: CGFloat = 8
+        static let buttonSize: CGSize = .init(width: 77, height: 33)
     }
 
     private let nameLabel: UILabel = {
@@ -22,12 +24,15 @@ final class AdminManagementCell: UICollectionViewCell {
         return label
     }()
 
-    private let gradeLabel: UILabel = {
-        let label = UILabel()
-        label.font = .Pretendard(type: .semiBold, size: 16)
-        label.textColor = .orange
-        label.text = "출석 버튼"
-        return label
+    // TODO: - 우측에 이미지 추가
+    private let attendanceButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .gray_200
+        button.setTitle("출석", for: .normal)
+        button.setTitleColor(UIColor.gray_800, for: .normal)
+        button.titleLabel?.font = .Pretendard(type: .semiBold, size: 14)
+        button.layer.cornerRadius = Constants.cornerRadius
+        return button
     }()
 
     override init(frame: CGRect) {
@@ -50,15 +55,19 @@ private extension AdminManagementCell {
     }
 
     func configureLayout() {
-        addSubviews([nameLabel, gradeLabel])
+        addSubviews([nameLabel, attendanceButton])
 
         nameLabel.snp.makeConstraints {
             $0.left.equalToSuperview().offset(Constants.horizontalPadding)
             $0.centerY.equalToSuperview()
         }
-        gradeLabel.snp.makeConstraints {
+        attendanceButton.snp.makeConstraints {
             $0.right.equalToSuperview().inset(Constants.horizontalPadding)
             $0.centerY.equalToSuperview()
+        }
+        attendanceButton.snp.makeConstraints {
+            $0.width.equalTo(Constants.buttonSize.width)
+            $0.height.equalTo(Constants.buttonSize.height)
         }
     }
 
