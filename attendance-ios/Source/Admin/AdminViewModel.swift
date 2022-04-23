@@ -16,7 +16,8 @@ final class AdminViewModel: ViewModel {
         let tapManagementButton = PublishRelay<Void>()
         let tapSettingButton = PublishRelay<Void>()
 
-        let selectedIndexInManagement = BehaviorSubject<Int>(value: 0)
+        let selectedIndexInManagement = BehaviorSubject<Int?>(value: nil)
+        let selectedAttenceInManagement = BehaviorSubject<AttendanceType?>(value: nil)
     }
 
     struct Output {

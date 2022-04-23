@@ -103,6 +103,15 @@ extension AdminManagementViewController {
 
 }
 
+// MARK: -
+extension AdminManagementViewController: AdminBottomSheetViewDelegate {
+
+    func didSelect(at type: AttendanceType) {
+        print("VC AttendanceType: \(type)")
+    }
+
+}
+
 // MARK: - CollectionView
 extension AdminManagementViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
 
@@ -123,8 +132,6 @@ extension AdminManagementViewController: UICollectionViewDelegateFlowLayout, UIC
     // TODO: - 셀 인덱스
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AdminManagementCell.identifier, for: indexPath) as? AdminManagementCell else { return UICollectionViewCell() }
-
-//        cell.attendanceButton.addTarget(self, action: #selector(cellTapped), for: .touchUpInside)
 
         cell.attendanceButton.rx.controlEvent([.touchUpInside])
             .asObservable()
@@ -164,7 +171,7 @@ private extension AdminManagementViewController {
 private extension AdminManagementViewController {
 
     func setupDelegate() {
-
+        bottomSheetView.delegate = self
     }
 
     func setupNavigationTitle() {

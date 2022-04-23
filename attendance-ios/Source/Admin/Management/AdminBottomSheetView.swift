@@ -10,6 +10,10 @@ import RxSwift
 import SnapKit
 import UIKit
 
+protocol AdminBottomSheetViewDelegate: AnyObject {
+    func didSelect(at type: AttendanceType)
+}
+
 final class AdminBottomSheetView: UIView {
 
     enum Constants {
@@ -33,6 +37,8 @@ final class AdminBottomSheetView: UIView {
         collectionView.showsVerticalScrollIndicator = false
         return collectionView
     }()
+
+    weak var delegate: AdminBottomSheetViewDelegate?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -107,10 +113,11 @@ extension AdminBottomSheetView: UICollectionViewDelegateFlowLayout, UICollection
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) as? AdminBottomSheetCell else { return }
-        cell.didSelect()
         let attendanceType = AttendanceType.allCases[indexPath.row]
-        print("attendanceType: \(attendanceType)")
-        hideBottomSheet()
+        print("바텀시트 attendanceType: \(attendanceType)")
+        cell.didSelect()
+        delegate?.didSelect(at: attendanceType)
+//        hideBottomSheet()
     }
 
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
