@@ -94,7 +94,7 @@ final class HomeAttendanceCheckTableViewCell: BaseTableViewCell {
         }
     }
     
-    func updateUI(_ type: AttendanceType) {
+    func updateUI(_ type: AttendanceData) {
         if type.text == "출석" {
             attendanceLabel.text = "출석"
             attendanceLabel.textColor = .etc_green
