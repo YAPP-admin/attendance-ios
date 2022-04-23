@@ -45,15 +45,6 @@ final class AdminManagementViewController: UIViewController {
         return collectionView
     }()
 
-    // MARK: - BottomSheet
-    private let bottomSheetTestButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("바텀 시트 테스트", for: .normal)
-        button.backgroundColor = .yapp_orange
-        button.layer.cornerRadius = 12
-        return button
-    }()
-
     private let bottomSheetView = AdminBottomSheetView()
 
     private let viewModel: AdminViewModel
@@ -103,12 +94,6 @@ extension AdminManagementViewController {
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
                 self?.navigationController?.popViewController(animated: true)
-            }).disposed(by: disposeBag)
-
-        bottomSheetTestButton.rx.controlEvent([.touchUpInside])
-            .asObservable()
-            .subscribe(onNext: { [weak self] _ in
-                self?.showBottomSheet()
             }).disposed(by: disposeBag)
     }
 
@@ -200,7 +185,7 @@ private extension AdminManagementViewController {
     }
 
     func configureLayout() {
-        view.addSubviews([adminMesasgeView, teamCollectionView, bottomSheetTestButton])
+        view.addSubviews([adminMesasgeView, teamCollectionView])
 
         adminMesasgeView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(Constants.topPadding)
@@ -211,11 +196,6 @@ private extension AdminManagementViewController {
             $0.top.equalTo(adminMesasgeView.snp.bottom).offset(Constants.verticalPadding)
             $0.left.right.equalToSuperview()
             $0.bottom.equalToSuperview()
-        }
-        bottomSheetTestButton.snp.makeConstraints {
-            $0.bottom.equalToSuperview().inset(Constants.horizontalPadding)
-            $0.left.right.equalToSuperview().inset(Constants.horizontalPadding)
-            $0.height.equalTo(48)
         }
     }
 

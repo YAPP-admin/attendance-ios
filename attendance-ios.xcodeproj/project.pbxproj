@@ -271,9 +271,9 @@
 			isa = PBXGroup;
 			children = (
 				5E7AEF2927E223040059FB3A /* AdminManagementViewController.swift */,
+				5E37B13C2813D13F0083CE23 /* AdminManagementCell.swift */,
 				5EAA79DA27F601ED00BC7397 /* AdminBottomSheetView.swift */,
 				5E6ACB372808504800ADF2BB /* AdminBottomSheetCell.swift */,
-				5E37B13C2813D13F0083CE23 /* AdminManagementCell.swift */,
 			);
 			path = Management;
 			sourceTree = "<group>";

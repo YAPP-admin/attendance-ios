@@ -13,9 +13,8 @@ import UIKit
 final class AdminBottomSheetView: UIView {
 
     enum Constants {
-        static let padding: CGFloat = 24
+        static let topPadding: CGFloat = 24
         static let cornerRadius: CGFloat = 20
-        static let topPadding: CGFloat = 116
         static let bottomSheetHeight: CGFloat = 300
         static let bottomSheetCornerRadius: CGFloat = 20
         static let bottomSheetCellHeight: CGFloat = 52
@@ -24,7 +23,6 @@ final class AdminBottomSheetView: UIView {
     private let containerView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
-        view.setTopCornerRadius(radius: Constants.cornerRadius)
         return view
     }()
 
@@ -54,8 +52,8 @@ final class AdminBottomSheetView: UIView {
 
 }
 
+// TODO: - 애니메이션 추가
 // MARK: - Animation
-// TODO: -
 private extension AdminBottomSheetView {
 
     func showBottomSheet() {
@@ -143,7 +141,7 @@ private extension AdminBottomSheetView {
             $0.height.equalTo(Constants.bottomSheetHeight)
         }
         collectionView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(Constants.cornerRadius/2)
+            $0.top.equalToSuperview().offset(Constants.topPadding)
             $0.left.right.bottom.equalToSuperview()
         }
     }

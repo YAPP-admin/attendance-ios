@@ -24,7 +24,7 @@ final class AdminBottomSheetCell: UICollectionViewCell {
 
     private let attendanceLabel: UILabel = {
         let label = UILabel()
-        label.font = .Pretendard(type: .regular, size: 16)
+        label.font = .Pretendard(type: .semiBold, size: 16)
         label.textColor = .gray_1200
         label.textAlignment = .center
         label.text = "출석"
