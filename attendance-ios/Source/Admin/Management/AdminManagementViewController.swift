@@ -135,8 +135,20 @@ extension AdminManagementViewController: UICollectionViewDelegateFlowLayout, UIC
         4
     }
 
+    // TODO: - 셀 인덱스
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AdminManagementCell.identifier, for: indexPath) as? AdminManagementCell else { return UICollectionViewCell() }
+
+//        cell.attendanceButton.addTarget(self, action: #selector(cellTapped), for: .touchUpInside)
+
+        cell.attendanceButton.rx.controlEvent([.touchUpInside])
+            .asObservable()
+            .subscribe(onNext: { [weak self] _ in
+                print("index: \(indexPath.row)")
+                self?.viewModel.input.selectedIndexInManagement.onNext(indexPath.row)
+                self?.showBottomSheet()
+            }).disposed(by: disposeBag)
+
         return cell
     }
 

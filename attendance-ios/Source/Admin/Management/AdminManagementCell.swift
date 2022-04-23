@@ -25,7 +25,7 @@ final class AdminManagementCell: UICollectionViewCell {
     }()
 
     // TODO: - 우측에 이미지 추가
-    private let attendanceButton: UIButton = {
+    let attendanceButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .gray_200
         button.setTitle("출석", for: .normal)

@@ -15,6 +15,8 @@ final class AdminViewModel: ViewModel {
         let tapCardView = PublishRelay<Void>()
         let tapManagementButton = PublishRelay<Void>()
         let tapSettingButton = PublishRelay<Void>()
+
+        let selectedIndexInManagement = BehaviorSubject<Int>(value: 0)
     }
 
     struct Output {
