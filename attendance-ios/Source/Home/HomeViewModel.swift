@@ -31,6 +31,7 @@ final class HomeViewModel: ViewModel {
     let disposeBag = DisposeBag()
     let configWorker = ConfigWorker()
     var homeType = BehaviorRelay<HomeType>(value: .todaySession)
+
     var list = [AttendanceType.attendance, AttendanceType.attendanceMarked, AttendanceType.absence, AttendanceType.tardy]
 
     init() {

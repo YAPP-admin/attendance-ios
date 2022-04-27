@@ -93,7 +93,7 @@ final class HomeAttendanceCheckTableViewCell: BaseTableViewCell {
             $0.leading.trailing.equalToSuperview()
         }
     }
-
+    
     func updateUI(_ type: AttendanceType) {
         if type.text == "출석" {
             attendanceLabel.text = "출석"
