@@ -22,21 +22,26 @@ final class HomeAttendanceCheckViewController: UIViewController {
     }()
     private let tableView: UITableView = {
         let tableView = UITableView()
-        tableView.separatorStyle = .none
         tableView.register(HomeAttendanceCheckTableViewCell.self, forCellReuseIdentifier: "HomeAttendanceCheckTableViewCell")
         tableView.register(HomeTotalScoreTableViewCell.self, forCellReuseIdentifier: "HomeTotalScoreTableViewCell")
         tableView.showsVerticalScrollIndicator = false
+        tableView.separatorStyle = .singleLine
+        tableView.separatorColor = .gray_200
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
+        tableView.separatorInsetReference = .fromAutomaticInsets
         return tableView
     }()
 
     private let viewModel = HomeViewModel()
-    
+    private var disposeBag = DisposeBag()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         navigationController?.isNavigationBarHidden = true
 
         addSubViews()
+        setupTableView()
         bindView()
     }
 
@@ -45,6 +50,7 @@ final class HomeAttendanceCheckViewController: UIViewController {
         view.addSubview(tableView)
         titleLabel.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
+            $0.height.equalTo(44)
         }
         tableView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(11)
@@ -52,9 +58,21 @@ final class HomeAttendanceCheckViewController: UIViewController {
         }
     }
 
-    func bindView() {
+    func setupTableView() {
         tableView.delegate = self
         tableView.dataSource = self
+    }
+
+    func bindView() {
+        viewModel.output.goToHelp
+            .observe(on: MainScheduler.instance)
+            .bind(onNext: showHelpVC)
+            .disposed(by: disposeBag)
+    }
+
+    func showHelpVC() {
+        let helpVC = HelpViewController()
+        self.navigationController?.pushViewController(helpVC, animated: true)
     }
 }
 
@@ -66,6 +84,15 @@ extension HomeAttendanceCheckViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row != 0 {
+            let item = viewModel.list[indexPath.row - 1]
+            let detailVC = HomeAttendanceDetailViewController()
+            detailVC.setType(item)
+            self.navigationController?.pushViewController(detailVC, animated: true)
+        }
+    }
 }
 
 extension HomeAttendanceCheckViewController: UITableViewDataSource {
@@ -76,11 +103,14 @@ extension HomeAttendanceCheckViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             if let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTotalScoreTableViewCell", for: indexPath) as? HomeTotalScoreTableViewCell {
+                cell.helpButton.rx.tap
+                    .bind(to: viewModel.input.tapHelp)
+                    .disposed(by: cell.eventBag)
                 return cell
             }
         } else {
             if let cell = tableView.dequeueReusableCell(withIdentifier: "HomeAttendanceCheckTableViewCell", for: indexPath) as? HomeAttendanceCheckTableViewCell {
-                cell.updateUI(viewModel.list[indexPath.row - 1].type)
+                cell.updateUI(viewModel.list[indexPath.row - 1])
                 return cell
             }
         }

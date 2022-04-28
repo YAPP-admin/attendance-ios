@@ -14,7 +14,7 @@ import UIKit
 final class HomeViewController: UIViewController {
     private let topView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white.withAlphaComponent(0.8)
+        view.backgroundColor = UIColor(red: 0.955, green: 0.961, blue: 0.971, alpha: 0.8)
         return view
     }()
     private let settingButton: UIButton = {
@@ -44,7 +44,7 @@ final class HomeViewController: UIViewController {
     }()
     private let bgView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor(red: 0.953, green: 0.961, blue: 0.973, alpha: 1)
         return view
     }()
     private let illustView: UIImageView = {
@@ -128,9 +128,9 @@ final class HomeViewController: UIViewController {
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         topView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            $0.top.equalTo(view.snp.top)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(44)
+            $0.height.equalTo(88)
         }
         settingButton.snp.makeConstraints {
             $0.centerY.equalToSuperview()

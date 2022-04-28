@@ -18,12 +18,16 @@ final class HomeViewModel: ViewModel {
     struct Input {
         let tapQR = PublishRelay<Void>()
         let tapSetting = PublishRelay<Void>()
+        let tapHelp = PublishRelay<Void>()
+        let tapBack = PublishRelay<Void>()
     }
 
     struct Output {
         let sessionList = BehaviorSubject<[Session]>(value: [])
         var goToQR = PublishRelay<Void>()
         var goToSetting = PublishRelay<Void>()
+        var goToHelp = PublishRelay<Void>()
+        var goToHome = PublishRelay<Void>()
     }
 
     let input = Input()
@@ -31,8 +35,8 @@ final class HomeViewModel: ViewModel {
     let disposeBag = DisposeBag()
     let configWorker = ConfigWorker()
     var homeType = BehaviorRelay<HomeType>(value: .todaySession)
-    var list = [Attendance(sessionId: 1, type: AttendanceData(point: 10, text: "출석")), Attendance(sessionId: 1, type: AttendanceData(point: 10, text: "지각")),
-                Attendance(sessionId: 1, type: AttendanceData(point: 10, text: "출석 인정")), Attendance(sessionId: 1, type: AttendanceData(point: 10, text: "결석"))]
+
+    var list = [AttendanceType.attendance, AttendanceType.attendanceMarked, AttendanceType.absence, AttendanceType.tardy]
 
     init() {
         input.tapQR
@@ -43,6 +47,16 @@ final class HomeViewModel: ViewModel {
         input.tapSetting
             .subscribe(onNext: { [weak self] _ in
                 self?.output.goToSetting.accept(())
+            }).disposed(by: disposeBag)
+
+        input.tapHelp
+            .subscribe(onNext: { [weak self] _ in
+                self?.output.goToHelp.accept(())
+            }).disposed(by: disposeBag)
+
+        input.tapBack
+            .subscribe(onNext: { [weak self] _ in
+                self?.output.goToHome.accept(())
             }).disposed(by: disposeBag)
 
         configWorker.decodeSessionList { [weak self] result in

@@ -15,6 +15,7 @@ enum TextStyle {
 	case Body1
 	case Body2
     case Caption1
+    case Caption2
 }
 
 extension TextStyle {
@@ -34,6 +35,8 @@ extension TextStyle {
 			return UIFont.Pretendard(type: .medium, size: 14)
         case .Caption1:
             return UIFont.Pretendard(type: .medium, size: 12)
+        case .Caption2:
+            return UIFont.Pretendard(type: .bold, size: 12)
         }
     }
 }

@@ -82,7 +82,7 @@ final class HomeAttendanceCheckTableViewCell: BaseTableViewCell {
             $0.top.equalToSuperview().offset(24)
             $0.leading.equalToSuperview().offset(52)
             $0.trailing.equalToSuperview().offset(-24)
-            $0.bottom.equalToSuperview()
+            $0.bottom.equalToSuperview().offset(-24)
         }
         vStackView.addArrangedSubview(hStackView)
         hStackView.addArrangedSubview(attendanceLabel)
@@ -93,8 +93,8 @@ final class HomeAttendanceCheckTableViewCell: BaseTableViewCell {
             $0.leading.trailing.equalToSuperview()
         }
     }
-    
-    func updateUI(_ type: AttendanceData) {
+
+    func updateUI(_ type: AttendanceType) {
         if type.text == "출석" {
             attendanceLabel.text = "출석"
             attendanceLabel.textColor = .etc_green
