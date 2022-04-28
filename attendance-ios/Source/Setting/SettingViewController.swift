@@ -67,6 +67,7 @@ final class SettingViewController: UIViewController {
 
     private let viewModel = SettingViewModel()
     private var disposeBag = DisposeBag()
+    private let tapPolicy = UITapGestureRecognizer()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,6 +88,17 @@ final class SettingViewController: UIViewController {
             .bind(onNext: showHomeVC)
             .disposed(by: disposeBag)
 
+        policyView.addGestureRecognizer(tapPolicy)
+        tapPolicy.rx.event
+            .bind(onNext: { [weak self] _ in
+                self?.viewModel.input.tapPolicyView.accept(())
+            }).disposed(by: disposeBag)
+
+        viewModel.output.goToPolicyVC
+            .observe(on: MainScheduler.instance)
+            .bind(onNext: goToPolicyVC)
+            .disposed(by: disposeBag)
+
 //        viewModel.memberData
 //            .observe(on: MainScheduler.instance)
 //            .subscribe(onNext: {[weak self] data in
@@ -98,5 +110,10 @@ final class SettingViewController: UIViewController {
 
     func showHomeVC() {
         self.navigationController?.popViewController(animated: true)
+    }
+
+    func goToPolicyVC() {
+        let vc = SettingPrivacyPolicyViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
