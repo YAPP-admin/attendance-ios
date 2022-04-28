@@ -23,6 +23,12 @@ final class HomeTotalScoreTableViewCell: BaseTableViewCell {
         view.backgroundColor = .white
         return view
     }()
+    let helpButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .clear
+        button.setImage(UIImage(named: "help"), for: .normal)
+        return button
+    }()
     private let myscoreLabel: UILabel = {
         let label = UILabel()
         label.textColor = .gray_600
@@ -45,6 +51,7 @@ final class HomeTotalScoreTableViewCell: BaseTableViewCell {
         return view
     }()
     private var progress = MKMagneticProgress()
+    private let chartView = HomeChartView()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -72,6 +79,12 @@ final class HomeTotalScoreTableViewCell: BaseTableViewCell {
         stackView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
+        contentView.addSubview(helpButton)
+        helpButton.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(40)
+            $0.trailing.equalToSuperview().offset(-26)
+            $0.width.height.equalTo(20)
+        }
         stackView.addArrangedSubview(containerView)
         containerView.snp.makeConstraints {
             $0.height.equalTo(351)
@@ -94,6 +107,14 @@ final class HomeTotalScoreTableViewCell: BaseTableViewCell {
             $0.top.equalTo(myscoreLabel.snp.bottom)
             $0.leading.equalToSuperview().offset(73)
             $0.trailing.equalToSuperview().offset(-73)
+        }
+        containerView.addSubview(chartView)
+        chartView.snp.makeConstraints {
+            $0.top.equalTo(scoreLabel.snp.bottom).offset(28)
+            $0.leading.equalToSuperview().offset(24)
+            $0.trailing.equalToSuperview().offset(-24)
+            $0.bottom.equalToSuperview().offset(-28)
+            $0.height.equalTo(100)
         }
         stackView.addArrangedSubview(sectionView)
         sectionView.snp.makeConstraints {

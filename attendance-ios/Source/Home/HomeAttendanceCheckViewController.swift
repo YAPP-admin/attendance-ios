@@ -33,6 +33,7 @@ final class HomeAttendanceCheckViewController: UIViewController {
     }()
 
     private let viewModel = HomeViewModel()
+    private var disposeBag = DisposeBag()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,9 +61,17 @@ final class HomeAttendanceCheckViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
     }
-    
-    func bindView() {
 
+    func bindView() {
+        viewModel.output.goToHelp
+            .observe(on: MainScheduler.instance)
+            .bind(onNext: showHelpVC)
+            .disposed(by: disposeBag)
+    }
+
+    func showHelpVC() {
+        let helpVC = HelpViewController()
+        self.navigationController?.pushViewController(helpVC, animated: true)
     }
 }
 
@@ -84,6 +93,9 @@ extension HomeAttendanceCheckViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             if let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTotalScoreTableViewCell", for: indexPath) as? HomeTotalScoreTableViewCell {
+                cell.helpButton.rx.tap
+                    .bind(to: viewModel.input.tapHelp)
+                    .disposed(by: cell.eventBag)
                 return cell
             }
         } else {

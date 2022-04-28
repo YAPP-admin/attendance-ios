@@ -272,7 +272,7 @@ final class HomeViewController: UIViewController {
         vc.modalPresentationStyle = .overFullScreen
         self.present(vc, animated: true, completion: nil)
     }
-
+    
     func showSettingVC() {
         let vc = SettingViewController()
         self.navigationController?.pushViewController(vc, animated: true)

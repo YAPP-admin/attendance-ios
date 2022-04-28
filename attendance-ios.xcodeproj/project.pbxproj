@@ -21,6 +21,9 @@
 		527657F727C384AE0080DA32 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527657F627C384AE0080DA32 /* UIViewController.swift */; };
 		527657FB27C387E40080DA32 /* UILabelWithRound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527657FA27C387E40080DA32 /* UILabelWithRound.swift */; };
 		527AC9AA281A0AF200B055E3 /* MKMagneticProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527AC9A9281A0AF200B055E3 /* MKMagneticProgress.swift */; };
+		52A85C55281A201900593749 /* HomeChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A85C54281A201900593749 /* HomeChartView.swift */; };
+		52A85C57281A4A3000593749 /* BaseNavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A85C56281A4A3000593749 /* BaseNavigationBarView.swift */; };
+		52A85C59281A4AE900593749 /* HelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A85C58281A4AE900593749 /* HelpViewController.swift */; };
 		52BCA07027C4D393001BF86F /* TextStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BCA06F27C4D393001BF86F /* TextStyle.swift */; };
 		52BCA07227C4D3DF001BF86F /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BCA07127C4D3DF001BF86F /* UIFont.swift */; };
 		52C4CDE027D0B1D1005EDE78 /* HomeBottomTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C4CDDF27D0B1D1005EDE78 /* HomeBottomTabView.swift */; };
@@ -94,6 +97,9 @@
 		527657F627C384AE0080DA32 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		527657FA27C387E40080DA32 /* UILabelWithRound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabelWithRound.swift; sourceTree = "<group>"; };
 		527AC9A9281A0AF200B055E3 /* MKMagneticProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MKMagneticProgress.swift; sourceTree = "<group>"; };
+		52A85C54281A201900593749 /* HomeChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeChartView.swift; sourceTree = "<group>"; };
+		52A85C56281A4A3000593749 /* BaseNavigationBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseNavigationBarView.swift; sourceTree = "<group>"; };
+		52A85C58281A4AE900593749 /* HelpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpViewController.swift; sourceTree = "<group>"; };
 		52BCA06F27C4D393001BF86F /* TextStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStyle.swift; sourceTree = "<group>"; };
 		52BCA07127C4D3DF001BF86F /* UIFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFont.swift; sourceTree = "<group>"; };
 		52C4CDDF27D0B1D1005EDE78 /* HomeBottomTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeBottomTabView.swift; sourceTree = "<group>"; };
@@ -210,6 +216,7 @@
 		527657F927C387CB0080DA32 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				52A85C56281A4A3000593749 /* BaseNavigationBarView.swift */,
 				527657FA27C387E40080DA32 /* UILabelWithRound.swift */,
 			);
 			path = View;
@@ -442,6 +449,8 @@
 				52EFD5F5280FFA3200065FEB /* HomeTotalScoreTableViewCell.swift */,
 				52EFD5EF280FF78C00065FEB /* HomeAttendanceCheckTableViewCell.swift */,
 				527AC9A9281A0AF200B055E3 /* MKMagneticProgress.swift */,
+				52A85C54281A201900593749 /* HomeChartView.swift */,
+				52A85C58281A4AE900593749 /* HelpViewController.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -616,6 +625,7 @@
 			files = (
 				527AC9AA281A0AF200B055E3 /* MKMagneticProgress.swift in Sources */,
 				5EAA7A0C27FF338800BC7397 /* (null) in Sources */,
+				52A85C55281A201900593749 /* HomeChartView.swift in Sources */,
 				5E6ACB41280894F800ADF2BB /* UserDefaultsWorker.swift in Sources */,
 				5E9CC7BA27D0F57A006D8B12 /* UICollectionViewCell.swift in Sources */,
 				5EAA79DD27F6045E00BC7397 /* AdminSessionCell.swift in Sources */,
@@ -642,11 +652,13 @@
 				52BCA07227C4D3DF001BF86F /* UIFont.swift in Sources */,
 				52EFD5F6280FFA3200065FEB /* HomeTotalScoreTableViewCell.swift in Sources */,
 				5EF69ED927AAACBA007E9735 /* PolicyViewController.swift in Sources */,
+				52A85C57281A4A3000593749 /* BaseNavigationBarView.swift in Sources */,
 				5E7AEF2827E222C30059FB3A /* AdminGradeViewController.swift in Sources */,
 				5264EFFF280D5B210026F560 /* SettingViewController+UI.swift in Sources */,
 				5264EFFD280D5B060026F560 /* SettingCellView.swift in Sources */,
 				297E958327CFAC0A00452222 /* QRViewModel.swift in Sources */,
 				5EF69EDB27AAB0BC007E9735 /* PolicyUnitView.swift in Sources */,
+				52A85C59281A4AE900593749 /* HelpViewController.swift in Sources */,
 				5EAA7A1027FF443200BC7397 /* SignUpTeamViewController.swift in Sources */,
 				5EAA7A0A27FF2A2200BC7397 /* ConfigWorker.swift in Sources */,
 				52BCA07027C4D393001BF86F /* TextStyle.swift in Sources */,
