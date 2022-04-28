@@ -44,51 +44,56 @@ final class HomeTotalScoreTableViewCell: BaseTableViewCell {
         view.backgroundColor = .background_base
         return view
     }()
-    private var progressbar = HalfCircleIndicator(frame: CGRect(x: UIScreen.main.bounds.midX, y: 100, width: UIScreen.main.bounds.width - 73 - 73, height: (UIScreen.main.bounds.width - 73 - 73) / 2), isInnerCircleExist: true, color: UIColor.red)
-    private var backProgress = HalfCircleIndicator(frame: CGRect(x: UIScreen.main.bounds.midX, y: 100, width: UIScreen.main.bounds.width - 73 - 73, height: (UIScreen.main.bounds.width - 73 - 73) / 2), isInnerCircleExist: true, color: UIColor.gray_200)
+    private var progress = MKMagneticProgress()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         initView()
+        setupProgress()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
+    private func setupProgress() {
+        progress.setProgress(progress: 0.9, animated: true)
+        progress.progressShapeColor = .etc_green
+        progress.backgroundShapeColor = .gray_200
+        progress.lineWidth = 10
+        progress.orientation = .bottom
+        progress.lineCap = .round
+        progress.spaceDegree = 100
+    }
+
     private func initView() {
-        progressbar.isInnerCircleExist = true
-        backProgress.isInnerCircleExist = true
-        progressbar.updateProgress(percent: 0.4)
-        backProgress.updateProgress(percent: 1.0)
         backgroundColor = .clear
         contentView.addSubview(stackView)
         stackView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
         stackView.addArrangedSubview(containerView)
-        containerView.addSubview(backProgress)
-        backProgress.addSubview(progressbar)
         containerView.snp.makeConstraints {
             $0.height.equalTo(351)
         }
-        backProgress.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(83)
+        containerView.addSubview(progress)
+        progress.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(83 + 50)
             $0.leading.equalToSuperview().offset(73)
             $0.trailing.equalToSuperview().offset(-73)
             $0.height.equalTo(123)
         }
-        progressbar.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
-        backProgress.addSubview(myscoreLabel)
-        backProgress.addSubview(scoreLabel)
+        containerView.addSubview(myscoreLabel)
+        containerView.addSubview(scoreLabel)
         myscoreLabel.snp.makeConstraints {
-            $0.center.equalToSuperview()
+            $0.top.equalToSuperview().offset(83 + 30)
+            $0.leading.equalToSuperview().offset(73)
+            $0.trailing.equalToSuperview().offset(-73)
         }
         scoreLabel.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.bottom.equalToSuperview()
+            $0.top.equalTo(myscoreLabel.snp.bottom)
+            $0.leading.equalToSuperview().offset(73)
+            $0.trailing.equalToSuperview().offset(-73)
         }
         stackView.addArrangedSubview(sectionView)
         sectionView.snp.makeConstraints {
