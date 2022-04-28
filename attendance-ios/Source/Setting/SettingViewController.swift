@@ -12,25 +12,7 @@ import SnapKit
 import UIKit
 
 final class SettingViewController: UIViewController {
-    let navigationBarView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .white
-        return view
-    }()
-    let backButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .clear
-        button.setImage(UIImage(named: "back"), for: .normal)
-        button.contentEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        return button
-    }()
-    let titleLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .gray_1200
-        label.font = .Pretendard(type: .regular, size: 18)
-        label.text = "설정"
-        return label
-    }()
+    let navigationBarView = BaseNavigationBarView(title: "설정")
     let generationView: UIView = {
         let view = UIView()
         view.backgroundColor = .yapp_orange_opacity
@@ -96,7 +78,7 @@ final class SettingViewController: UIViewController {
     }
 
     func bind() {
-        backButton.rx.tap
+        navigationBarView.backButton.rx.tap
             .bind(to: viewModel.input.tapBack)
             .disposed(by: disposeBag)
 

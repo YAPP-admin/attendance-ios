@@ -50,6 +50,7 @@ final class HomeAttendanceCheckViewController: UIViewController {
         view.addSubview(tableView)
         titleLabel.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
+            $0.height.equalTo(44)
         }
         tableView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(11)
@@ -82,6 +83,15 @@ extension HomeAttendanceCheckViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row != 0 {
+            let item = viewModel.list[indexPath.row - 1]
+            let detailVC = HomeAttendanceDetailViewController()
+            detailVC.setType(item)
+            self.navigationController?.pushViewController(detailVC, animated: true)
+        }
     }
 }
 
