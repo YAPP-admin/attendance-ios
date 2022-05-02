@@ -104,6 +104,7 @@ final class HomeViewController: UIViewController {
         label.style(.Body1)
         label.textColor = .gray_800
         label.numberOfLines = 0
+        label.setLineSpacing(4)
         return label
     }()
     private let attendanceView = HomeAttendanceCheckViewController()
@@ -235,7 +236,7 @@ final class HomeViewController: UIViewController {
             .disposed(by: disposeBag)
 
         viewModel.output.sessionList
-            .subscribe(onNext: { [weak self] sessionList in
+            .subscribe(onNext: { [weak self] _ in
                 DispatchQueue.main.async {
                     self?.updateSessionInfo()
                 }
@@ -279,7 +280,7 @@ final class HomeViewController: UIViewController {
     }
 
     func updateSessionInfo() {
-        guard let sessionList = try? viewModel.output.sessionList.value(), let session = sessionList.todaySession() else { return }
+        guard let session = viewModel.output.sessionList.value.todaySession() else { return }
         dateLabel.text = session.date.date()?.mmdd() ?? ""
         titleLabel.text = session.title
         contentsLabel.text = session.description

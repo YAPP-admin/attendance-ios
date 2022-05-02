@@ -23,7 +23,7 @@ final class HomeViewModel: ViewModel {
     }
 
     struct Output {
-        let sessionList = BehaviorSubject<[Session]>(value: [])
+        let sessionList = BehaviorRelay<[Session]>(value: [])
         var goToQR = PublishRelay<Void>()
         var goToSetting = PublishRelay<Void>()
         var goToHelp = PublishRelay<Void>()
@@ -35,8 +35,6 @@ final class HomeViewModel: ViewModel {
     let disposeBag = DisposeBag()
     let configWorker = ConfigWorker()
     var homeType = BehaviorRelay<HomeType>(value: .todaySession)
-
-    var list = [AttendanceType.attendance, AttendanceType.attendanceMarked, AttendanceType.absence, AttendanceType.tardy]
 
     init() {
         input.tapQR
@@ -61,7 +59,7 @@ final class HomeViewModel: ViewModel {
 
         configWorker.decodeSessionList { [weak self] result in
             switch result {
-            case .success(let list): self?.output.sessionList.onNext(list)
+            case .success(let list): self?.output.sessionList.accept(list)
             case .failure: ()
             }
         }

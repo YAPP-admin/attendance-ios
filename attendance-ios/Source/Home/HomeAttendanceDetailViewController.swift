@@ -26,10 +26,15 @@ final class HomeAttendanceDetailViewController: UIViewController {
         return view
     }()
     let navigationBarView = BaseNavigationBarView(title: "오리엔테이션")
+    private let hStackView: UIStackView = {
+        let view = UIStackView()
+        view.axis = .horizontal
+        view.spacing = 4
+        return view
+    }()
     private let markImageView: UIImageView = {
         let view = UIImageView()
         view.backgroundColor = .clear
-        view.image = UIImage(named: "attendance")
         return view
     }()
     private let attendanceLabel: UILabel = {
@@ -52,9 +57,10 @@ final class HomeAttendanceDetailViewController: UIViewController {
         label.textColor = .gray_1000
         label.font = .Pretendard(type: .bold, size: 24)
         label.text = "오리엔테이션"
+        label.numberOfLines = 0
         return label
     }()
-    private let contentLabel: UILabel = {
+    private let descriptionLabel: UILabel = {
         let label = UILabel()
         label.textColor = .gray_800
         label.style(.Body1)
@@ -92,32 +98,30 @@ final class HomeAttendanceDetailViewController: UIViewController {
             $0.top.leading.trailing.equalToSuperview()
             $0.height.equalTo(44)
         }
-        contentView.addSubview(markImageView)
-        markImageView.snp.makeConstraints {
-            $0.width.height.equalTo(20)
+        contentView.addSubview(hStackView)
+        hStackView.addArrangedSubviews([markImageView, attendanceLabel])
+        hStackView.snp.makeConstraints {
             $0.top.equalTo(navigationBarView.snp.bottom).offset(42)
             $0.leading.equalToSuperview().offset(24)
         }
-        contentView.addSubview(attendanceLabel)
-        attendanceLabel.snp.makeConstraints {
-            $0.centerY.equalTo(markImageView.snp.centerY)
-            $0.leading.equalTo(markImageView.snp.trailing).offset(4)
+        markImageView.snp.makeConstraints {
+            $0.width.height.equalTo(20)
         }
         contentView.addSubview(dateLabel)
         dateLabel.snp.makeConstraints {
-            $0.centerY.equalTo(markImageView.snp.centerY)
-            $0.leading.equalTo(attendanceLabel.snp.trailing)
+            $0.centerY.equalTo(hStackView.snp.centerY)
+            $0.leading.equalTo(hStackView.snp.trailing)
             $0.trailing.equalToSuperview().offset(-24)
         }
 
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints {
-            $0.top.equalTo(markImageView.snp.bottom).offset(28)
+            $0.top.equalTo(hStackView.snp.bottom).offset(28)
             $0.leading.equalToSuperview().offset(24)
             $0.trailing.equalToSuperview().offset(-24)
         }
-        contentView.addSubview(contentLabel)
-        contentLabel.snp.makeConstraints {
+        contentView.addSubview(descriptionLabel)
+        descriptionLabel.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(12)
             $0.leading.equalToSuperview().offset(24)
             $0.trailing.equalToSuperview().offset(-24)
@@ -139,36 +143,35 @@ final class HomeAttendanceDetailViewController: UIViewController {
         self.navigationController?.popViewController(animated: true)
     }
 
-    func setType(_ type: AttendanceType) {
-        navigationBarView.titleLabel.text = "\(type.text)"
-        updateUI(type)
+    func setType(_ session: Session) {
+        navigationBarView.titleLabel.text = "\(session.title)"
+        updateUI(session)
     }
 
-    private func updateUI(_ type: AttendanceType) {
-        if type.text == "출석" {
-            attendanceLabel.text = "출석"
-            attendanceLabel.textColor = .etc_green
-            markImageView.image = UIImage(named: "attendance")
-        } else if type.text == "지각" {
-            attendanceLabel.text = "지각"
-            attendanceLabel.textColor = .etc_yellow_font
-            markImageView.image = UIImage(named: "tardy")
-        } else if type.text == "결석" {
-            attendanceLabel.text = "결석"
-            attendanceLabel.textColor = .etc_red
-            markImageView.image = UIImage(named: "absence")
-        } else if type.text == "출석 인정" {
-            attendanceLabel.text = "출석 인정"
-            attendanceLabel.textColor = .etc_green
-            markImageView.image = UIImage(named: "attendance")
-        } else if type.text == "예정" {
-            attendanceLabel.text = "예정"
+    private func updateUI(_ session: Session) {
+        titleLabel.text = session.title
+        descriptionLabel.text = session.description
+        dateLabel.text = session.date.date()?.mmdd() ?? ""
+        switch session.type {
+        case .needAttendance:
+            guard let nowDate = Date().startDate() else { return }
+            if nowDate.isPast(than: session.date.date()) {
+                attendanceLabel.text = "출석"
+                attendanceLabel.textColor = .etc_green
+                markImageView.image = UIImage(named: "attendance")
+            } else {
+                attendanceLabel.text = "예정"
+                attendanceLabel.textColor = .gray_400
+                markImageView.isHidden = true
+            }
+        case .dontNeedAttendance:
+            attendanceLabel.text = "출석 체크 없는 날"
             attendanceLabel.textColor = .gray_400
-            markImageView.image = nil
-        } else {
+            markImageView.isHidden = true
+        case .dayOff:
             attendanceLabel.text = "쉬어가는 날"
             attendanceLabel.textColor = .gray_400
-            markImageView.image = nil
+            markImageView.isHidden = true
         }
     }
 }
