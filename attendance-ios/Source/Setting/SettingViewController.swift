@@ -98,6 +98,15 @@ final class SettingViewController: UIViewController {
             .observe(on: MainScheduler.instance)
             .bind(onNext: goToPolicyVC)
             .disposed(by: disposeBag)
+
+        viewModel.output.generation
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] _ in
+                if let num = self?.viewModel.output.generation.value {
+                    self?.generationLabel.text = "YAPP " + num + "기 회원"
+                }
+            })
+            .disposed(by: disposeBag)
     }
 
     func showHomeVC() {

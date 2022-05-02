@@ -102,8 +102,8 @@ extension UserDefaultsWorker {
         get(forKey: .generation)
     }
 
-    func setSessionCount(generation: Int) {
-        set(generation, forKey: .session)
+    func setSessionCount(session: Int) {
+        set(session, forKey: .session)
     }
 
     func getSessionCount() -> String? {

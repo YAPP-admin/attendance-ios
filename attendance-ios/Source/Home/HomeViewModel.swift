@@ -28,6 +28,7 @@ final class HomeViewModel: ViewModel {
         var goToSetting = PublishRelay<Void>()
         var goToHelp = PublishRelay<Void>()
         var goToHome = PublishRelay<Void>()
+        let yappConfig = BehaviorSubject<YappConfig?>(value: nil)
     }
 
     let input = Input()
@@ -35,6 +36,7 @@ final class HomeViewModel: ViewModel {
     let disposeBag = DisposeBag()
     let configWorker = ConfigWorker()
     var homeType = BehaviorRelay<HomeType>(value: .todaySession)
+    private let userDefaultsWorker = UserDefaultsWorker()
 
     init() {
         input.tapQR
@@ -60,6 +62,20 @@ final class HomeViewModel: ViewModel {
         configWorker.decodeSessionList { [weak self] result in
             switch result {
             case .success(let list): self?.output.sessionList.accept(list)
+            case .failure: ()
+            }
+        }
+
+        setupConfig()
+    }
+
+    func setupConfig() {
+        configWorker.decodeYappConfig { [weak self] result in
+            switch result {
+            case .success(let config):
+                self?.output.yappConfig.onNext(config)
+                self?.userDefaultsWorker.setGeneration(generation: config.generation)
+                self?.userDefaultsWorker.setSessionCount(session: config.sessionCount)
             case .failure: ()
             }
         }

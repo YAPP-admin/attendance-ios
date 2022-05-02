@@ -19,6 +19,7 @@ final class SettingViewModel: ViewModel {
     struct Output {
         var goToHome = PublishRelay<Void>()
         let goToPolicyVC = PublishRelay<Void>()
+        var generation = BehaviorRelay<String>(value: "")
     }
 
     let input = Input()
@@ -27,6 +28,8 @@ final class SettingViewModel: ViewModel {
     let db = Firestore.firestore()
     var documentID = BehaviorRelay<String>(value: "")
     var memberData = BehaviorRelay<Member?>(value: nil)
+
+    private let userDefaultsWorker = UserDefaultsWorker()
 
     init() {
         input.tapBack
@@ -38,5 +41,13 @@ final class SettingViewModel: ViewModel {
             .subscribe(onNext: { [weak self] _ in
                 self?.output.goToPolicyVC.accept(())
             }).disposed(by: disposeBag)
+
+        checkGeneration()
+    }
+
+    func checkGeneration() {
+        if let generation = userDefaultsWorker.getGeneration(), generation.isEmpty == false {
+            output.generation.accept(generation)
+        }
     }
 }
