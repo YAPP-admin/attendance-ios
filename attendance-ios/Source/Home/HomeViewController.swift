@@ -14,7 +14,7 @@ import UIKit
 final class HomeViewController: UIViewController {
     private let topView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(red: 0.955, green: 0.961, blue: 0.971, alpha: 0.8)
+        view.backgroundColor = .clear
         return view
     }()
     private let settingButton: UIButton = {
@@ -111,6 +111,7 @@ final class HomeViewController: UIViewController {
 
     private let viewModel = HomeViewModel()
     private var disposeBag = DisposeBag()
+    private let tapInfoView = UITapGestureRecognizer()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -123,19 +124,26 @@ final class HomeViewController: UIViewController {
     }
 
     func addSubViews() {
-        view.addSubview(topView)
-        topView.addSubview(settingButton)
+        let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
+        visualEffectView.frame = view.frame
+
         view.addSubview(tabView)
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
+        view.addSubview(topView)
+        topView.addSubview(visualEffectView)
+        topView.addSubview(settingButton)
         topView.snp.makeConstraints {
             $0.top.equalTo(view.snp.top)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(88)
         }
+        visualEffectView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
         settingButton.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
             $0.trailing.equalToSuperview().offset(-14)
+            $0.bottom.equalToSuperview()
             $0.width.height.equalTo(44)
         }
         tabView.snp.makeConstraints {
@@ -151,7 +159,7 @@ final class HomeViewController: UIViewController {
         infoStackView.addArrangedSubview(infoLabel)
         contentView.addSubview(contentsInfoView)
         scrollView.snp.makeConstraints {
-            $0.top.equalTo(topView.snp.bottom)
+            $0.top.equalTo(view.snp.top)
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalTo(tabView.snp.top)
         }
@@ -265,6 +273,12 @@ final class HomeViewController: UIViewController {
                     self?.attendanceView.view.isHidden = false
                 }
                 self?.tabView.setHomeType(type)
+            }).disposed(by: disposeBag)
+
+        infoView.addGestureRecognizer(tapInfoView)
+        tapInfoView.rx.event
+            .bind(onNext: { [weak self] _ in
+               
             }).disposed(by: disposeBag)
     }
 
