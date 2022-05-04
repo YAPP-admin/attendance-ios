@@ -26,8 +26,8 @@ final class ConfigWorker {
             self.remoteConfig.activate { _, _ in
                 guard let configString = self.remoteConfig[Config.sessionList.rawValue].stringValue,
                       let configData = configString.data(using: .utf8),
-                      let sesstions = try? JSONDecoder().decode([Session].self, from: configData) else { return }
-                completion(.success(sesstions))
+                      let sessions = try? JSONDecoder().decode([Session].self, from: configData) else { return }
+                completion(.success(sessions))
             }
         }
     }

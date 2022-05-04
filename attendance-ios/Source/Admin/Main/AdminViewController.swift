@@ -121,6 +121,13 @@ private extension AdminViewController {
             .observe(on: MainScheduler.instance)
             .bind(onNext: goToLoginVC)
             .disposed(by: disposeBag)
+
+        viewModel.output.sessionList
+            .subscribe(onNext: { [weak self] _ in
+                DispatchQueue.main.async {
+                    self?.reloadCollectionView()
+                }
+            }).disposed(by: disposeBag)
     }
 
 }
@@ -134,12 +141,20 @@ extension AdminViewController: UICollectionViewDelegateFlowLayout, UICollectionV
         sessionCollectionView.register(AdminSessionCell.self, forCellWithReuseIdentifier: AdminSessionCell.identifier)
     }
 
+    private func reloadCollectionView() {
+        sessionCollectionView.reloadData()
+    }
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        10
+        guard let sessionList = try? viewModel.output.sessionList.value() else { return 0 }
+        return sessionList.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AdminSessionCell.identifier, for: indexPath) as? AdminSessionCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AdminSessionCell.identifier, for: indexPath) as? AdminSessionCell,
+              let sessionList = try? viewModel.output.sessionList.value() else { return UICollectionViewCell() }
+        let session = sessionList[indexPath.row]
+        cell.updateUI(with: session)
         return cell
     }
 
@@ -152,8 +167,11 @@ extension AdminViewController: UICollectionViewDelegateFlowLayout, UICollectionV
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath.row)
-        goToManagementVC()
+        guard let sessionList = try? viewModel.output.sessionList.value() else { return }
+        let session = sessionList[indexPath.row]
+        if session.type == .needAttendance {
+            goToManagementVC()
+        }
     }
 
 }

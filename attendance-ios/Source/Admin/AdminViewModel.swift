@@ -9,6 +9,7 @@ import FirebaseRemoteConfig
 import RxCocoa
 import RxSwift
 import UIKit
+
 final class AdminViewModel: ViewModel {
 
     struct Input {
@@ -21,6 +22,7 @@ final class AdminViewModel: ViewModel {
     }
 
     struct Output {
+        let sessionList = BehaviorSubject<[Session]>(value: [])
         let goToLoginVC = PublishRelay<Void>()
         let goToGradeVC = PublishRelay<Void>()
         let goToManagementVC = PublishRelay<Void>()
@@ -29,12 +31,18 @@ final class AdminViewModel: ViewModel {
     let input = Input()
     let output = Output()
     let disposeBag = DisposeBag()
+    private let configWorker = ConfigWorker()
 
     init() {
         subscribeInputs()
+        setupSessionList()
     }
 
-    private func subscribeInputs() {
+}
+
+private extension AdminViewModel {
+
+    func subscribeInputs() {
         input.tapCardView
             .subscribe(onNext: { [weak self] _ in
                 self?.output.goToGradeVC.accept(())
@@ -49,6 +57,15 @@ final class AdminViewModel: ViewModel {
             .subscribe(onNext: { [weak self] _ in
                 self?.output.goToLoginVC.accept(())
             }).disposed(by: disposeBag)
+    }
+
+    func setupSessionList() {
+        configWorker.decodeSessionList { [weak self] result in
+            switch result {
+            case .success(let list): self?.output.sessionList.onNext(list)
+            case .failure: ()
+            }
+        }
     }
 
 }

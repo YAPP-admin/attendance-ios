@@ -55,8 +55,8 @@ final class AdminTodayView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configureTodayLabel()
-        configureTitleLabel()
+        updateTodayLabel()
+        updateTitleLabel()
         configureUI()
         configureLayout()
     }
@@ -69,11 +69,11 @@ final class AdminTodayView: UIView {
 
 extension AdminTodayView {
 
-    func configureTodayLabel() {
+    func updateTodayLabel() {
         todayLabel.text = "02.07"
     }
 
-    func configureTitleLabel() {
+    func updateTitleLabel() {
         let titleString = "휴얍"
         titleLabel.text = titleString
     }
