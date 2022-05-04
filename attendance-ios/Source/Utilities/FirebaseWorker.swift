@@ -99,7 +99,8 @@ extension FirebaseWorker {
             }
             guard let documents = snapshot?.documents else { return }
 
-            print("👉documents: \(documents)")
+            // TODO: - memberlist 반환
+            print("documents: \(documents)")
         }
     }
 

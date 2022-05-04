@@ -71,6 +71,7 @@
 		5EED02BD27D76D4200C52637 /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EED02BC27D76D4200C52637 /* SignUpViewModel.swift */; };
 		5EED02C027D7854F00C52637 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EED02BF27D7854F00C52637 /* AlertView.swift */; };
 		5EF06A6B2822B4B10021D25B /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF06A6A2822B4B10021D25B /* Array.swift */; };
+		5EF06A6D2822B7010021D25B /* PrintFn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF06A6C2822B7010021D25B /* PrintFn.swift */; };
 		5EF69EA327A7DAF8007E9735 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69EA227A7DAF8007E9735 /* AppDelegate.swift */; };
 		5EF69EA527A7DAF8007E9735 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69EA427A7DAF8007E9735 /* SceneDelegate.swift */; };
 		5EF69EA727A7DAF8007E9735 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69EA627A7DAF8007E9735 /* LoginViewController.swift */; };
@@ -153,6 +154,7 @@
 		5EED02BC27D76D4200C52637 /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 		5EED02BF27D7854F00C52637 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		5EF06A6A2822B4B10021D25B /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
+		5EF06A6C2822B7010021D25B /* PrintFn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrintFn.swift; sourceTree = "<group>"; };
 		5EF69E9F27A7DAF8007E9735 /* attendance-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "attendance-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5EF69EA227A7DAF8007E9735 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5EF69EA427A7DAF8007E9735 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -221,6 +223,7 @@
 				5EF69EC127A7EFFF007E9735 /* BaseViewModel.swift */,
 				52EFD5F3280FF92600065FEB /* BaseTableViewCell.swift */,
 				5EED02BF27D7854F00C52637 /* AlertView.swift */,
+				5EF06A6C2822B7010021D25B /* PrintFn.swift */,
 				527657F927C387CB0080DA32 /* View */,
 			);
 			path = Common;
@@ -706,6 +709,7 @@
 				5E6ACB3C28086A7300ADF2BB /* KakaoLoginWorker.swift in Sources */,
 				5E7AEF2427E21D680059FB3A /* AdminViewModel.swift in Sources */,
 				522EFA45281A649E00EF09C7 /* SettingPrivacyPolicyViewController.swift in Sources */,
+				5EF06A6D2822B7010021D25B /* PrintFn.swift in Sources */,
 				5E68F167281197810093B985 /* UIString.swift in Sources */,
 				5EAA7A0727FF24CB00BC7397 /* CollectionViewLeftAlignFlowLayout.swift in Sources */,
 			);
