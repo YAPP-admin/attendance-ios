@@ -13,10 +13,12 @@ import FirebaseFirestore
 final class SettingViewModel: ViewModel {
     struct Input {
         let tapBack = PublishRelay<Void>()
+        let tapPolicyView = PublishRelay<Void>()
     }
 
     struct Output {
         var goToHome = PublishRelay<Void>()
+        let goToPolicyVC = PublishRelay<Void>()
     }
 
     let input = Input()
@@ -31,6 +33,12 @@ final class SettingViewModel: ViewModel {
             .subscribe(onNext: { [weak self] _ in
                 self?.output.goToHome.accept(())
             }).disposed(by: disposeBag)
+
+        input.tapPolicyView
+            .subscribe(onNext: { [weak self] _ in
+                self?.output.goToPolicyVC.accept(())
+            }).disposed(by: disposeBag)
+
         getCollections()
     }
 }

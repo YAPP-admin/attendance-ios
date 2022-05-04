@@ -14,20 +14,10 @@ import UIKit
 extension SettingViewController {
     func addSubViews() {
         view.addSubview(navigationBarView)
-        navigationBarView.addSubview(backButton)
-        navigationBarView.addSubview(titleLabel)
         navigationBarView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(45)
-        }
-        titleLabel.snp.makeConstraints {
-            $0.center.equalToSuperview()
-        }
-        backButton.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-            $0.leading.equalToSuperview().offset(7)
-            $0.width.height.equalTo(44)
+            $0.height.equalTo(44)
         }
 
         view.addSubview(generationView)

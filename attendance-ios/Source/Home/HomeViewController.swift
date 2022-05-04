@@ -14,7 +14,7 @@ import UIKit
 final class HomeViewController: UIViewController {
     private let topView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white.withAlphaComponent(0.8)
+        view.backgroundColor = UIColor(red: 0.955, green: 0.961, blue: 0.971, alpha: 0.8)
         return view
     }()
     private let settingButton: UIButton = {
@@ -25,7 +25,7 @@ final class HomeViewController: UIViewController {
         return button
     }()
     private lazy var tabView: HomeBottomTabView = {
-        let view = HomeBottomTabView()
+        let view = HomeBottomTabView(viewModel.homeType.value)
         return view
     }()
     private let scrollView: UIScrollView = {
@@ -44,7 +44,7 @@ final class HomeViewController: UIViewController {
     }()
     private let bgView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor(red: 0.953, green: 0.961, blue: 0.973, alpha: 1)
         return view
     }()
     private let illustView: UIImageView = {
@@ -88,14 +88,12 @@ final class HomeViewController: UIViewController {
     }()
     private let dateLabel: UILabel = {
         let label = UILabel()
-        label.text = "02.07"
         label.style(.Body1)
         label.textColor = .gray_600
         return label
     }()
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "YAPP 3번째 데브 캠프\n및 성과 공유회"
         label.style(.H1)
         label.textColor = .gray_1000
         label.numberOfLines = 0
@@ -103,12 +101,12 @@ final class HomeViewController: UIViewController {
     }()
     private let contentsLabel: UILabel = {
         let label = UILabel()
-        label.text = "드디어 마지막 성과 공유를 하는 세션입니다!\n지금까지 하나의 팀으로서 열심히 작업한 결과물을 YAPP 전원에게 보여주세요 🎉"
         label.style(.Body1)
         label.textColor = .gray_800
         label.numberOfLines = 0
         return label
     }()
+    private let attendanceView = HomeAttendanceCheckViewController()
 
     private let viewModel = HomeViewModel()
     private var disposeBag = DisposeBag()
@@ -117,6 +115,7 @@ final class HomeViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         navigationController?.isNavigationBarHidden = true
+        attendanceView.view.isHidden = true
 
         addSubViews()
         bind()
@@ -129,9 +128,9 @@ final class HomeViewController: UIViewController {
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         topView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            $0.top.equalTo(view.snp.top)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(44)
+            $0.height.equalTo(88)
         }
         settingButton.snp.makeConstraints {
             $0.centerY.equalToSuperview()
@@ -210,6 +209,15 @@ final class HomeViewController: UIViewController {
             $0.trailing.equalToSuperview().offset(-24)
             $0.bottom.equalToSuperview().offset(-40)
         }
+
+        attendanceView.view.frame = self.view.frame
+        view.addSubview(attendanceView.view)
+        addChild(attendanceView)
+        attendanceView.view.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            $0.leading.trailing.equalToSuperview()
+            $0.bottom.equalTo(tabView.snp.top)
+        }
     }
 
     func bind() {
@@ -226,10 +234,37 @@ final class HomeViewController: UIViewController {
             .bind(to: viewModel.input.tapSetting)
             .disposed(by: disposeBag)
 
+        viewModel.output.sessionList
+            .subscribe(onNext: { [weak self] sessionList in
+                DispatchQueue.main.async {
+                    self?.updateSessionInfo()
+                }
+            }).disposed(by: disposeBag)
+
         viewModel.output.goToSetting
             .observe(on: MainScheduler.instance)
             .bind(onNext: showSettingVC)
             .disposed(by: disposeBag)
+
+        tabView.tapButton
+            .subscribe(onNext: { [weak self] type in
+                self?.viewModel.homeType.accept(type)
+            }).disposed(by: disposeBag)
+
+        viewModel.homeType
+            .subscribe(onNext: { [weak self] type in
+                switch type {
+                case .todaySession:
+                    self?.topView.isHidden = false
+                    self?.scrollView.isHidden = false
+                    self?.attendanceView.view.isHidden = true
+                case .attendanceCheck:
+                    self?.topView.isHidden = true
+                    self?.scrollView.isHidden = true
+                    self?.attendanceView.view.isHidden = false
+                }
+                self?.tabView.setHomeType(type)
+            }).disposed(by: disposeBag)
     }
 
     func showQRVC() {
@@ -242,4 +277,21 @@ final class HomeViewController: UIViewController {
         let vc = SettingViewController()
         self.navigationController?.pushViewController(vc, animated: true)
     }
+
+    func updateSessionInfo() {
+        guard let sessionList = try? viewModel.output.sessionList.value(), let session = sessionList.todaySession() else { return }
+        dateLabel.text = session.date.date()?.mmdd() ?? ""
+        titleLabel.text = session.title
+        contentsLabel.text = session.description
+    }
+}
+
+private extension Array where Element == Session {
+
+    func todaySession() -> Session? {
+        guard let nowDate = Date().startDate() else { return nil }
+        lazy var sessions = self.filter { nowDate.isFuture(than: $0.date.date()) }
+        return sessions.first
+    }
+
 }
