@@ -14,16 +14,16 @@ final class AdminViewModel: ViewModel {
     struct Input {
         let tapCardView = PublishRelay<Void>()
         let tapManagementButton = PublishRelay<Void>()
-        let tapSettingButton = PublishRelay<Void>()
+        let tapLogoutButton = PublishRelay<Void>()
 
         let selectedIndexInManagement = BehaviorSubject<Int?>(value: nil)
         let selectedAttenceInManagement = BehaviorSubject<AttendanceType?>(value: nil)
     }
 
     struct Output {
+        let goToLoginVC = PublishRelay<Void>()
         let goToGradeVC = PublishRelay<Void>()
         let goToManagementVC = PublishRelay<Void>()
-        let goToSettingVC = PublishRelay<Void>()
     }
 
     let input = Input()
@@ -45,9 +45,9 @@ final class AdminViewModel: ViewModel {
                 self?.output.goToManagementVC.accept(())
             }).disposed(by: disposeBag)
 
-        input.tapSettingButton
+        input.tapLogoutButton
             .subscribe(onNext: { [weak self] _ in
-                self?.output.goToSettingVC.accept(())
+                self?.output.goToLoginVC.accept(())
             }).disposed(by: disposeBag)
     }
 

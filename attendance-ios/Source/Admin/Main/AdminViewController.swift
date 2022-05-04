@@ -21,10 +21,10 @@ final class AdminViewController: UIViewController {
         static let cellHeight: CGFloat = 60
     }
 
-    private let settingButton: UIButton = {
+    private let logoutButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .clear
-        button.setImage(UIImage(named: "setting"), for: .normal)
+        button.setImage(UIImage(named: "logout"), for: .normal)
         button.contentEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         return button
     }()
@@ -99,10 +99,10 @@ private extension AdminViewController {
                 self?.viewModel.input.tapManagementButton.accept(())
             }).disposed(by: disposeBag)
 
-        settingButton.rx.controlEvent([.touchUpInside])
+        logoutButton.rx.controlEvent([.touchUpInside])
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
-                self?.viewModel.input.tapSettingButton.accept(())
+                self?.viewModel.input.tapLogoutButton.accept(())
             }).disposed(by: disposeBag)
     }
 
@@ -117,9 +117,9 @@ private extension AdminViewController {
             .bind(onNext: goToManagementVC)
             .disposed(by: disposeBag)
 
-        viewModel.output.goToSettingVC
+        viewModel.output.goToLoginVC
             .observe(on: MainScheduler.instance)
-            .bind(onNext: goToSettingVC)
+            .bind(onNext: goToLoginVC)
             .disposed(by: disposeBag)
     }
 
@@ -175,8 +175,11 @@ private extension AdminViewController {
         navigationController?.pushViewController(managementVC, animated: true)
     }
 
-    func goToSettingVC() {
-        print("goToSettingVC")
+    func goToLoginVC() {
+        let loginVC = LoginViewController()
+        let navC = UINavigationController(rootViewController: loginVC)
+        navC.modalPresentationStyle = .fullScreen
+        self.present(navC, animated: true)
     }
 
     func setupDelegate() {
@@ -193,9 +196,9 @@ private extension AdminViewController {
     }
 
     func configureLayout() {
-        view.addSubviews([settingButton, cardView, dividerView, titleLabel, todayView, sessionTitleLabel, sessionCollectionView])
+        view.addSubviews([logoutButton, cardView, dividerView, titleLabel, todayView, sessionTitleLabel, sessionCollectionView])
 
-        settingButton.snp.makeConstraints {
+        logoutButton.snp.makeConstraints {
             $0.top.equalToSuperview().inset(Constants.verticalPadding)
             $0.right.equalToSuperview().inset(Constants.horizontalPadding)
             $0.width.height.equalTo(44)
