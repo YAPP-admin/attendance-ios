@@ -34,7 +34,11 @@ final class AdminGradeViewController: UIViewController {
         return button
     }()
 
-    private let adminMesasgeView = AdminMessageView()
+    private let adminMesasgeView: AdminMessageView = {
+        let view = AdminMessageView()
+        view.configureLabel("점수가 실시간으로 반영되고 있어요")
+        return view
+    }()
 
     private let teamCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -69,7 +73,6 @@ final class AdminGradeViewController: UIViewController {
         setupDelegate()
         setupCollectionView()
         setupNavigationTitle()
-        setupMessage()
 
         configureUI()
         configureLayout()
@@ -111,10 +114,6 @@ private extension AdminGradeViewController {
         navigationTitleLabel.text = "누적 출결 점수"
     }
 
-    func setupMessage() {
-        adminMesasgeView.configureLabel("10명이 출석했어요")
-    }
-
 }
 
 // MARK: - CollectionView
@@ -154,7 +153,6 @@ private extension AdminGradeViewController {
 
     func configureUI() {
         view.backgroundColor = .white
-        adminMesasgeView.configureLabel("점수가 실시간으로 반영되고 있어요")
     }
 
     func configureLayout() {
