@@ -47,6 +47,12 @@ final class AdminTodayView: UIView {
         return button
     }()
 
+    private let dividerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .gray_300
+        return view
+    }()
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureTodayLabel()
@@ -64,8 +70,7 @@ final class AdminTodayView: UIView {
 extension AdminTodayView {
 
     func configureTodayLabel() {
-        let todayString = "02.07"
-        todayLabel.text = "\(todayString) 오늘"
+        todayLabel.text = "02.07"
     }
 
     func configureTitleLabel() {
@@ -79,10 +84,11 @@ extension AdminTodayView {
 private extension AdminTodayView {
 
     func configureUI() {
+
     }
 
     func configureLayout() {
-        addSubviews([todayLabel, stackView])
+        addSubviews([todayLabel, stackView, dividerView])
         stackView.addArrangedSubviews([titleLabel, managementButton])
 
         todayLabel.snp.makeConstraints {
@@ -90,11 +96,16 @@ private extension AdminTodayView {
             $0.left.right.equalToSuperview()
         }
         stackView.snp.makeConstraints {
-            $0.bottom.left.right.equalToSuperview()
+            $0.top.equalTo(todayLabel.snp.bottom).offset(6)
+            $0.left.right.equalToSuperview()
             $0.height.equalTo(Constants.buttonSize.height)
         }
         managementButton.snp.makeConstraints {
             $0.width.equalTo(Constants.buttonSize.width)
+        }
+        dividerView.snp.makeConstraints {
+            $0.bottom.left.right.equalToSuperview()
+            $0.height.equalTo(1)
         }
     }
 
