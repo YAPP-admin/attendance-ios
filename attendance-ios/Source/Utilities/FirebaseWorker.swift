@@ -92,6 +92,17 @@ extension FirebaseWorker {
 // MARK: - Read
 extension FirebaseWorker {
 
+    func getAllMemberList(completion: @escaping (Result<[Member], Error>) -> Void) {
+        memberCollectionRef.getDocuments { snapshot, error in
+            if let error = error {
+                completion(.failure(error))
+            }
+            guard let documents = snapshot?.documents else { return }
+
+            print("👉documents: \(documents)")
+        }
+    }
+
     /// 멤버 문서 id 배열을 반환합니다.
     func getMemberDocumentIdList(completion: @escaping (Result<[String], Error>) -> Void) {
         memberCollectionRef.getDocuments { snapshot, error in

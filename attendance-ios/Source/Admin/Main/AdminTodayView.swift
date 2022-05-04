@@ -55,8 +55,6 @@ final class AdminTodayView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        updateTodayLabel()
-        updateTitleLabel()
         configureUI()
         configureLayout()
     }
@@ -69,13 +67,10 @@ final class AdminTodayView: UIView {
 
 extension AdminTodayView {
 
-    func updateTodayLabel() {
-        todayLabel.text = "02.07"
-    }
-
-    func updateTitleLabel() {
-        let titleString = "휴얍"
-        titleLabel.text = titleString
+    func updateUI(session: Session) {
+        let date = session.date.date()?.mmdd()
+        todayLabel.text = date
+        titleLabel.text = session.title
     }
 
 }

@@ -22,6 +22,7 @@ final class AdminViewModel: ViewModel {
     }
 
     struct Output {
+        let memberList = BehaviorSubject<[Member]>(value: [])
         let sessionList = BehaviorSubject<[Session]>(value: [])
         let goToLoginVC = PublishRelay<Void>()
         let goToGradeVC = PublishRelay<Void>()
@@ -31,10 +32,12 @@ final class AdminViewModel: ViewModel {
     let input = Input()
     let output = Output()
     let disposeBag = DisposeBag()
+    private let firebaseWorker = FirebaseWorker()
     private let configWorker = ConfigWorker()
 
     init() {
         subscribeInputs()
+        setupMemberList()
         setupSessionList()
     }
 
@@ -57,6 +60,15 @@ private extension AdminViewModel {
             .subscribe(onNext: { [weak self] _ in
                 self?.output.goToLoginVC.accept(())
             }).disposed(by: disposeBag)
+    }
+
+    func setupMemberList() {
+        firebaseWorker.getAllMemberList { [weak self] result in
+            switch result {
+            case .success(let list): ()
+            case .failure: ()
+            }
+        }
     }
 
     func setupSessionList() {

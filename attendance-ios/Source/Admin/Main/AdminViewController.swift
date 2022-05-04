@@ -125,6 +125,7 @@ private extension AdminViewController {
         viewModel.output.sessionList
             .subscribe(onNext: { [weak self] _ in
                 DispatchQueue.main.async {
+                    self?.updateTodayView()
                     self?.reloadCollectionView()
                 }
             }).disposed(by: disposeBag)
@@ -178,6 +179,11 @@ extension AdminViewController: UICollectionViewDelegateFlowLayout, UICollectionV
 
 // MARK: - etc
 private extension AdminViewController {
+
+    func updateTodayView() {
+        guard let sessionList = try? viewModel.output.sessionList.value(), let todaySession = sessionList.todaySession() else { return }
+        todayView.updateUI(session: todaySession)
+    }
 
     func goToGradeVC() {
         let gradeVC = AdminGradeViewController(viewModel: viewModel)
