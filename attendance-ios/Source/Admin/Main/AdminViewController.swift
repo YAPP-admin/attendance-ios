@@ -25,7 +25,6 @@ final class AdminViewController: UIViewController {
         let button = UIButton()
         button.backgroundColor = .clear
         button.setImage(UIImage(named: "logout"), for: .normal)
-        button.contentEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         return button
     }()
 
@@ -217,6 +216,7 @@ private extension AdminViewController {
 
     func configureUI() {
         view.backgroundColor = .white
+        navigationController?.navigationBar.isHidden = true
     }
 
     func configureLayout() {
