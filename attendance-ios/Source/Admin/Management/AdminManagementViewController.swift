@@ -214,7 +214,11 @@ private extension AdminManagementViewController {
     }
 
     func setupMessage() {
-        adminMesasgeView.configureLabel("10명이 출석했어요")
+        guard let todaySession = try? viewModel.output.todaySession.value(),
+              let memberList = try? viewModel.output.memberList.value() else { return }
+        let todayAttendances = memberList.flatMap { $0.attendances }.filter { $0.sessionId == todaySession.sessionId }
+        let attendances = todayAttendances.filter { $0.type.text == AttendanceType.attendance.text }
+        adminMesasgeView.configureLabel("\(attendances.count)명이 출석했어요")
     }
 
 }
