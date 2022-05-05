@@ -7,6 +7,18 @@
 
 import Foundation
 
+extension Array where Element: Equatable {
+
+    mutating func toggleElement(_ element: Element) {
+        if let index = self.firstIndex(where: { $0 == element }) {
+            self.remove(at: index)
+        } else {
+            self.append(element)
+        }
+    }
+
+}
+
 extension Array where Element == Session {
 
     func todaySession() -> Session? {
