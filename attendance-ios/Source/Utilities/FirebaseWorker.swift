@@ -116,10 +116,7 @@ extension FirebaseWorker {
             case .success(let documentId):
                 let ref = self.memberCollectionRef.document(documentId)
                 // TODO: - 에러
-                let fields = ["attendances": attendances]
-                ref.updateData(fields) { error in
-                    print("error: \(error)")
-                }
+                ref.updateData(["attendances": attendances])
             case .failure: ()
             }
         }
