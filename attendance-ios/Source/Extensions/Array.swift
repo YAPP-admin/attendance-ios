@@ -7,6 +7,20 @@
 
 import Foundation
 
+extension Array {
+
+    subscript(safe index: Int) -> Element? {
+        get {
+            return indices ~= index ? self[index] : nil
+        }
+        set {
+            guard indices ~= index else { return }
+            self[safe: index] = newValue
+        }
+    }
+
+}
+
 extension Array where Element: Equatable {
 
     mutating func toggleElement(_ element: Element) {

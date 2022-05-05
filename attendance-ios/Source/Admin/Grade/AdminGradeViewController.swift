@@ -153,26 +153,31 @@ extension AdminGradeViewController: UICollectionViewDelegateFlowLayout, UICollec
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AdminGradeCell.identifier, for: indexPath) as? AdminGradeCell,
               var indexList = try? viewModel.input.selectedTeamIndexListInGrade.value() else { return .init() }
+        let index = indexPath.row
 
         cell.chevronButton.rx.tap
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
                 print("AdminGradeCell 버튼 클릭")
-                let index = indexPath.row
                 indexList.toggleElement(index)
                 self?.viewModel.input.selectedTeamIndexListInGrade.onNext(indexList)
             }).disposed(by: disposeBag)
+
+        if let teamList = try? viewModel.output.teamList.value(), let team = teamList[safe: index] {
+            let teamName = team.name()
+            cell.updateTeamNameLabel(name: teamName)
+        }
 
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        guard let indexList = try? viewModel.input.selectedTeamIndexListInGrade.value() else { return .zero }
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AdminGradeCell.identifier, for: indexPath) as? AdminGradeCell else { return .zero }
-        var height = CGFloat.zero
-        height = Constants.cellHeight*3
+//        guard let indexList = try? viewModel.input.selectedTeamIndexListInGrade.value(),
+//              let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AdminGradeCell.identifier, for: indexPath) as? AdminGradeCell else { return .zero }
 
         // TODO: - Show/Hide
+        var height = CGFloat.zero
+        height = Constants.cellHeight*3
 //        if indexList.contains(indexPath.row) == true {
 //            height = Constants.cellHeight*3
 //            cell.showMembers()

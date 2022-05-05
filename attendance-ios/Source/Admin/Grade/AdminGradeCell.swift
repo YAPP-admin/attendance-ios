@@ -29,7 +29,6 @@ final class AdminGradeCell: UICollectionViewCell {
         let label = UILabel()
         label.font = .Pretendard(type: .semiBold, size: 18)
         label.textColor = .gray_1200
-        label.text = "All-rounder 1팀"
         return label
     }()
 
@@ -65,6 +64,15 @@ final class AdminGradeCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         disposeBag = DisposeBag()
+    }
+
+}
+
+// MARK: - Update
+extension AdminGradeCell {
+
+    func updateTeamNameLabel(name: String) {
+        teamNameLabel.text = name
     }
 
 }
