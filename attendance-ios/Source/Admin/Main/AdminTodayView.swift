@@ -15,7 +15,7 @@ final class AdminTodayView: UIView {
         static let buttonSize: CGSize = .init(width: 57, height: 33)
     }
 
-    private let todayLabel: UILabel = {
+    private let dateLabel: UILabel = {
         let label = UILabel()
         label.font = .Pretendard(type: .regular, size: 14)
         label.textColor = .gray_600
@@ -55,7 +55,6 @@ final class AdminTodayView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configureUI()
         configureLayout()
     }
 
@@ -69,7 +68,7 @@ extension AdminTodayView {
 
     func updateUI(session: Session) {
         let date = session.date.date()?.mmdd()
-        todayLabel.text = date
+        dateLabel.text = date
         titleLabel.text = session.title
     }
 
@@ -78,20 +77,16 @@ extension AdminTodayView {
 // MARK: - UI
 private extension AdminTodayView {
 
-    func configureUI() {
-
-    }
-
     func configureLayout() {
-        addSubviews([todayLabel, stackView, dividerView])
+        addSubviews([dateLabel, stackView, dividerView])
         stackView.addArrangedSubviews([titleLabel, managementButton])
 
-        todayLabel.snp.makeConstraints {
+        dateLabel.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.left.right.equalToSuperview()
         }
         stackView.snp.makeConstraints {
-            $0.top.equalTo(todayLabel.snp.bottom).offset(6)
+            $0.top.equalTo(dateLabel.snp.bottom).offset(6)
             $0.left.right.equalToSuperview()
             $0.height.equalTo(Constants.buttonSize.height)
         }
