@@ -22,7 +22,7 @@ final class AdminManagementViewController: UIViewController {
     // MARK: Navigation
     private let navigationTitleLabel: UILabel = {
         let label = UILabel()
-        label.font = .Pretendard(type: .regular, size: 18)
+        label.font = .Pretendard(type: .medium, size: 18)
         label.textColor = .gray_1200
         label.numberOfLines = 1
         label.textAlignment = .center
@@ -46,18 +46,21 @@ final class AdminManagementViewController: UIViewController {
     }()
 
     private let bottomSheetView = AdminBottomSheetView()
-    var sessionId: Int = 0
+
+    private var session: Session
 
     private let viewModel: AdminViewModel
     private var disposeBag = DisposeBag()
 
-    init(viewModel: AdminViewModel) {
+    init(viewModel: AdminViewModel, session: Session) {
         self.viewModel = viewModel
+        self.session = session
         super.init(nibName: nil, bundle: nil)
     }
 
-    init?(coder: NSCoder, viewModel: AdminViewModel) {
+    init?(coder: NSCoder, viewModel: AdminViewModel, session: Session) {
         self.viewModel = viewModel
+        self.session = session
         super.init(coder: coder)
     }
 
@@ -83,15 +86,6 @@ final class AdminManagementViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationItem.hidesBackButton = true
-    }
-
-}
-
-// MARK: - Setup
-extension AdminManagementViewController {
-
-    func setupSessionId(sessionId: Int) {
-        self.sessionId = sessionId
     }
 
 }
@@ -122,8 +116,8 @@ extension AdminManagementViewController: AdminBottomSheetViewDelegate {
 
     // TODO: - 출결 업데이트
     func didSelect(at type: AttendanceType) {
-        print("VC AttendanceType: \(type)")
         guard let member = try? viewModel.input.selectedMemberInManagement.value() else { return }
+        let sessionId = session.sessionId
         var attendances = member.attendances
         attendances[sessionId].type = AttendanceData(point: type.point, text: type.text)
         viewModel.updateAttendances(memberId: member.id, attendances: attendances)
@@ -167,7 +161,7 @@ extension AdminManagementViewController: UICollectionViewDelegateFlowLayout, UIC
             cell.updateTeamNameLabel(name: teamName)
 
             let members = memberList.filter { $0.team == team  }
-            cell.setupSessionId(sessionId: sessionId)
+            cell.setupSessionId(sessionId: session.sessionId)
             cell.setupTeam(team: team)
             cell.setupMembers(members: members)
         }
@@ -210,7 +204,7 @@ private extension AdminManagementViewController {
     }
 
     func setupNavigationTitle() {
-        navigationTitleLabel.text = "YAPP 오리엔테이션"
+        navigationTitleLabel.text = session.title
     }
 
     func setupMessage() {

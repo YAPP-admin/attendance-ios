@@ -96,7 +96,7 @@ private extension AdminViewController {
         todayView.managementButton.rx.controlEvent([.touchUpInside])
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
-                self?.viewModel.input.tapManagementButton.accept(())
+                self?.goToTodayManagementVC()
             }).disposed(by: disposeBag)
 
         logoutButton.rx.controlEvent([.touchUpInside])
@@ -110,11 +110,6 @@ private extension AdminViewController {
         viewModel.output.goToGradeVC
             .observe(on: MainScheduler.instance)
             .bind(onNext: goToGradeVC)
-            .disposed(by: disposeBag)
-
-        viewModel.output.goToManagementVC
-            .observe(on: MainScheduler.instance)
-            .bind(onNext: goToManagementVC)
             .disposed(by: disposeBag)
 
         viewModel.output.goToLoginVC
@@ -171,7 +166,7 @@ extension AdminViewController: UICollectionViewDelegateFlowLayout, UICollectionV
         guard let sessionList = try? viewModel.output.sessionList.value() else { return }
         let session = sessionList[indexPath.row]
         if session.type == .needAttendance {
-            goToManagementVC()
+            goToManagementVC(session: session)
         }
     }
 
@@ -192,15 +187,18 @@ private extension AdminViewController {
         navigationController?.pushViewController(gradeVC, animated: true)
     }
 
-    func goToManagementVC() {
-        let managementVC = AdminManagementViewController(viewModel: viewModel)
+    func goToTodayManagementVC() {
+        guard let todaySession = try? viewModel.output.todaySession.value() else { return }
+        let managementVC = AdminManagementViewController(viewModel: viewModel, session: todaySession)
         navigationItem.backButtonTitle = ""
         navigationController?.navigationBar.tintColor = .gray_800
+        navigationController?.pushViewController(managementVC, animated: true)
+    }
 
-        guard let todaySession = try? viewModel.output.todaySession.value() else { return }
-        let sessionId = todaySession.sessionId
-        managementVC.setupSessionId(sessionId: sessionId)
-
+    func goToManagementVC(session: Session) {
+        let managementVC = AdminManagementViewController(viewModel: viewModel, session: session)
+        navigationItem.backButtonTitle = ""
+        navigationController?.navigationBar.tintColor = .gray_800
         navigationController?.pushViewController(managementVC, animated: true)
     }
 

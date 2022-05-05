@@ -14,7 +14,6 @@ final class AdminViewModel: ViewModel {
 
     struct Input {
         let tapCardView = PublishRelay<Void>()
-        let tapManagementButton = PublishRelay<Void>()
         let tapLogoutButton = PublishRelay<Void>()
 
         let selectedTeamIndexListInGrade = BehaviorSubject<[Int]>(value: [])
@@ -30,7 +29,6 @@ final class AdminViewModel: ViewModel {
         let showBottomsheet = PublishRelay<Void>()
         let goToLoginVC = PublishRelay<Void>()
         let goToGradeVC = PublishRelay<Void>()
-        let goToManagementVC = PublishRelay<Void>()
     }
 
     let input = Input()
@@ -66,11 +64,6 @@ private extension AdminViewModel {
         input.tapCardView
             .subscribe(onNext: { [weak self] _ in
                 self?.output.goToGradeVC.accept(())
-            }).disposed(by: disposeBag)
-
-        input.tapManagementButton
-            .subscribe(onNext: { [weak self] _ in
-                self?.output.goToManagementVC.accept(())
             }).disposed(by: disposeBag)
 
         input.tapLogoutButton
