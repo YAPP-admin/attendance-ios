@@ -115,8 +115,8 @@ extension FirebaseWorker {
             switch result {
             case .success(let documentId):
                 let ref = self.memberCollectionRef.document(documentId)
-                // TODO: - 기존 문서 업데이트시 에러 발생
-                ref.updateData(["attendances": attendances])
+                // TODO: - 기존 문서 업데이트시 에러 발생, 수정 필요
+//                ref.updateData(["attendances": attendances])
             case .failure: ()
             }
         }
