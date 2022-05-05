@@ -10,6 +10,8 @@ import Foundation
 enum UserDefaultsKey: String {
     case kakaoTalkId
     case appleId
+    case generation
+    case session
 }
 
 final class UserDefaultsWorker {
@@ -88,5 +90,23 @@ extension UserDefaultsWorker {
     func removeAppleId() {
         remove(forKey: .appleId)
     }
+}
 
+// MARK: - YappConfig
+extension UserDefaultsWorker {
+    func setGeneration(generation: Int) {
+        set(generation, forKey: .generation)
+    }
+
+    func getGeneration() -> String? {
+        get(forKey: .generation)
+    }
+
+    func setSessionCount(session: Int) {
+        set(session, forKey: .session)
+    }
+
+    func getSessionCount() -> String? {
+        get(forKey: .session)
+    }
 }

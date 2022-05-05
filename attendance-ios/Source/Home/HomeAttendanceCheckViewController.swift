@@ -68,9 +68,17 @@ final class HomeAttendanceCheckViewController: UIViewController {
             .observe(on: MainScheduler.instance)
             .bind(onNext: showHelpVC)
             .disposed(by: disposeBag)
+
+        viewModel.output.sessionList
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] list in
+                UIView.performWithoutAnimation {
+                    self?.tableView.reloadData()
+                }
+            }).disposed(by: disposeBag)
     }
 
-    func showHelpVC() {
+    private func showHelpVC() {
         let helpVC = HelpViewController()
         self.navigationController?.pushViewController(helpVC, animated: true)
     }
@@ -87,7 +95,7 @@ extension HomeAttendanceCheckViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row != 0 {
-            let item = viewModel.list[indexPath.row - 1]
+            let item = viewModel.output.sessionList.value[indexPath.row - 1]
             let detailVC = HomeAttendanceDetailViewController()
             detailVC.setType(item)
             self.navigationController?.pushViewController(detailVC, animated: true)
@@ -97,7 +105,7 @@ extension HomeAttendanceCheckViewController: UITableViewDelegate {
 
 extension HomeAttendanceCheckViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.list.count + 1
+        return viewModel.output.sessionList.value.count + 1
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -110,7 +118,7 @@ extension HomeAttendanceCheckViewController: UITableViewDataSource {
             }
         } else {
             if let cell = tableView.dequeueReusableCell(withIdentifier: "HomeAttendanceCheckTableViewCell", for: indexPath) as? HomeAttendanceCheckTableViewCell {
-                cell.updateUI(viewModel.list[indexPath.row - 1])
+                cell.updateUI(viewModel.output.sessionList.value[indexPath.row - 1])
                 return cell
             }
         }

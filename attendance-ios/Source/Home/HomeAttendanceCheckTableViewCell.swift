@@ -50,9 +50,10 @@ final class HomeAttendanceCheckTableViewCell: BaseTableViewCell {
         label.textColor = .gray_1200
         label.font = .Pretendard(type: .bold, size: 18)
         label.text = "오리엔테이션"
+        label.numberOfLines = 1
         return label
     }()
-    private let contentLabel: UILabel = {
+    private let descriptionLabel: UILabel = {
         let label = UILabel()
         label.textColor = .gray_800
         label.font = .Pretendard(type: .regular, size: 16)
@@ -88,37 +89,44 @@ final class HomeAttendanceCheckTableViewCell: BaseTableViewCell {
         hStackView.addArrangedSubview(attendanceLabel)
         hStackView.addArrangedSubview(dateLabel)
         vStackView.addArrangedSubview(titleLabel)
-        vStackView.addArrangedSubview(contentLabel)
+        vStackView.addArrangedSubview(descriptionLabel)
         hStackView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview()
         }
     }
 
-    func updateUI(_ type: AttendanceType) {
-        if type.text == "출석" {
-            attendanceLabel.text = "출석"
-            attendanceLabel.textColor = .etc_green
-            markImageView.image = UIImage(named: "attendance")
-        } else if type.text == "지각" {
-            attendanceLabel.text = "지각"
-            attendanceLabel.textColor = .etc_yellow_font
-            markImageView.image = UIImage(named: "tardy")
-        } else if type.text == "결석" {
-            attendanceLabel.text = "결석"
-            attendanceLabel.textColor = .etc_red
-            markImageView.image = UIImage(named: "absence")
-        } else if type.text == "출석 인정" {
-            attendanceLabel.text = "출석 인정"
-            attendanceLabel.textColor = .etc_green
-            markImageView.image = UIImage(named: "attendance")
-        } else if type.text == "예정" {
-            attendanceLabel.text = "예정"
+    func updateUI(_ session: Session) {
+        titleLabel.text = session.title
+        descriptionLabel.text = session.description
+        dateLabel.text = session.date.date()?.mmdd() ?? ""
+        switch session.type {
+        case .needAttendance:
+            guard let nowDate = Date().startDate() else { return }
+            if nowDate.isPast(than: session.date.date()) {
+                attendanceLabel.text = "출석"
+                attendanceLabel.textColor = .etc_green
+                markImageView.image = UIImage(named: "attendance")
+                titleLabel.textColor = .gray_1200
+                descriptionLabel.textColor = .gray_800
+            } else {
+                attendanceLabel.text = "예정"
+                attendanceLabel.textColor = .gray_400
+                markImageView.image = nil
+                titleLabel.textColor = .gray_600
+                descriptionLabel.textColor = .gray_600
+            }
+        case .dontNeedAttendance:
+            attendanceLabel.text = "출석 체크 없는 날"
             attendanceLabel.textColor = .gray_400
             markImageView.image = nil
-        } else {
+            titleLabel.textColor = .gray_1200
+            descriptionLabel.textColor = .gray_800
+        case .dayOff:
             attendanceLabel.text = "쉬어가는 날"
             attendanceLabel.textColor = .gray_400
             markImageView.image = nil
+            titleLabel.textColor = .gray_600
+            descriptionLabel.textColor = .gray_600
         }
     }
 }

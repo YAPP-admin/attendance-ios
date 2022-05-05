@@ -84,7 +84,10 @@ private extension SignUpViewModel {
     func setupConfig() {
         configWorker.decodeYappConfig { [weak self] result in
             switch result {
-            case .success(let config): self?.output.yappConfig.onNext(config)
+            case .success(let config):
+                self?.output.yappConfig.onNext(config)
+                self?.userDefaultsWorker.setGeneration(generation: config.generation)
+                self?.userDefaultsWorker.setSessionCount(session: config.sessionCount)
             case .failure: ()
             }
         }

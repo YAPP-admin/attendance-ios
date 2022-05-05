@@ -19,6 +19,7 @@ final class SettingViewModel: ViewModel {
     struct Output {
         var goToHome = PublishRelay<Void>()
         let goToPolicyVC = PublishRelay<Void>()
+        var generation = BehaviorRelay<String>(value: "")
     }
 
     let input = Input()
@@ -27,6 +28,8 @@ final class SettingViewModel: ViewModel {
     let db = Firestore.firestore()
     var documentID = BehaviorRelay<String>(value: "")
     var memberData = BehaviorRelay<Member?>(value: nil)
+
+    private let userDefaultsWorker = UserDefaultsWorker()
 
     init() {
         input.tapBack
@@ -39,29 +42,12 @@ final class SettingViewModel: ViewModel {
                 self?.output.goToPolicyVC.accept(())
             }).disposed(by: disposeBag)
 
-        getCollections()
+        checkGeneration()
     }
-}
 
-private extension SettingViewModel {
-    func getCollections() {
-//        let docRef = db.collection("member").document("20th")
-//        docRef.collection("members").getDocuments { (querySnapshot, err) in
-//            if let err = err {
-//                print("Error getting documents: \(err)")
-//            } else {
-//                if let querySnapshot = querySnapshot {
-//                    for document in querySnapshot.documents {
-//                        self.documentID.accept("\(document.documentID)")
-//                        let id = document.data()["id"] as? Int ?? 0
-//                        let isAdmin = document.data()["isAdmin"] as? Bool ?? false
-//                        let name = document.data()["name"] as? String ?? ""
-//                        let position = document.data()["position"] as? String ?? ""
-//                        let team = document.data()["team"] as? String ?? ""
-//                        self.memberData.accept(Member(id: id, isAdmin: isAdmin, name: name, position: position, team: team))
-//                    }
-//                }
-//            }
-//        }
+    func checkGeneration() {
+        if let generation = userDefaultsWorker.getGeneration(), generation.isEmpty == false {
+            output.generation.accept(generation)
+        }
     }
 }

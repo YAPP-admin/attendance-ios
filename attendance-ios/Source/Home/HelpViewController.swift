@@ -115,7 +115,7 @@ final class HelpViewController: UIViewController {
         return label
     }()
     private let readContentLabel: UILabel = {
-        let fullText = "﹒ 출결 점수는 100점에서 시작해요.\n﹒ 점수가 70점 미만이 되는 회원은 운영진의 심의 하에 제명될 수 있으니 출결에 유의해주세요.\n﹒ 회비 납부 무단 연체 시 연체 1일마다 5점이 감점돼요.\n﹒ 아르바이트, 인턴, 직장인 우대사항은 없어요."
+        let fullText = "- 출결 점수는 100점에서 시작해요.\n- 점수가 70점 미만이 되는 회원은 운영진의 심의 하에 제명될 수 있으니 출결에 유의해주세요.\n- 회비 납부 무단 연체 시 연체 1일마다 5점이 감점돼요.\n- 아르바이트, 인턴, 직장인 우대사항은 없어요."
         let attributes: [NSAttributedString.Key: Any] = [.font: TextStyle.Caption2.font, .foregroundColor: UIColor.gray_800]
         let range100 = (fullText as NSString).range(of: "100점")
         let range70 = (fullText as NSString).range(of: "70점 미만")
@@ -125,7 +125,7 @@ final class HelpViewController: UIViewController {
 
         let label = UILabel()
         label.textColor = .gray_600
-        label.font = .Pretendard(type: .regular, size: 12)
+        label.font = .Pretendard(type: .medium, size: 12)
         label.attributedText = attributedString
         label.numberOfLines = 0
         label.setLineSpacing(4)
