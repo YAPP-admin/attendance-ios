@@ -103,14 +103,14 @@ private extension BaseViewModel {
                     self.output.kakaoTalkId.onNext(kakaoId)
 
                     // MARK: - 애플 로그인을 통해 이미 가입한 유저라면 기존 문서 이름 변경
-                    if let appleId = try? self.output.appleId.value() {
-                        self.firebaseWorker.changeMemberDocumentName(appleId, to: kakaoId) { result in
-                            switch result {
-                            case .success: self.output.goToHome.accept(())
-                            case .failure: self.output.goToSignUp.accept(())
-                            }
-                        }
-                    }
+//                    if let appleId = try? self.output.appleId.value() {
+//                        self.firebaseWorker.changeMemberDocumentName(appleId, to: kakaoId) { result in
+//                            switch result {
+//                            case .success: self.output.goToHome.accept(())
+//                            case .failure: self.output.goToSignUp.accept(())
+//                            }
+//                        }
+//                    }
 
                     // MARK: - 이미 가입한 카카오톡 유저인지 확인
                     self.firebaseWorker.checkIsRegisteredUser(id: kakaoId) { isRegistered in
