@@ -131,7 +131,7 @@ extension AdminManagementCell {
     }
 
     private func showCollectionView() {
-        let height = Constants.cellHeight*2
+        let height = Constants.cellHeight*8
         collectionView.snp.remakeConstraints {
             $0.height.equalTo(height)
         }
@@ -228,7 +228,7 @@ private extension AdminManagementCell {
         }
         collectionView.snp.makeConstraints {
             $0.bottom.left.right.equalToSuperview()
-            $0.height.equalTo(Constants.cellHeight*2)
+            $0.height.equalTo(Constants.cellHeight*5)
         }
         dividerView.snp.makeConstraints {
             $0.bottom.equalToSuperview()

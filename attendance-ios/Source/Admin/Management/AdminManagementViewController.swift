@@ -173,7 +173,7 @@ extension AdminManagementViewController: UICollectionViewDelegateFlowLayout, UIC
     // TODO: - Show/Hide
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         var height = CGFloat.zero
-        height = Constants.cellHeight*3
+        height = Constants.cellHeight*6
 
         return CGSize(width: collectionView.bounds.width, height: height)
     }

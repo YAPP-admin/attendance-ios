@@ -188,7 +188,7 @@ extension AdminGradeViewController: UICollectionViewDelegateFlowLayout, UICollec
 //              let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AdminGradeCell.identifier, for: indexPath) as? AdminGradeCell else { return .zero }
 
         var height = CGFloat.zero
-        height = Constants.cellHeight*3
+        height = Constants.cellHeight*6
 //        if indexList.contains(indexPath.row) == true {
 //            height = Constants.cellHeight*3
 //            cell.showMembers()

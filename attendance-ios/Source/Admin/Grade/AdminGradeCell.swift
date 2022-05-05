@@ -202,7 +202,7 @@ private extension AdminGradeCell {
         }
         collectionView.snp.makeConstraints {
             $0.bottom.left.right.equalToSuperview()
-            $0.height.equalTo(Constants.cellHeight*2)
+            $0.height.equalTo(Constants.cellHeight*5)
         }
         dividerView.snp.makeConstraints {
             $0.bottom.equalToSuperview()
