@@ -154,24 +154,25 @@ extension AdminGradeViewController: UICollectionViewDelegateFlowLayout, UICollec
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AdminGradeCell.identifier, for: indexPath) as? AdminGradeCell,
               var indexList = try? viewModel.input.selectedTeamIndexListInGrade.value() else { return .init() }
 
-//        cell.chevronButton.rx.tap
-//            .asObservable()
-//            .subscribe(onNext: { [weak self] _ in
-//                let index = indexPath.row
-//                indexList.toggleElement(index)
-//                self?.viewModel.input.selectedTeamIndexListInGrade.onNext(indexList)
-//            }).disposed(by: disposeBag)
-
-//        indexList.contains(indexPath.row) == true ? cell.showMembers() : cell.hideMembers()
+        cell.chevronButton.rx.tap
+            .asObservable()
+            .subscribe(onNext: { [weak self] _ in
+                print("AdminGradeCell 버튼 클릭")
+                let index = indexPath.row
+                indexList.toggleElement(index)
+                self?.viewModel.input.selectedTeamIndexListInGrade.onNext(indexList)
+            }).disposed(by: disposeBag)
 
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        guard let indexList = try? viewModel.input.selectedTeamIndexListInGrade.value() else { return .zero }
-//        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AdminGradeCell.identifier, for: indexPath) as? AdminGradeCell else { return .zero }
-//        var height = CGFloat.zero
-//        height = Constants.cellHeight*3
+        guard let indexList = try? viewModel.input.selectedTeamIndexListInGrade.value() else { return .zero }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AdminGradeCell.identifier, for: indexPath) as? AdminGradeCell else { return .zero }
+        var height = CGFloat.zero
+        height = Constants.cellHeight*3
+
+        // TODO: - Show/Hide
 //        if indexList.contains(indexPath.row) == true {
 //            height = Constants.cellHeight*3
 //            cell.showMembers()
@@ -179,8 +180,8 @@ extension AdminGradeViewController: UICollectionViewDelegateFlowLayout, UICollec
 //            height = Constants.cellHeight*1
 //            cell.hideMembers()
 //        }
-//        return CGSize(width: collectionView.bounds.width, height: height)
-        return CGSize(width: collectionView.bounds.width, height: Constants.cellHeight*3)
+
+        return CGSize(width: collectionView.bounds.width, height: height)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
