@@ -12,9 +12,7 @@ import KakaoSDKUser
 import UIKit
 
 final class FirebaseWorker {
-
     private let memberCollectionRef = Firestore.firestore().collection("member")
-
 }
 
 // MARK: - Register
@@ -69,9 +67,29 @@ extension FirebaseWorker {
         return attendances
     }
 
+    /// 문서 이름을 애플 아이디에서 카카오톡 아이디로 변경합니다.
+    func changeMemberDocumentName(_ appleId: String, to kakaoId: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        let docRef = memberCollectionRef.document(appleId)
+        docRef.getDocument { [weak self] snapshot, error in
+            if let error = error {
+                completion(.failure(error))
+            }
+            guard let self = self, let newId = Int(kakaoId), let member = try? snapshot?.data(as: Member.self) else { return }
+
+            let newUser = FirebaseNewMember(name: member.name, positionType: member.position, teamType: member.team.type, teamNumber: member.team.number)
+            self.registerKakaoUserInfo(id: newId, newUser: newUser) { result in
+                switch result {
+                case .success:
+                    self.deleteDocument(id: appleId)
+                    completion(.success(()))
+                case .failure: ()
+                }
+            }
+        }
+    }
+
 }
 
-// MARK: - Delete
 extension FirebaseWorker {
 
     /// 카카오톡으로 로그인한 유저의 문서를 삭제합니다.
@@ -92,15 +110,15 @@ extension FirebaseWorker {
 // MARK: - Read
 extension FirebaseWorker {
 
-    func getAllMemberList(completion: @escaping (Result<[Member], Error>) -> Void) {
+    /// 전체 맴버를 반환합니다.
+    func getAllMembers(completion: @escaping (Result<[Member], Error>) -> Void) {
         memberCollectionRef.getDocuments { snapshot, error in
             if let error = error {
                 completion(.failure(error))
             }
             guard let documents = snapshot?.documents else { return }
-
-            // TODO: - memberlist 반환
-            print("documents: \(documents)")
+            let members = documents.compactMap { try? $0.data(as: Member.self) }
+            completion(.success(members))
         }
     }
 
@@ -122,27 +140,6 @@ extension FirebaseWorker {
             switch result {
             case .success(let idList): completion(idList.contains(id))
             case .failure: completion(false)
-            }
-        }
-    }
-
-    /// 문서 이름을 애플 아이디에서 카카오톡 아이디로 변경합니다.
-    func changeMemberDocumentName(_ appleId: String, to kakaoId: String, completion: @escaping (Result<Void, Error>) -> Void) {
-        let docRef = memberCollectionRef.document(appleId)
-        docRef.getDocument { [weak self] snapshot, error in
-            if let error = error {
-                completion(.failure(error))
-            }
-            guard let self = self, let newId = Int(kakaoId), let member = try? snapshot?.data(as: Member.self) else { return }
-
-            let newUser = FirebaseNewMember(name: member.name, positionType: member.position, teamType: member.team.type, teamNumber: member.team.number)
-            self.registerKakaoUserInfo(id: newId, newUser: newUser) { result in
-                switch result {
-                case .success:
-                    self.deleteDocument(id: appleId)
-                    completion(.success(()))
-                case .failure: ()
-                }
             }
         }
     }

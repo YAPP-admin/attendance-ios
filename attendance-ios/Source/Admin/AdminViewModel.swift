@@ -63,9 +63,9 @@ private extension AdminViewModel {
     }
 
     func setupMemberList() {
-        firebaseWorker.getAllMemberList { [weak self] result in
+        firebaseWorker.getAllMembers { [weak self] result in
             switch result {
-            case .success(let list): ()
+            case .success(let list): self?.output.memberList.onNext(list)
             case .failure: ()
             }
         }
