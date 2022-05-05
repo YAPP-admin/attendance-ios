@@ -152,6 +152,7 @@ extension AdminGradeViewController: UICollectionViewDelegateFlowLayout, UICollec
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AdminGradeCell.identifier, for: indexPath) as? AdminGradeCell,
+              let memberList = try? viewModel.output.memberList.value(),
               var indexList = try? viewModel.input.selectedTeamIndexListInGrade.value() else { return .init() }
         let index = indexPath.row
 
@@ -166,6 +167,9 @@ extension AdminGradeViewController: UICollectionViewDelegateFlowLayout, UICollec
         if let teamList = try? viewModel.output.teamList.value(), let team = teamList[safe: index] {
             let teamName = team.name()
             cell.updateTeamNameLabel(name: teamName)
+
+            let members = memberList.filter { $0.team == team  }
+            cell.setupMembers(members: members)
         }
 
         return cell

@@ -29,6 +29,7 @@ final class AdminGradeCell: UICollectionViewCell {
         let label = UILabel()
         label.font = .Pretendard(type: .semiBold, size: 18)
         label.textColor = .gray_1200
+        label.text = "팀 이름"
         return label
     }()
 
@@ -45,6 +46,7 @@ final class AdminGradeCell: UICollectionViewCell {
     }()
 
     var isShownMembers: Bool = true
+    var members: [Member] = []
 
     private var disposeBag = DisposeBag()
 
@@ -61,15 +63,20 @@ final class AdminGradeCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        disposeBag = DisposeBag()
-    }
+//    override func prepareForReuse() {
+//        super.prepareForReuse()
+//        disposeBag = DisposeBag()
+//    }
 
 }
 
-// MARK: - Update
+// MARK: -
 extension AdminGradeCell {
+
+    func setupMembers(members: [Member]) {
+        self.members = members
+        reloadCollectionView()
+    }
 
     func updateTeamNameLabel(name: String) {
         teamNameLabel.text = name
@@ -156,11 +163,13 @@ extension AdminGradeCell: UICollectionViewDelegateFlowLayout, UICollectionViewDa
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 2
+        return members.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AdminGradeMemberCell.identifier, for: indexPath) as? AdminGradeMemberCell else { return UICollectionViewCell() }
+        let member = members[indexPath.row]
+        cell.updateSubViews(with: member)
         return cell
     }
 
