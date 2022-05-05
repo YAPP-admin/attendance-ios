@@ -24,6 +24,12 @@ final class AdminBottomSheetView: UIView {
         static let bottomSheetCellHeight: CGFloat = 52
     }
 
+    private let backgroundView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.4)
+        return view
+    }()
+
     private let containerView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
@@ -61,7 +67,7 @@ final class AdminBottomSheetView: UIView {
 // MARK: - Animation
 private extension AdminBottomSheetView {
 
-    // TODO: - 애니메이션 안되는 문제 해결
+    // TODO: - 애니메이션
     func showBottomSheet() {
         UIView.animate(withDuration: 2, delay: 0, options: .curveEaseInOut, animations: { [weak self] in
             self?.containerView.snp.updateConstraints {
@@ -114,10 +120,9 @@ extension AdminBottomSheetView: UICollectionViewDelegateFlowLayout, UICollection
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) as? AdminBottomSheetCell else { return }
         let attendanceType = AttendanceType.allCases[indexPath.row]
-        print("바텀시트 attendanceType: \(attendanceType)")
         cell.didSelect()
         delegate?.didSelect(at: attendanceType)
-//        hideBottomSheet()
+        hideBottomSheet()
     }
 
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
@@ -132,7 +137,7 @@ private extension AdminBottomSheetView {
 
     func addTapGesture() {
         let tapGesture = UITapGestureRecognizer()
-        addGestureRecognizer(tapGesture)
+        backgroundView.addGestureRecognizer(tapGesture)
 
         tapGesture.rx.event
             .bind(onNext: { [weak self] _ in
@@ -149,9 +154,12 @@ private extension AdminBottomSheetView {
     }
 
     func configureLayout() {
-        addSubview(containerView)
+        addSubviews([backgroundView, containerView])
         containerView.addSubview(collectionView)
 
+        backgroundView.snp.makeConstraints {
+            $0.top.bottom.left.right.equalToSuperview()
+        }
         containerView.snp.makeConstraints {
             $0.bottom.equalToSuperview().inset(-Constants.bottomSheetHeight)
             $0.left.right.equalToSuperview()

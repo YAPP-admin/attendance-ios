@@ -107,6 +107,41 @@ extension FirebaseWorker {
 
 }
 
+// MARK: - Update
+extension FirebaseWorker {
+
+    func updateMemberAttendances(memberId: Int, attendances: [Attendance]) {
+        getMemberDocumentId(memberId: memberId) { result in
+            switch result {
+            case .success(let documentId):
+                let ref = self.memberCollectionRef.document(documentId)
+                // TODO: - 에러
+                let fields = ["attendances": attendances]
+                ref.updateData(fields) { error in
+                    print("error: \(error)")
+                }
+            case .failure: ()
+            }
+        }
+    }
+
+    func getMemberDocumentId(memberId: Int, completion: @escaping (Result<String, Error>) -> Void) {
+        memberCollectionRef.getDocuments { snapshot, error in
+            if let error = error {
+                completion(.failure(error))
+            }
+            guard let documents = snapshot?.documents else { return }
+            for document in documents {
+                guard let member = try? document.data(as: Member.self) else { continue }
+                if member.id == memberId {
+                    completion(.success(document.documentID))
+                }
+            }
+        }
+    }
+
+}
+
 // MARK: - Read
 extension FirebaseWorker {
 

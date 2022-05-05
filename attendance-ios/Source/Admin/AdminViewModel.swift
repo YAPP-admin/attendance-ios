@@ -19,7 +19,6 @@ final class AdminViewModel: ViewModel {
 
         let selectedTeamIndexListInGrade = BehaviorSubject<[Int]>(value: [])
         let selectedMemberInManagement = BehaviorSubject<Member?>(value: nil)
-        let selectedAttenceInManagement = BehaviorSubject<AttendanceType?>(value: nil)
     }
 
     struct Output {
@@ -47,6 +46,15 @@ final class AdminViewModel: ViewModel {
         setupMemberList()
         setupSessionList()
         setupTeamList()
+    }
+
+}
+
+// MARK: - Update
+extension AdminViewModel {
+
+    func updateAttendances(memberId: Int, attendances: [Attendance]) {
+        firebaseWorker.updateMemberAttendances(memberId: memberId, attendances: attendances)
     }
 
 }

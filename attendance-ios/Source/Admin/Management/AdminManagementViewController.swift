@@ -46,6 +46,7 @@ final class AdminManagementViewController: UIViewController {
     }()
 
     private let bottomSheetView = AdminBottomSheetView()
+    var sessionId: Int = 0
 
     private let viewModel: AdminViewModel
     private var disposeBag = DisposeBag()
@@ -86,6 +87,15 @@ final class AdminManagementViewController: UIViewController {
 
 }
 
+// MARK: - Setup
+extension AdminManagementViewController {
+
+    func setupSessionId(sessionId: Int) {
+        self.sessionId = sessionId
+    }
+
+}
+
 // MARK: - Bind
 extension AdminManagementViewController {
 
@@ -110,8 +120,13 @@ extension AdminManagementViewController {
 // MARK: -
 extension AdminManagementViewController: AdminBottomSheetViewDelegate {
 
+    // TODO: - 출결 업데이트
     func didSelect(at type: AttendanceType) {
         print("VC AttendanceType: \(type)")
+        guard let member = try? viewModel.input.selectedMemberInManagement.value() else { return }
+        var attendances = member.attendances
+        attendances[sessionId].type = AttendanceData(point: type.point, text: type.text)
+        viewModel.updateAttendances(memberId: member.id, attendances: attendances)
     }
 
 }
@@ -143,7 +158,7 @@ extension AdminManagementViewController: UICollectionViewDelegateFlowLayout, UIC
         cell.chevronButton.rx.controlEvent([.touchUpInside])
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
-                self?.showBottomSheet()
+                print("index: \(indexPath.row)")
             }).disposed(by: disposeBag)
 
         if let teamList = try? viewModel.output.teamList.value(), let team = teamList[safe: index] {
@@ -152,8 +167,9 @@ extension AdminManagementViewController: UICollectionViewDelegateFlowLayout, UIC
             cell.updateTeamNameLabel(name: teamName)
 
             let members = memberList.filter { $0.team == team  }
-            cell.setupMembers(members: members)
+            cell.setupSessionId(sessionId: sessionId)
             cell.setupTeam(team: team)
+            cell.setupMembers(members: members)
         }
 
         return cell

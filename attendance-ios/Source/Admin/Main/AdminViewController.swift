@@ -196,6 +196,11 @@ private extension AdminViewController {
         let managementVC = AdminManagementViewController(viewModel: viewModel)
         navigationItem.backButtonTitle = ""
         navigationController?.navigationBar.tintColor = .gray_800
+
+        guard let todaySession = try? viewModel.output.todaySession.value() else { return }
+        let sessionId = todaySession.sessionId
+        managementVC.setupSessionId(sessionId: sessionId)
+
         navigationController?.pushViewController(managementVC, animated: true)
     }
 

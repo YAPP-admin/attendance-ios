@@ -375,6 +375,31 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		5EF06A7B2823FE650021D25B /* UIKit */ = {
+			isa = PBXGroup;
+			children = (
+				5EF69EC327A7F8B0007E9735 /* UILabel.swift */,
+				5EF69EC527A7FA40007E9735 /* UIColor.swift */,
+				527657F627C384AE0080DA32 /* UIViewController.swift */,
+				52BCA07127C4D3DF001BF86F /* UIFont.swift */,
+				5E6179AB27C670D500B1A835 /* UITextField.swift */,
+				5E9CC7B927D0F57A006D8B12 /* UICollectionViewCell.swift */,
+				5EAA79D627F5ED7B00BC7397 /* UIView.swift */,
+				5EAA79D827F5EE1900BC7397 /* UIStackView.swift */,
+				5E68F166281197810093B985 /* UIString.swift */,
+			);
+			path = UIKit;
+			sourceTree = "<group>";
+		};
+		5EF06A7C2823FE810021D25B /* Foundation */ = {
+			isa = PBXGroup;
+			children = (
+				5E68F168281197FB0093B985 /* Date.swift */,
+				5EF06A6A2822B4B10021D25B /* Array.swift */,
+			);
+			path = Foundation;
+			sourceTree = "<group>";
+		};
 		5EF69E9627A7DAF8007E9735 = {
 			isa = PBXGroup;
 			children = (
@@ -458,18 +483,9 @@
 		5EF69EBE27A7DD8F007E9735 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				5EF06A7C2823FE810021D25B /* Foundation */,
+				5EF06A7B2823FE650021D25B /* UIKit */,
 				5EF06A722823D1950021D25B /* Models */,
-				5EF69EC327A7F8B0007E9735 /* UILabel.swift */,
-				5EF69EC527A7FA40007E9735 /* UIColor.swift */,
-				527657F627C384AE0080DA32 /* UIViewController.swift */,
-				52BCA07127C4D3DF001BF86F /* UIFont.swift */,
-				5E6179AB27C670D500B1A835 /* UITextField.swift */,
-				5E9CC7B927D0F57A006D8B12 /* UICollectionViewCell.swift */,
-				5EAA79D627F5ED7B00BC7397 /* UIView.swift */,
-				5EAA79D827F5EE1900BC7397 /* UIStackView.swift */,
-				5E68F166281197810093B985 /* UIString.swift */,
-				5E68F168281197FB0093B985 /* Date.swift */,
-				5EF06A6A2822B4B10021D25B /* Array.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";

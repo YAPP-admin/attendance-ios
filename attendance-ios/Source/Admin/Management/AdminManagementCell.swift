@@ -47,9 +47,10 @@ final class AdminManagementCell: UICollectionViewCell {
         return view
     }()
 
-    var isShownMembers: Bool = true
+    var sessionId: Int = 0
     var team: Team?
     var members: [Member] = []
+    var isShownMembers: Bool = true
 
     private var viewModel: AdminViewModel?
     private var disposeBag = DisposeBag()
@@ -79,6 +80,10 @@ extension AdminManagementCell {
 
     func setupViewModel(_ viewModel: AdminViewModel) {
         self.viewModel = viewModel
+    }
+
+    func setupSessionId(sessionId: Int) {
+        self.sessionId = sessionId
     }
 
     func setupTeam(team: Team) {
@@ -190,6 +195,9 @@ extension AdminManagementCell: UICollectionViewDelegateFlowLayout, UICollectionV
                 let member = self.members[indexPath.row]
                 self.viewModel?.input.selectedMemberInManagement.onNext(member)
             }).disposed(by: disposeBag)
+
+        let attendance = member.attendances[sessionId]
+        cell.updateAttendance(with: attendance)
 
         return cell
     }

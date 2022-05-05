@@ -55,6 +55,15 @@ final class AdminManagementMemberCell: UICollectionViewCell {
 
 }
 
+// MARK: - Update
+extension AdminManagementMemberCell {
+
+    func updateAttendance(with attendance: Attendance) {
+        attendanceButton.setTitle(attendance.type.text, for: .normal)
+    }
+
+}
+
 // MARK: - UI
 private extension AdminManagementMemberCell {
 

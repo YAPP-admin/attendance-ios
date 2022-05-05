@@ -9,7 +9,7 @@ import Foundation
 
 struct Attendance: Codable {
     let sessionId: Int
-    let type: AttendanceData
+    var type: AttendanceData
 }
 
 struct AttendanceData: Codable {
