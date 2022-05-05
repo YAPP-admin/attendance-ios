@@ -107,6 +107,28 @@ private extension AdminViewController {
     }
 
     func bindViewModel() {
+        viewModel.output.isFinished
+            .subscribe(onNext: { [weak self] isFinished in
+                guard isFinished == true else { return }
+                DispatchQueue.main.async {
+                    self?.todayView.updateUIWhenFinished()
+                }
+            }).disposed(by: disposeBag)
+
+        viewModel.output.sessionList
+            .subscribe(onNext: { [weak self] _ in
+                DispatchQueue.main.async {
+                    self?.reloadCollectionView()
+                }
+            }).disposed(by: disposeBag)
+
+        viewModel.output.todaySession
+            .subscribe(onNext: { [weak self] _ in
+                DispatchQueue.main.async {
+                    self?.updateTodayView()
+                }
+            }).disposed(by: disposeBag)
+
         viewModel.output.goToGradeVC
             .observe(on: MainScheduler.instance)
             .bind(onNext: goToGradeVC)
@@ -116,14 +138,6 @@ private extension AdminViewController {
             .observe(on: MainScheduler.instance)
             .bind(onNext: goToLoginVC)
             .disposed(by: disposeBag)
-
-        viewModel.output.sessionList
-            .subscribe(onNext: { [weak self] _ in
-                DispatchQueue.main.async {
-                    self?.updateTodayView()
-                    self?.reloadCollectionView()
-                }
-            }).disposed(by: disposeBag)
     }
 
 }
@@ -176,7 +190,7 @@ extension AdminViewController: UICollectionViewDelegateFlowLayout, UICollectionV
 private extension AdminViewController {
 
     func updateTodayView() {
-        guard let sessionList = try? viewModel.output.sessionList.value(), let todaySession = sessionList.todaySession() else { return }
+        guard let todaySession = try? viewModel.output.todaySession.value() else { return }
         todayView.updateUI(session: todaySession)
     }
 

@@ -25,6 +25,7 @@ final class AdminViewModel: ViewModel {
         let sessionList = BehaviorSubject<[Session]>(value: [])
         let teamList = BehaviorSubject<[Team]>(value: [])
         let todaySession = BehaviorSubject<Session?>(value: nil)
+        let isFinished = BehaviorSubject<Bool>(value: false)
 
         let showBottomsheet = PublishRelay<Void>()
         let goToLoginVC = PublishRelay<Void>()
@@ -131,9 +132,10 @@ private extension AdminViewModel {
     }
 
     func setupTodaySession() {
-        guard let sessionList = try? output.sessionList.value() else { return }
+        guard let sessionList = try? output.sessionList.value(), sessionList.isEmpty == false else { return }
         let todaySession = sessionList.todaySession()
         output.todaySession.onNext(todaySession)
+        output.isFinished.onNext(todaySession == nil)
     }
 
 }

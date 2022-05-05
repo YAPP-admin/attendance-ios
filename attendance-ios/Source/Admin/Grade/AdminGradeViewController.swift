@@ -21,10 +21,11 @@ final class AdminGradeViewController: UIViewController {
 
     private let navigationTitleLabel: UILabel = {
         let label = UILabel()
-        label.font = .Pretendard(type: .regular, size: 18)
+        label.font = .Pretendard(type: .medium, size: 18)
         label.textColor = .gray_1200
         label.numberOfLines = 1
         label.textAlignment = .center
+        label.text = "누적 출결 점수"
         return label
     }()
 
@@ -70,9 +71,7 @@ final class AdminGradeViewController: UIViewController {
         bindSubviews()
         bindViewModel()
 
-        setupDelegate()
         setupCollectionView()
-        setupNavigationTitle()
 
         configureUI()
         configureLayout()
@@ -112,19 +111,6 @@ extension AdminGradeViewController {
                 }
             }).disposed(by: disposeBag)
 
-    }
-
-}
-
-// MARK: - etc
-private extension AdminGradeViewController {
-
-    func setupDelegate() {
-
-    }
-
-    func setupNavigationTitle() {
-        navigationTitleLabel.text = "누적 출결 점수"
     }
 
 }

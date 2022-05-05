@@ -68,8 +68,14 @@ extension AdminTodayView {
 
     func updateUI(session: Session) {
         let date = session.date.date()?.mmdd()
+        dateLabel.isHidden = false
         dateLabel.text = date
         titleLabel.text = session.title
+    }
+
+    func updateUIWhenFinished() {
+        dateLabel.isHidden = true
+        titleLabel.text = "모든 세션을 끝마쳤습니다"
     }
 
 }

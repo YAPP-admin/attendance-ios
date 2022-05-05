@@ -76,7 +76,6 @@ extension AdminGradeCell {
 
     func setupMembers(members: [Member]) {
         self.members = members
-        print("AdminGradeCell members count: \(members.count)")
         reloadCollectionView()
     }
 
