@@ -131,7 +131,6 @@ extension SignUpPositionViewController: UICollectionViewDelegateFlowLayout, UICo
     private func setupCollectionView() {
         collectionView.delegate = self
         collectionView.dataSource = self
-
         collectionView.register(SignUpCollectionViewCell.self, forCellWithReuseIdentifier: SignUpCollectionViewCell.identifier)
     }
 

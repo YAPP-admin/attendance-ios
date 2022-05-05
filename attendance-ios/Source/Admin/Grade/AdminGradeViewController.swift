@@ -149,7 +149,7 @@ extension AdminGradeViewController: UICollectionViewDelegateFlowLayout, UICollec
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(width: collectionView.bounds.width, height: Constants.cellHeight)
+        CGSize(width: collectionView.bounds.width, height: Constants.cellHeight*3)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

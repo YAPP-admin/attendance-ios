@@ -72,6 +72,7 @@
 		5EED02C027D7854F00C52637 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EED02BF27D7854F00C52637 /* AlertView.swift */; };
 		5EF06A6B2822B4B10021D25B /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF06A6A2822B4B10021D25B /* Array.swift */; };
 		5EF06A6D2822B7010021D25B /* PrintFn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF06A6C2822B7010021D25B /* PrintFn.swift */; };
+		5EF06A6F2823A8AE0021D25B /* AdminGradeMemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF06A6E2823A8AE0021D25B /* AdminGradeMemberCell.swift */; };
 		5EF69EA327A7DAF8007E9735 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69EA227A7DAF8007E9735 /* AppDelegate.swift */; };
 		5EF69EA527A7DAF8007E9735 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69EA427A7DAF8007E9735 /* SceneDelegate.swift */; };
 		5EF69EA727A7DAF8007E9735 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69EA627A7DAF8007E9735 /* LoginViewController.swift */; };
@@ -155,6 +156,7 @@
 		5EED02BF27D7854F00C52637 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		5EF06A6A2822B4B10021D25B /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		5EF06A6C2822B7010021D25B /* PrintFn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrintFn.swift; sourceTree = "<group>"; };
+		5EF06A6E2823A8AE0021D25B /* AdminGradeMemberCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminGradeMemberCell.swift; sourceTree = "<group>"; };
 		5EF69E9F27A7DAF8007E9735 /* attendance-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "attendance-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5EF69EA227A7DAF8007E9735 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5EF69EA427A7DAF8007E9735 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -296,6 +298,7 @@
 			children = (
 				5E7AEF2727E222C30059FB3A /* AdminGradeViewController.swift */,
 				5E3D7690280717090067286A /* AdminGradeCell.swift */,
+				5EF06A6E2823A8AE0021D25B /* AdminGradeMemberCell.swift */,
 			);
 			path = Grade;
 			sourceTree = "<group>";
@@ -700,6 +703,7 @@
 				5EF69EA527A7DAF8007E9735 /* SceneDelegate.swift in Sources */,
 				5EAA79DB27F601ED00BC7397 /* AdminBottomSheetView.swift in Sources */,
 				5EAA79D727F5ED7B00BC7397 /* UIView.swift in Sources */,
+				5EF06A6F2823A8AE0021D25B /* AdminGradeMemberCell.swift in Sources */,
 				52578C39280EB55F00C0D569 /* HomeAttendanceCheckViewController.swift in Sources */,
 				5E6ACB3A2808648700ADF2BB /* FirebaseWorker.swift in Sources */,
 				5EAA79D527F5D6B400BC7397 /* AdminTodayView.swift in Sources */,
