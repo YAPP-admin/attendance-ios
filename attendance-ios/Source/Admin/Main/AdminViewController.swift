@@ -18,6 +18,7 @@ final class AdminViewController: UIViewController {
         static let topPadding: CGFloat = 116
         static let dividerViewHeight: CGFloat = 12
         static let todayViewHeight: CGFloat = 80
+        static let logoutButtonSize: CGSize = .init(width: 28, height: 28)
         static let cellHeight: CGFloat = 60
     }
 
@@ -223,12 +224,12 @@ private extension AdminViewController {
         view.addSubviews([logoutButton, cardView, dividerView, titleLabel, todayView, sessionTitleLabel, sessionCollectionView])
 
         logoutButton.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(Constants.verticalPadding)
+            $0.top.equalToSuperview().inset(40)
             $0.right.equalToSuperview().inset(Constants.horizontalPadding)
-            $0.width.height.equalTo(44)
+            $0.width.height.equalTo(Constants.logoutButtonSize.width)
         }
         cardView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(80)
+            $0.top.equalToSuperview().offset(90)
             $0.left.right.equalToSuperview().inset(Constants.horizontalPadding)
             $0.height.equalTo(Constants.topPadding)
         }
