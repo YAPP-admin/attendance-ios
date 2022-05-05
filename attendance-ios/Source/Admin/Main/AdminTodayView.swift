@@ -71,6 +71,7 @@ extension AdminTodayView {
         dateLabel.isHidden = false
         dateLabel.text = date
         titleLabel.text = session.title
+        managementButton.isEnabled = session.type == .needAttendance
     }
 
     func updateUIWhenFinished() {
