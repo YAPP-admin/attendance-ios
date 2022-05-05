@@ -210,7 +210,7 @@ private extension AdminManagementViewController {
 
     func setupMessage() {
         guard let memberList = try? viewModel.output.memberList.value() else { return }
-        let attendances = memberList.flatMap { $0.attendances }.filter { $0.sessionId == session.sessionId }.filter { $0.type.text == AttendanceType.attendance.text }
+        let attendances = memberList.flatMap { $0.attendances }.filter { $0.sessionId == session.sessionId }.filter { $0.type.text != AttendanceType.absence.text }
         adminMesasgeView.configureLabel("\(attendances.count)명이 출석했어요")
     }
 
