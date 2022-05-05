@@ -24,6 +24,7 @@ final class AdminGradeMemberCell: UICollectionViewCell {
     private let iconImageView: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(named: "warning")
+        view.isHidden = true
         return view
     }()
 
@@ -62,6 +63,9 @@ extension AdminGradeMemberCell {
         nameLabel.text = member.name
         let totalGrade = member.totalGrade(until: sessionId)
         gradeLabel.text = String(totalGrade)
+        if totalGrade < 70 {
+            iconImageView.isHidden = false
+        }
     }
 
 }
