@@ -17,6 +17,7 @@ final class AdminViewModel: ViewModel {
         let tapManagementButton = PublishRelay<Void>()
         let tapLogoutButton = PublishRelay<Void>()
 
+        let selectedTeamIndexListInGrade = BehaviorSubject<[Int]>(value: [])
         let selectedIndexInManagement = BehaviorSubject<Int?>(value: nil)
         let selectedAttenceInManagement = BehaviorSubject<AttendanceType?>(value: nil)
     }
@@ -65,7 +66,7 @@ private extension AdminViewModel {
 
         input.tapLogoutButton
             .subscribe(onNext: { [weak self] _ in
-                self?.output.goToGradeVC.accept(())
+                self?.output.goToLoginVC.accept(())
             }).disposed(by: disposeBag)
     }
 
