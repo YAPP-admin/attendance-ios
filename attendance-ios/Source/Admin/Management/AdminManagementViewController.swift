@@ -26,6 +26,7 @@ final class AdminManagementViewController: UIViewController {
         label.textColor = .gray_1200
         label.numberOfLines = 1
         label.textAlignment = .center
+        label.text = "0명이 출석했어요"
         return label
     }()
 
@@ -208,10 +209,8 @@ private extension AdminManagementViewController {
     }
 
     func setupMessage() {
-        guard let todaySession = try? viewModel.output.todaySession.value(),
-              let memberList = try? viewModel.output.memberList.value() else { return }
-        let todayAttendances = memberList.flatMap { $0.attendances }.filter { $0.sessionId == todaySession.sessionId }
-        let attendances = todayAttendances.filter { $0.type.text == AttendanceType.attendance.text }
+        guard let memberList = try? viewModel.output.memberList.value() else { return }
+        let attendances = memberList.flatMap { $0.attendances }.filter { $0.sessionId == session.sessionId }.filter { $0.type.text == AttendanceType.attendance.text }
         adminMesasgeView.configureLabel("\(attendances.count)명이 출석했어요")
     }
 

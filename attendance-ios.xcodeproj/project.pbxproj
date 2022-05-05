@@ -483,9 +483,9 @@
 		5EF69EBE27A7DD8F007E9735 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				5EF06A7C2823FE810021D25B /* Foundation */,
-				5EF06A7B2823FE650021D25B /* UIKit */,
 				5EF06A722823D1950021D25B /* Models */,
+				5EF06A7B2823FE650021D25B /* UIKit */,
+				5EF06A7C2823FE810021D25B /* Foundation */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
