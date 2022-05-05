@@ -111,6 +111,7 @@ extension AdminGradeViewController {
                     self?.reloadCollectionView()
                 }
             }).disposed(by: disposeBag)
+
     }
 
 }
@@ -146,8 +147,8 @@ extension AdminGradeViewController: UICollectionViewDelegateFlowLayout, UICollec
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let teamCount = try? viewModel.output.teamCount.value() else { return .zero }
-        return teamCount
+        guard let teamList = try? viewModel.output.teamList.value() else { return .zero }
+        return teamList.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -160,7 +161,7 @@ extension AdminGradeViewController: UICollectionViewDelegateFlowLayout, UICollec
         cell.chevronButton.rx.tap
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
-                print("AdminGradeCell 버튼 클릭")
+                print("index: \(indexPath.row)")
                 indexList.toggleElement(index)
                 self?.viewModel.input.selectedTeamIndexListInGrade.onNext(indexList)
             }).disposed(by: disposeBag)
@@ -170,21 +171,22 @@ extension AdminGradeViewController: UICollectionViewDelegateFlowLayout, UICollec
         }
 
         if let teamList = try? viewModel.output.teamList.value(), let team = teamList[safe: index] {
-            let teamName = team.name()
+            let teamNames = teamList.map { $0.name() }
+            let teamName = teamNames[indexPath.row]
             cell.updateTeamNameLabel(name: teamName)
 
-            let members = memberList.filter { $0.team == team  }
+            let members = memberList.filter { $0.team == team }
             cell.setupMembers(members: members)
         }
 
         return cell
     }
 
+    // TODO: - Show/Hide
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 //        guard let indexList = try? viewModel.input.selectedTeamIndexListInGrade.value(),
 //              let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AdminGradeCell.identifier, for: indexPath) as? AdminGradeCell else { return .zero }
 
-        // TODO: - Show/Hide
         var height = CGFloat.zero
         height = Constants.cellHeight*3
 //        if indexList.contains(indexPath.row) == true {

@@ -18,7 +18,7 @@ final class AdminViewModel: ViewModel {
         let tapLogoutButton = PublishRelay<Void>()
 
         let selectedTeamIndexListInGrade = BehaviorSubject<[Int]>(value: [])
-        let selectedIndexInManagement = BehaviorSubject<Int?>(value: nil)
+        let selectedMemberInManagement = BehaviorSubject<Member?>(value: nil)
         let selectedAttenceInManagement = BehaviorSubject<AttendanceType?>(value: nil)
     }
 
@@ -26,9 +26,9 @@ final class AdminViewModel: ViewModel {
         let memberList = BehaviorSubject<[Member]>(value: [])
         let sessionList = BehaviorSubject<[Session]>(value: [])
         let teamList = BehaviorSubject<[Team]>(value: [])
-        let teamCount = BehaviorSubject<Int>(value: 0)
         let todaySession = BehaviorSubject<Session?>(value: nil)
 
+        let showBottomsheet = PublishRelay<Void>()
         let goToLoginVC = PublishRelay<Void>()
         let goToGradeVC = PublishRelay<Void>()
         let goToManagementVC = PublishRelay<Void>()
@@ -69,14 +69,14 @@ private extension AdminViewModel {
             .subscribe(onNext: { [weak self] _ in
                 self?.output.goToLoginVC.accept(())
             }).disposed(by: disposeBag)
+
+        input.selectedMemberInManagement
+            .subscribe(onNext: { [weak self] _ in
+                self?.output.showBottomsheet.accept(())
+            }).disposed(by: disposeBag)
     }
 
     func subscribeOutputs() {
-        output.teamList
-            .subscribe(onNext: { [weak self] _ in
-                self?.setupteamCount()
-            }).disposed(by: disposeBag)
-
         output.sessionList
             .subscribe(onNext: { [weak self] _ in
                 self?.setupTodaySession()
@@ -108,17 +108,25 @@ private extension AdminViewModel {
 
     func setupTeamList() {
         configWorker.decodeSelectTeams { [weak self] result in
+            guard let self = self else { return }
             switch result {
-            case .success(let teams): self?.output.teamList.onNext(teams)
+            case .success(let teams):
+                let allTeams = self.makeTeamList(teams)
+                self.output.teamList.onNext(allTeams)
             case .failure: ()
             }
         }
     }
 
-    func setupteamCount() {
-        guard let teamList = try? output.teamList.value() else { return }
-        let teamCount = teamList.reduce(0, { $0 + $1.number })
-        output.teamCount.onNext(teamCount)
+    private func makeTeamList(_ teams: [Team]) -> [Team] {
+        var newTeams: [Team] = []
+        teams.forEach {
+            for n in 1...$0.number {
+                let team = Team(type: $0.type, number: n)
+                newTeams.append(team)
+            }
+        }
+        return newTeams
     }
 
     func setupTodaySession() {

@@ -98,7 +98,11 @@ extension AdminManagementViewController {
     }
 
     func bindViewModel() {
-
+        viewModel.output.showBottomsheet
+            .asObservable()
+            .subscribe(onNext: { [weak self] _ in
+                self?.showBottomSheet()
+            }).disposed(by: disposeBag)
     }
 
 }
@@ -126,25 +130,41 @@ extension AdminManagementViewController: UICollectionViewDelegateFlowLayout, UIC
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        4
+        guard let teamList = try? viewModel.output.teamList.value() else { return .zero }
+        return teamList.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AdminManagementCell.identifier, for: indexPath) as? AdminManagementCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AdminManagementCell.identifier, for: indexPath) as? AdminManagementCell,
+              let memberList = try? viewModel.output.memberList.value() else { return UICollectionViewCell() }
+        cell.setupViewModel(viewModel)
+        let index = indexPath.row
 
-        cell.attendanceButton.rx.controlEvent([.touchUpInside])
+        cell.chevronButton.rx.controlEvent([.touchUpInside])
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
-                print("index: \(indexPath.row)")
-                self?.viewModel.input.selectedIndexInManagement.onNext(indexPath.row)
                 self?.showBottomSheet()
             }).disposed(by: disposeBag)
+
+        if let teamList = try? viewModel.output.teamList.value(), let team = teamList[safe: index] {
+            let teamNames = teamList.map { $0.name() }
+            let teamName = teamNames[indexPath.row]
+            cell.updateTeamNameLabel(name: teamName)
+
+            let members = memberList.filter { $0.team == team  }
+            cell.setupMembers(members: members)
+            cell.setupTeam(team: team)
+        }
 
         return cell
     }
 
+    // TODO: - Show/Hide
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(width: collectionView.bounds.width, height: Constants.cellHeight)
+        var height = CGFloat.zero
+        height = Constants.cellHeight*3
+
+        return CGSize(width: collectionView.bounds.width, height: height)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
