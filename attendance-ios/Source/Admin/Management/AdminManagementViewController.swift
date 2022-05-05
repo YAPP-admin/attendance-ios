@@ -26,7 +26,8 @@ final class AdminManagementViewController: UIViewController {
         label.textColor = .gray_1200
         label.numberOfLines = 1
         label.textAlignment = .center
-        label.text = "0명이 출석했어요"
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.5
         return label
     }()
 
