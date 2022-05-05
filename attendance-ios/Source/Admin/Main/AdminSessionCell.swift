@@ -66,6 +66,8 @@ extension AdminSessionCell {
         titleLabel.text = session.title
         if session.type == .needAttendance {
             updateUIWhenNeedAttendance()
+        } else {
+            updateUIWhenDontNeedAttendance()
         }
     }
 
@@ -75,6 +77,11 @@ extension AdminSessionCell {
         arrowButton.isHidden = false
     }
 
+    private func updateUIWhenDontNeedAttendance() {
+        dateLabel.textColor = .gray_400
+        titleLabel.textColor = .gray_400
+        arrowButton.isHidden = true
+    }
 }
 
 // MARK: - UI
