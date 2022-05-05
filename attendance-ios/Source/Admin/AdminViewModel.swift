@@ -24,6 +24,9 @@ final class AdminViewModel: ViewModel {
     struct Output {
         let memberList = BehaviorSubject<[Member]>(value: [])
         let sessionList = BehaviorSubject<[Session]>(value: [])
+        let teamList = BehaviorSubject<[Team]>(value: [])
+        let teamCount = BehaviorSubject<Int>(value: 0)
+
         let goToLoginVC = PublishRelay<Void>()
         let goToGradeVC = PublishRelay<Void>()
         let goToManagementVC = PublishRelay<Void>()
@@ -37,12 +40,16 @@ final class AdminViewModel: ViewModel {
 
     init() {
         subscribeInputs()
+        subscribeOutputs()
+
         setupMemberList()
         setupSessionList()
+        setupTeamList()
     }
 
 }
 
+// MARK: - Bind
 private extension AdminViewModel {
 
     func subscribeInputs() {
@@ -58,9 +65,21 @@ private extension AdminViewModel {
 
         input.tapLogoutButton
             .subscribe(onNext: { [weak self] _ in
-                self?.output.goToLoginVC.accept(())
+                self?.output.goToGradeVC.accept(())
             }).disposed(by: disposeBag)
     }
+
+    func subscribeOutputs() {
+        output.teamList
+            .subscribe(onNext: { [weak self] _ in
+                self?.setupteamCount()
+            }).disposed(by: disposeBag)
+    }
+
+}
+
+// MARK: - Setup
+private extension AdminViewModel {
 
     func setupMemberList() {
         firebaseWorker.getAllMembers { [weak self] result in
@@ -78,6 +97,21 @@ private extension AdminViewModel {
             case .failure: ()
             }
         }
+    }
+
+    func setupTeamList() {
+        configWorker.decodeSelectTeams { [weak self] result in
+            switch result {
+            case .success(let teams): self?.output.teamList.onNext(teams)
+            case .failure: ()
+            }
+        }
+    }
+
+    func setupteamCount() {
+        guard let teamList = try? output.teamList.value() else { return }
+        let teamCount = teamList.reduce(0, { $0 + $1.number })
+        output.teamCount.onNext(teamCount)
     }
 
 }

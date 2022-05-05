@@ -98,7 +98,12 @@ extension AdminGradeViewController {
     }
 
     func bindViewModel() {
-
+        viewModel.output.memberList
+            .subscribe(onNext: { [weak self] _ in
+                DispatchQueue.main.async {
+                    self?.reloadCollectionView()
+                }
+            }).disposed(by: disposeBag)
     }
 
 }
@@ -125,12 +130,17 @@ extension AdminGradeViewController: UICollectionViewDelegateFlowLayout, UICollec
         teamCollectionView.register(AdminGradeCell.self, forCellWithReuseIdentifier: AdminGradeCell.identifier)
     }
 
+    private func reloadCollectionView() {
+        teamCollectionView.reloadData()
+    }
+
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         1
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        4
+        guard let teamCount = try? viewModel.output.teamCount.value() else { return .zero }
+        return teamCount
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

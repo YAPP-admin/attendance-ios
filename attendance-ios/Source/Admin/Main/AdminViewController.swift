@@ -147,7 +147,7 @@ extension AdminViewController: UICollectionViewDelegateFlowLayout, UICollectionV
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let sessionList = try? viewModel.output.sessionList.value() else { return 0 }
+        guard let sessionList = try? viewModel.output.sessionList.value() else { return .zero }
         return sessionList.count
     }
 
