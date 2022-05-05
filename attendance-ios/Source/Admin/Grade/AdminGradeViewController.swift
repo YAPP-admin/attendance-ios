@@ -152,6 +152,7 @@ extension AdminGradeViewController: UICollectionViewDelegateFlowLayout, UICollec
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AdminGradeCell.identifier, for: indexPath) as? AdminGradeCell,
+              let sessionList = try? viewModel.output.sessionList.value(),
               let memberList = try? viewModel.output.memberList.value(),
               var indexList = try? viewModel.input.selectedTeamIndexListInGrade.value() else { return .init() }
         let index = indexPath.row
@@ -163,6 +164,10 @@ extension AdminGradeViewController: UICollectionViewDelegateFlowLayout, UICollec
                 indexList.toggleElement(index)
                 self?.viewModel.input.selectedTeamIndexListInGrade.onNext(indexList)
             }).disposed(by: disposeBag)
+
+        if let sessionId = sessionList.todaySession()?.sessionId {
+            cell.sessionId = sessionId
+        }
 
         if let teamList = try? viewModel.output.teamList.value(), let team = teamList[safe: index] {
             let teamName = team.name()

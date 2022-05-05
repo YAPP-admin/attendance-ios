@@ -27,6 +27,7 @@ final class AdminViewModel: ViewModel {
         let sessionList = BehaviorSubject<[Session]>(value: [])
         let teamList = BehaviorSubject<[Team]>(value: [])
         let teamCount = BehaviorSubject<Int>(value: 0)
+        let todaySession = BehaviorSubject<Session?>(value: nil)
 
         let goToLoginVC = PublishRelay<Void>()
         let goToGradeVC = PublishRelay<Void>()
@@ -75,6 +76,11 @@ private extension AdminViewModel {
             .subscribe(onNext: { [weak self] _ in
                 self?.setupteamCount()
             }).disposed(by: disposeBag)
+
+        output.sessionList
+            .subscribe(onNext: { [weak self] _ in
+                self?.setupTodaySession()
+            }).disposed(by: disposeBag)
     }
 
 }
@@ -113,6 +119,12 @@ private extension AdminViewModel {
         guard let teamList = try? output.teamList.value() else { return }
         let teamCount = teamList.reduce(0, { $0 + $1.number })
         output.teamCount.onNext(teamCount)
+    }
+
+    func setupTodaySession() {
+        guard let sessionList = try? output.sessionList.value() else { return }
+        let todaySession = sessionList.todaySession()
+        output.todaySession.onNext(todaySession)
     }
 
 }

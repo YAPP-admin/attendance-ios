@@ -58,10 +58,10 @@ final class AdminGradeMemberCell: UICollectionViewCell {
 // MARK: - Update
 extension AdminGradeMemberCell {
 
-    func updateSubViews(with member: Member) {
+    func updateSubViews(with member: Member, sessionId: Int) {
         nameLabel.text = member.name
-        // TODO: - 점수 계산
-        gradeLabel.text = "100"
+        let totalGrade = member.totalGrade(until: sessionId)
+        gradeLabel.text = String(totalGrade)
     }
 
 }
