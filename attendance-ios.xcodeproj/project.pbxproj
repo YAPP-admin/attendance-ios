@@ -33,11 +33,14 @@
 		52EFD5F0280FF78C00065FEB /* HomeAttendanceCheckTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EFD5EF280FF78C00065FEB /* HomeAttendanceCheckTableViewCell.swift */; };
 		52EFD5F4280FF92600065FEB /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EFD5F3280FF92600065FEB /* BaseTableViewCell.swift */; };
 		52EFD5F6280FFA3200065FEB /* HomeTotalScoreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EFD5F5280FFA3200065FEB /* HomeTotalScoreTableViewCell.swift */; };
+		5E37B13D2813D13F0083CE23 /* AdminManagementCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E37B13C2813D13F0083CE23 /* AdminManagementCell.swift */; };
+		5E3D7691280717090067286A /* AdminGradeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3D7690280717090067286A /* AdminGradeCell.swift */; };
 		5E6179AC27C670D500B1A835 /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E6179AB27C670D500B1A835 /* UITextField.swift */; };
 		5E63BC9427BBD2AC0024FCE3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5E63BC9327BBD2AC0024FCE3 /* GoogleService-Info.plist */; };
 		5E63BC9B27BBE90F0024FCE3 /* SignUpNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E63BC9A27BBE90F0024FCE3 /* SignUpNameViewController.swift */; };
 		5E68F167281197810093B985 /* UIString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E68F166281197810093B985 /* UIString.swift */; };
 		5E68F169281197FB0093B985 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E68F168281197FB0093B985 /* Date.swift */; };
+		5E6ACB382808504800ADF2BB /* AdminBottomSheetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E6ACB372808504800ADF2BB /* AdminBottomSheetCell.swift */; };
 		5E6ACB3A2808648700ADF2BB /* FirebaseWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E6ACB392808648700ADF2BB /* FirebaseWorker.swift */; };
 		5E6ACB3C28086A7300ADF2BB /* KakaoLoginWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E6ACB3B28086A7200ADF2BB /* KakaoLoginWorker.swift */; };
 		5E6ACB41280894F800ADF2BB /* UserDefaultsWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E6ACB40280894F800ADF2BB /* UserDefaultsWorker.swift */; };
@@ -67,6 +70,13 @@
 		5EE54FF027DA469A00294120 /* splash_main.html in Resources */ = {isa = PBXBuildFile; fileRef = 5EE54FEF27DA469A00294120 /* splash_main.html */; };
 		5EED02BD27D76D4200C52637 /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EED02BC27D76D4200C52637 /* SignUpViewModel.swift */; };
 		5EED02C027D7854F00C52637 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EED02BF27D7854F00C52637 /* AlertView.swift */; };
+		5EF06A6B2822B4B10021D25B /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF06A6A2822B4B10021D25B /* Array.swift */; };
+		5EF06A6D2822B7010021D25B /* PrintFn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF06A6C2822B7010021D25B /* PrintFn.swift */; };
+		5EF06A6F2823A8AE0021D25B /* AdminGradeMemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF06A6E2823A8AE0021D25B /* AdminGradeMemberCell.swift */; };
+		5EF06A712823D1660021D25B /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF06A702823D1660021D25B /* Team.swift */; };
+		5EF06A762823D5520021D25B /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF06A752823D5520021D25B /* Member.swift */; };
+		5EF06A782823D7250021D25B /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF06A772823D7250021D25B /* Session.swift */; };
+		5EF06A7A2823E5F60021D25B /* AdminManagementMemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF06A792823E5F60021D25B /* AdminManagementMemberCell.swift */; };
 		5EF69EA327A7DAF8007E9735 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69EA227A7DAF8007E9735 /* AppDelegate.swift */; };
 		5EF69EA527A7DAF8007E9735 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69EA427A7DAF8007E9735 /* SceneDelegate.swift */; };
 		5EF69EA727A7DAF8007E9735 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69EA627A7DAF8007E9735 /* LoginViewController.swift */; };
@@ -111,11 +121,14 @@
 		52EFD5EF280FF78C00065FEB /* HomeAttendanceCheckTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeAttendanceCheckTableViewCell.swift; sourceTree = "<group>"; };
 		52EFD5F3280FF92600065FEB /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
 		52EFD5F5280FFA3200065FEB /* HomeTotalScoreTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTotalScoreTableViewCell.swift; sourceTree = "<group>"; };
+		5E37B13C2813D13F0083CE23 /* AdminManagementCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminManagementCell.swift; sourceTree = "<group>"; };
+		5E3D7690280717090067286A /* AdminGradeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminGradeCell.swift; sourceTree = "<group>"; };
 		5E6179AB27C670D500B1A835 /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
 		5E63BC9327BBD2AC0024FCE3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5E63BC9A27BBE90F0024FCE3 /* SignUpNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpNameViewController.swift; sourceTree = "<group>"; };
 		5E68F166281197810093B985 /* UIString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIString.swift; sourceTree = "<group>"; };
 		5E68F168281197FB0093B985 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		5E6ACB372808504800ADF2BB /* AdminBottomSheetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminBottomSheetCell.swift; sourceTree = "<group>"; };
 		5E6ACB392808648700ADF2BB /* FirebaseWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseWorker.swift; sourceTree = "<group>"; };
 		5E6ACB3B28086A7200ADF2BB /* KakaoLoginWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginWorker.swift; sourceTree = "<group>"; };
 		5E6ACB3F2808791E00ADF2BB /* attendance-ios.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "attendance-ios.entitlements"; sourceTree = "<group>"; };
@@ -145,6 +158,13 @@
 		5EE54FEF27DA469A00294120 /* splash_main.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = splash_main.html; sourceTree = "<group>"; };
 		5EED02BC27D76D4200C52637 /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 		5EED02BF27D7854F00C52637 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
+		5EF06A6A2822B4B10021D25B /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
+		5EF06A6C2822B7010021D25B /* PrintFn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrintFn.swift; sourceTree = "<group>"; };
+		5EF06A6E2823A8AE0021D25B /* AdminGradeMemberCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminGradeMemberCell.swift; sourceTree = "<group>"; };
+		5EF06A702823D1660021D25B /* Team.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Team.swift; sourceTree = "<group>"; };
+		5EF06A752823D5520021D25B /* Member.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
+		5EF06A772823D7250021D25B /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
+		5EF06A792823E5F60021D25B /* AdminManagementMemberCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminManagementMemberCell.swift; sourceTree = "<group>"; };
 		5EF69E9F27A7DAF8007E9735 /* attendance-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "attendance-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5EF69EA227A7DAF8007E9735 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5EF69EA427A7DAF8007E9735 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -213,6 +233,7 @@
 				5EF69EC127A7EFFF007E9735 /* BaseViewModel.swift */,
 				52EFD5F3280FF92600065FEB /* BaseTableViewCell.swift */,
 				5EED02BF27D7854F00C52637 /* AlertView.swift */,
+				5EF06A6C2822B7010021D25B /* PrintFn.swift */,
 				527657F927C387CB0080DA32 /* View */,
 			);
 			path = Common;
@@ -284,6 +305,8 @@
 			isa = PBXGroup;
 			children = (
 				5E7AEF2727E222C30059FB3A /* AdminGradeViewController.swift */,
+				5E3D7690280717090067286A /* AdminGradeCell.swift */,
+				5EF06A6E2823A8AE0021D25B /* AdminGradeMemberCell.swift */,
 			);
 			path = Grade;
 			sourceTree = "<group>";
@@ -292,7 +315,10 @@
 			isa = PBXGroup;
 			children = (
 				5E7AEF2927E223040059FB3A /* AdminManagementViewController.swift */,
+				5E37B13C2813D13F0083CE23 /* AdminManagementCell.swift */,
+				5EF06A792823E5F60021D25B /* AdminManagementMemberCell.swift */,
 				5EAA79DA27F601ED00BC7397 /* AdminBottomSheetView.swift */,
+				5E6ACB372808504800ADF2BB /* AdminBottomSheetCell.swift */,
 			);
 			path = Management;
 			sourceTree = "<group>";
@@ -337,6 +363,41 @@
 				5EAA7A0627FF24CB00BC7397 /* CollectionViewLeftAlignFlowLayout.swift */,
 			);
 			path = SignUp;
+			sourceTree = "<group>";
+		};
+		5EF06A722823D1950021D25B /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				5EF06A702823D1660021D25B /* Team.swift */,
+				5EF06A752823D5520021D25B /* Member.swift */,
+				5EF06A772823D7250021D25B /* Session.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		5EF06A7B2823FE650021D25B /* UIKit */ = {
+			isa = PBXGroup;
+			children = (
+				5EF69EC327A7F8B0007E9735 /* UILabel.swift */,
+				5EF69EC527A7FA40007E9735 /* UIColor.swift */,
+				527657F627C384AE0080DA32 /* UIViewController.swift */,
+				52BCA07127C4D3DF001BF86F /* UIFont.swift */,
+				5E6179AB27C670D500B1A835 /* UITextField.swift */,
+				5E9CC7B927D0F57A006D8B12 /* UICollectionViewCell.swift */,
+				5EAA79D627F5ED7B00BC7397 /* UIView.swift */,
+				5EAA79D827F5EE1900BC7397 /* UIStackView.swift */,
+				5E68F166281197810093B985 /* UIString.swift */,
+			);
+			path = UIKit;
+			sourceTree = "<group>";
+		};
+		5EF06A7C2823FE810021D25B /* Foundation */ = {
+			isa = PBXGroup;
+			children = (
+				5E68F168281197FB0093B985 /* Date.swift */,
+				5EF06A6A2822B4B10021D25B /* Array.swift */,
+			);
+			path = Foundation;
 			sourceTree = "<group>";
 		};
 		5EF69E9627A7DAF8007E9735 = {
@@ -422,16 +483,9 @@
 		5EF69EBE27A7DD8F007E9735 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				5EF69EC327A7F8B0007E9735 /* UILabel.swift */,
-				5EF69EC527A7FA40007E9735 /* UIColor.swift */,
-				527657F627C384AE0080DA32 /* UIViewController.swift */,
-				52BCA07127C4D3DF001BF86F /* UIFont.swift */,
-				5E6179AB27C670D500B1A835 /* UITextField.swift */,
-				5E9CC7B927D0F57A006D8B12 /* UICollectionViewCell.swift */,
-				5EAA79D627F5ED7B00BC7397 /* UIView.swift */,
-				5EAA79D827F5EE1900BC7397 /* UIStackView.swift */,
-				5E68F166281197810093B985 /* UIString.swift */,
-				5E68F168281197FB0093B985 /* Date.swift */,
+				5EF06A722823D1950021D25B /* Models */,
+				5EF06A7B2823FE650021D25B /* UIKit */,
+				5EF06A7C2823FE810021D25B /* Foundation */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -653,22 +707,27 @@
 				5EF69EC427A7F8B0007E9735 /* UILabel.swift in Sources */,
 				52EFD5F0280FF78C00065FEB /* HomeAttendanceCheckTableViewCell.swift in Sources */,
 				5EF69EC627A7FA40007E9735 /* UIColor.swift in Sources */,
+				5E37B13D2813D13F0083CE23 /* AdminManagementCell.swift in Sources */,
 				5EF69ECB27A81E56007E9735 /* HomeViewController.swift in Sources */,
 				5EF69EC227A7EFFF007E9735 /* BaseViewModel.swift in Sources */,
 				52BCA07227C4D3DF001BF86F /* UIFont.swift in Sources */,
 				522EFA43281A5EEC00EF09C7 /* HomeAttendanceDetailViewController.swift in Sources */,
 				52EFD5F6280FFA3200065FEB /* HomeTotalScoreTableViewCell.swift in Sources */,
 				5EF69ED927AAACBA007E9735 /* PolicyViewController.swift in Sources */,
+				5EF06A6B2822B4B10021D25B /* Array.swift in Sources */,
 				52A85C57281A4A3000593749 /* BaseNavigationBarView.swift in Sources */,
 				5E7AEF2827E222C30059FB3A /* AdminGradeViewController.swift in Sources */,
 				5264EFFF280D5B210026F560 /* SettingViewController+UI.swift in Sources */,
 				5264EFFD280D5B060026F560 /* SettingCellView.swift in Sources */,
+				5E6ACB382808504800ADF2BB /* AdminBottomSheetCell.swift in Sources */,
 				297E958327CFAC0A00452222 /* QRViewModel.swift in Sources */,
+				5E3D7691280717090067286A /* AdminGradeCell.swift in Sources */,
 				5EF69EDB27AAB0BC007E9735 /* PolicyUnitView.swift in Sources */,
 				52A85C59281A4AE900593749 /* HelpViewController.swift in Sources */,
 				5EAA7A1027FF443200BC7397 /* SignUpTeamViewController.swift in Sources */,
 				5EAA7A0A27FF2A2200BC7397 /* ConfigWorker.swift in Sources */,
 				52BCA07027C4D393001BF86F /* TextStyle.swift in Sources */,
+				5EF06A782823D7250021D25B /* Session.swift in Sources */,
 				5EF69EA727A7DAF8007E9735 /* LoginViewController.swift in Sources */,
 				5EED02BD27D76D4200C52637 /* SignUpViewModel.swift in Sources */,
 				5EF69EA327A7DAF8007E9735 /* AppDelegate.swift in Sources */,
@@ -681,15 +740,20 @@
 				5EF69EA527A7DAF8007E9735 /* SceneDelegate.swift in Sources */,
 				5EAA79DB27F601ED00BC7397 /* AdminBottomSheetView.swift in Sources */,
 				5EAA79D727F5ED7B00BC7397 /* UIView.swift in Sources */,
+				5EF06A6F2823A8AE0021D25B /* AdminGradeMemberCell.swift in Sources */,
 				52578C39280EB55F00C0D569 /* HomeAttendanceCheckViewController.swift in Sources */,
+				5EF06A712823D1660021D25B /* Team.swift in Sources */,
 				5E6ACB3A2808648700ADF2BB /* FirebaseWorker.swift in Sources */,
 				5EAA79D527F5D6B400BC7397 /* AdminTodayView.swift in Sources */,
 				5264EFFB280D5AE80026F560 /* SettingViewModel.swift in Sources */,
 				5E7AEF2627E21E4C0059FB3A /* AdminCardView.swift in Sources */,
+				5EF06A7A2823E5F60021D25B /* AdminManagementMemberCell.swift in Sources */,
 				5EAA79F927FDD84C00BC7397 /* AdminMessageView.swift in Sources */,
+				5EF06A762823D5520021D25B /* Member.swift in Sources */,
 				5E6ACB3C28086A7300ADF2BB /* KakaoLoginWorker.swift in Sources */,
 				5E7AEF2427E21D680059FB3A /* AdminViewModel.swift in Sources */,
 				522EFA45281A649E00EF09C7 /* SettingPrivacyPolicyViewController.swift in Sources */,
+				5EF06A6D2822B7010021D25B /* PrintFn.swift in Sources */,
 				5E68F167281197810093B985 /* UIString.swift in Sources */,
 				5EAA7A0727FF24CB00BC7397 /* CollectionViewLeftAlignFlowLayout.swift in Sources */,
 			);

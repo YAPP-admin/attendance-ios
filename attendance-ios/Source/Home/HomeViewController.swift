@@ -300,13 +300,3 @@ final class HomeViewController: UIViewController {
         contentsLabel.text = session.description
     }
 }
-
-private extension Array where Element == Session {
-
-    func todaySession() -> Session? {
-        guard let nowDate = Date().startDate() else { return nil }
-        lazy var sessions = self.filter { nowDate.isFuture(than: $0.date.date()) }
-        return sessions.first
-    }
-
-}

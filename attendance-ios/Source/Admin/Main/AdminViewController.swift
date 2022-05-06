@@ -17,15 +17,15 @@ final class AdminViewController: UIViewController {
         static let verticalPadding: CGFloat = 28
         static let topPadding: CGFloat = 116
         static let dividerViewHeight: CGFloat = 12
-        static let todayViewHeight: CGFloat = 65
+        static let todayViewHeight: CGFloat = 80
+        static let logoutButtonSize: CGSize = .init(width: 28, height: 28)
         static let cellHeight: CGFloat = 60
     }
 
-    private let settingButton: UIButton = {
+    private let logoutButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .clear
-        button.setImage(UIImage(named: "setting"), for: .normal)
-        button.contentEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        button.setImage(UIImage(named: "logout"), for: .normal)
         return button
     }()
 
@@ -96,30 +96,47 @@ private extension AdminViewController {
         todayView.managementButton.rx.controlEvent([.touchUpInside])
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
-                self?.viewModel.input.tapManagementButton.accept(())
+                self?.goToTodayManagementVC()
             }).disposed(by: disposeBag)
 
-        settingButton.rx.controlEvent([.touchUpInside])
+        logoutButton.rx.controlEvent([.touchUpInside])
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
-                self?.viewModel.input.tapSettingButton.accept(())
+                self?.viewModel.input.tapLogoutButton.accept(())
             }).disposed(by: disposeBag)
     }
 
     func bindViewModel() {
+        viewModel.output.isFinished
+            .subscribe(onNext: { [weak self] isFinished in
+                guard isFinished == true else { return }
+                DispatchQueue.main.async {
+                    self?.todayView.updateUIWhenFinished()
+                }
+            }).disposed(by: disposeBag)
+
+        viewModel.output.sessionList
+            .subscribe(onNext: { [weak self] _ in
+                DispatchQueue.main.async {
+                    self?.reloadCollectionView()
+                }
+            }).disposed(by: disposeBag)
+
+        viewModel.output.todaySession
+            .subscribe(onNext: { [weak self] _ in
+                DispatchQueue.main.async {
+                    self?.updateTodayView()
+                }
+            }).disposed(by: disposeBag)
+
         viewModel.output.goToGradeVC
             .observe(on: MainScheduler.instance)
             .bind(onNext: goToGradeVC)
             .disposed(by: disposeBag)
 
-        viewModel.output.goToManagementVC
+        viewModel.output.goToLoginVC
             .observe(on: MainScheduler.instance)
-            .bind(onNext: goToManagementVC)
-            .disposed(by: disposeBag)
-
-        viewModel.output.goToSettingVC
-            .observe(on: MainScheduler.instance)
-            .bind(onNext: goToSettingVC)
+            .bind(onNext: goToLoginVC)
             .disposed(by: disposeBag)
     }
 
@@ -134,12 +151,20 @@ extension AdminViewController: UICollectionViewDelegateFlowLayout, UICollectionV
         sessionCollectionView.register(AdminSessionCell.self, forCellWithReuseIdentifier: AdminSessionCell.identifier)
     }
 
+    private func reloadCollectionView() {
+        sessionCollectionView.reloadData()
+    }
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        10
+        guard let sessionList = try? viewModel.output.sessionList.value() else { return .zero }
+        return sessionList.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AdminSessionCell.identifier, for: indexPath) as? AdminSessionCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AdminSessionCell.identifier, for: indexPath) as? AdminSessionCell,
+              let sessionList = try? viewModel.output.sessionList.value() else { return UICollectionViewCell() }
+        let session = sessionList[indexPath.row]
+        cell.updateUI(with: session)
         return cell
     }
 
@@ -152,14 +177,22 @@ extension AdminViewController: UICollectionViewDelegateFlowLayout, UICollectionV
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath.row)
-        goToManagementVC()
+        guard let sessionList = try? viewModel.output.sessionList.value() else { return }
+        let session = sessionList[indexPath.row]
+        if session.type == .needAttendance {
+            goToManagementVC(session: session)
+        }
     }
 
 }
 
 // MARK: - etc
 private extension AdminViewController {
+
+    func updateTodayView() {
+        guard let todaySession = try? viewModel.output.todaySession.value() else { return }
+        todayView.updateUI(session: todaySession)
+    }
 
     func goToGradeVC() {
         let gradeVC = AdminGradeViewController(viewModel: viewModel)
@@ -168,15 +201,26 @@ private extension AdminViewController {
         navigationController?.pushViewController(gradeVC, animated: true)
     }
 
-    func goToManagementVC() {
-        let managementVC = AdminManagementViewController(viewModel: viewModel)
+    func goToTodayManagementVC() {
+        guard let todaySession = try? viewModel.output.todaySession.value() else { return }
+        let managementVC = AdminManagementViewController(viewModel: viewModel, session: todaySession)
         navigationItem.backButtonTitle = ""
         navigationController?.navigationBar.tintColor = .gray_800
         navigationController?.pushViewController(managementVC, animated: true)
     }
 
-    func goToSettingVC() {
-        print("goToSettingVC")
+    func goToManagementVC(session: Session) {
+        let managementVC = AdminManagementViewController(viewModel: viewModel, session: session)
+        navigationItem.backButtonTitle = ""
+        navigationController?.navigationBar.tintColor = .gray_800
+        navigationController?.pushViewController(managementVC, animated: true)
+    }
+
+    func goToLoginVC() {
+        let loginVC = LoginViewController()
+        let navC = UINavigationController(rootViewController: loginVC)
+        navC.modalPresentationStyle = .fullScreen
+        self.present(navC, animated: true)
     }
 
     func setupDelegate() {
@@ -190,18 +234,19 @@ private extension AdminViewController {
 
     func configureUI() {
         view.backgroundColor = .white
+        navigationController?.navigationBar.isHidden = true
     }
 
     func configureLayout() {
-        view.addSubviews([settingButton, cardView, dividerView, titleLabel, todayView, sessionTitleLabel, sessionCollectionView])
+        view.addSubviews([logoutButton, cardView, dividerView, titleLabel, todayView, sessionTitleLabel, sessionCollectionView])
 
-        settingButton.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(Constants.verticalPadding)
+        logoutButton.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(40)
             $0.right.equalToSuperview().inset(Constants.horizontalPadding)
-            $0.width.height.equalTo(44)
+            $0.width.height.equalTo(Constants.logoutButtonSize.width)
         }
         cardView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(80)
+            $0.top.equalToSuperview().offset(90)
             $0.left.right.equalToSuperview().inset(Constants.horizontalPadding)
             $0.height.equalTo(Constants.topPadding)
         }

@@ -9,7 +9,7 @@ import Foundation
 
 struct Attendance: Codable {
     let sessionId: Int
-    let type: AttendanceData
+    var type: AttendanceData
 }
 
 struct AttendanceData: Codable {
@@ -17,10 +17,10 @@ struct AttendanceData: Codable {
     let text: String
 }
 
-enum AttendanceType: Codable, CaseIterable {
-    case absence
-    case tardy
+enum AttendanceType: Int, Codable, CaseIterable {
     case attendance
+    case tardy
+    case absence
     case attendanceMarked
 
     var text: String {

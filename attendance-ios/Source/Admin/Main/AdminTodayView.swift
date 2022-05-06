@@ -11,12 +11,11 @@ import UIKit
 final class AdminTodayView: UIView {
 
     enum Constants {
-        static let padding: CGFloat = 6
         static let cornerRadius: CGFloat = 8
-        static let buttonHeight: CGFloat = 33
+        static let buttonSize: CGSize = .init(width: 57, height: 33)
     }
 
-    private let todayLabel: UILabel = {
+    private let dateLabel: UILabel = {
         let label = UILabel()
         label.font = .Pretendard(type: .regular, size: 14)
         label.textColor = .gray_600
@@ -26,10 +25,9 @@ final class AdminTodayView: UIView {
     private let stackView: UIStackView = {
         let view = UIStackView()
         view.axis = .horizontal
-        view.spacing = Constants.padding
+        view.spacing = 4
         view.alignment = .fill
-        view.distribution = .fillEqually
-        view.backgroundColor = .systemGray
+        view.distribution = .fill
         return view
     }()
 
@@ -44,16 +42,19 @@ final class AdminTodayView: UIView {
         let button = UIButton()
         button.backgroundColor = .yapp_orange
         button.setTitle("관리", for: .normal)
-        button.titleLabel?.font = .Pretendard(type: .regular, size: 14)
+        button.titleLabel?.font = .Pretendard(type: .semiBold, size: 14)
         button.layer.cornerRadius = Constants.cornerRadius
         return button
     }()
 
+    private let dividerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .gray_300
+        return view
+    }()
+
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configureTodayLabel()
-        configureTitleLabel()
-        configureUI()
         configureLayout()
     }
 
@@ -63,17 +64,19 @@ final class AdminTodayView: UIView {
 
 }
 
-// TODO: - 다음 세션 정보로 업데이트
 extension AdminTodayView {
 
-    func configureTodayLabel() {
-        let todayString = "02.07"
-        todayLabel.text = "\(todayString) 오늘"
+    func updateUI(session: Session) {
+        let date = session.date.date()?.mmdd()
+        dateLabel.isHidden = false
+        dateLabel.text = date
+        titleLabel.text = session.title
+        managementButton.isEnabled = session.type == .needAttendance
     }
 
-    func configureTitleLabel() {
-        let titleString = "휴얍"
-        titleLabel.text = titleString
+    func updateUIWhenFinished() {
+        dateLabel.isHidden = true
+        titleLabel.text = "모든 세션을 끝마쳤습니다"
     }
 
 }
@@ -81,20 +84,25 @@ extension AdminTodayView {
 // MARK: - UI
 private extension AdminTodayView {
 
-    func configureUI() {
-        backgroundColor = .systemGroupedBackground
-    }
-
     func configureLayout() {
-        addSubviews([todayLabel, stackView])
+        addSubviews([dateLabel, stackView, dividerView])
+        stackView.addArrangedSubviews([titleLabel, managementButton])
 
-        todayLabel.snp.makeConstraints {
+        dateLabel.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.left.right.equalToSuperview()
         }
         stackView.snp.makeConstraints {
+            $0.top.equalTo(dateLabel.snp.bottom).offset(6)
+            $0.left.right.equalToSuperview()
+            $0.height.equalTo(Constants.buttonSize.height)
+        }
+        managementButton.snp.makeConstraints {
+            $0.width.equalTo(Constants.buttonSize.width)
+        }
+        dividerView.snp.makeConstraints {
             $0.bottom.left.right.equalToSuperview()
-            $0.height.equalTo(Constants.buttonHeight)
+            $0.height.equalTo(1)
         }
     }
 

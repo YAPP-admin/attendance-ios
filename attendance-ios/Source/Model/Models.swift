@@ -51,7 +51,7 @@ enum PositionType: String, CaseIterable, Codable {
     }
 }
 
-struct Team: Codable {
+struct Team: Codable, Equatable {
     var type: TeamType
     var number: Int
 }

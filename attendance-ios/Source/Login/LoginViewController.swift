@@ -15,7 +15,7 @@ final class LoginViewController: UIViewController, ASAuthorizationControllerDele
 
     enum Constants {
         static let padding: CGFloat = 24
-        static let buttonPadding: CGFloat = 6
+        static let leftButtonHalfWidth: CGFloat = 3
         static let buttonSpacing: CGFloat = 8
         static let buttonHeight: CGFloat = 44
         static let buttonBottomSpacing: CGFloat = 133
@@ -52,8 +52,8 @@ final class LoginViewController: UIViewController, ASAuthorizationControllerDele
         button.titleLabel?.font = .Pretendard(type: .regular, size: 19)
         button.setTitleColor(UIColor.white, for: .normal)
         button.setImage(UIImage(systemName: "applelogo"), for: .normal) // 이미지 수정
-        button.titleEdgeInsets = .init(top: 0, left: Constants.buttonPadding/2, bottom: 0, right: -Constants.buttonPadding/2)
-        button.imageEdgeInsets = .init(top: 0, left: -Constants.buttonPadding/2, bottom: 0, right: Constants.buttonPadding/2)
+        button.titleEdgeInsets = .init(top: 0, left: Constants.leftButtonHalfWidth, bottom: 0, right: -Constants.leftButtonHalfWidth)
+        button.imageEdgeInsets = .init(top: 0, left: -Constants.leftButtonHalfWidth, bottom: 0, right: Constants.leftButtonHalfWidth)
         button.layer.cornerRadius = Constants.cornerRadius
         return button
     }()
@@ -66,8 +66,8 @@ final class LoginViewController: UIViewController, ASAuthorizationControllerDele
         button.setTitleColor(Constants.kakaoBlack, for: .normal)
         button.titleLabel?.font = .Pretendard(type: .regular, size: 19)
         button.setImage(UIImage(named: "kakao_login"), for: .normal)
-        button.titleEdgeInsets = .init(top: 0, left: Constants.buttonPadding/2, bottom: 0, right: -Constants.buttonPadding/2)
-        button.imageEdgeInsets = .init(top: 0, left: -Constants.buttonPadding/2, bottom: 0, right: Constants.buttonPadding/2)
+        button.titleEdgeInsets = .init(top: 0, left: Constants.leftButtonHalfWidth, bottom: 0, right: -Constants.leftButtonHalfWidth)
+        button.imageEdgeInsets = .init(top: 0, left: -Constants.leftButtonHalfWidth, bottom: 0, right: Constants.leftButtonHalfWidth)
         button.layer.cornerRadius = Constants.cornerRadius
         return button
     }()
