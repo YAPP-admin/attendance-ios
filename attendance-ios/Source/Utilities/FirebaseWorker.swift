@@ -137,6 +137,20 @@ extension FirebaseWorker {
         }
     }
 
+    func getMemberDocumentData(memberId: Int, completion: @escaping (Result<Member, Error>) -> Void) {
+        memberCollectionRef.getDocuments { snapshot, error in
+            if let error = error {
+                completion(.failure(error))
+            }
+            guard let documents = snapshot?.documents else { return }
+            for document in documents {
+                guard let member = try? document.data(as: Member.self) else { continue }
+                if member.id == memberId {
+                    completion(.success(member))
+                }
+            }
+        }
+    }
 }
 
 // MARK: - Read

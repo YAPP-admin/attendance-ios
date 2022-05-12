@@ -24,19 +24,27 @@ final class HomeViewModel: ViewModel {
 
     struct Output {
         let sessionList = BehaviorRelay<[Session]>(value: [])
-        var goToQR = PublishRelay<Void>()
-        var goToSetting = PublishRelay<Void>()
-        var goToHelp = PublishRelay<Void>()
-        var goToHome = PublishRelay<Void>()
+        let goToQR = PublishRelay<Void>()
+        let goToSetting = PublishRelay<Void>()
+        let goToHelp = PublishRelay<Void>()
+        let goToHome = PublishRelay<Void>()
+        let goToLoginVC = PublishRelay<Void>()
         let yappConfig = BehaviorSubject<YappConfig?>(value: nil)
+        
+        let kakaoAccessToken = PublishSubject<String>()
+        let kakaoTalkId = BehaviorSubject<String>(value: "")
+        let appleId = BehaviorSubject<String>(value: "")
     }
 
     let input = Input()
     let output = Output()
     let disposeBag = DisposeBag()
     let configWorker = ConfigWorker()
-    var homeType = BehaviorRelay<HomeType>(value: .todaySession)
+    let homeType = BehaviorRelay<HomeType>(value: .todaySession)
+    let myId = BehaviorRelay<String>(value: "")
+    
     private let userDefaultsWorker = UserDefaultsWorker()
+    private let firebaseWorker = FirebaseWorker()
 
     init() {
         input.tapQR
@@ -67,6 +75,7 @@ final class HomeViewModel: ViewModel {
         }
 
         setupConfig()
+        checkLoginId()
     }
 
     func setupConfig() {
@@ -78,6 +87,24 @@ final class HomeViewModel: ViewModel {
                 self?.userDefaultsWorker.setSessionCount(session: config.sessionCount)
             case .failure: ()
             }
+        }
+    }
+
+    func checkLoginId() {
+        if let kakaoTalkId = userDefaultsWorker.kakaoTalkId(), kakaoTalkId.isEmpty == false {
+            myId.accept(kakaoTalkId)
+        } else if let appleId = userDefaultsWorker.appleId(), appleId.isEmpty == false {
+            myId.accept(appleId)
+        } else {
+            output.goToLoginVC.accept(())
+            return
+        }
+        getUserData()
+    }
+
+    func getUserData() {
+        firebaseWorker.getMemberDocumentData(memberId: Int(myId.value) ?? 0) { member in
+            print(member)
         }
     }
 }
