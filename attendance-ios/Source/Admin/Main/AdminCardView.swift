@@ -43,7 +43,7 @@ final class AdminCardView: UIView {
     private let imageView: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(named: "illust_manager_home")
-        view.contentMode = .scaleToFill
+        view.contentMode = .scaleAspectFill
         return view
     }()
 
