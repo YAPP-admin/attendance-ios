@@ -33,7 +33,6 @@ final class AdminGradeMemberCell: UICollectionViewCell {
         let label = UILabel()
         label.font = .Pretendard(type: .regular, size: 16)
         label.textColor = .gray_800
-        label.text = "김철수"
         return label
     }()
 
