@@ -17,6 +17,7 @@ final class AdminViewModel: ViewModel {
         let tapLogoutButton = PublishRelay<Void>()
 
         let selectedTeamIndexListInGrade = BehaviorSubject<[Int]>(value: [])
+        let selectedTeamIndexListInManagement = BehaviorSubject<[Int]>(value: [])
         let selectedMemberInManagement = BehaviorSubject<Member?>(value: nil)
     }
 

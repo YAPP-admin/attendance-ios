@@ -37,7 +37,6 @@ final class AdminGradeCell: UICollectionViewCell {
         let label = UILabel()
         label.font = .Pretendard(type: .semiBold, size: 18)
         label.textColor = .gray_1200
-        label.text = "팀 이름"
         return label
     }()
 
@@ -87,7 +86,7 @@ final class AdminGradeCell: UICollectionViewCell {
 
 }
 
-// MARK: -
+// MARK: - Setup
 extension AdminGradeCell {
 
     func setupMembers(members: [Member]) {

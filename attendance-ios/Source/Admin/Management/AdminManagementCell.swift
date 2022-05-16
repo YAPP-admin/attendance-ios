@@ -27,11 +27,18 @@ final class AdminManagementCell: UICollectionViewCell {
         return collectionView
     }()
 
+    private let headerStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        stackView.distribution = .fill
+        return stackView
+    }()
+
     private let teamNameLabel: UILabel = {
         let label = UILabel()
         label.font = .Pretendard(type: .semiBold, size: 18)
         label.textColor = .gray_1200
-        label.text = "팀 이름"
         return label
     }()
 
@@ -41,9 +48,17 @@ final class AdminManagementCell: UICollectionViewCell {
         return button
     }()
 
-    private let dividerView: UIView = {
+    private let topDividerView: UIView = {
         let view = UIView()
         view.backgroundColor = .gray_300
+        view.isHidden = true
+        return view
+    }()
+
+    private let bottomDividerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .gray_300
+        view.isHidden = true
         return view
     }()
 
@@ -61,7 +76,7 @@ final class AdminManagementCell: UICollectionViewCell {
 
         configureUI()
         configureLayout()
-//        updateSubViews()
+        updateSubViews()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -75,7 +90,7 @@ final class AdminManagementCell: UICollectionViewCell {
 
 }
 
-// MARK: -
+// MARK: - Setup
 extension AdminManagementCell {
 
     func setupViewModel(_ viewModel: AdminViewModel) {
@@ -104,64 +119,38 @@ extension AdminManagementCell {
 // MARK: - Show/Hide
 extension AdminManagementCell {
 
-    func showMembers() {
-        isShownMembers = true
-        updateSubViewsWhenShow()
-    }
-
-    func hideMembers() {
-        isShownMembers = false
-        updateSubViewsWhenHide()
-    }
-
     func updateSubViews() {
         isShownMembers == true ? updateSubViewsWhenShow() : updateSubViewsWhenHide()
     }
 
-    private func updateSubViewsWhenShow() {
-        showCollectionView()
-        showChevronButton()
+    func updateSubViewsWhenShow() {
+        updateButtonWhenShow()
         showDividerView()
     }
 
-    private func updateSubViewsWhenHide() {
-        hideCollectionView()
-        hideChevronButton()
+    func updateSubViewsWhenHide() {
+        updateButtonWhenHide()
         hideDividerView()
     }
 
-    private func showCollectionView() {
-        let height = Constants.cellHeight*8
-        collectionView.snp.remakeConstraints {
-            $0.height.equalTo(height)
-        }
-        reloadCollectionView()
-    }
-
-    private func hideCollectionView() {
-        let height = 0
-        collectionView.snp.remakeConstraints {
-            $0.height.equalTo(height)
-        }
-        reloadCollectionView()
-    }
-
-    private func showChevronButton() {
+    private func updateButtonWhenShow() {
         let image = UIImage(named: "chevron_up")
         chevronButton.setImage(image, for: .normal)
     }
 
-    private func hideChevronButton() {
+    private func updateButtonWhenHide() {
         let image = UIImage(named: "chevron_down")
         chevronButton.setImage(image, for: .normal)
     }
 
     private func showDividerView() {
-        dividerView.isHidden = false
+        topDividerView.isHidden = false
+        bottomDividerView.isHidden = false
     }
 
     private func hideDividerView() {
-        dividerView.isHidden = true
+        topDividerView.isHidden = true
+        bottomDividerView.isHidden = true
     }
 
 }
@@ -183,18 +172,19 @@ extension AdminManagementCell: UICollectionViewDelegateFlowLayout, UICollectionV
         return members.count
     }
 
+    // TODO: -
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AdminManagementMemberCell.identifier, for: indexPath) as? AdminManagementMemberCell else { return UICollectionViewCell() }
         let member = members[indexPath.row]
         cell.updateSubViews(with: member)
 
-        cell.attendanceButton.rx.controlEvent([.touchUpInside])
-            .asObservable()
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                let member = self.members[indexPath.row]
-                self.viewModel?.input.selectedMemberInManagement.onNext(member)
-            }).disposed(by: disposeBag)
+//        cell.attendanceButton.rx.controlEvent([.touchUpInside])
+//            .asObservable()
+//            .subscribe(onNext: { [weak self] _ in
+//                guard let self = self else { return }
+//                let member = self.members[indexPath.row]
+//                self.viewModel?.input.selectedMemberInManagement.onNext(member)
+//            }).disposed(by: disposeBag)
 
         let attendance = member.attendances[sessionId]
         cell.updateAttendance(with: attendance)
@@ -216,22 +206,28 @@ private extension AdminManagementCell {
     }
 
     func configureLayout() {
-        addSubviews([teamNameLabel, chevronButton, collectionView, dividerView])
+        addSubviews([headerStackView, collectionView, topDividerView, bottomDividerView])
+        headerStackView.addArrangedSubviews([teamNameLabel, chevronButton])
 
-        teamNameLabel.snp.makeConstraints {
-            $0.left.equalToSuperview().offset(Constants.horizontalPadding)
-            $0.top.equalToSuperview().offset(20)
+        headerStackView.snp.makeConstraints {
+            $0.top.right.equalToSuperview()
+            $0.left.equalToSuperview().inset(Constants.horizontalPadding)
+            $0.height.equalTo(Constants.cellHeight)
         }
         chevronButton.snp.makeConstraints {
-            $0.right.equalToSuperview().inset(Constants.horizontalPadding)
-            $0.centerY.equalTo(teamNameLabel)
+            $0.width.height.equalTo(Constants.cellHeight)
         }
         collectionView.snp.makeConstraints {
+            $0.top.equalTo(headerStackView.snp.bottom)
             $0.bottom.left.right.equalToSuperview()
-            $0.height.equalTo(Constants.cellHeight*5)
         }
-        dividerView.snp.makeConstraints {
-            $0.bottom.equalToSuperview()
+        topDividerView.snp.makeConstraints {
+            $0.top.equalTo(collectionView.snp.top)
+            $0.left.right.equalToSuperview().inset(Constants.horizontalPadding)
+            $0.height.equalTo(1)
+        }
+        bottomDividerView.snp.makeConstraints {
+            $0.bottom.equalTo(collectionView.snp.bottom)
             $0.left.right.equalToSuperview().inset(Constants.horizontalPadding)
             $0.height.equalTo(1)
         }

@@ -218,8 +218,7 @@ private extension AdminGradeViewController {
 
         teamCollectionView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(Constants.topPadding)
-            $0.left.right.equalToSuperview()
-            $0.bottom.equalToSuperview()
+            $0.bottom.left.right.equalToSuperview()
         }
     }
 
