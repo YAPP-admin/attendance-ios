@@ -13,14 +13,24 @@ import UIKit
 final class AdminViewController: UIViewController {
 
     enum Constants {
-        static let horizontalPadding: CGFloat = 24
         static let verticalPadding: CGFloat = 28
-        static let topPadding: CGFloat = 116
+        static let horizontalPadding: CGFloat = 24
+        static let topPadding: CGFloat = 88
         static let dividerViewHeight: CGFloat = 12
         static let todayViewHeight: CGFloat = 80
         static let logoutButtonSize: CGSize = .init(width: 28, height: 28)
         static let cellHeight: CGFloat = 60
     }
+
+    private let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        return scrollView
+    }()
+
+    private let contentView: UIView = {
+        let view = UIView()
+        return view
+    }()
 
     private let logoutButton: UIButton = {
         let button = UIButton()
@@ -69,10 +79,9 @@ final class AdminViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        bindSubviews()
         bindViewModel()
+        bindSubviews()
 
-        setupDelegate()
         setupCollectionView()
 
         configureUI()
@@ -83,6 +92,41 @@ final class AdminViewController: UIViewController {
 
 // MARK: - Bind
 private extension AdminViewController {
+
+    func bindViewModel() {
+        viewModel.output.isFinished
+            .subscribe(onNext: { [weak self] isFinished in
+                guard isFinished == true else { return }
+                DispatchQueue.main.async {
+                    self?.todayView.updateUIWhenFinished()
+                }
+            }).disposed(by: disposeBag)
+
+        viewModel.output.sessionList
+            .subscribe(onNext: { [weak self] list in
+                DispatchQueue.main.async {
+                    self?.updateCollectionViewHeight(with: list)
+                    self?.reloadCollectionView()
+                }
+            }).disposed(by: disposeBag)
+
+        viewModel.output.todaySession
+            .subscribe(onNext: { [weak self] _ in
+                DispatchQueue.main.async {
+                    self?.updateTodayView()
+                }
+            }).disposed(by: disposeBag)
+
+        viewModel.output.goToGradeVC
+            .observe(on: MainScheduler.instance)
+            .bind(onNext: goToGradeVC)
+            .disposed(by: disposeBag)
+
+        viewModel.output.goToLoginVC
+            .observe(on: MainScheduler.instance)
+            .bind(onNext: goToLoginVC)
+            .disposed(by: disposeBag)
+    }
 
     func bindSubviews() {
         let tapGesture = UITapGestureRecognizer()
@@ -106,40 +150,6 @@ private extension AdminViewController {
             }).disposed(by: disposeBag)
     }
 
-    func bindViewModel() {
-        viewModel.output.isFinished
-            .subscribe(onNext: { [weak self] isFinished in
-                guard isFinished == true else { return }
-                DispatchQueue.main.async {
-                    self?.todayView.updateUIWhenFinished()
-                }
-            }).disposed(by: disposeBag)
-
-        viewModel.output.sessionList
-            .subscribe(onNext: { [weak self] _ in
-                DispatchQueue.main.async {
-                    self?.reloadCollectionView()
-                }
-            }).disposed(by: disposeBag)
-
-        viewModel.output.todaySession
-            .subscribe(onNext: { [weak self] _ in
-                DispatchQueue.main.async {
-                    self?.updateTodayView()
-                }
-            }).disposed(by: disposeBag)
-
-        viewModel.output.goToGradeVC
-            .observe(on: MainScheduler.instance)
-            .bind(onNext: goToGradeVC)
-            .disposed(by: disposeBag)
-
-        viewModel.output.goToLoginVC
-            .observe(on: MainScheduler.instance)
-            .bind(onNext: goToLoginVC)
-            .disposed(by: disposeBag)
-    }
-
 }
 
 // MARK: - CollectionView
@@ -149,6 +159,13 @@ extension AdminViewController: UICollectionViewDelegateFlowLayout, UICollectionV
         sessionCollectionView.delegate = self
         sessionCollectionView.dataSource = self
         sessionCollectionView.register(AdminSessionCell.self, forCellWithReuseIdentifier: AdminSessionCell.identifier)
+    }
+
+    private func updateCollectionViewHeight(with list: [Session]) {
+        let height = Constants.cellHeight*CGFloat(list.count)
+        sessionCollectionView.snp.updateConstraints {
+            $0.height.equalTo(height)
+        }
     }
 
     private func reloadCollectionView() {
@@ -223,10 +240,6 @@ private extension AdminViewController {
         self.present(navC, animated: true)
     }
 
-    func setupDelegate() {
-
-    }
-
 }
 
 // MARK: - UI
@@ -238,8 +251,18 @@ private extension AdminViewController {
     }
 
     func configureLayout() {
-        view.addSubviews([logoutButton, cardView, dividerView, titleLabel, todayView, sessionTitleLabel, sessionCollectionView])
+        view.addSubviews([scrollView])
+        scrollView.addSubviews([contentView])
+        contentView.addSubviews([logoutButton, cardView, dividerView, titleLabel, todayView, sessionTitleLabel, sessionCollectionView])
 
+        scrollView.snp.makeConstraints {
+            $0.top.bottom.left.right.equalToSuperview()
+        }
+        contentView.snp.makeConstraints {
+            $0.top.bottom.left.right.equalToSuperview()
+            $0.width.equalToSuperview()
+            $0.bottom.equalTo(sessionCollectionView.snp.bottom)
+        }
         logoutButton.snp.makeConstraints {
             $0.top.equalToSuperview().inset(40)
             $0.right.equalToSuperview().inset(Constants.horizontalPadding)
@@ -272,6 +295,7 @@ private extension AdminViewController {
             $0.top.equalTo(sessionTitleLabel.snp.bottom).offset(4)
             $0.left.right.equalToSuperview().inset(Constants.horizontalPadding)
             $0.bottom.equalToSuperview()
+            $0.height.equalTo(Constants.cellHeight*20)
         }
     }
 

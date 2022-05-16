@@ -1,13 +1,13 @@
 //
-//  UICollectionViewCell.swift
+//  UICollectionReusableView.swift
 //  attendance-ios
 //
-//  Created by leeesangheee on 2022/03/03.
+//  Created by leeesangheee on 2022/05/16.
 //
 
 import UIKit
 
-extension UICollectionViewCell {
+extension UICollectionReusableView {
 
     static var identifier: String {
         return String(describing: Self.self)

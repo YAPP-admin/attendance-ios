@@ -11,7 +11,7 @@ import UIKit
 final class AdminManagementMemberCell: UICollectionViewCell {
 
     enum Constants {
-        static let horizontalPadding: CGFloat = 24
+        static let horizontalPadding: CGFloat = 28
         static let cornerRadius: CGFloat = 8
         static let buttonSize: CGSize = .init(width: 77, height: 33)
     }
@@ -20,7 +20,6 @@ final class AdminManagementMemberCell: UICollectionViewCell {
         let label = UILabel()
         label.font = .Pretendard(type: .regular, size: 16)
         label.textColor = .gray_800
-        label.text = "김철수"
         return label
     }()
 
