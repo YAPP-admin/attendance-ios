@@ -96,6 +96,11 @@ final class SettingViewController: UIViewController {
             .bind(onNext: goToPolicyVC)
             .disposed(by: disposeBag)
 
+        viewModel.output.goToLoginVC
+            .observe(on: MainScheduler.instance)
+            .bind(onNext: goToLoginVC)
+            .disposed(by: disposeBag)
+
         viewModel.output.generation
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] _ in
@@ -134,5 +139,12 @@ final class SettingViewController: UIViewController {
     func goToPolicyVC() {
         let vc = SettingPrivacyPolicyViewController()
         self.navigationController?.pushViewController(vc, animated: true)
+    }
+
+    func goToLoginVC() {
+        let loginVC = LoginViewController()
+        let navC = UINavigationController(rootViewController: loginVC)
+        navC.modalPresentationStyle = .fullScreen
+        self.present(navC, animated: true)
     }
 }

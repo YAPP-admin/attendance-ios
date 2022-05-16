@@ -21,6 +21,7 @@ final class SettingViewModel: ViewModel {
     struct Output {
         var goToHome = PublishRelay<Void>()
         let goToPolicyVC = PublishRelay<Void>()
+        let goToLoginVC = PublishRelay<Void>()
         var generation = BehaviorRelay<String>(value: "")
     }
 
@@ -65,9 +66,14 @@ final class SettingViewModel: ViewModel {
 
     func logout() {
         print("로그아웃")
+        userDefaultsWorker.removeKakaoTalkId()
+        output.goToLoginVC.accept(())
     }
 
     func memberOut() {
         print("회원탈퇴")
+
+        output.goToLoginVC.accept(())
+
     }
 }
