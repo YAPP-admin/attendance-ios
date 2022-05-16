@@ -68,6 +68,8 @@ final class SettingViewController: UIViewController {
     private let viewModel = SettingViewModel()
     private var disposeBag = DisposeBag()
     private let tapPolicy = UITapGestureRecognizer()
+    private let tapLogout = UITapGestureRecognizer()
+    private let tapMemberOut = UITapGestureRecognizer()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,6 +78,7 @@ final class SettingViewController: UIViewController {
 
         addSubViews()
         bind()
+        bindSubViews()
     }
 
     func bind() {
@@ -87,12 +90,6 @@ final class SettingViewController: UIViewController {
             .observe(on: MainScheduler.instance)
             .bind(onNext: showHomeVC)
             .disposed(by: disposeBag)
-
-        policyView.addGestureRecognizer(tapPolicy)
-        tapPolicy.rx.event
-            .bind(onNext: { [weak self] _ in
-                self?.viewModel.input.tapPolicyView.accept(())
-            }).disposed(by: disposeBag)
 
         viewModel.output.goToPolicyVC
             .observe(on: MainScheduler.instance)
@@ -107,6 +104,27 @@ final class SettingViewController: UIViewController {
                 }
             })
             .disposed(by: disposeBag)
+    }
+
+    func bindSubViews() {
+        policyView.addGestureRecognizer(tapPolicy)
+        logoutView.addGestureRecognizer(tapLogout)
+        memberoutView.addGestureRecognizer(tapMemberOut)
+
+        tapPolicy.rx.event
+            .bind(onNext: { [weak self] _ in
+                self?.viewModel.input.tapPolicyView.accept(())
+            }).disposed(by: disposeBag)
+
+        tapLogout.rx.event
+            .bind(onNext: { [weak self] _ in
+                self?.viewModel.input.tapLogoutView.accept(())
+            }).disposed(by: disposeBag)
+
+        tapMemberOut.rx.event
+            .bind(onNext: { [weak self] _ in
+                self?.viewModel.input.tapMemberView.accept(())
+            }).disposed(by: disposeBag)
     }
 
     func showHomeVC() {

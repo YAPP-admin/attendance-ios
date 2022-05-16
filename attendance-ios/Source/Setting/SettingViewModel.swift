@@ -14,6 +14,8 @@ final class SettingViewModel: ViewModel {
     struct Input {
         let tapBack = PublishRelay<Void>()
         let tapPolicyView = PublishRelay<Void>()
+        let tapLogoutView = PublishRelay<Void>()
+        let tapMemberView = PublishRelay<Void>()
     }
 
     struct Output {
@@ -42,6 +44,16 @@ final class SettingViewModel: ViewModel {
                 self?.output.goToPolicyVC.accept(())
             }).disposed(by: disposeBag)
 
+        input.tapLogoutView
+            .subscribe(onNext: { [weak self] _ in
+                self?.logout()
+            }).disposed(by: disposeBag)
+
+        input.tapMemberView
+            .subscribe(onNext: { [weak self] _ in
+                self?.memberOut()
+            }).disposed(by: disposeBag)
+
         checkGeneration()
     }
 
@@ -49,5 +61,13 @@ final class SettingViewModel: ViewModel {
         if let generation = userDefaultsWorker.getGeneration(), generation.isEmpty == false {
             output.generation.accept(generation)
         }
+    }
+
+    func logout() {
+        print("로그아웃")
+    }
+
+    func memberOut() {
+        print("회원탈퇴")
     }
 }
