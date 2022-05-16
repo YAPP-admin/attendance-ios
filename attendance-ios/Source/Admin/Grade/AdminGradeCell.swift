@@ -200,8 +200,8 @@ private extension AdminGradeCell {
             $0.centerY.equalTo(teamNameLabel)
         }
         collectionView.snp.makeConstraints {
+            $0.top.equalTo(teamNameLabel.snp.bottom)
             $0.bottom.left.right.equalToSuperview()
-            $0.height.equalTo(Constants.cellHeight*5)
         }
         dividerView.snp.makeConstraints {
             $0.bottom.equalToSuperview()
