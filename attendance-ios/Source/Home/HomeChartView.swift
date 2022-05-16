@@ -57,7 +57,7 @@ final class HomeChartView: UIView {
         let label = UILabel()
         label.textColor = .gray_800
         label.font = .Pretendard(type: .semiBold, size: 18)
-        label.text = "10"
+        label.text = "0"
         label.textAlignment = .center
         return label
     }()
@@ -88,7 +88,7 @@ final class HomeChartView: UIView {
         let label = UILabel()
         label.textColor = .gray_800
         label.font = .Pretendard(type: .semiBold, size: 18)
-        label.text = "2"
+        label.text = "0"
         label.textAlignment = .center
         return label
     }()

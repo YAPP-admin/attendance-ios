@@ -22,8 +22,8 @@ final class HomeAttendanceCheckViewController: UIViewController {
     }()
     private let tableView: UITableView = {
         let tableView = UITableView()
-        tableView.register(HomeAttendanceCheckTableViewCell.self, forCellReuseIdentifier: "HomeAttendanceCheckTableViewCell")
         tableView.register(HomeTotalScoreTableViewCell.self, forCellReuseIdentifier: "HomeTotalScoreTableViewCell")
+        tableView.register(HomeAttendanceCheckTableViewCell.self, forCellReuseIdentifier: "HomeAttendanceCheckTableViewCell")
         tableView.showsVerticalScrollIndicator = false
         tableView.separatorStyle = .singleLine
         tableView.separatorColor = .gray_200
@@ -71,7 +71,15 @@ final class HomeAttendanceCheckViewController: UIViewController {
 
         viewModel.output.sessionList
             .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] list in
+            .subscribe(onNext: { [weak self] _ in
+                UIView.performWithoutAnimation {
+                    self?.tableView.reloadData()
+                }
+            }).disposed(by: disposeBag)
+
+        viewModel.memberData
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] _ in
                 UIView.performWithoutAnimation {
                     self?.tableView.reloadData()
                 }
@@ -95,9 +103,11 @@ extension HomeAttendanceCheckViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row != 0 {
+            guard let data = viewModel.memberData.value else { return }
+            let type = data.attendances[indexPath.row - 1].type
             let item = viewModel.output.sessionList.value[indexPath.row - 1]
             let detailVC = HomeAttendanceDetailViewController()
-            detailVC.setType(item)
+            detailVC.setType(item, type: type)
             self.navigationController?.pushViewController(detailVC, animated: true)
         }
     }
@@ -118,7 +128,8 @@ extension HomeAttendanceCheckViewController: UITableViewDataSource {
             }
         } else {
             if let cell = tableView.dequeueReusableCell(withIdentifier: "HomeAttendanceCheckTableViewCell", for: indexPath) as? HomeAttendanceCheckTableViewCell {
-                cell.updateUI(viewModel.output.sessionList.value[indexPath.row - 1])
+                guard let data = viewModel.memberData.value else { return cell }
+                cell.updateUI(viewModel.output.sessionList.value[indexPath.row - 1], data: data.attendances[indexPath.row - 1].type)
                 return cell
             }
         }

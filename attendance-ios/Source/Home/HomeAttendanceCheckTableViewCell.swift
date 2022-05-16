@@ -95,7 +95,7 @@ final class HomeAttendanceCheckTableViewCell: BaseTableViewCell {
         }
     }
 
-    func updateUI(_ session: Session) {
+    func updateUI(_ session: Session, data: AttendanceData) {
         titleLabel.text = session.title
         descriptionLabel.text = session.description
         dateLabel.text = session.date.date()?.mmdd() ?? ""
@@ -103,9 +103,19 @@ final class HomeAttendanceCheckTableViewCell: BaseTableViewCell {
         case .needAttendance:
             guard let nowDate = Date().startDate() else { return }
             if nowDate.isPast(than: session.date.date()) {
-                attendanceLabel.text = "출석"
-                attendanceLabel.textColor = .etc_green
-                markImageView.image = UIImage(named: "attendance")
+                if data.text == "출석" {
+                    attendanceLabel.text = "출석"
+                    attendanceLabel.textColor = .etc_green
+                    markImageView.image = UIImage(named: "attendance")
+                } else if data.text == "결석" {
+                    attendanceLabel.text = "결석"
+                    attendanceLabel.textColor = .etc_red
+                    markImageView.image = UIImage(named: "absence")
+                } else {
+                    attendanceLabel.text = "지각"
+                    attendanceLabel.textColor = .etc_yellow_font
+                    markImageView.image = UIImage(named: "tardy")
+                }
                 titleLabel.textColor = .gray_1200
                 descriptionLabel.textColor = .gray_800
             } else {

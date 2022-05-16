@@ -103,7 +103,7 @@ final class HomeViewModel: ViewModel {
             return
         }
     }
-    
+
     func getUserData() {
         firebaseWorker.getMemberDocumentData(memberId: Int(myId.value) ?? 0) { result in
             switch result {
