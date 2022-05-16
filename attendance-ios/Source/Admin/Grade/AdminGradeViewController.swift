@@ -15,8 +15,9 @@ final class AdminGradeViewController: UIViewController {
     enum Constants {
         static let horizontalPadding: CGFloat = 24
         static let verticalPadding: CGFloat = 28
-        static let topPadding: CGFloat = 116
+        static let topPadding: CGFloat = 88
         static let cellHeight: CGFloat = 60
+        static let headerHeight: CGFloat = 104
     }
 
     private let navigationTitleLabel: UILabel = {
@@ -33,12 +34,6 @@ final class AdminGradeViewController: UIViewController {
         let button = UIButton()
         button.setImage(UIImage(named: "back"), for: .normal)
         return button
-    }()
-
-    private let adminMesasgeView: AdminMessageView = {
-        let view = AdminMessageView()
-        view.configureLabel("점수가 실시간으로 반영되고 있어요")
-        return view
     }()
 
     private let teamCollectionView: UICollectionView = {
@@ -122,6 +117,7 @@ extension AdminGradeViewController: UICollectionViewDelegateFlowLayout, UICollec
         teamCollectionView.delegate = self
         teamCollectionView.dataSource = self
         teamCollectionView.register(AdminGradeCell.self, forCellWithReuseIdentifier: AdminGradeCell.identifier)
+        teamCollectionView.register(AdminMessageHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: AdminMessageHeader.identifier)
     }
 
     private func reloadCollectionView() {
@@ -187,7 +183,21 @@ extension AdminGradeViewController: UICollectionViewDelegateFlowLayout, UICollec
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        0
+        return 0
+    }
+
+    // MARK: - Header
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard kind == UICollectionView.elementKindSectionHeader,
+              let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: AdminMessageHeader.identifier, for: indexPath) as? AdminMessageHeader else { return .init() }
+        header.configureLabel("점수가 실시간으로 반영되고 있어요")
+        return header
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        let width = collectionView.bounds.width
+        let height = Constants.headerHeight
+        return .init(width: width, height: height)
     }
 
 }
@@ -200,15 +210,10 @@ private extension AdminGradeViewController {
     }
 
     func configureLayout() {
-        view.addSubviews([adminMesasgeView, teamCollectionView])
+        view.addSubview(teamCollectionView)
 
-        adminMesasgeView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(Constants.topPadding)
-            $0.left.right.equalToSuperview().inset(Constants.horizontalPadding)
-            $0.height.equalTo(48)
-        }
         teamCollectionView.snp.makeConstraints {
-            $0.top.equalTo(adminMesasgeView.snp.bottom).offset(Constants.verticalPadding)
+            $0.top.equalToSuperview().offset(Constants.topPadding)
             $0.left.right.equalToSuperview()
             $0.bottom.equalToSuperview()
         }

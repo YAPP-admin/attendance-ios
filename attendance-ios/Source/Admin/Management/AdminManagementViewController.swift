@@ -37,7 +37,7 @@ final class AdminManagementViewController: UIViewController {
         return button
     }()
 
-    private let adminMesasgeView = AdminMessageView()
+    private let adminMesasgeView = AdminMessageHeader()
 
     private let teamCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()

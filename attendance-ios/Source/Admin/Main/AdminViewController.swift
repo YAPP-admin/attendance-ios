@@ -79,8 +79,8 @@ final class AdminViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        bindSubviews()
         bindViewModel()
+        bindSubviews()
 
         setupDelegate()
         setupCollectionView()
@@ -93,6 +93,41 @@ final class AdminViewController: UIViewController {
 
 // MARK: - Bind
 private extension AdminViewController {
+
+    func bindViewModel() {
+        viewModel.output.isFinished
+            .subscribe(onNext: { [weak self] isFinished in
+                guard isFinished == true else { return }
+                DispatchQueue.main.async {
+                    self?.todayView.updateUIWhenFinished()
+                }
+            }).disposed(by: disposeBag)
+
+        viewModel.output.sessionList
+            .subscribe(onNext: { [weak self] list in
+                DispatchQueue.main.async {
+                    self?.updateCollectionViewHeight(with: list)
+                    self?.reloadCollectionView()
+                }
+            }).disposed(by: disposeBag)
+
+        viewModel.output.todaySession
+            .subscribe(onNext: { [weak self] _ in
+                DispatchQueue.main.async {
+                    self?.updateTodayView()
+                }
+            }).disposed(by: disposeBag)
+
+        viewModel.output.goToGradeVC
+            .observe(on: MainScheduler.instance)
+            .bind(onNext: goToGradeVC)
+            .disposed(by: disposeBag)
+
+        viewModel.output.goToLoginVC
+            .observe(on: MainScheduler.instance)
+            .bind(onNext: goToLoginVC)
+            .disposed(by: disposeBag)
+    }
 
     func bindSubviews() {
         let tapGesture = UITapGestureRecognizer()
@@ -116,40 +151,6 @@ private extension AdminViewController {
             }).disposed(by: disposeBag)
     }
 
-    func bindViewModel() {
-        viewModel.output.isFinished
-            .subscribe(onNext: { [weak self] isFinished in
-                guard isFinished == true else { return }
-                DispatchQueue.main.async {
-                    self?.todayView.updateUIWhenFinished()
-                }
-            }).disposed(by: disposeBag)
-
-        viewModel.output.sessionList
-            .subscribe(onNext: { [weak self] _ in
-                DispatchQueue.main.async {
-                    self?.reloadCollectionView()
-                }
-            }).disposed(by: disposeBag)
-
-        viewModel.output.todaySession
-            .subscribe(onNext: { [weak self] _ in
-                DispatchQueue.main.async {
-                    self?.updateTodayView()
-                }
-            }).disposed(by: disposeBag)
-
-        viewModel.output.goToGradeVC
-            .observe(on: MainScheduler.instance)
-            .bind(onNext: goToGradeVC)
-            .disposed(by: disposeBag)
-
-        viewModel.output.goToLoginVC
-            .observe(on: MainScheduler.instance)
-            .bind(onNext: goToLoginVC)
-            .disposed(by: disposeBag)
-    }
-
 }
 
 // MARK: - CollectionView
@@ -159,6 +160,14 @@ extension AdminViewController: UICollectionViewDelegateFlowLayout, UICollectionV
         sessionCollectionView.delegate = self
         sessionCollectionView.dataSource = self
         sessionCollectionView.register(AdminSessionCell.self, forCellWithReuseIdentifier: AdminSessionCell.identifier)
+    }
+
+    // TODO: - SessionList 적용
+    private func updateCollectionViewHeight(with list: [Session]) {
+//        let height = Constants.cellHeight*CGFloat(list.count)
+//        sessionCollectionView.snp.remakeConstraints {
+//            $0.height.equalTo(height)
+//        }
     }
 
     private func reloadCollectionView() {
@@ -292,7 +301,7 @@ private extension AdminViewController {
             $0.top.equalTo(sessionTitleLabel.snp.bottom).offset(4)
             $0.left.right.equalToSuperview().inset(Constants.horizontalPadding)
             $0.bottom.equalToSuperview()
-            $0.height.equalTo(Constants.cellHeight*19)
+            $0.height.equalTo(Constants.cellHeight*20)
         }
     }
 
