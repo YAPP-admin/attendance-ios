@@ -171,16 +171,19 @@ extension AdminGradeViewController: UICollectionViewDelegateFlowLayout, UICollec
 
     // TODO: - Show/Hide
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        guard let memberList = try? viewModel.output.memberList.value(),
-              let indexList = try? viewModel.input.selectedTeamIndexListInGrade.value() else { return .zero }
+        var size = CGSize(width: collectionView.bounds.width, height: Constants.cellHeight)
 
-        var height = Constants.cellHeight
+        guard let teamList = try? viewModel.output.teamList.value(),
+              let memberList = try? viewModel.output.memberList.value(),
+              let indexList = try? viewModel.input.selectedTeamIndexListInGrade.value(),
+              indexList.contains(indexPath.row) == true else { return size }
 
-        if indexList.contains(indexPath.row) == true {
-            height = Constants.cellHeight*6
+        if let team = teamList[safe: indexPath.row] {
+            let members = memberList.filter { $0.team == team }
+            size.height = Constants.cellHeight*CGFloat(members.count+1)
         }
 
-        return CGSize(width: collectionView.bounds.width, height: height)
+        return size
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

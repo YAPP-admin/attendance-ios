@@ -25,6 +25,14 @@ final class AdminGradeCell: UICollectionViewCell {
         return collectionView
     }()
 
+    private let headerStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        stackView.distribution = .fill
+        return stackView
+    }()
+
     private let teamNameLabel: UILabel = {
         let label = UILabel()
         label.font = .Pretendard(type: .semiBold, size: 18)
@@ -116,7 +124,7 @@ extension AdminGradeCell {
 
     private func showCollectionView() {
         let height = Constants.cellHeight*2
-        collectionView.snp.remakeConstraints {
+        collectionView.snp.updateConstraints {
             $0.height.equalTo(height)
         }
         reloadCollectionView()
@@ -124,7 +132,7 @@ extension AdminGradeCell {
 
     private func hideCollectionView() {
         let height = 0
-        collectionView.snp.remakeConstraints {
+        collectionView.snp.updateConstraints {
             $0.height.equalTo(height)
         }
         reloadCollectionView()
@@ -189,18 +197,19 @@ private extension AdminGradeCell {
     }
 
     func configureLayout() {
-        addSubviews([teamNameLabel, chevronButton, collectionView, dividerView])
+        addSubviews([headerStackView, collectionView, dividerView])
+        headerStackView.addArrangedSubviews([teamNameLabel, chevronButton])
 
-        teamNameLabel.snp.makeConstraints {
-            $0.left.equalToSuperview().offset(Constants.horizontalPadding)
-            $0.top.equalToSuperview().offset(20)
+        headerStackView.snp.makeConstraints {
+            $0.top.right.equalToSuperview()
+            $0.left.equalToSuperview().inset(Constants.horizontalPadding)
+            $0.height.equalTo(Constants.cellHeight)
         }
         chevronButton.snp.makeConstraints {
-            $0.right.equalToSuperview().inset(Constants.horizontalPadding)
-            $0.centerY.equalTo(teamNameLabel)
+            $0.width.height.equalTo(Constants.cellHeight)
         }
         collectionView.snp.makeConstraints {
-            $0.top.equalTo(teamNameLabel.snp.bottom)
+            $0.top.equalTo(headerStackView.snp.bottom)
             $0.bottom.left.right.equalToSuperview()
         }
         dividerView.snp.makeConstraints {
