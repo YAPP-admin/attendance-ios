@@ -11,13 +11,14 @@ import UIKit
 final class AdminGradeMemberCell: UICollectionViewCell {
 
     enum Constants {
-        static let horizontalPadding: CGFloat = 32
+        static let horizontalPadding: CGFloat = 28
     }
 
     private let nameStackView: UIStackView = {
         let view = UIStackView()
         view.alignment = .leading
-        view.spacing = 8
+        view.spacing = 6
+        view.alignment = .center
         return view
     }()
 

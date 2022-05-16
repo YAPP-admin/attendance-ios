@@ -148,7 +148,6 @@ extension AdminGradeViewController: UICollectionViewDelegateFlowLayout, UICollec
         cell.chevronButton.rx.tap
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
-                print("index: \(indexPath.row)")
                 indexList.toggleElement(index)
                 self?.viewModel.input.selectedTeamIndexListInGrade.onNext(indexList)
             }).disposed(by: disposeBag)
@@ -156,6 +155,8 @@ extension AdminGradeViewController: UICollectionViewDelegateFlowLayout, UICollec
         if let sessionId = sessionList.todaySession()?.sessionId {
             cell.sessionId = sessionId
         }
+        cell.isShownMembers = indexList.contains(indexPath.row)
+        cell.updateSubViews()
 
         if let teamList = try? viewModel.output.teamList.value(), let team = teamList[safe: index] {
             let teamNames = teamList.map { $0.name() }
@@ -169,7 +170,6 @@ extension AdminGradeViewController: UICollectionViewDelegateFlowLayout, UICollec
         return cell
     }
 
-    // TODO: - Show/Hide
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         var size = CGSize(width: collectionView.bounds.width, height: Constants.cellHeight)
 

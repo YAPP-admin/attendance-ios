@@ -47,13 +47,21 @@ final class AdminGradeCell: UICollectionViewCell {
         return button
     }()
 
-    private let dividerView: UIView = {
+    private let topDividerView: UIView = {
         let view = UIView()
         view.backgroundColor = .gray_300
+        view.isHidden = true
         return view
     }()
 
-    var isShownMembers: Bool = true
+    private let bottomDividerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .gray_300
+        view.isHidden = true
+        return view
+    }()
+
+    var isShownMembers: Bool = false
     var members: [Member] = []
     var sessionId: Int = 0
 
@@ -65,7 +73,7 @@ final class AdminGradeCell: UICollectionViewCell {
 
         configureUI()
         configureLayout()
-//        updateSubViews()
+        updateSubViews()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -96,46 +104,18 @@ extension AdminGradeCell {
 // MARK: - Show/Hide
 extension AdminGradeCell {
 
-    func showMembers() {
-        isShownMembers = true
-        updateSubViewsWhenShow()
-    }
-
-    func hideMembers() {
-        isShownMembers = false
-        updateSubViewsWhenHide()
-    }
-
     func updateSubViews() {
         isShownMembers == true ? updateSubViewsWhenShow() : updateSubViewsWhenHide()
     }
 
-    private func updateSubViewsWhenShow() {
-        showCollectionView()
+    func updateSubViewsWhenShow() {
         updateButtonWhenShow()
         showDividerView()
     }
 
-    private func updateSubViewsWhenHide() {
-        hideCollectionView()
+    func updateSubViewsWhenHide() {
         updateButtonWhenHide()
         hideDividerView()
-    }
-
-    private func showCollectionView() {
-        let height = Constants.cellHeight*2
-        collectionView.snp.updateConstraints {
-            $0.height.equalTo(height)
-        }
-        reloadCollectionView()
-    }
-
-    private func hideCollectionView() {
-        let height = 0
-        collectionView.snp.updateConstraints {
-            $0.height.equalTo(height)
-        }
-        reloadCollectionView()
     }
 
     private func updateButtonWhenShow() {
@@ -149,11 +129,13 @@ extension AdminGradeCell {
     }
 
     private func showDividerView() {
-        dividerView.isHidden = false
+        topDividerView.isHidden = false
+        bottomDividerView.isHidden = false
     }
 
     private func hideDividerView() {
-        dividerView.isHidden = true
+        topDividerView.isHidden = true
+        bottomDividerView.isHidden = true
     }
 
 }
@@ -197,7 +179,7 @@ private extension AdminGradeCell {
     }
 
     func configureLayout() {
-        addSubviews([headerStackView, collectionView, dividerView])
+        addSubviews([headerStackView, collectionView, topDividerView, bottomDividerView])
         headerStackView.addArrangedSubviews([teamNameLabel, chevronButton])
 
         headerStackView.snp.makeConstraints {
@@ -212,8 +194,13 @@ private extension AdminGradeCell {
             $0.top.equalTo(headerStackView.snp.bottom)
             $0.bottom.left.right.equalToSuperview()
         }
-        dividerView.snp.makeConstraints {
-            $0.bottom.equalToSuperview()
+        topDividerView.snp.makeConstraints {
+            $0.top.equalTo(collectionView.snp.top)
+            $0.left.right.equalToSuperview().inset(Constants.horizontalPadding)
+            $0.height.equalTo(1)
+        }
+        bottomDividerView.snp.makeConstraints {
+            $0.bottom.equalTo(collectionView.snp.bottom)
             $0.left.right.equalToSuperview().inset(Constants.horizontalPadding)
             $0.height.equalTo(1)
         }
