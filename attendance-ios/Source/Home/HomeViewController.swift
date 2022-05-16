@@ -112,11 +112,6 @@ final class HomeViewController: UIViewController {
     private let viewModel = HomeViewModel()
     private var disposeBag = DisposeBag()
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        viewModel.calculateScore()
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
