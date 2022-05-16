@@ -122,4 +122,13 @@ final class HomeTotalScoreTableViewCell: BaseTableViewCell {
             $0.height.equalTo(12)
         }
     }
+
+    func updateUI(total: Int, attendance: Int, absence: Int, tardy: Int) {
+        let score = 100 + total
+        scoreLabel.text = String(score)
+        progress.setProgress(progress: CGFloat(Float(score)/100.0), animated: true)
+        chartView.attendanceCountLabel.text = String(attendance)
+        chartView.absenceCountLabel.text = String(absence)
+        chartView.tardyCountLabel.text = String(tardy)
+    }
 }

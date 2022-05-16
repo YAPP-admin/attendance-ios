@@ -35,6 +35,11 @@ final class HomeAttendanceCheckViewController: UIViewController {
     private let viewModel = HomeViewModel()
     private var disposeBag = DisposeBag()
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        viewModel.calculateScore()
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -84,6 +89,14 @@ final class HomeAttendanceCheckViewController: UIViewController {
                     self?.tableView.reloadData()
                 }
             }).disposed(by: disposeBag)
+
+        viewModel.output.totalScore
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] _ in
+                UIView.performWithoutAnimation {
+                    self?.tableView.reloadData()
+                }
+            }).disposed(by: disposeBag)
     }
 
     private func showHelpVC() {
@@ -121,6 +134,7 @@ extension HomeAttendanceCheckViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             if let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTotalScoreTableViewCell", for: indexPath) as? HomeTotalScoreTableViewCell {
+                cell.updateUI(total: viewModel.output.totalScore.value, attendance: viewModel.output.attendanceScore.value, absence: viewModel.output.absenceScore.value, tardy: viewModel.output.tardyScore.value)
                 cell.helpButton.rx.tap
                     .bind(to: viewModel.input.tapHelp)
                     .disposed(by: cell.eventBag)

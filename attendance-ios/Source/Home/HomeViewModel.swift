@@ -34,6 +34,11 @@ final class HomeViewModel: ViewModel {
         let kakaoAccessToken = PublishSubject<String>()
         let kakaoTalkId = BehaviorSubject<String>(value: "")
         let appleId = BehaviorSubject<String>(value: "")
+
+        let totalScore = BehaviorRelay<Int>(value: 0)
+        let attendanceScore = BehaviorRelay<Int>(value: 0)
+        let absenceScore = BehaviorRelay<Int>(value: 0)
+        let tardyScore = BehaviorRelay<Int>(value: 0)
     }
 
     let input = Input()
@@ -110,6 +115,31 @@ final class HomeViewModel: ViewModel {
             case .success(let member):
                 self.memberData.accept(member)
             case .failure: ()
+            }
+        }
+    }
+
+    func calculateScore() {
+        output.totalScore.accept(0)
+        output.attendanceScore.accept(0)
+        output.absenceScore.accept(0)
+        output.tardyScore.accept(0)
+        guard let data = memberData.value else { return }
+        guard let session = output.sessionList.value.todaySession() else { return }
+        for idx in 0..<data.attendances.count {
+            if data.attendances[idx].sessionId < session.sessionId, output.sessionList.value[idx].type == .needAttendance {
+                let currentScore = output.totalScore.value
+                output.totalScore.accept(currentScore + data.attendances[idx].type.point)
+                if data.attendances[idx].type.text == "출석" {
+                    let attendanceScore = output.attendanceScore.value
+                    output.attendanceScore.accept(attendanceScore + 1)
+                } else if data.attendances[idx].type.text == "결석" {
+                    let absenceScore = output.absenceScore.value
+                    output.absenceScore.accept(absenceScore + 1)
+                } else {
+                    let tardyScore = output.tardyScore.value
+                    output.tardyScore.accept(tardyScore + 1)
+                }
             }
         }
     }
