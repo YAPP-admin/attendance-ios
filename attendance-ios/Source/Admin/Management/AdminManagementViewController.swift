@@ -115,7 +115,7 @@ extension AdminManagementViewController {
     func bindSubviews() {
         navigationBackButton.rx.controlEvent([.touchUpInside])
             .asObservable()
-            .subscribe(onNext: { [weak self] _ in
+            .subscribe(onNext: { [weak self] _ in                self?.viewModel.input.selectedTeamIndexListInManagement.onNext([])
                 self?.navigationController?.popViewController(animated: true)
             }).disposed(by: disposeBag)
     }

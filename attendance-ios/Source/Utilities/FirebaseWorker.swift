@@ -112,6 +112,7 @@ extension FirebaseWorker {
 
 extension FirebaseWorker {
 
+    // TODO: - 출결 업데이트 체크
     func updateMemberAttendances(memberId: Int, attendances: [Attendance]) {
         memberCollectionRef.getDocuments { snapshot, error in
             guard error == nil, let documents = snapshot?.documents else { return }

@@ -109,6 +109,7 @@ extension AdminGradeViewController {
         navigationBackButton.rx.controlEvent([.touchUpInside])
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
+                self?.viewModel.input.selectedTeamIndexListInGrade.onNext([])
                 self?.navigationController?.popViewController(animated: true)
             }).disposed(by: disposeBag)
     }
