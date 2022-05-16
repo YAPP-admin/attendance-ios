@@ -53,11 +53,11 @@ final class HomeChartView: UIView {
         label.text = "출석"
         return label
     }()
-    private let attendanceCountLabel: UILabel = {
+    var attendanceCountLabel: UILabel = {
         let label = UILabel()
         label.textColor = .gray_800
         label.font = .Pretendard(type: .semiBold, size: 18)
-        label.text = "10"
+        label.text = "0"
         label.textAlignment = .center
         return label
     }()
@@ -84,11 +84,11 @@ final class HomeChartView: UIView {
         label.text = "지각"
         return label
     }()
-    private let tardyCountLabel: UILabel = {
+    var tardyCountLabel: UILabel = {
         let label = UILabel()
         label.textColor = .gray_800
         label.font = .Pretendard(type: .semiBold, size: 18)
-        label.text = "2"
+        label.text = "0"
         label.textAlignment = .center
         return label
     }()
@@ -115,7 +115,7 @@ final class HomeChartView: UIView {
         label.text = "결석"
         return label
     }()
-    private let absenceCountLabel: UILabel = {
+    var absenceCountLabel: UILabel = {
         let label = UILabel()
         label.textColor = .gray_800
         label.font = .Pretendard(type: .semiBold, size: 18)
@@ -162,18 +162,5 @@ final class HomeChartView: UIView {
             $0.width.height.equalTo(20)
         }
         countStackView.addArrangedSubviews([attendanceCountLabel, tardyCountLabel, absenceCountLabel])
-    }
-
-    func updateCount(_ data: AttendanceData) {
-        switch data.text {
-        case "출석":
-            attendanceCountLabel.text = "\(data.point)"
-        case "지각":
-            tardyCountLabel.text = "\(data.point)"
-        case "결석":
-            attendanceCountLabel.text = "\(data.point)"
-        default:
-            return
-        }
     }
 }

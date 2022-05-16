@@ -107,6 +107,15 @@ final class SettingViewController: UIViewController {
                 }
             })
             .disposed(by: disposeBag)
+
+        viewModel.output.name
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] _ in
+                if let name = self?.viewModel.output.name.value {
+                    self?.nameLabel.text = name + " 님"
+                }
+            })
+            .disposed(by: disposeBag)
     }
 
     func showHomeVC() {

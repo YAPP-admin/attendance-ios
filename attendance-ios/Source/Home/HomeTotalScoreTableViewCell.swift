@@ -27,6 +27,7 @@ final class HomeTotalScoreTableViewCell: BaseTableViewCell {
         let button = UIButton()
         button.backgroundColor = .clear
         button.setImage(UIImage(named: "help"), for: .normal)
+        button.contentEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         return button
     }()
     private let myscoreLabel: UILabel = {
@@ -83,7 +84,7 @@ final class HomeTotalScoreTableViewCell: BaseTableViewCell {
         helpButton.snp.makeConstraints {
             $0.top.equalToSuperview().offset(40)
             $0.trailing.equalToSuperview().offset(-26)
-            $0.width.height.equalTo(20)
+            $0.width.height.equalTo(40)
         }
         stackView.addArrangedSubview(containerView)
         containerView.snp.makeConstraints {
@@ -120,5 +121,14 @@ final class HomeTotalScoreTableViewCell: BaseTableViewCell {
         sectionView.snp.makeConstraints {
             $0.height.equalTo(12)
         }
+    }
+
+    func updateUI(total: Int, attendance: Int, absence: Int, tardy: Int) {
+        let score = 100 + total
+        scoreLabel.text = String(score)
+        progress.setProgress(progress: CGFloat(Float(score)/100.0), animated: true)
+        chartView.attendanceCountLabel.text = String(attendance)
+        chartView.absenceCountLabel.text = String(absence)
+        chartView.tardyCountLabel.text = String(tardy)
     }
 }
