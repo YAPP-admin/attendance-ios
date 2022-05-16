@@ -22,6 +22,16 @@ final class AdminViewController: UIViewController {
         static let cellHeight: CGFloat = 60
     }
 
+    private let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        return scrollView
+    }()
+
+    private let contentView: UIView = {
+        let view = UIView()
+        return view
+    }()
+
     private let logoutButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .clear
@@ -238,8 +248,18 @@ private extension AdminViewController {
     }
 
     func configureLayout() {
-        view.addSubviews([logoutButton, cardView, dividerView, titleLabel, todayView, sessionTitleLabel, sessionCollectionView])
+        view.addSubviews([scrollView])
+        scrollView.addSubviews([contentView])
+        contentView.addSubviews([logoutButton, cardView, dividerView, titleLabel, todayView, sessionTitleLabel, sessionCollectionView])
 
+        scrollView.snp.makeConstraints {
+            $0.top.bottom.left.right.equalToSuperview()
+        }
+        contentView.snp.makeConstraints {
+            $0.top.bottom.left.right.equalToSuperview()
+            $0.width.equalToSuperview()
+            $0.bottom.equalTo(sessionCollectionView.snp.bottom)
+        }
         logoutButton.snp.makeConstraints {
             $0.top.equalToSuperview().inset(40)
             $0.right.equalToSuperview().inset(Constants.horizontalPadding)
@@ -272,6 +292,7 @@ private extension AdminViewController {
             $0.top.equalTo(sessionTitleLabel.snp.bottom).offset(4)
             $0.left.right.equalToSuperview().inset(Constants.horizontalPadding)
             $0.bottom.equalToSuperview()
+            $0.height.equalTo(Constants.cellHeight*19)
         }
     }
 
