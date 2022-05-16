@@ -45,6 +45,7 @@
 		5E6ACB3C28086A7300ADF2BB /* KakaoLoginWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E6ACB3B28086A7200ADF2BB /* KakaoLoginWorker.swift */; };
 		5E6ACB41280894F800ADF2BB /* UserDefaultsWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E6ACB40280894F800ADF2BB /* UserDefaultsWorker.swift */; };
 		5E6B7FFB28321BBE00F4D88F /* UICollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E6B7FFA28321BBE00F4D88F /* UICollectionReusableView.swift */; };
+		5E6B7FFD283271C100F4D88F /* Attendances.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E6B7FFC283271C100F4D88F /* Attendances.swift */; };
 		5E7AEF2227E212690059FB3A /* AdminViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7AEF2127E212690059FB3A /* AdminViewController.swift */; };
 		5E7AEF2427E21D680059FB3A /* AdminViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7AEF2327E21D680059FB3A /* AdminViewModel.swift */; };
 		5E7AEF2627E21E4C0059FB3A /* AdminCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7AEF2527E21E4C0059FB3A /* AdminCardView.swift */; };
@@ -134,6 +135,7 @@
 		5E6ACB3F2808791E00ADF2BB /* attendance-ios.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "attendance-ios.entitlements"; sourceTree = "<group>"; };
 		5E6ACB40280894F800ADF2BB /* UserDefaultsWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsWorker.swift; sourceTree = "<group>"; };
 		5E6B7FFA28321BBE00F4D88F /* UICollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionReusableView.swift; sourceTree = "<group>"; };
+		5E6B7FFC283271C100F4D88F /* Attendances.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Attendances.swift; sourceTree = "<group>"; };
 		5E7AEF2127E212690059FB3A /* AdminViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminViewController.swift; sourceTree = "<group>"; };
 		5E7AEF2327E21D680059FB3A /* AdminViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminViewModel.swift; sourceTree = "<group>"; };
 		5E7AEF2527E21E4C0059FB3A /* AdminCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminCardView.swift; sourceTree = "<group>"; };
@@ -371,6 +373,7 @@
 				5EF06A702823D1660021D25B /* Team.swift */,
 				5EF06A752823D5520021D25B /* Member.swift */,
 				5EF06A772823D7250021D25B /* Session.swift */,
+				5E6B7FFC283271C100F4D88F /* Attendances.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -713,6 +716,7 @@
 				52BCA07227C4D3DF001BF86F /* UIFont.swift in Sources */,
 				522EFA43281A5EEC00EF09C7 /* HomeAttendanceDetailViewController.swift in Sources */,
 				52EFD5F6280FFA3200065FEB /* HomeTotalScoreTableViewCell.swift in Sources */,
+				5E6B7FFD283271C100F4D88F /* Attendances.swift in Sources */,
 				5EF69ED927AAACBA007E9735 /* PolicyViewController.swift in Sources */,
 				5EF06A6B2822B4B10021D25B /* Array.swift in Sources */,
 				52A85C57281A4A3000593749 /* BaseNavigationBarView.swift in Sources */,

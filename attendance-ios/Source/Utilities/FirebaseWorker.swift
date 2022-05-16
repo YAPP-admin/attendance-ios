@@ -30,7 +30,8 @@ extension FirebaseWorker {
             "id": id,
             "name": newUser.name,
             "position": newUser.positionType.rawValue,
-            "team": ["number": newUser.teamNumber, "type": newUser.teamType.rawValue],
+            "team": ["number": newUser.teamNumber,
+                     "type": newUser.teamType.rawValue],
             "attendances": self.makeEmptyAttendances()
         ]) { error in
             guard let error = error else {
@@ -46,7 +47,8 @@ extension FirebaseWorker {
             "id": Int.random(in: 1000000000..<10000000000),
             "name": newUser.name,
             "position": newUser.positionType.rawValue,
-            "team": ["number": newUser.teamNumber, "type": newUser.teamType.rawValue],
+            "team": ["number": newUser.teamNumber,
+                     "type": newUser.teamType.rawValue],
             "attendances": self.makeEmptyAttendances()
         ]) { error in
             guard let error = error else {
@@ -61,7 +63,8 @@ extension FirebaseWorker {
         var attendances: [[String: Any]] = []
         let sessionCount = 20
         for id in 0..<sessionCount {
-            let empty: [String: Any] = ["sessionId": id, "type": ["text": "결석", "point": -20]]
+            let empty: [String: Any] = ["sessionId": id,
+                                        "type": ["text": "결석", "point": -20]]
             attendances.append(empty)
         }
         return attendances
@@ -107,17 +110,37 @@ extension FirebaseWorker {
 
 }
 
-// MARK: - Update
 extension FirebaseWorker {
 
     func updateMemberAttendances(memberId: Int, attendances: [Attendance]) {
-        getMemberDocumentId(memberId: memberId) { result in
-            switch result {
-            case .success(let documentId):
-                let ref = self.memberCollectionRef.document(documentId)
-                // TODO: - 기존 문서 업데이트시 에러 발생, 수정 필요
-//                ref.updateData(["attendances": attendances])
-            case .failure: ()
+        memberCollectionRef.getDocuments { snapshot, error in
+            guard error == nil, let documents = snapshot?.documents else { return }
+            for document in documents {
+                guard let member = try? document.data(as: Member.self), member.id == memberId else { continue }
+                let ref = self.memberCollectionRef.document(document.documentID)
+                ref.updateData([
+                    "id": member.id,
+                    "name": member.name,
+                    "position": member.position.rawValue,
+                    "team": ["number": member.team.number,
+                             "type": member.team.type.rawValue],
+                    "attendances": member.attendances.decode()
+                ])
+            }
+        }
+    }
+
+    func getMember(memberId: Int, completion: @escaping (Result<Member, Error>) -> Void) {
+        memberCollectionRef.getDocuments { snapshot, error in
+            if let error = error {
+                completion(.failure(error))
+            }
+            guard let documents = snapshot?.documents else { return }
+            for document in documents {
+                guard let member = try? document.data(as: Member.self) else { continue }
+                if member.id == memberId {
+                    completion(.success(member))
+                }
             }
         }
     }

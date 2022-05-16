@@ -12,7 +12,7 @@ struct Member: Codable {
     let name: String
     let position: PositionType
     let team: Team
-    let attendances: [Attendance]
+    var attendances: [Attendance]
 }
 
 struct Session: Codable {

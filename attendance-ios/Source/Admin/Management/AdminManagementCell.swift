@@ -178,13 +178,14 @@ extension AdminManagementCell: UICollectionViewDelegateFlowLayout, UICollectionV
         let member = members[indexPath.row]
         cell.updateSubViews(with: member)
 
-//        cell.attendanceButton.rx.controlEvent([.touchUpInside])
-//            .asObservable()
-//            .subscribe(onNext: { [weak self] _ in
-//                guard let self = self else { return }
-//                let member = self.members[indexPath.row]
-//                self.viewModel?.input.selectedMemberInManagement.onNext(member)
-//            }).disposed(by: disposeBag)
+        cell.attendanceButton.rx.controlEvent([.touchUpInside])
+            .asObservable()
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                let member = self.members[indexPath.row]
+                print("member: \(member.name)")
+                self.viewModel?.input.selectedMemberInManagement.onNext(member)
+            }).disposed(by: disposeBag)
 
         let attendance = member.attendances[sessionId]
         cell.updateAttendance(with: attendance)

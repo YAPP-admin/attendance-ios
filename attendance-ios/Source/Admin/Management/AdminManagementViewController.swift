@@ -122,8 +122,7 @@ extension AdminManagementViewController {
 
 }
 
-// MARK: -
-// TODO: - 출결 업데이트
+// MARK: - Update Attendance
 extension AdminManagementViewController: AdminBottomSheetViewDelegate {
 
     func didSelect(at type: AttendanceType) {
