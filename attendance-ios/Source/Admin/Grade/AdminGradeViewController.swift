@@ -13,8 +13,8 @@ import UIKit
 final class AdminGradeViewController: UIViewController {
 
     enum Constants {
-        static let horizontalPadding: CGFloat = 24
         static let verticalPadding: CGFloat = 28
+        static let horizontalPadding: CGFloat = 24
         static let topPadding: CGFloat = 88
         static let cellHeight: CGFloat = 60
         static let headerHeight: CGFloat = 104
@@ -22,7 +22,7 @@ final class AdminGradeViewController: UIViewController {
 
     private let navigationTitleLabel: UILabel = {
         let label = UILabel()
-        label.font = .Pretendard(type: .medium, size: 18)
+        label.font = .Pretendard(type: .regular, size: 18)
         label.textColor = .gray_1200
         label.numberOfLines = 1
         label.textAlignment = .center
@@ -40,7 +40,6 @@ final class AdminGradeViewController: UIViewController {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.showsVerticalScrollIndicator = false
         return collectionView
     }()
 
@@ -63,8 +62,8 @@ final class AdminGradeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        bindSubviews()
         bindViewModel()
+        bindSubviews()
 
         setupCollectionView()
 
@@ -83,14 +82,6 @@ final class AdminGradeViewController: UIViewController {
 // MARK: - Bind
 extension AdminGradeViewController {
 
-    func bindSubviews() {
-        navigationBackButton.rx.controlEvent([.touchUpInside])
-            .asObservable()
-            .subscribe(onNext: { [weak self] _ in
-                self?.navigationController?.popViewController(animated: true)
-            }).disposed(by: disposeBag)
-    }
-
     func bindViewModel() {
         viewModel.input.selectedTeamIndexListInGrade
             .subscribe(onNext: { [weak self] _ in
@@ -105,7 +96,14 @@ extension AdminGradeViewController {
                     self?.reloadCollectionView()
                 }
             }).disposed(by: disposeBag)
+    }
 
+    func bindSubviews() {
+        navigationBackButton.rx.controlEvent([.touchUpInside])
+            .asObservable()
+            .subscribe(onNext: { [weak self] _ in
+                self?.navigationController?.popViewController(animated: true)
+            }).disposed(by: disposeBag)
     }
 
 }
@@ -125,7 +123,7 @@ extension AdminGradeViewController: UICollectionViewDelegateFlowLayout, UICollec
     }
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        1
+        return 1
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

@@ -15,14 +15,15 @@ final class AdminManagementViewController: UIViewController {
     enum Constants {
         static let horizontalPadding: CGFloat = 24
         static let verticalPadding: CGFloat = 28
-        static let topPadding: CGFloat = 116
+        static let topPadding: CGFloat = 88
         static let cellHeight: CGFloat = 60
+        static let headerHeight: CGFloat = 104
     }
 
     // MARK: Navigation
     private let navigationTitleLabel: UILabel = {
         let label = UILabel()
-        label.font = .Pretendard(type: .medium, size: 18)
+        label.font = .Pretendard(type: .regular, size: 18)
         label.textColor = .gray_1200
         label.numberOfLines = 1
         label.textAlignment = .center
@@ -37,13 +38,10 @@ final class AdminManagementViewController: UIViewController {
         return button
     }()
 
-    private let adminMesasgeView = AdminMessageHeader()
-
     private let teamCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.showsVerticalScrollIndicator = false
         return collectionView
     }()
 
@@ -72,13 +70,12 @@ final class AdminManagementViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        bindSubviews()
         bindViewModel()
+        bindSubviews()
 
         setupDelegate()
         setupCollectionView()
         setupNavigationTitle()
-        setupMessage()
 
         configureUI()
         configureLayout()
@@ -95,19 +92,25 @@ final class AdminManagementViewController: UIViewController {
 // MARK: - Bind
 extension AdminManagementViewController {
 
+    func bindViewModel() {
+        viewModel.output.memberList
+            .asObservable()
+            .subscribe(onNext: { [weak self] _ in
+                self?.reloadCollectionView()
+            }).disposed(by: disposeBag)
+
+        viewModel.output.showBottomsheet
+            .asObservable()
+            .subscribe(onNext: { [weak self] _ in
+                self?.showBottomSheet()
+            }).disposed(by: disposeBag)
+    }
+
     func bindSubviews() {
         navigationBackButton.rx.controlEvent([.touchUpInside])
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
                 self?.navigationController?.popViewController(animated: true)
-            }).disposed(by: disposeBag)
-    }
-
-    func bindViewModel() {
-        viewModel.output.showBottomsheet
-            .asObservable()
-            .subscribe(onNext: { [weak self] _ in
-                self?.showBottomSheet()
             }).disposed(by: disposeBag)
     }
 
@@ -134,10 +137,15 @@ extension AdminManagementViewController: UICollectionViewDelegateFlowLayout, UIC
         teamCollectionView.delegate = self
         teamCollectionView.dataSource = self
         teamCollectionView.register(AdminManagementCell.self, forCellWithReuseIdentifier: AdminManagementCell.identifier)
+        teamCollectionView.register(AdminMessageHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: AdminMessageHeader.identifier)
+    }
+
+    private func reloadCollectionView() {
+        teamCollectionView.reloadData()
     }
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        1
+        return 1
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -180,7 +188,25 @@ extension AdminManagementViewController: UICollectionViewDelegateFlowLayout, UIC
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        0
+        return 0
+    }
+
+    // MARK: - Header
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard kind == UICollectionView.elementKindSectionHeader,
+              let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: AdminMessageHeader.identifier, for: indexPath) as? AdminMessageHeader,
+              let memberList = try? viewModel.output.memberList.value() else { return .init() }
+
+        let attendances = memberList.flatMap { $0.attendances }.filter { $0.sessionId == session.sessionId }.filter { $0.type.text != AttendanceType.absence.text }
+        header.configureLabel("\(attendances.count)명이 출석했어요")
+
+        return header
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        let width = collectionView.bounds.width
+        let height = Constants.headerHeight
+        return .init(width: width, height: height)
     }
 
 }
@@ -209,12 +235,6 @@ private extension AdminManagementViewController {
         navigationTitleLabel.text = session.title
     }
 
-    func setupMessage() {
-        guard let memberList = try? viewModel.output.memberList.value() else { return }
-        let attendances = memberList.flatMap { $0.attendances }.filter { $0.sessionId == session.sessionId }.filter { $0.type.text != AttendanceType.absence.text }
-        adminMesasgeView.configureLabel("\(attendances.count)명이 출석했어요")
-    }
-
 }
 
 // MARK: - UI
@@ -225,15 +245,10 @@ private extension AdminManagementViewController {
     }
 
     func configureLayout() {
-        view.addSubviews([adminMesasgeView, teamCollectionView])
+        view.addSubview(teamCollectionView)
 
-        adminMesasgeView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(Constants.topPadding)
-            $0.left.right.equalToSuperview().inset(Constants.horizontalPadding)
-            $0.height.equalTo(48)
-        }
         teamCollectionView.snp.makeConstraints {
-            $0.top.equalTo(adminMesasgeView.snp.bottom).offset(Constants.verticalPadding)
+            $0.top.equalToSuperview().offset(Constants.topPadding)
             $0.left.right.equalToSuperview()
             $0.bottom.equalToSuperview()
         }

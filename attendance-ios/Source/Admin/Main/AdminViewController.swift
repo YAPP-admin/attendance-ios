@@ -13,8 +13,8 @@ import UIKit
 final class AdminViewController: UIViewController {
 
     enum Constants {
-        static let horizontalPadding: CGFloat = 24
         static let verticalPadding: CGFloat = 28
+        static let horizontalPadding: CGFloat = 24
         static let topPadding: CGFloat = 116
         static let dividerViewHeight: CGFloat = 12
         static let todayViewHeight: CGFloat = 80
@@ -82,7 +82,6 @@ final class AdminViewController: UIViewController {
         bindViewModel()
         bindSubviews()
 
-        setupDelegate()
         setupCollectionView()
 
         configureUI()
@@ -240,10 +239,6 @@ private extension AdminViewController {
         let navC = UINavigationController(rootViewController: loginVC)
         navC.modalPresentationStyle = .fullScreen
         self.present(navC, animated: true)
-    }
-
-    func setupDelegate() {
-
     }
 
 }
