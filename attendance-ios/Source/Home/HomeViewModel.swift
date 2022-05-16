@@ -114,6 +114,7 @@ final class HomeViewModel: ViewModel {
             switch result {
             case .success(let member):
                 self.memberData.accept(member)
+                self.userDefaultsWorker.setName(name: member.name)
                 self.calculateScore()
             case .failure: ()
             }
