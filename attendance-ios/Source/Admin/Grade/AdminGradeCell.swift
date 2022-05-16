@@ -104,13 +104,13 @@ extension AdminGradeCell {
 
     private func updateSubViewsWhenShow() {
         showCollectionView()
-        showChevronButton()
+        updateButtonWhenShow()
         showDividerView()
     }
 
     private func updateSubViewsWhenHide() {
         hideCollectionView()
-        hideChevronButton()
+        updateButtonWhenHide()
         hideDividerView()
     }
 
@@ -130,12 +130,12 @@ extension AdminGradeCell {
         reloadCollectionView()
     }
 
-    private func showChevronButton() {
+    private func updateButtonWhenShow() {
         let image = UIImage(named: "chevron_up")
         chevronButton.setImage(image, for: .normal)
     }
 
-    private func hideChevronButton() {
+    private func updateButtonWhenHide() {
         let image = UIImage(named: "chevron_down")
         chevronButton.setImage(image, for: .normal)
     }
