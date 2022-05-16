@@ -108,6 +108,18 @@ extension FirebaseWorker {
         memberCollectionRef.document(id).delete()
     }
 
+    /// 문서를 삭제합니다.
+    func deleteDocument(memberId: Int, completion: @escaping (()) -> Void) {
+        getMemberDocumentId(memberId: memberId) { result in
+            switch result {
+            case .success(let id):
+                self.deleteDocument(id: id)
+                completion(())
+            case .failure: ()
+            }
+        }
+    }
+
 }
 
 extension FirebaseWorker {

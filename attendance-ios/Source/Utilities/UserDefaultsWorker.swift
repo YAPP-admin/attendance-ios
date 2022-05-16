@@ -12,6 +12,7 @@ enum UserDefaultsKey: String {
     case appleId
     case generation
     case session
+    case memberId
     case name
 }
 
@@ -112,8 +113,16 @@ extension UserDefaultsWorker {
     }
 }
 
-// MARK: - Member Data
+// MARK: - Member
 extension UserDefaultsWorker {
+    func setMemberId(memberId: Int) {
+        set(memberId, forKey: .memberId)
+    }
+
+    func getMemberId() -> Int? {
+        get(forKey: .memberId)
+    }
+
     func setName(name: String) {
         set(name, forKey: .name)
     }

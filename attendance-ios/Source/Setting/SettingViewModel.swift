@@ -14,11 +14,14 @@ final class SettingViewModel: ViewModel {
     struct Input {
         let tapBack = PublishRelay<Void>()
         let tapPolicyView = PublishRelay<Void>()
+        let tapLogoutView = PublishRelay<Void>()
+        let tapMemberView = PublishRelay<Void>()
     }
 
     struct Output {
         var goToHome = PublishRelay<Void>()
         let goToPolicyVC = PublishRelay<Void>()
+        let goToLoginVC = PublishRelay<Void>()
         var generation = BehaviorRelay<String>(value: "")
         var name = BehaviorRelay<String>(value: "")
     }
@@ -31,6 +34,7 @@ final class SettingViewModel: ViewModel {
     var memberData = BehaviorRelay<Member?>(value: nil)
 
     private let userDefaultsWorker = UserDefaultsWorker()
+    private let firebaseWorker = FirebaseWorker()
 
     init() {
         input.tapBack
@@ -43,6 +47,16 @@ final class SettingViewModel: ViewModel {
                 self?.output.goToPolicyVC.accept(())
             }).disposed(by: disposeBag)
 
+        input.tapLogoutView
+            .subscribe(onNext: { [weak self] _ in
+                self?.logout()
+            }).disposed(by: disposeBag)
+
+        input.tapMemberView
+            .subscribe(onNext: { [weak self] _ in
+                self?.memberOut()
+            }).disposed(by: disposeBag)
+
         checkGeneration()
         setupName()
     }
@@ -53,9 +67,24 @@ final class SettingViewModel: ViewModel {
         }
     }
 
-    func setupName() {
+     func setupName() {
         if let name = userDefaultsWorker.getName(), name.isEmpty == false {
             output.name.accept(name)
+        }
+    }
+
+    func logout() {
+        userDefaultsWorker.removeKakaoTalkId()
+        output.goToLoginVC.accept(())
+    }
+
+    func memberOut() {
+        guard let member = memberData.value else { return }
+
+        firebaseWorker.deleteDocument(memberId: member.id) { [weak self] _ in
+            guard let self = self else { return }
+            self.userDefaultsWorker.removeKakaoTalkId()
+            self.output.goToLoginVC.accept(())
         }
     }
 }
