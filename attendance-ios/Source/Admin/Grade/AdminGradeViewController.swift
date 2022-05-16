@@ -90,6 +90,13 @@ extension AdminGradeViewController {
                 }
             }).disposed(by: disposeBag)
 
+        viewModel.output.teamList
+            .subscribe(onNext: { [weak self] _ in
+                DispatchQueue.main.async {
+                    self?.reloadCollectionView()
+                }
+            }).disposed(by: disposeBag)
+
         viewModel.output.memberList
             .subscribe(onNext: { [weak self] _ in
                 DispatchQueue.main.async {
