@@ -33,6 +33,7 @@ final class SettingViewModel: ViewModel {
     var memberData = BehaviorRelay<Member?>(value: nil)
 
     private let userDefaultsWorker = UserDefaultsWorker()
+    private let firebaseWorker = FirebaseWorker()
 
     init() {
         input.tapBack
@@ -65,15 +66,18 @@ final class SettingViewModel: ViewModel {
     }
 
     func logout() {
-        print("로그아웃")
         userDefaultsWorker.removeKakaoTalkId()
         output.goToLoginVC.accept(())
     }
 
+    // TODO: - memberData가 있어야 실행됨
     func memberOut() {
-        print("회원탈퇴")
+        guard let member = try? memberData.value else { return }
 
-        output.goToLoginVC.accept(())
-
+        firebaseWorker.deleteDocument(memberId: member.id) { [weak self] _ in
+            guard let self = self else { return }
+            self.userDefaultsWorker.removeKakaoTalkId()
+            self.output.goToLoginVC.accept(())
+        }
     }
 }
