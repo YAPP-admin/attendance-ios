@@ -15,7 +15,7 @@ final class AdminViewController: UIViewController {
     enum Constants {
         static let verticalPadding: CGFloat = 28
         static let horizontalPadding: CGFloat = 24
-        static let topPadding: CGFloat = 116
+        static let topPadding: CGFloat = 88
         static let dividerViewHeight: CGFloat = 12
         static let todayViewHeight: CGFloat = 80
         static let logoutButtonSize: CGSize = .init(width: 28, height: 28)
@@ -161,12 +161,11 @@ extension AdminViewController: UICollectionViewDelegateFlowLayout, UICollectionV
         sessionCollectionView.register(AdminSessionCell.self, forCellWithReuseIdentifier: AdminSessionCell.identifier)
     }
 
-    // TODO: - SessionList 적용
     private func updateCollectionViewHeight(with list: [Session]) {
-//        let height = Constants.cellHeight*CGFloat(list.count)
-//        sessionCollectionView.snp.remakeConstraints {
-//            $0.height.equalTo(height)
-//        }
+        let height = Constants.cellHeight*CGFloat(list.count)
+        sessionCollectionView.snp.updateConstraints {
+            $0.height.equalTo(height)
+        }
     }
 
     private func reloadCollectionView() {
