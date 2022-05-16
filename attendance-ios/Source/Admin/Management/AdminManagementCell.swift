@@ -183,7 +183,7 @@ extension AdminManagementCell: UICollectionViewDelegateFlowLayout, UICollectionV
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else { return }
                 let member = self.members[indexPath.row]
-                print("member: \(member.name)")
+                print("member attendances first: \(member.attendances.first)")
                 self.viewModel?.input.selectedMemberInManagement.onNext(member)
             }).disposed(by: disposeBag)
 

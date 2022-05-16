@@ -130,6 +130,7 @@ extension AdminManagementViewController: AdminBottomSheetViewDelegate {
         let sessionId = session.sessionId
         var attendances = member.attendances
         attendances[sessionId].type = AttendanceData(point: type.point, text: type.text)
+        print(attendances.first)
         viewModel.updateAttendances(memberId: member.id, attendances: attendances)
     }
 

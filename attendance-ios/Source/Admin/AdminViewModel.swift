@@ -55,6 +55,11 @@ extension AdminViewModel {
 
     func updateAttendances(memberId: Int, attendances: [Attendance]) {
         firebaseWorker.updateMemberAttendances(memberId: memberId, attendances: attendances)
+
+        guard var memberList = try? output.memberList.value(),
+              let index = memberList.firstIndex(where: { $0.id == memberId }) else { return }
+        memberList[index].attendances = attendances
+        output.memberList.onNext(memberList)
     }
 
 }
