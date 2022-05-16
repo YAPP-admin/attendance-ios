@@ -43,7 +43,7 @@ final class AdminCardView: UIView {
     private let imageView: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(named: "illust_manager_home")
-        view.contentMode = .scaleAspectFit
+        view.contentMode = .scaleAspectFill
         return view
     }()
 
@@ -65,6 +65,7 @@ private extension AdminCardView {
     func configureUI() {
         backgroundColor = .gray_200
         layer.cornerRadius = Constants.cornerRadius
+        clipsToBounds = true
     }
 
     func configureLayout() {

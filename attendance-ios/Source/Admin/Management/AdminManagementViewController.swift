@@ -13,16 +13,16 @@ import UIKit
 final class AdminManagementViewController: UIViewController {
 
     enum Constants {
-        static let horizontalPadding: CGFloat = 24
         static let verticalPadding: CGFloat = 28
-        static let topPadding: CGFloat = 116
+        static let horizontalPadding: CGFloat = 24
+        static let topPadding: CGFloat = 88
         static let cellHeight: CGFloat = 60
+        static let headerHeight: CGFloat = 104
     }
 
-    // MARK: Navigation
     private let navigationTitleLabel: UILabel = {
         let label = UILabel()
-        label.font = .Pretendard(type: .medium, size: 18)
+        label.font = .Pretendard(type: .regular, size: 18)
         label.textColor = .gray_1200
         label.numberOfLines = 1
         label.textAlignment = .center
@@ -37,13 +37,10 @@ final class AdminManagementViewController: UIViewController {
         return button
     }()
 
-    private let adminMesasgeView = AdminMessageView()
-
     private let teamCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.showsVerticalScrollIndicator = false
         return collectionView
     }()
 
@@ -72,13 +69,12 @@ final class AdminManagementViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        bindSubviews()
         bindViewModel()
+        bindSubviews()
 
         setupDelegate()
         setupCollectionView()
         setupNavigationTitle()
-        setupMessage()
 
         configureUI()
         configureLayout()
@@ -95,15 +91,20 @@ final class AdminManagementViewController: UIViewController {
 // MARK: - Bind
 extension AdminManagementViewController {
 
-    func bindSubviews() {
-        navigationBackButton.rx.controlEvent([.touchUpInside])
+    func bindViewModel() {
+        viewModel.input.selectedTeamIndexListInManagement
+            .subscribe(onNext: { [weak self] _ in
+                DispatchQueue.main.async {
+                    self?.reloadCollectionView()
+                }
+            }).disposed(by: disposeBag)
+
+        viewModel.output.memberList
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
-                self?.navigationController?.popViewController(animated: true)
+                self?.reloadCollectionView()
             }).disposed(by: disposeBag)
-    }
 
-    func bindViewModel() {
         viewModel.output.showBottomsheet
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
@@ -111,17 +112,25 @@ extension AdminManagementViewController {
             }).disposed(by: disposeBag)
     }
 
+    func bindSubviews() {
+        navigationBackButton.rx.controlEvent([.touchUpInside])
+            .asObservable()
+            .subscribe(onNext: { [weak self] _ in                self?.viewModel.input.selectedTeamIndexListInManagement.onNext([])
+                self?.navigationController?.popViewController(animated: true)
+            }).disposed(by: disposeBag)
+    }
+
 }
 
-// MARK: -
+// MARK: - Update Attendance
 extension AdminManagementViewController: AdminBottomSheetViewDelegate {
 
-    // TODO: - 출결 업데이트
     func didSelect(at type: AttendanceType) {
         guard let member = try? viewModel.input.selectedMemberInManagement.value() else { return }
         let sessionId = session.sessionId
         var attendances = member.attendances
         attendances[sessionId].type = AttendanceData(point: type.point, text: type.text)
+        print(attendances.first)
         viewModel.updateAttendances(memberId: member.id, attendances: attendances)
     }
 
@@ -134,10 +143,15 @@ extension AdminManagementViewController: UICollectionViewDelegateFlowLayout, UIC
         teamCollectionView.delegate = self
         teamCollectionView.dataSource = self
         teamCollectionView.register(AdminManagementCell.self, forCellWithReuseIdentifier: AdminManagementCell.identifier)
+        teamCollectionView.register(AdminMessageHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: AdminMessageHeader.identifier)
+    }
+
+    private func reloadCollectionView() {
+        teamCollectionView.reloadData()
     }
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        1
+        return 1
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -147,15 +161,19 @@ extension AdminManagementViewController: UICollectionViewDelegateFlowLayout, UIC
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AdminManagementCell.identifier, for: indexPath) as? AdminManagementCell,
-              let memberList = try? viewModel.output.memberList.value() else { return UICollectionViewCell() }
-        cell.setupViewModel(viewModel)
+              let memberList = try? viewModel.output.memberList.value(),
+              var indexList = try? viewModel.input.selectedTeamIndexListInManagement.value() else { return .init() }
         let index = indexPath.row
 
-        cell.chevronButton.rx.controlEvent([.touchUpInside])
+        cell.chevronButton.rx.tap
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
-                print("index: \(indexPath.row)")
+                indexList.toggleElement(index)
+                self?.viewModel.input.selectedTeamIndexListInManagement.onNext(indexList)
             }).disposed(by: disposeBag)
+
+        cell.isShownMembers = indexList.contains(indexPath.row)
+        cell.updateSubViews()
 
         if let teamList = try? viewModel.output.teamList.value(), let team = teamList[safe: index] {
             let teamNames = teamList.map { $0.name() }
@@ -167,20 +185,46 @@ extension AdminManagementViewController: UICollectionViewDelegateFlowLayout, UIC
             cell.setupTeam(team: team)
             cell.setupMembers(members: members)
         }
+        cell.setupViewModel(viewModel)
 
         return cell
     }
 
-    // TODO: - Show/Hide
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        var height = CGFloat.zero
-        height = Constants.cellHeight*6
+        var size = CGSize(width: collectionView.bounds.width, height: Constants.cellHeight)
 
-        return CGSize(width: collectionView.bounds.width, height: height)
+        guard let teamList = try? viewModel.output.teamList.value(),
+              let memberList = try? viewModel.output.memberList.value(),
+              let indexList = try? viewModel.input.selectedTeamIndexListInManagement.value(),
+              indexList.contains(indexPath.row) == true else { return size }
+
+        if let team = teamList[safe: indexPath.row] {
+            let members = memberList.filter { $0.team == team }
+            size.height = Constants.cellHeight*CGFloat(members.count+1)
+        }
+
+        return size
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        0
+        return 0
+    }
+
+    // MARK: - Header
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard kind == UICollectionView.elementKindSectionHeader,
+              let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: AdminMessageHeader.identifier, for: indexPath) as? AdminMessageHeader,
+              let memberList = try? viewModel.output.memberList.value() else { return .init() }
+
+        let attendances = memberList.flatMap { $0.attendances }.filter { $0.sessionId == session.sessionId }.filter { $0.type.text != AttendanceType.absence.text }
+        header.configureLabel("\(attendances.count)명이 출석했어요")
+        return header
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        let width = collectionView.bounds.width
+        let height = Constants.headerHeight
+        return .init(width: width, height: height)
     }
 
 }
@@ -198,7 +242,7 @@ private extension AdminManagementViewController {
 
 }
 
-// MARK: - etc
+// MARK: - Setup
 private extension AdminManagementViewController {
 
     func setupDelegate() {
@@ -207,12 +251,6 @@ private extension AdminManagementViewController {
 
     func setupNavigationTitle() {
         navigationTitleLabel.text = session.title
-    }
-
-    func setupMessage() {
-        guard let memberList = try? viewModel.output.memberList.value() else { return }
-        let attendances = memberList.flatMap { $0.attendances }.filter { $0.sessionId == session.sessionId }.filter { $0.type.text != AttendanceType.absence.text }
-        adminMesasgeView.configureLabel("\(attendances.count)명이 출석했어요")
     }
 
 }
@@ -225,17 +263,11 @@ private extension AdminManagementViewController {
     }
 
     func configureLayout() {
-        view.addSubviews([adminMesasgeView, teamCollectionView])
+        view.addSubview(teamCollectionView)
 
-        adminMesasgeView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(Constants.topPadding)
-            $0.left.right.equalToSuperview().inset(Constants.horizontalPadding)
-            $0.height.equalTo(48)
-        }
         teamCollectionView.snp.makeConstraints {
-            $0.top.equalTo(adminMesasgeView.snp.bottom).offset(Constants.verticalPadding)
-            $0.left.right.equalToSuperview()
-            $0.bottom.equalToSuperview()
+            $0.top.equalToSuperview().offset(Constants.topPadding)
+            $0.bottom.left.right.equalToSuperview()
         }
     }
 

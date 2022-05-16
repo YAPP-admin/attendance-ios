@@ -13,6 +13,7 @@ enum UserDefaultsKey: String {
     case generation
     case session
     case memberId
+    case name
 }
 
 final class UserDefaultsWorker {
@@ -120,5 +121,13 @@ extension UserDefaultsWorker {
 
     func getMemberId() -> Int? {
         get(forKey: .memberId)
+    }
+
+    func setName(name: String) {
+        set(name, forKey: .name)
+    }
+
+    func getName() -> String? {
+        get(forKey: .name)
     }
 }

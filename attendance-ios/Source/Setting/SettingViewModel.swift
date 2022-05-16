@@ -23,6 +23,7 @@ final class SettingViewModel: ViewModel {
         let goToPolicyVC = PublishRelay<Void>()
         let goToLoginVC = PublishRelay<Void>()
         var generation = BehaviorRelay<String>(value: "")
+        var name = BehaviorRelay<String>(value: "")
     }
 
     let input = Input()
@@ -57,11 +58,18 @@ final class SettingViewModel: ViewModel {
             }).disposed(by: disposeBag)
 
         checkGeneration()
+        setupName()
     }
 
     func checkGeneration() {
         if let generation = userDefaultsWorker.getGeneration(), generation.isEmpty == false {
             output.generation.accept(generation)
+        }
+    }
+
+     func setupName() {
+        if let name = userDefaultsWorker.getName(), name.isEmpty == false {
+            output.name.accept(name)
         }
     }
 

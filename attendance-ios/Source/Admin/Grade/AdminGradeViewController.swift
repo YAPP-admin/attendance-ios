@@ -13,15 +13,16 @@ import UIKit
 final class AdminGradeViewController: UIViewController {
 
     enum Constants {
-        static let horizontalPadding: CGFloat = 24
         static let verticalPadding: CGFloat = 28
-        static let topPadding: CGFloat = 116
+        static let horizontalPadding: CGFloat = 24
+        static let topPadding: CGFloat = 88
         static let cellHeight: CGFloat = 60
+        static let headerHeight: CGFloat = 104
     }
 
     private let navigationTitleLabel: UILabel = {
         let label = UILabel()
-        label.font = .Pretendard(type: .medium, size: 18)
+        label.font = .Pretendard(type: .regular, size: 18)
         label.textColor = .gray_1200
         label.numberOfLines = 1
         label.textAlignment = .center
@@ -35,17 +36,10 @@ final class AdminGradeViewController: UIViewController {
         return button
     }()
 
-    private let adminMesasgeView: AdminMessageView = {
-        let view = AdminMessageView()
-        view.configureLabel("점수가 실시간으로 반영되고 있어요")
-        return view
-    }()
-
     private let teamCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.showsVerticalScrollIndicator = false
         return collectionView
     }()
 
@@ -68,8 +62,8 @@ final class AdminGradeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        bindSubviews()
         bindViewModel()
+        bindSubviews()
 
         setupCollectionView()
 
@@ -88,16 +82,15 @@ final class AdminGradeViewController: UIViewController {
 // MARK: - Bind
 extension AdminGradeViewController {
 
-    func bindSubviews() {
-        navigationBackButton.rx.controlEvent([.touchUpInside])
-            .asObservable()
-            .subscribe(onNext: { [weak self] _ in
-                self?.navigationController?.popViewController(animated: true)
-            }).disposed(by: disposeBag)
-    }
-
     func bindViewModel() {
         viewModel.input.selectedTeamIndexListInGrade
+            .subscribe(onNext: { [weak self] _ in
+                DispatchQueue.main.async {
+                    self?.reloadCollectionView()
+                }
+            }).disposed(by: disposeBag)
+
+        viewModel.output.teamList
             .subscribe(onNext: { [weak self] _ in
                 DispatchQueue.main.async {
                     self?.reloadCollectionView()
@@ -110,7 +103,15 @@ extension AdminGradeViewController {
                     self?.reloadCollectionView()
                 }
             }).disposed(by: disposeBag)
+    }
 
+    func bindSubviews() {
+        navigationBackButton.rx.controlEvent([.touchUpInside])
+            .asObservable()
+            .subscribe(onNext: { [weak self] _ in
+                self?.viewModel.input.selectedTeamIndexListInGrade.onNext([])
+                self?.navigationController?.popViewController(animated: true)
+            }).disposed(by: disposeBag)
     }
 
 }
@@ -122,6 +123,7 @@ extension AdminGradeViewController: UICollectionViewDelegateFlowLayout, UICollec
         teamCollectionView.delegate = self
         teamCollectionView.dataSource = self
         teamCollectionView.register(AdminGradeCell.self, forCellWithReuseIdentifier: AdminGradeCell.identifier)
+        teamCollectionView.register(AdminMessageHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: AdminMessageHeader.identifier)
     }
 
     private func reloadCollectionView() {
@@ -129,7 +131,7 @@ extension AdminGradeViewController: UICollectionViewDelegateFlowLayout, UICollec
     }
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        1
+        return 1
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -147,7 +149,6 @@ extension AdminGradeViewController: UICollectionViewDelegateFlowLayout, UICollec
         cell.chevronButton.rx.tap
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
-                print("index: \(indexPath.row)")
                 indexList.toggleElement(index)
                 self?.viewModel.input.selectedTeamIndexListInGrade.onNext(indexList)
             }).disposed(by: disposeBag)
@@ -155,6 +156,8 @@ extension AdminGradeViewController: UICollectionViewDelegateFlowLayout, UICollec
         if let sessionId = sessionList.todaySession()?.sessionId {
             cell.sessionId = sessionId
         }
+        cell.isShownMembers = indexList.contains(indexPath.row)
+        cell.updateSubViews()
 
         if let teamList = try? viewModel.output.teamList.value(), let team = teamList[safe: index] {
             let teamNames = teamList.map { $0.name() }
@@ -168,26 +171,38 @@ extension AdminGradeViewController: UICollectionViewDelegateFlowLayout, UICollec
         return cell
     }
 
-    // TODO: - Show/Hide
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        guard let indexList = try? viewModel.input.selectedTeamIndexListInGrade.value(),
-//              let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AdminGradeCell.identifier, for: indexPath) as? AdminGradeCell else { return .zero }
+        var size = CGSize(width: collectionView.bounds.width, height: Constants.cellHeight)
 
-        var height = CGFloat.zero
-        height = Constants.cellHeight*6
-//        if indexList.contains(indexPath.row) == true {
-//            height = Constants.cellHeight*3
-//            cell.showMembers()
-//        } else {
-//            height = Constants.cellHeight*1
-//            cell.hideMembers()
-//        }
+        guard let teamList = try? viewModel.output.teamList.value(),
+              let memberList = try? viewModel.output.memberList.value(),
+              let indexList = try? viewModel.input.selectedTeamIndexListInGrade.value(),
+              indexList.contains(indexPath.row) == true else { return size }
 
-        return CGSize(width: collectionView.bounds.width, height: height)
+        if let team = teamList[safe: indexPath.row] {
+            let members = memberList.filter { $0.team == team }
+            size.height = Constants.cellHeight*CGFloat(members.count+1)
+        }
+
+        return size
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        0
+        return 0
+    }
+
+    // MARK: - Header
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard kind == UICollectionView.elementKindSectionHeader,
+              let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: AdminMessageHeader.identifier, for: indexPath) as? AdminMessageHeader else { return .init() }
+        header.configureLabel("점수가 실시간으로 반영되고 있어요")
+        return header
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        let width = collectionView.bounds.width
+        let height = Constants.headerHeight
+        return .init(width: width, height: height)
     }
 
 }
@@ -200,17 +215,11 @@ private extension AdminGradeViewController {
     }
 
     func configureLayout() {
-        view.addSubviews([adminMesasgeView, teamCollectionView])
+        view.addSubview(teamCollectionView)
 
-        adminMesasgeView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(Constants.topPadding)
-            $0.left.right.equalToSuperview().inset(Constants.horizontalPadding)
-            $0.height.equalTo(48)
-        }
         teamCollectionView.snp.makeConstraints {
-            $0.top.equalTo(adminMesasgeView.snp.bottom).offset(Constants.verticalPadding)
-            $0.left.right.equalToSuperview()
-            $0.bottom.equalToSuperview()
+            $0.top.equalToSuperview().offset(Constants.topPadding)
+            $0.bottom.left.right.equalToSuperview()
         }
     }
 

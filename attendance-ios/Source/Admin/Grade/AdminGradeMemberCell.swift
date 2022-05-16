@@ -11,13 +11,14 @@ import UIKit
 final class AdminGradeMemberCell: UICollectionViewCell {
 
     enum Constants {
-        static let horizontalPadding: CGFloat = 32
+        static let horizontalPadding: CGFloat = 28
     }
 
     private let nameStackView: UIStackView = {
         let view = UIStackView()
         view.alignment = .leading
-        view.spacing = 8
+        view.spacing = 6
+        view.alignment = .center
         return view
     }()
 
@@ -32,7 +33,6 @@ final class AdminGradeMemberCell: UICollectionViewCell {
         let label = UILabel()
         label.font = .Pretendard(type: .regular, size: 16)
         label.textColor = .gray_800
-        label.text = "김철수"
         return label
     }()
 
