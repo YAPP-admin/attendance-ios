@@ -111,7 +111,6 @@ final class HomeViewController: UIViewController {
 
     private let viewModel = HomeViewModel()
     private var disposeBag = DisposeBag()
-    private let tapInfoView = UITapGestureRecognizer()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -121,6 +120,7 @@ final class HomeViewController: UIViewController {
 
         addSubViews()
         bind()
+        updateSessionInfo()
     }
 
     func addSubViews() {
@@ -275,10 +275,11 @@ final class HomeViewController: UIViewController {
                 self?.tabView.setHomeType(type)
             }).disposed(by: disposeBag)
 
-        infoView.addGestureRecognizer(tapInfoView)
-        tapInfoView.rx.event
-            .bind(onNext: { [weak self] _ in
-               
+        viewModel.memberData
+            .subscribe(onNext: { [weak self] _ in
+                DispatchQueue.main.async {
+                    self?.updateAttendancesData()
+                }
             }).disposed(by: disposeBag)
     }
 
@@ -298,5 +299,24 @@ final class HomeViewController: UIViewController {
         dateLabel.text = session.date.date()?.mmdd() ?? ""
         titleLabel.text = session.title
         contentsLabel.text = session.description
+    }
+
+    func updateAttendancesData() {
+        guard let session = viewModel.output.sessionList.value.todaySession() else { return }
+        if let data = viewModel.memberData.value {
+            let id = data.attendances.filter { $0.sessionId == session.sessionId }.map { $0.sessionId }.first
+            let text = data.attendances.filter { $0.sessionId == id }.map { $0.type.text }
+            if text.first == "출석" {
+                infoLabel.text = "출석을 완료했어요"
+                infoLabel.textColor = .yapp_orange
+                checkButton.setImage(UIImage(named: "info_check_enabled"), for: .normal)
+                illustView.image = UIImage(named: "illust_member_home_enabled")
+            } else {
+                infoLabel.text = "아직 출석 전이에요"
+                infoLabel.textColor = .gray_600
+                checkButton.setImage(UIImage(named: "info_check_disabled"), for: .normal)
+                illustView.image = UIImage(named: "illust_member_home_disabled")
+            }
+        }
     }
 }

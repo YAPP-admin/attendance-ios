@@ -30,7 +30,7 @@ final class HomeViewModel: ViewModel {
         let goToHome = PublishRelay<Void>()
         let goToLoginVC = PublishRelay<Void>()
         let yappConfig = BehaviorSubject<YappConfig?>(value: nil)
-        
+
         let kakaoAccessToken = PublishSubject<String>()
         let kakaoTalkId = BehaviorSubject<String>(value: "")
         let appleId = BehaviorSubject<String>(value: "")
@@ -42,7 +42,8 @@ final class HomeViewModel: ViewModel {
     let configWorker = ConfigWorker()
     let homeType = BehaviorRelay<HomeType>(value: .todaySession)
     let myId = BehaviorRelay<String>(value: "")
-    
+    let memberData = BehaviorRelay<Member?>(value: nil)
+
     private let userDefaultsWorker = UserDefaultsWorker()
     private let firebaseWorker = FirebaseWorker()
 
@@ -93,18 +94,23 @@ final class HomeViewModel: ViewModel {
     func checkLoginId() {
         if let kakaoTalkId = userDefaultsWorker.kakaoTalkId(), kakaoTalkId.isEmpty == false {
             myId.accept(kakaoTalkId)
+            getUserData()
         } else if let appleId = userDefaultsWorker.appleId(), appleId.isEmpty == false {
             myId.accept(appleId)
+            getUserData()
         } else {
             output.goToLoginVC.accept(())
             return
         }
-        getUserData()
     }
-
+    
     func getUserData() {
-        firebaseWorker.getMemberDocumentData(memberId: Int(myId.value) ?? 0) { member in
-            print(member)
+        firebaseWorker.getMemberDocumentData(memberId: Int(myId.value) ?? 0) { result in
+            switch result {
+            case .success(let member):
+                self.memberData.accept(member)
+            case .failure: ()
+            }
         }
     }
 }
