@@ -70,9 +70,8 @@ final class SettingViewModel: ViewModel {
         output.goToLoginVC.accept(())
     }
 
-    // TODO: - memberData가 있어야 실행됨
     func memberOut() {
-        guard let member = try? memberData.value else { return }
+        guard let member = memberData.value else { return }
 
         firebaseWorker.deleteDocument(memberId: member.id) { [weak self] _ in
             guard let self = self else { return }
