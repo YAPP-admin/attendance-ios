@@ -12,7 +12,6 @@ final class AdminSessionCell: UICollectionViewCell {
 
     enum Constants {
         static let horizontalPadding: CGFloat = 24
-        static let buttonWidth: CGFloat = 22
     }
 
     private let labelStackView: UIStackView = {
@@ -37,7 +36,7 @@ final class AdminSessionCell: UICollectionViewCell {
         return label
     }()
 
-    private let arrowButton: UIButton = {
+    let arrowButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "cheron_right"), for: .normal)
         button.tintColor = .gray_600
@@ -104,8 +103,9 @@ private extension AdminSessionCell {
             $0.width.equalTo(63)
         }
         arrowButton.snp.makeConstraints {
+            $0.top.bottom.equalToSuperview()
             $0.right.equalToSuperview().inset(Constants.horizontalPadding)
-            $0.width.height.equalTo(Constants.buttonWidth)
+            $0.width.equalTo(bounds.height)
             $0.centerY.equalToSuperview()
         }
     }

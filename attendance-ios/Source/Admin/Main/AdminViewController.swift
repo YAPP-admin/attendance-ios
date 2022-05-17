@@ -182,6 +182,15 @@ extension AdminViewController: UICollectionViewDelegateFlowLayout, UICollectionV
               let sessionList = try? viewModel.output.sessionList.value() else { return UICollectionViewCell() }
         let session = sessionList[indexPath.row]
         cell.updateUI(with: session)
+
+        cell.arrowButton.rx.tap
+            .asObservable()
+            .subscribe(onNext: { [weak self] _ in
+                guard let session = sessionList[safe: indexPath.row],
+                      session.type == .needAttendance else { return }
+                self?.goToManagementVC(session: session)
+            }).disposed(by: disposeBag)
+
         return cell
     }
 
@@ -191,14 +200,6 @@ extension AdminViewController: UICollectionViewDelegateFlowLayout, UICollectionV
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         0
-    }
-
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let sessionList = try? viewModel.output.sessionList.value() else { return }
-        let session = sessionList[indexPath.row]
-        if session.type == .needAttendance {
-            goToManagementVC(session: session)
-        }
     }
 
 }
