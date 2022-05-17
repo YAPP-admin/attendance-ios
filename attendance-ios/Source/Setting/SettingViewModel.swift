@@ -93,6 +93,7 @@ final class SettingViewModel: ViewModel {
         firebaseWorker.deleteDocument(memberId: member.id) { [weak self] _ in
             guard let self = self else { return }
             self.userDefaultsWorker.removeKakaoTalkId()
+            self.userDefaultsWorker.removeAppleId()
             self.output.goToLoginVC.accept(())
         }
     }
