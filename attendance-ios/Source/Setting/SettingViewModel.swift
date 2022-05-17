@@ -30,6 +30,7 @@ final class SettingViewModel: ViewModel {
     let output = Output()
     let disposeBag = DisposeBag()
     let db = Firestore.firestore()
+    let myId = BehaviorRelay<String>(value: "")
     var documentID = BehaviorRelay<String>(value: "")
     var memberData = BehaviorRelay<Member?>(value: nil)
 
@@ -57,6 +58,7 @@ final class SettingViewModel: ViewModel {
                 self?.memberOut()
             }).disposed(by: disposeBag)
 
+        checkLoginId()
         checkGeneration()
         setupName()
     }
@@ -87,4 +89,26 @@ final class SettingViewModel: ViewModel {
             self.output.goToLoginVC.accept(())
         }
     }
+
+    func checkLoginId() {
+        if let kakaoTalkId = userDefaultsWorker.kakaoTalkId(), kakaoTalkId.isEmpty == false {
+            myId.accept(kakaoTalkId)
+            getUserData()
+        } else if let appleId = userDefaultsWorker.appleId(), appleId.isEmpty == false {
+            myId.accept(appleId)
+            getUserData()
+        }
+    }
+
+    func getUserData() {
+        firebaseWorker.getMemberDocumentData(memberId: Int(myId.value) ?? 0) { result in
+            switch result {
+            case .success(let member):
+                self.memberData.accept(member)
+                self.userDefaultsWorker.setName(name: member.name)
+            case .failure: ()
+            }
+        }
+    }
+
 }
