@@ -32,13 +32,18 @@ final class BaseViewModel: ViewModel {
     struct Input {
         let tapKakaoTalkLogin = PublishRelay<Void>()
         let tapEasterEgg = PublishRelay<Void>()
+        let easterEggKey = BehaviorSubject<String>(value: "")
+        let tapEasterEggOkButton = PublishRelay<Void>()
     }
 
     struct Output {
         let kakaoAccessToken = PublishSubject<String>()
         let kakaoTalkId = BehaviorSubject<String>(value: "")
         let appleId = BehaviorSubject<String>(value: "")
+
+        let yappConfig = BehaviorSubject<YappConfig?>(value: nil)
         let easterEggCount = BehaviorSubject<Int>(value: 0)
+        let isEasterEggKeyValid = BehaviorSubject<Bool>(value: false)
 
         let goToSignUp = PublishRelay<Void>()
         let goToHome = PublishRelay<Void>()
@@ -53,10 +58,12 @@ final class BaseViewModel: ViewModel {
     private let kakaoLoginWorker = KakaoLoginWorker()
     private let firebaseWorker = FirebaseWorker()
     private let userDefaultsWorker = UserDefaultsWorker()
+    private let configWorker = ConfigWorker()
 
     init() {
         checkLoginId()
 
+        setupConfig()
         subscribeInput()
     }
 
@@ -69,6 +76,11 @@ final class BaseViewModel: ViewModel {
         input.tapEasterEgg
             .subscribe(onNext: { [weak self] _ in
                 self?.tapEasterEgg()
+            }).disposed(by: disposeBag)
+
+        input.tapEasterEggOkButton
+            .subscribe(onNext: { [weak self] _ in
+                self?.checkEasterEggKey()
             }).disposed(by: disposeBag)
     }
 
@@ -178,6 +190,18 @@ extension BaseViewModel {
 // MARK: - Easter Egg
 private extension BaseViewModel {
 
+    func setupConfig() {
+        configWorker.decodeYappConfig { [weak self] result in
+            switch result {
+            case .success(let config):
+                self?.output.yappConfig.onNext(config)
+                self?.userDefaultsWorker.setGeneration(generation: config.generation)
+                self?.userDefaultsWorker.setSessionCount(session: config.sessionCount)
+            case .failure: ()
+            }
+        }
+    }
+
     func tapEasterEgg() {
         guard var count = try? output.easterEggCount.value() else { return }
         count += 1
@@ -192,6 +216,17 @@ private extension BaseViewModel {
     func showEasterEgg() {
         output.easterEggCount.onNext(0)
         output.showEasterEgg.accept(())
+    }
+
+    // TODO: -
+    func checkEasterEggKey() {
+        guard let key = try? input.easterEggKey.value(),
+              let adminPassword = try? output.yappConfig.value()?.adminPassword else { return }
+        let isValid = (key == adminPassword)
+        output.isEasterEggKeyValid.onNext(isValid)
+        if isValid == true {
+            output.goToAdmin.accept(())
+        }
     }
 
 }

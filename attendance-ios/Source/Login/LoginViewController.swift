@@ -93,8 +93,8 @@ final class LoginViewController: UIViewController, ASAuthorizationControllerDele
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        bindSubviews()
         bindViewModel()
+        bindSubviews()
 
         setupAppleLogin()
         setupDelegate()
@@ -109,22 +109,6 @@ final class LoginViewController: UIViewController, ASAuthorizationControllerDele
 
 // MARK: - Bind
 private extension LoginViewController {
-
-    func bindSubviews() {
-        appleLoginButton.rx.tap
-            .throttle(.seconds(3), latest: false, scheduler: MainScheduler.instance)
-            .bind(onNext: loginWithApple)
-            .disposed(by: disposeBag)
-
-        kakaoLoginButton.rx.tap
-            .throttle(.seconds(3), latest: false, scheduler: MainScheduler.instance)
-            .bind(to: viewModel.input.tapKakaoTalkLogin)
-            .disposed(by: disposeBag)
-
-        secretAdminButton.rx.tap
-            .bind(to: viewModel.input.tapEasterEgg)
-            .disposed(by: disposeBag)
-    }
 
     func bindViewModel() {
         viewModel.output.goToSignUp
@@ -146,6 +130,39 @@ private extension LoginViewController {
             .observe(on: MainScheduler.instance)
             .bind(onNext: showEasterEgg)
             .disposed(by: disposeBag)
+
+        viewModel.output.isEasterEggKeyValid
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] _ in
+                self?.clearTextField()
+            })
+            .disposed(by: disposeBag)
+    }
+
+    func bindSubviews() {
+        appleLoginButton.rx.tap
+            .throttle(.seconds(3), latest: false, scheduler: MainScheduler.instance)
+            .bind(onNext: loginWithApple)
+            .disposed(by: disposeBag)
+
+        kakaoLoginButton.rx.tap
+            .throttle(.seconds(3), latest: false, scheduler: MainScheduler.instance)
+            .bind(to: viewModel.input.tapKakaoTalkLogin)
+            .disposed(by: disposeBag)
+
+        secretAdminButton.rx.tap
+            .bind(to: viewModel.input.tapEasterEgg)
+            .disposed(by: disposeBag)
+
+        easterEggView.rightButton.rx.tap
+            .bind(to: viewModel.input.tapEasterEggOkButton)
+            .disposed(by: disposeBag)
+
+        easterEggView.textField.rx.text
+            .subscribe(onNext: { [weak self] text in
+                guard let text = text else { return }
+                self?.viewModel.input.easterEggKey.onNext(text)
+            }).disposed(by: disposeBag)
     }
 
 }
@@ -232,6 +249,10 @@ extension LoginViewController {
         easterEggView.isHidden = false
     }
 
+    func clearTextField() {
+        easterEggView.clearTextField()
+    }
+
 }
 
 // MARK: - UI
@@ -284,7 +305,6 @@ private extension LoginViewController {
             $0.bottom.equalToSuperview().inset(80)
             $0.left.right.equalToSuperview().inset(10)
         }
-        secretAdminButton.backgroundColor = .yapp_orange_opacity
         secretAdminButton.snp.makeConstraints {
             $0.center.equalTo(webView)
             $0.width.height.equalTo(200)

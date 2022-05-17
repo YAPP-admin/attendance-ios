@@ -58,7 +58,7 @@ final class EasterEggView: UIView {
         return label
     }()
 
-    private let textField: UITextField = {
+    let textField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "****"
         textField.backgroundColor = .gray_200
@@ -67,7 +67,6 @@ final class EasterEggView: UIView {
         textField.textColor = .gray_800
         textField.tintColor = .yapp_orange
         textField.textAlignment = .center
-        textField.keyboardType = .numberPad
         return textField
     }()
 
@@ -103,7 +102,7 @@ final class EasterEggView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        bindButton()
+        bindSubViews()
         configureUI()
         configureLayout()
     }
@@ -134,7 +133,7 @@ extension EasterEggView {
 
 private extension EasterEggView {
 
-    func bindButton() {
+    func bindSubViews() {
         leftButton.rx.controlEvent([.touchUpInside])
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
