@@ -286,10 +286,33 @@ final class HomeViewController: UIViewController {
     }
 
     func showQRVC() {
-        let vc = QRViewController()
-        vc.modalPresentationStyle = .overFullScreen
-        self.present(vc, animated: true, completion: nil)
-    }
+		let format = DateFormatter()
+		format.dateFormat = "yyyy-MM-dd HH:mm:ss"
+		format.timeZone = TimeZone(abbreviation: "UTC")
+		guard let time = getKoreaDateTypeToString(), let session = viewModel.output.sessionList.value.todaySession() else { return }
+		guard let startTime = format.date(from: time), let endTime = format.date(from: session.date) else { return }
+		let useTime = Int(endTime.timeIntervalSince(startTime))
+		if time.stringPrefix() == session.date.stringPrefix() {
+			if useTime <= 1800 {
+				let vc = QRViewController()
+				vc.modalPresentationStyle = .overFullScreen
+				self.present(vc, animated: true, completion: nil)
+			} else {
+				showToast(message: "지금은 출석할 수 없어요.")
+			}
+		} else {
+			showToast(message: "지금은 출석할 수 없어요.")
+		}
+	}
+
+	func getKoreaDateTypeToString() -> String? {
+		let current = Date()
+		let formatter = DateFormatter()
+		formatter.locale = Locale(identifier: "ko_kr")
+		formatter.timeZone = TimeZone(abbreviation: "UTC")
+		formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+		return formatter.string(from: current)
+	}
 
     func showSettingVC() {
         let vc = SettingViewController()
