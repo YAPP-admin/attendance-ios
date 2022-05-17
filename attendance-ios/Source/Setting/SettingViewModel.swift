@@ -24,6 +24,7 @@ final class SettingViewModel: ViewModel {
         let goToPolicyVC = PublishRelay<Void>()
         let goToLoginVC = PublishRelay<Void>()
         let showDialogWhenMemberOut = PublishRelay<Void>()
+        let showToastWhenError = PublishRelay<Void>()
         var generation = BehaviorRelay<String>(value: "")
         var name = BehaviorRelay<String>(value: "")
     }
@@ -87,13 +88,21 @@ final class SettingViewModel: ViewModel {
     }
 
     func memberOut() {
-        guard let member = memberData.value else { return }
+        guard let member = memberData.value else {
+            self.output.showToastWhenError.accept(())
+            return
+        }
 
-        firebaseWorker.deleteDocument(memberId: member.id) { [weak self] _ in
+        firebaseWorker.deleteDocument(memberId: member.id) { [weak self] result in
             guard let self = self else { return }
-            self.userDefaultsWorker.removeKakaoTalkId()
-            self.userDefaultsWorker.removeAppleId()
-            self.output.goToLoginVC.accept(())
+            switch result {
+            case .success:
+                self.userDefaultsWorker.removeKakaoTalkId()
+                self.userDefaultsWorker.removeAppleId()
+                self.output.goToLoginVC.accept(())
+            case .failure:
+                self.output.showToastWhenError.accept(())
+            }
         }
     }
 

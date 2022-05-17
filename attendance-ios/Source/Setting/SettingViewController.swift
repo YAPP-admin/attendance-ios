@@ -115,6 +115,11 @@ final class SettingViewController: UIViewController {
             .bind(onNext: showDialogWhenMemberOut)
             .disposed(by: disposeBag)
 
+        viewModel.output.showToastWhenError
+            .observe(on: MainScheduler.instance)
+            .bind(onNext: showToastWhenError)
+            .disposed(by: disposeBag)
+
         viewModel.output.generation
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] _ in
@@ -178,8 +183,11 @@ final class SettingViewController: UIViewController {
         self.present(navC, animated: true)
     }
 
-    // TODO: -
     func showDialogWhenMemberOut() {
         alertView.isHidden = false
+    }
+
+    func showToastWhenError() {
+        showToast(message: "오류가 발생했어요. 다시 시도해주세요.")
     }
 }
