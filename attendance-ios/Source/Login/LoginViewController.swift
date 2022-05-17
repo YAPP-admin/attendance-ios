@@ -74,6 +74,12 @@ final class LoginViewController: UIViewController, ASAuthorizationControllerDele
 
     private let secretAdminButton: UIButton = UIButton()
 
+    private let easterEggView: EasterEggView = {
+        let view = EasterEggView()
+        view.isHidden = true
+        return view
+    }()
+
     private let authorizationController: ASAuthorizationController = {
         let appleIDProvider = ASAuthorizationAppleIDProvider()
         let request = appleIDProvider.createRequest()
@@ -222,9 +228,10 @@ extension LoginViewController: WKNavigationDelegate {
 // MARK: - Easter Egg
 extension LoginViewController {
 
-    // TODO: - 이스터에그 화면 띄우기
+    // TODO: -
     func showEasterEgg() {
         print("showEasterEgg")
+        easterEggView.isHidden = false
     }
 
 }
@@ -253,7 +260,7 @@ private extension LoginViewController {
     }
 
     func configureLayout() {
-        view.addSubviews([titleLabel, webView, appleLoginButton, kakaoLoginButton, splashView, secretAdminButton])
+        view.addSubviews([titleLabel, webView, appleLoginButton, kakaoLoginButton, splashView, secretAdminButton, easterEggView])
 
         webView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(40)
@@ -283,6 +290,9 @@ private extension LoginViewController {
         secretAdminButton.snp.makeConstraints {
             $0.center.equalTo(webView)
             $0.width.height.equalTo(200)
+        }
+        easterEggView.snp.makeConstraints {
+            $0.top.bottom.left.right.equalToSuperview()
         }
     }
 

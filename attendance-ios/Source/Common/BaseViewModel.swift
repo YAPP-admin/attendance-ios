@@ -182,6 +182,7 @@ private extension BaseViewModel {
         guard let count = try? output.easterEggCount.value() else { return }
         if count < 14 {
             output.easterEggCount.onNext(count+1)
+            print(count)
             return
         }
         output.easterEggCount.onNext(0)

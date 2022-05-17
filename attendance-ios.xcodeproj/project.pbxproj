@@ -51,6 +51,7 @@
 		5E7AEF2627E21E4C0059FB3A /* AdminCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7AEF2527E21E4C0059FB3A /* AdminCardView.swift */; };
 		5E7AEF2827E222C30059FB3A /* AdminGradeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7AEF2727E222C30059FB3A /* AdminGradeViewController.swift */; };
 		5E7AEF2A27E223040059FB3A /* AdminManagementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7AEF2927E223040059FB3A /* AdminManagementViewController.swift */; };
+		5E94967A2833788100C0CE7E /* EasterEggView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9496792833788100C0CE7E /* EasterEggView.swift */; };
 		5E9CC7BC27D0F79E006D8B12 /* SignUpCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9CC7BB27D0F79D006D8B12 /* SignUpCollectionViewCell.swift */; };
 		5EA97D8827DBA621004E2330 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA97D8727DBA621004E2330 /* Models.swift */; };
 		5EA97D8A27DBB06A004E2330 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA97D8927DBB06A004E2330 /* Config.swift */; };
@@ -141,6 +142,7 @@
 		5E7AEF2527E21E4C0059FB3A /* AdminCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminCardView.swift; sourceTree = "<group>"; };
 		5E7AEF2727E222C30059FB3A /* AdminGradeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminGradeViewController.swift; sourceTree = "<group>"; };
 		5E7AEF2927E223040059FB3A /* AdminManagementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminManagementViewController.swift; sourceTree = "<group>"; };
+		5E9496792833788100C0CE7E /* EasterEggView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EasterEggView.swift; sourceTree = "<group>"; };
 		5E9CC7BB27D0F79D006D8B12 /* SignUpCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpCollectionViewCell.swift; sourceTree = "<group>"; };
 		5EA97D8727DBA621004E2330 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		5EA97D8927DBB06A004E2330 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
@@ -497,6 +499,7 @@
 			isa = PBXGroup;
 			children = (
 				5EF69EA627A7DAF8007E9735 /* LoginViewController.swift */,
+				5E9496792833788100C0CE7E /* EasterEggView.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -706,6 +709,7 @@
 				297E957F27CFA68600452222 /* QRViewController.swift in Sources */,
 				5E68F169281197FB0093B985 /* Date.swift in Sources */,
 				527657F727C384AE0080DA32 /* UIViewController.swift in Sources */,
+				5E94967A2833788100C0CE7E /* EasterEggView.swift in Sources */,
 				5EAA79FB27FDE42500BC7397 /* Attendance.swift in Sources */,
 				5EF69EC427A7F8B0007E9735 /* UILabel.swift in Sources */,
 				52EFD5F0280FF78C00065FEB /* HomeAttendanceCheckTableViewCell.swift in Sources */,
