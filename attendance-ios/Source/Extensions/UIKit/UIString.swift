@@ -12,7 +12,22 @@ extension String {
     func date() -> Date? {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+		dateFormatter.locale =  Locale(identifier: "ko_kr")
+		dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
         return dateFormatter.date(from: self)
     }
+
+	func dateYYMMDD() -> Date? {
+		let dateFormatter = DateFormatter()
+		dateFormatter.dateFormat = "yyyy-MM-dd"
+		dateFormatter.locale =  Locale(identifier: "ko_kr")
+		dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+		return dateFormatter.date(from: self)
+	}
+
+	func stringPrefix() -> String {
+		let strRange = self.index(self.startIndex, offsetBy: 0) ... self.index(self.endIndex, offsetBy: -10)
+		return String(self[strRange])
+	}
 
 }
