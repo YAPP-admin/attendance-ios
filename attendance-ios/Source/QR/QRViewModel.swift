@@ -18,6 +18,7 @@ final class QRViewModel: ViewModel {
 		var goToHome = PublishRelay<Void>()
         let time = BehaviorSubject<String>(value: "")
         let showToastFail = PublishRelay<Void>()
+		let sessionList = BehaviorRelay<[Session]>(value: [])
 	}
 
 	let input = Input()
@@ -30,6 +31,13 @@ final class QRViewModel: ViewModel {
 			.subscribe(onNext: { [weak self] _ in
 				self?.output.goToHome.accept(())
 			}).disposed(by: disposeBag)
+
+		configWorker.decodeSessionList { [weak self] result in
+			switch result {
+			case .success(let list): self?.output.sessionList.accept(list)
+			case .failure: ()
+			}
+		}
 	}
 
     func getConfigTime() {

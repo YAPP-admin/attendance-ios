@@ -39,7 +39,7 @@ final class QRViewController: UIViewController {
 	private let checkView: UIImageView = {
 		let view = UIImageView()
 		view.backgroundColor = .clear
-		view.image = UIImage(named: "check_enabled")
+		view.image = UIImage(named: "qr_check_enabled")
 		view.isHidden = true
 		return view
 	}()
@@ -123,7 +123,8 @@ final class QRViewController: UIViewController {
             self.checkView.isHidden = false
 		}, completion: { _ in
             UIView.animate(withDuration: 3.0, delay: 3.0, options: .curveEaseOut, animations: {
-                self.showHomeVC()
+//                self.showHomeVC()
+				self.showToast(message: "출석 완료")
             }, completion: nil)
         })
 	}
@@ -162,12 +163,12 @@ extension QRViewController: AVCaptureMetadataOutputObjectsDelegate {
 
 	func metadataOutput(_ captureOutput: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
 		guard let metadataObject = metadataObjects.first, let readableObject = metadataObject as? AVMetadataMachineReadableCodeObject, let stringValue = readableObject.stringValue else { return }
-
-		print("stringValue: \(stringValue)")
-
-		if stringValue == "yapp" {
-			self.captureSession.stopRunning()
-			showCheck()
+		if let res = try? JSONSerialization.jsonObject(with: Data(stringValue.utf8), options: []) as? [String: Int] {
+			guard let id = res["session_id"], let session = self.viewModel.output.sessionList.value.todaySession() else { return }
+			if id == session.sessionId {
+				self.captureSession.stopRunning()
+				showCheck()
+			}
 		}
 	}
 }
