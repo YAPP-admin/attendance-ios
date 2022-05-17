@@ -16,11 +16,14 @@ final class QRViewModel: ViewModel {
 
 	struct Output {
 		var goToHome = PublishRelay<Void>()
+        let time = BehaviorSubject<String>(value: "")
+        let showToastFail = PublishRelay<Void>()
 	}
 
 	let input = Input()
 	let output = Output()
 	let disposeBag = DisposeBag()
+    private let configWorker = ConfigWorker()
 
 	init() {
 		input.tapClose
@@ -28,4 +31,18 @@ final class QRViewModel: ViewModel {
 				self?.output.goToHome.accept(())
 			}).disposed(by: disposeBag)
 	}
+
+    func getConfigTime() {
+        configWorker.decodeMaginotlineTime { [weak self] result in
+            switch result {
+            case .success(let time):
+                if time.isEmpty == false {
+                    self?.output.time.onNext(time + "까지 출석해주세요.\n30분까지는 지각, 그 이후는 결석으로 처리돼요.")
+                } else {
+                    self?.output.time.onNext("정보를 불러오지 못했어요.")
+                }
+            case .failure: self?.output.time.onNext("정보를 불러오지 못했어요.")
+            }
+        }
+    }
 }

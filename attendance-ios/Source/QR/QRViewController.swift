@@ -14,7 +14,6 @@ import UIKit
 final class QRViewController: UIViewController {
 	private let guideLabel: UILabel = {
 		let label = UILabel()
-		label.text = "2시 5분까지 출석 체크를 완료해주세요!\n이후 출석은 지각으로 처리돼요"
 		label.textColor = .white
 		label.numberOfLines = 0
 		label.textAlignment = .center
@@ -49,6 +48,10 @@ final class QRViewController: UIViewController {
 
 	private let viewModel = QRViewModel()
 	private var disposeBag = DisposeBag()
+
+    override func viewWillAppear(_ animated: Bool) {
+        viewModel.getConfigTime()
+    }
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -94,11 +97,26 @@ final class QRViewController: UIViewController {
 			.observe(on: MainScheduler.instance)
 			.bind(onNext: showHomeVC)
 			.disposed(by: disposeBag)
+
+        viewModel.output.showToastFail
+            .observe(on: MainScheduler.instance)
+            .bind(onNext: showToastFail)
+            .disposed(by: disposeBag)
+
+        viewModel.output.time
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] time in
+                self?.guideLabel.text = time
+            }).disposed(by: disposeBag)
 	}
 
 	func showHomeVC() {
 		dismiss(animated: true, completion: nil)
 	}
+
+    func showToastFail() {
+        showToast(message: "오류가 발생했어요.\n홈으로 돌아가서 다시 시도해 주세요.")
+    }
 
 	func showCheck() {
         UIView.animate(withDuration: 3.0, delay: 0.1, options: .curveEaseOut, animations: {

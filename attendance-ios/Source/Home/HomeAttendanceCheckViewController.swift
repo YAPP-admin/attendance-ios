@@ -20,7 +20,7 @@ final class HomeAttendanceCheckViewController: UIViewController {
         label.textAlignment = .center
         return label
     }()
-    private let tableView: UITableView = {
+    let tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(HomeTotalScoreTableViewCell.self, forCellReuseIdentifier: "HomeTotalScoreTableViewCell")
         tableView.register(HomeAttendanceCheckTableViewCell.self, forCellReuseIdentifier: "HomeAttendanceCheckTableViewCell")
@@ -32,7 +32,7 @@ final class HomeAttendanceCheckViewController: UIViewController {
         return tableView
     }()
 
-    private let viewModel = HomeViewModel()
+    var viewModel = HomeViewModel()
     private var disposeBag = DisposeBag()
 
     override func viewWillAppear(_ animated: Bool) {
@@ -69,11 +69,6 @@ final class HomeAttendanceCheckViewController: UIViewController {
     }
 
     func bindView() {
-        viewModel.output.goToHelp
-            .observe(on: MainScheduler.instance)
-            .bind(onNext: showHelpVC)
-            .disposed(by: disposeBag)
-
         viewModel.output.sessionList
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] _ in
@@ -136,8 +131,10 @@ extension HomeAttendanceCheckViewController: UITableViewDataSource {
             if let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTotalScoreTableViewCell", for: indexPath) as? HomeTotalScoreTableViewCell {
                 cell.updateUI(total: viewModel.output.totalScore.value, attendance: viewModel.output.attendanceScore.value, absence: viewModel.output.absenceScore.value, tardy: viewModel.output.tardyScore.value)
                 cell.helpButton.rx.tap
-                    .bind(to: viewModel.input.tapHelp)
-                    .disposed(by: cell.eventBag)
+                    .subscribe(onNext: { [weak self] _ in
+                        guard let self = self else { return }
+                        self.showHelpVC()
+                    }).disposed(by: cell.eventBag)
                 return cell
             }
         } else {

@@ -74,7 +74,7 @@ final class SettingCellView: UIView {
         }
         stackView.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.leading.equalTo(titleLabel.snp.trailing)
+//            $0.leading.equalTo(titleLabel.snp.trailing)
             $0.trailing.equalToSuperview().offset(-24)
         }
     }
