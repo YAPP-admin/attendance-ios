@@ -179,12 +179,17 @@ extension BaseViewModel {
 private extension BaseViewModel {
 
     func tapEasterEgg() {
-        guard let count = try? output.easterEggCount.value() else { return }
-        if count < 14 {
-            output.easterEggCount.onNext(count+1)
-            print(count)
+        guard var count = try? output.easterEggCount.value() else { return }
+        count += 1
+        print(count)
+        if count < 15 {
+            output.easterEggCount.onNext(count)
             return
         }
+        showEasterEgg()
+    }
+
+    func showEasterEgg() {
         output.easterEggCount.onNext(0)
         output.showEasterEgg.accept(())
     }

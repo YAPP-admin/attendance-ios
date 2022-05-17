@@ -67,6 +67,7 @@ final class EasterEggView: UIView {
         textField.textColor = .gray_800
         textField.tintColor = .yapp_orange
         textField.textAlignment = .center
+        
         return textField
     }()
 
@@ -82,7 +83,7 @@ final class EasterEggView: UIView {
         let button = UIButton()
         button.backgroundColor = .gray_200
         button.setTitleColor(.gray_800, for: .normal)
-        button.titleLabel?.font = .Pretendard(type: .medium, size: 16)
+        button.titleLabel?.font = .Pretendard(type: .bold, size: 16)
         button.layer.cornerRadius = Constants.cornerRadius
         button.setTitle("취소", for: .normal)
         return button
@@ -92,7 +93,7 @@ final class EasterEggView: UIView {
         let button = UIButton()
         button.backgroundColor = .yapp_orange
         button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = .Pretendard(type: .medium, size: 16)
+        button.titleLabel?.font = .Pretendard(type: .bold, size: 16)
         button.layer.cornerRadius = Constants.cornerRadius
         button.setTitle("확인", for: .normal)
         return button

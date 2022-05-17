@@ -57,7 +57,7 @@ final class AlertView: UIView {
         let button = UIButton()
         button.backgroundColor = .gray_200
         button.setTitleColor(.gray_800, for: .normal)
-        button.titleLabel?.font = .Pretendard(type: .medium, size: 16)
+        button.titleLabel?.font = .Pretendard(type: .bold, size: 16)
         button.layer.cornerRadius = Constants.cornerRadius
         return button
     }()
@@ -66,7 +66,7 @@ final class AlertView: UIView {
         let button = UIButton()
         button.backgroundColor = .yapp_orange
         button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = .Pretendard(type: .medium, size: 16)
+        button.titleLabel?.font = .Pretendard(type: .bold, size: 16)
         button.layer.cornerRadius = Constants.cornerRadius
         return button
     }()
