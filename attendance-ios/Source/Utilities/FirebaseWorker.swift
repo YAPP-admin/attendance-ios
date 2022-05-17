@@ -43,8 +43,9 @@ extension FirebaseWorker {
     }
 
     func registerAppleUserInfo(id: String, newUser: FirebaseNewMember, completion: @escaping (Result<Void, Error>) -> Void) {
+        guard let intId = Int(id) else { return }
         memberCollectionRef.document("\(id)").setData([
-            "id": Int.random(in: 1000000000..<10000000000),
+            "id": intId,
             "name": newUser.name,
             "position": newUser.positionType.rawValue,
             "team": ["number": newUser.teamNumber,
@@ -72,21 +73,32 @@ extension FirebaseWorker {
 
     /// 문서 이름을 애플 아이디에서 카카오톡 아이디로 변경합니다.
     func changeMemberDocumentName(_ appleId: String, to kakaoId: String, completion: @escaping (Result<Void, Error>) -> Void) {
-        let docRef = memberCollectionRef.document(appleId)
-        docRef.getDocument { [weak self] snapshot, error in
-            if let error = error {
-                completion(.failure(error))
-            }
-            guard let self = self, let newId = Int(kakaoId), let member = try? snapshot?.data(as: Member.self) else { return }
+        getMemberDocumentIdList { result in
+            switch result {
+            case .success(let list):
+                guard list.contains(appleId) else { return }
 
-            let newUser = FirebaseNewMember(name: member.name, positionType: member.position, teamType: member.team.type, teamNumber: member.team.number)
-            self.registerKakaoUserInfo(id: newId, newUser: newUser) { result in
-                switch result {
-                case .success:
-                    self.deleteDocument(id: appleId)
-                    completion(.success(()))
-                case .failure: ()
+                let docRef = self.memberCollectionRef.document(appleId)
+
+                docRef.getDocument { [weak self] snapshot, error in
+                    if let error = error {
+                        completion(.failure(error))
+                    }
+
+                    guard let self = self, let newId = Int(kakaoId), let member = try? snapshot?.data(as: Member.self) else { return }
+
+                    let newUser = FirebaseNewMember(name: member.name, positionType: member.position, teamType: member.team.type, teamNumber: member.team.number)
+
+                    self.registerKakaoUserInfo(id: newId, newUser: newUser) { result in
+                        switch result {
+                        case .success:
+                            self.deleteDocument(id: appleId)
+                            completion(.success(()))
+                        case .failure: ()
+                        }
+                    }
                 }
+            case .failure: ()
             }
         }
     }

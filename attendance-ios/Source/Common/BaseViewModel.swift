@@ -77,13 +77,11 @@ private extension BaseViewModel {
     func checkKakaoId() {
         guard let kakaoTalkId = userDefaultsWorker.kakaoTalkId(), kakaoTalkId.isEmpty == false else { return }
         output.kakaoTalkId.onNext(kakaoTalkId)
-        print("저장된 kakaoTalkId: \(kakaoTalkId)")
         output.goToHome.accept(())
     }
 
     func checkAppleId() {
         guard let appleId = userDefaultsWorker.appleId(), appleId.isEmpty == false else { return }
-        print("저장된 appleId: \(appleId)")
         output.appleId.onNext(appleId)
     }
 
@@ -104,14 +102,16 @@ private extension BaseViewModel {
                     self.output.kakaoTalkId.onNext(kakaoId)
 
                     // MARK: - 애플 로그인을 통해 이미 가입한 유저라면 기존 문서 이름 변경
-//                    if let appleId = try? self.output.appleId.value() {
-//                        self.firebaseWorker.changeMemberDocumentName(appleId, to: kakaoId) { result in
-//                            switch result {
-//                            case .success: self.output.goToHome.accept(())
-//                            case .failure: self.output.goToSignUp.accept(())
-//                            }
-//                        }
-//                    }
+                    if let appleId = try? self.output.appleId.value() {
+                        self.firebaseWorker.changeMemberDocumentName(appleId, to: kakaoId) { result in
+                            switch result {
+                            case .success:
+                                self.userDefaultsWorker.removeAppleId()
+                                self.output.goToHome.accept(())
+                            case .failure: self.output.goToSignUp.accept(())
+                            }
+                        }
+                    }
 
                     // MARK: - 이미 가입한 카카오톡 유저인지 확인
                     self.firebaseWorker.checkIsRegisteredUser(id: kakaoId) { isRegistered in
@@ -142,24 +142,26 @@ private extension BaseViewModel {
 extension BaseViewModel {
 
     func authorizationController(authorization: ASAuthorization) {
+        print("authorizationController")
+
         switch authorization.credential {
         case let appleIDCredential as ASAuthorizationAppleIDCredential:
-            let userIdentifier = appleIDCredential.user
+//            let userIdentifier = appleIDCredential.user
 //            let fullName = appleIDCredential.fullName
 //            let email = appleIDCredential.email
-            output.appleId.onNext(userIdentifier)
-            self.firebaseWorker.checkIsRegisteredUser(id: userIdentifier) { isRegistered in
-                // MARK: - 가입하지 않은 애플 유저
-                guard isRegistered == true else {
-                    self.output.goToSignUp.accept(())
-                    return
-                }
-                // MARK: - 이미 가입한 애플 유저
-                self.userDefaultsWorker.setAppleId(id: userIdentifier)
-                self.output.goToHome.accept(())
-            }
+
+            checkKakaoId()
+            checkAppleId()
+            signUpWithApple()
         default: break
         }
+    }
+
+    private func signUpWithApple() {
+        let randomId = Int.random(in: 1000000000..<10000000000)
+        let stringId = String(randomId)
+        output.appleId.onNext(stringId)
+        output.goToSignUp.accept(())
     }
 
 }
