@@ -62,6 +62,7 @@ final class AdminGradeCell: UICollectionViewCell {
 
     var isShownMembers: Bool = false
     var members: [Member] = []
+    var needAttendanceSessionIdList: [Int] = []
     var sessionId: Int = 0
 
     private var disposeBag = DisposeBag()
@@ -159,7 +160,7 @@ extension AdminGradeCell: UICollectionViewDelegateFlowLayout, UICollectionViewDa
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AdminGradeMemberCell.identifier, for: indexPath) as? AdminGradeMemberCell else { return UICollectionViewCell() }
         let member = members[indexPath.row]
-        cell.updateSubViews(with: member, sessionId: sessionId)
+        cell.updateSubViews(with: member, sessionId: sessionId, sessionIdList: needAttendanceSessionIdList)
 
         return cell
     }

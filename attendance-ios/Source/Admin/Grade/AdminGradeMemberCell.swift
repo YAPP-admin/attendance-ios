@@ -59,10 +59,13 @@ final class AdminGradeMemberCell: UICollectionViewCell {
 // MARK: - Update
 extension AdminGradeMemberCell {
 
-    func updateSubViews(with member: Member, sessionId: Int) {
-        nameLabel.text = member.name
-        let totalGrade = member.totalGrade(until: sessionId)
+    func updateSubViews(with member: Member, sessionId: Int, sessionIdList: [Int]) {
+        let attendances = member.attendances.filter { sessionIdList.contains($0.sessionId) && $0.sessionId < sessionId }
+        var totalGrade = attendances.reduce(100, { $0 + $1.type.point })
+        totalGrade = max(totalGrade, 0)
+
         gradeLabel.text = String(totalGrade)
+        nameLabel.text = member.name
         if totalGrade < 70 {
             iconImageView.isHidden = false
         }
