@@ -121,13 +121,13 @@ extension FirebaseWorker {
     }
 
     /// 문서를 삭제합니다.
-    func deleteDocument(memberId: Int, completion: @escaping (()) -> Void) {
+    func deleteDocument(memberId: Int, completion: @escaping (Result<Void, Error>) -> Void) {
         getMemberDocumentId(memberId: memberId) { result in
             switch result {
             case .success(let id):
                 self.deleteDocument(id: id)
-                completion(())
-            case .failure: ()
+                completion(.success(()))
+            case .failure(let error): completion(.failure(error))
             }
         }
     }
