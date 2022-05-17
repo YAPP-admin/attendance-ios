@@ -83,7 +83,6 @@ final class SettingViewModel: ViewModel {
     }
 
     func logout() {
-        userDefaultsWorker.removeKakaoTalkId()
         output.goToLoginVC.accept(())
     }
 

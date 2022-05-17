@@ -52,10 +52,6 @@ final class BaseViewModel: ViewModel {
     private let userDefaultsWorker = UserDefaultsWorker()
 
     init() {
-        // TODO: - 테스트를 위해 추가, 이후 삭제
-        logoutWithKakao()
-        //
-
         checkLoginId()
 
         subscribeInput()
@@ -73,17 +69,25 @@ final class BaseViewModel: ViewModel {
 // MARK: - Check
 private extension BaseViewModel {
 
-    func checkLoginId() {
-        if let kakaoTalkId = userDefaultsWorker.kakaoTalkId(), kakaoTalkId.isEmpty == false {
-            output.kakaoTalkId.onNext(kakaoTalkId)
-            output.goToHome.accept(())
-            return
-        } else if let appleId = userDefaultsWorker.appleId(), appleId.isEmpty == false {
-            output.appleId.onNext(appleId)
-        } else {
-            // MARK: - UserDefaults에 저장된 id가 없음
-            output.goToSignUp.accept(())
-        }
+    @discardableResult
+    func checkLoginId() -> Bool {
+        guard checkKakaoId() == false, checkAppleId() == false else { return true }
+        return false
+    }
+
+    @discardableResult
+    func checkKakaoId() -> Bool {
+        guard let kakaoTalkId = userDefaultsWorker.kakaoTalkId(), kakaoTalkId.isEmpty == false else { return false }
+        output.kakaoTalkId.onNext(kakaoTalkId)
+        output.goToHome.accept(())
+        return true
+    }
+
+    @discardableResult
+    func checkAppleId() -> Bool {
+        guard let appleId = userDefaultsWorker.appleId(), appleId.isEmpty == false else { return false }
+        output.appleId.onNext(appleId)
+        return true
     }
 
 }
@@ -103,14 +107,16 @@ private extension BaseViewModel {
                     self.output.kakaoTalkId.onNext(kakaoId)
 
                     // MARK: - 애플 로그인을 통해 이미 가입한 유저라면 기존 문서 이름 변경
-//                    if let appleId = try? self.output.appleId.value() {
-//                        self.firebaseWorker.changeMemberDocumentName(appleId, to: kakaoId) { result in
-//                            switch result {
-//                            case .success: self.output.goToHome.accept(())
-//                            case .failure: self.output.goToSignUp.accept(())
-//                            }
-//                        }
-//                    }
+                    if let appleId = try? self.output.appleId.value() {
+                        self.firebaseWorker.changeMemberDocumentName(appleId, to: kakaoId) { result in
+                            switch result {
+                            case .success:
+                                self.userDefaultsWorker.removeAppleId()
+                                self.output.goToHome.accept(())
+                            case .failure: self.output.goToSignUp.accept(())
+                            }
+                        }
+                    }
 
                     // MARK: - 이미 가입한 카카오톡 유저인지 확인
                     self.firebaseWorker.checkIsRegisteredUser(id: kakaoId) { isRegistered in
@@ -130,10 +136,6 @@ private extension BaseViewModel {
         }
     }
 
-    func checkIsRegisteredUser(id: String) {
-
-    }
-
     func logoutWithKakao() {
         kakaoLoginWorker.logoutWithKakao()
         userDefaultsWorker.removeKakaoTalkId()
@@ -147,22 +149,20 @@ extension BaseViewModel {
     func authorizationController(authorization: ASAuthorization) {
         switch authorization.credential {
         case let appleIDCredential as ASAuthorizationAppleIDCredential:
-            let userIdentifier = appleIDCredential.user
+//            let userIdentifier = appleIDCredential.user
 //            let fullName = appleIDCredential.fullName
 //            let email = appleIDCredential.email
-            output.appleId.onNext(userIdentifier)
-            self.firebaseWorker.checkIsRegisteredUser(id: userIdentifier) { isRegistered in
-                // MARK: - 가입하지 않은 애플 유저
-                guard isRegistered == true else {
-                    self.output.goToSignUp.accept(())
-                    return
-                }
-                // MARK: - 이미 가입한 애플 유저
-                self.userDefaultsWorker.setAppleId(id: userIdentifier)
-                self.output.goToHome.accept(())
-            }
+            guard checkLoginId() == false else { return }
+            signUpWithApple()
         default: break
         }
+    }
+
+    private func signUpWithApple() {
+        let randomId = Int.random(in: 1000000000..<10000000000)
+        let stringId = String(randomId)
+        output.appleId.onNext(stringId)
+        output.goToSignUp.accept(())
     }
 
 }

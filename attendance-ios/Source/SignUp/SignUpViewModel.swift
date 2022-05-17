@@ -115,22 +115,29 @@ extension SignUpViewModel {
 
         let newUser = FirebaseNewMember(name: name, positionType: positionType, teamType: teamType, teamNumber: teamNumber)
 
-        if kakaoTalkId.isEmpty == false {
-            guard let id = Int(kakaoTalkId) else { return }
-            firebaseWorker.registerKakaoUserInfo(id: id, newUser: newUser) { [weak self] result in
-                switch result {
-                case .success: self?.output.goToHome.accept(())
-                case .failure: ()
-                }
-            }
+        if kakaoTalkId.isEmpty == false, let id = Int(kakaoTalkId) {
+            registerKakaoUserInfo(id: id, newUser: newUser)
         } else if appleId.isEmpty == false {
-            firebaseWorker.registerAppleUserInfo(id: appleId, newUser: newUser) { [weak self] result in
-                switch result {
-                case .success:
-                    self?.userDefaultsWorker.setAppleId(id: appleId)
-                    self?.output.goToHome.accept(())
-                case .failure: ()
-                }
+            registerWithApple(id: appleId, newUser: newUser)
+        }
+    }
+
+    func registerKakaoUserInfo(id: Int, newUser: FirebaseNewMember) {
+        firebaseWorker.registerKakaoUserInfo(id: id, newUser: newUser) { [weak self] result in
+            switch result {
+            case .success: self?.output.goToHome.accept(())
+            case .failure: ()
+            }
+        }
+    }
+
+    func registerWithApple(id: String, newUser: FirebaseNewMember) {
+        firebaseWorker.registerAppleUserInfo(id: id, newUser: newUser) { [weak self] result in
+            switch result {
+            case .success:
+                self?.userDefaultsWorker.setAppleId(id: id)
+                self?.output.goToHome.accept(())
+            case .failure: ()
             }
         }
     }
