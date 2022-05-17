@@ -31,16 +31,19 @@ final class BaseViewModel: ViewModel {
 
     struct Input {
         let tapKakaoTalkLogin = PublishRelay<Void>()
+        let tapEasterEgg = PublishRelay<Void>()
     }
 
     struct Output {
         let kakaoAccessToken = PublishSubject<String>()
         let kakaoTalkId = BehaviorSubject<String>(value: "")
         let appleId = BehaviorSubject<String>(value: "")
+        let easterEggCount = BehaviorSubject<Int>(value: 0)
 
         let goToSignUp = PublishRelay<Void>()
         let goToHome = PublishRelay<Void>()
         let goToAdmin = PublishRelay<Void>()
+        let showEasterEgg = PublishRelay<Void>()
     }
 
     let input = Input()
@@ -61,6 +64,11 @@ final class BaseViewModel: ViewModel {
         input.tapKakaoTalkLogin
             .subscribe(onNext: { [weak self] _ in
                 self?.loginWithKakao()
+            }).disposed(by: disposeBag)
+
+        input.tapEasterEgg
+            .subscribe(onNext: { [weak self] _ in
+                self?.tapEasterEgg()
             }).disposed(by: disposeBag)
     }
 
@@ -163,6 +171,21 @@ extension BaseViewModel {
         let stringId = String(randomId)
         output.appleId.onNext(stringId)
         output.goToSignUp.accept(())
+    }
+
+}
+
+// MARK: - Easter Egg
+private extension BaseViewModel {
+
+    func tapEasterEgg() {
+        guard let count = try? output.easterEggCount.value() else { return }
+        print(count)
+        if count > 14 {
+            output.showEasterEgg.accept(())
+            output.easterEggCount.onNext(0)
+        }
+        output.easterEggCount.onNext(count+1)
     }
 
 }

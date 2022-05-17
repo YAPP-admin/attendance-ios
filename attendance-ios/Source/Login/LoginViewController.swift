@@ -116,9 +116,7 @@ private extension LoginViewController {
             .disposed(by: disposeBag)
 
         secretAdminButton.rx.tap
-            .bind { [weak self] _ in
-                self?.goToAdminVC()
-            }
+            .bind(to: viewModel.input.tapEasterEgg)
             .disposed(by: disposeBag)
     }
 
@@ -136,6 +134,11 @@ private extension LoginViewController {
         viewModel.output.goToAdmin
             .observe(on: MainScheduler.instance)
             .bind(onNext: goToAdminVC)
+            .disposed(by: disposeBag)
+
+        viewModel.output.showEasterEgg
+            .observe(on: MainScheduler.instance)
+            .bind(onNext: showEasterEgg)
             .disposed(by: disposeBag)
     }
 
@@ -216,6 +219,16 @@ extension LoginViewController: WKNavigationDelegate {
 
 }
 
+// MARK: - Easter Egg
+extension LoginViewController {
+
+    // TODO: - 이스터에그 화면 띄우기
+    func showEasterEgg() {
+        print("showEasterEgg")
+    }
+
+}
+
 // MARK: - UI
 private extension LoginViewController {
 
@@ -266,9 +279,10 @@ private extension LoginViewController {
             $0.bottom.equalToSuperview().inset(80)
             $0.left.right.equalToSuperview().inset(10)
         }
+        secretAdminButton.backgroundColor = .yapp_orange_opacity
         secretAdminButton.snp.makeConstraints {
-            $0.top.left.equalTo(view.safeAreaLayoutGuide)
-            $0.width.height.equalTo(100)
+            $0.center.equalTo(webView)
+            $0.width.height.equalTo(200)
         }
     }
 
