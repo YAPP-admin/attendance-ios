@@ -19,13 +19,13 @@ extension UIViewController {
         toastLabel.numberOfLines = 0
         self.view.addSubview(toastLabel)
         toastLabel.snp.makeConstraints {
-            $0.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).inset(84)
-            $0.leading.greaterThanOrEqualToSuperview().inset(24)
-            $0.trailing.lessThanOrEqualToSuperview().inset(24)
+            $0.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-110)
+            $0.leading.equalToSuperview().offset(24)
+            $0.trailing.equalToSuperview().offset(-24)
             $0.width.greaterThanOrEqualTo(44)
             $0.centerX.equalToSuperview()
         }
-        UIView.animate(withDuration: 5.0, delay: 0.1, options: .curveEaseIn, animations: {
+        UIView.animate(withDuration: 3.0, delay: 0.1, options: .curveEaseIn, animations: {
             toastLabel.alpha = 0.0
         }, completion: { _ in
             toastLabel.removeFromSuperview()

@@ -14,7 +14,7 @@ import UIKit
 final class QRViewController: UIViewController {
 	private let guideLabel: UILabel = {
 		let label = UILabel()
-		label.text = "2시 5분까지 출석 체크를 완료해주세요!\n이후 출석은 지각으로 처리돼요"
+		label.text = "2시 5분까지 출석해주세요.\n30분까지는 지각, 그 이후는 결석으로 처리돼요."
 		label.textColor = .white
 		label.numberOfLines = 0
 		label.textAlignment = .center
