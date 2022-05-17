@@ -16,12 +16,14 @@ final class SettingViewModel: ViewModel {
         let tapPolicyView = PublishRelay<Void>()
         let tapLogoutView = PublishRelay<Void>()
         let tapMemberView = PublishRelay<Void>()
+        let memberOut = PublishRelay<Void>()
     }
 
     struct Output {
         var goToHome = PublishRelay<Void>()
         let goToPolicyVC = PublishRelay<Void>()
         let goToLoginVC = PublishRelay<Void>()
+        let showDialogWhenMemberOut = PublishRelay<Void>()
         var generation = BehaviorRelay<String>(value: "")
         var name = BehaviorRelay<String>(value: "")
     }
@@ -54,6 +56,11 @@ final class SettingViewModel: ViewModel {
             }).disposed(by: disposeBag)
 
         input.tapMemberView
+            .subscribe(onNext: { [weak self] _ in
+                self?.output.showDialogWhenMemberOut.accept(())
+            }).disposed(by: disposeBag)
+
+        input.memberOut
             .subscribe(onNext: { [weak self] _ in
                 self?.memberOut()
             }).disposed(by: disposeBag)

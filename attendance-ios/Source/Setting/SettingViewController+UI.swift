@@ -77,5 +77,10 @@ extension SettingViewController {
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(51)
         }
+
+        view.addSubview(alertView)
+        alertView.snp.makeConstraints {
+            $0.top.bottom.left.right.equalToSuperview()
+        }
     }
 }

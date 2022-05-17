@@ -56,7 +56,10 @@ final class SignUpPositionViewController: UIViewController {
     private let alertView: AlertView = {
         let view = AlertView()
         view.isHidden = true
-        view.configureUI(text: "입력을 취소할까요?", subText: "언제든 다시 돌아올 수 있어요", leftButtonText: "아니요", rightButtonText: "취소합니다")
+        view.configureUI(text: "입력을 취소할까요?",
+                         subText: "언제든 다시 돌아올 수 있어요",
+                         leftButtonText: "아니요",
+                         rightButtonText: "취소합니다")
         return view
     }()
 
