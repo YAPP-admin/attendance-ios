@@ -69,20 +69,25 @@ final class BaseViewModel: ViewModel {
 // MARK: - Check
 private extension BaseViewModel {
 
-    func checkLoginId() {
-        checkKakaoId()
-        checkAppleId()
+    @discardableResult
+    func checkLoginId() -> Bool {
+        guard checkKakaoId() == false, checkAppleId() == false else { return true }
+        return false
     }
 
-    func checkKakaoId() {
-        guard let kakaoTalkId = userDefaultsWorker.kakaoTalkId(), kakaoTalkId.isEmpty == false else { return }
+    @discardableResult
+    func checkKakaoId() -> Bool {
+        guard let kakaoTalkId = userDefaultsWorker.kakaoTalkId(), kakaoTalkId.isEmpty == false else { return false }
         output.kakaoTalkId.onNext(kakaoTalkId)
         output.goToHome.accept(())
+        return true
     }
 
-    func checkAppleId() {
-        guard let appleId = userDefaultsWorker.appleId(), appleId.isEmpty == false else { return }
+    @discardableResult
+    func checkAppleId() -> Bool {
+        guard let appleId = userDefaultsWorker.appleId(), appleId.isEmpty == false else { return false }
         output.appleId.onNext(appleId)
+        return true
     }
 
 }
@@ -142,16 +147,12 @@ private extension BaseViewModel {
 extension BaseViewModel {
 
     func authorizationController(authorization: ASAuthorization) {
-        print("authorizationController")
-
         switch authorization.credential {
         case let appleIDCredential as ASAuthorizationAppleIDCredential:
 //            let userIdentifier = appleIDCredential.user
 //            let fullName = appleIDCredential.fullName
 //            let email = appleIDCredential.email
-
-            checkKakaoId()
-            checkAppleId()
+            guard checkLoginId() == false else { return }
             signUpWithApple()
         default: break
         }
