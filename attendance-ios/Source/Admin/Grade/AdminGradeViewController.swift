@@ -157,6 +157,7 @@ extension AdminGradeViewController: UICollectionViewDelegateFlowLayout, UICollec
             cell.sessionId = sessionId
         }
         cell.isShownMembers = indexList.contains(indexPath.row)
+        cell.needAttendanceSessionIdList = sessionList.filter { $0.type == .needAttendance }.map { $0.sessionId }
         cell.updateSubViews()
 
         if let teamList = try? viewModel.output.teamList.value(), let team = teamList[safe: index] {
