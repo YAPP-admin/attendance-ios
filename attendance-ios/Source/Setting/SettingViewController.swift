@@ -64,6 +64,15 @@ final class SettingViewController: UIViewController {
         view.setLogout("회원탈퇴")
         return view
     }()
+    let alertView: AlertView = {
+        let view = AlertView()
+        view.isHidden = true
+        view.configureUI(text: "정말 탈퇴하시겠어요?",
+                         subText: "탈퇴하면 모든 정보가 사라져요.",
+                         leftButtonText: "취소",
+                         rightButtonText: "탈퇴합니다")
+        return view
+    }()
 
     private let viewModel = SettingViewModel()
     private var disposeBag = DisposeBag()
@@ -99,6 +108,11 @@ final class SettingViewController: UIViewController {
         viewModel.output.goToLoginVC
             .observe(on: MainScheduler.instance)
             .bind(onNext: goToLoginVC)
+            .disposed(by: disposeBag)
+
+        viewModel.output.showDialogWhenMemberOut
+            .observe(on: MainScheduler.instance)
+            .bind(onNext: showDialogWhenMemberOut)
             .disposed(by: disposeBag)
 
         viewModel.output.generation
@@ -139,6 +153,13 @@ final class SettingViewController: UIViewController {
             .bind(onNext: { [weak self] _ in
                 self?.viewModel.input.tapMemberView.accept(())
             }).disposed(by: disposeBag)
+
+        alertView.rightButton.rx.controlEvent([.touchUpInside])
+            .asObservable()
+            .subscribe(onNext: { [weak self] _ in
+                self?.viewModel.input.memberOut.accept(())
+                self?.alertView.isHidden.toggle()
+            }).disposed(by: disposeBag)
     }
 
     func showHomeVC() {
@@ -155,5 +176,10 @@ final class SettingViewController: UIViewController {
         let navC = UINavigationController(rootViewController: loginVC)
         navC.modalPresentationStyle = .fullScreen
         self.present(navC, animated: true)
+    }
+
+    // TODO: -
+    func showDialogWhenMemberOut() {
+        alertView.isHidden = false
     }
 }

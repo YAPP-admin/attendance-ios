@@ -16,12 +16,14 @@ final class SettingViewModel: ViewModel {
         let tapPolicyView = PublishRelay<Void>()
         let tapLogoutView = PublishRelay<Void>()
         let tapMemberView = PublishRelay<Void>()
+        let memberOut = PublishRelay<Void>()
     }
 
     struct Output {
         var goToHome = PublishRelay<Void>()
         let goToPolicyVC = PublishRelay<Void>()
         let goToLoginVC = PublishRelay<Void>()
+        let showDialogWhenMemberOut = PublishRelay<Void>()
         var generation = BehaviorRelay<String>(value: "")
         var name = BehaviorRelay<String>(value: "")
     }
@@ -30,6 +32,7 @@ final class SettingViewModel: ViewModel {
     let output = Output()
     let disposeBag = DisposeBag()
     let db = Firestore.firestore()
+    let myId = BehaviorRelay<String>(value: "")
     var documentID = BehaviorRelay<String>(value: "")
     var memberData = BehaviorRelay<Member?>(value: nil)
 
@@ -54,9 +57,15 @@ final class SettingViewModel: ViewModel {
 
         input.tapMemberView
             .subscribe(onNext: { [weak self] _ in
+                self?.output.showDialogWhenMemberOut.accept(())
+            }).disposed(by: disposeBag)
+
+        input.memberOut
+            .subscribe(onNext: { [weak self] _ in
                 self?.memberOut()
             }).disposed(by: disposeBag)
 
+        checkLoginId()
         checkGeneration()
         setupName()
     }
@@ -84,7 +93,30 @@ final class SettingViewModel: ViewModel {
         firebaseWorker.deleteDocument(memberId: member.id) { [weak self] _ in
             guard let self = self else { return }
             self.userDefaultsWorker.removeKakaoTalkId()
+            self.userDefaultsWorker.removeAppleId()
             self.output.goToLoginVC.accept(())
         }
     }
+
+    func checkLoginId() {
+        if let kakaoTalkId = userDefaultsWorker.kakaoTalkId(), kakaoTalkId.isEmpty == false {
+            myId.accept(kakaoTalkId)
+            getUserData()
+        } else if let appleId = userDefaultsWorker.appleId(), appleId.isEmpty == false {
+            myId.accept(appleId)
+            getUserData()
+        }
+    }
+
+    func getUserData() {
+        firebaseWorker.getMemberDocumentData(memberId: Int(myId.value) ?? 0) { result in
+            switch result {
+            case .success(let member):
+                self.memberData.accept(member)
+                self.userDefaultsWorker.setName(name: member.name)
+            case .failure: ()
+            }
+        }
+    }
+
 }
