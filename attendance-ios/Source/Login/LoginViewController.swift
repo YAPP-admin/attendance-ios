@@ -133,8 +133,11 @@ private extension LoginViewController {
 
         viewModel.output.isEasterEggKeyValid
             .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] _ in
+            .subscribe(onNext: { [weak self] isValid in
                 self?.clearTextField()
+                if isValid == true {
+                    self?.easterEggView.isHidden = true
+                }
             })
             .disposed(by: disposeBag)
     }
