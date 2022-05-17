@@ -18,7 +18,6 @@ final class HomeViewModel: ViewModel {
     struct Input {
         let tapQR = PublishRelay<Void>()
         let tapSetting = PublishRelay<Void>()
-        let tapHelp = PublishRelay<Void>()
         let tapBack = PublishRelay<Void>()
     }
 
@@ -26,7 +25,6 @@ final class HomeViewModel: ViewModel {
         let sessionList = BehaviorRelay<[Session]>(value: [])
         let goToQR = PublishRelay<Void>()
         let goToSetting = PublishRelay<Void>()
-        let goToHelp = PublishRelay<Void>()
         let goToHome = PublishRelay<Void>()
         let goToLoginVC = PublishRelay<Void>()
         let yappConfig = BehaviorSubject<YappConfig?>(value: nil)
@@ -61,11 +59,6 @@ final class HomeViewModel: ViewModel {
         input.tapSetting
             .subscribe(onNext: { [weak self] _ in
                 self?.output.goToSetting.accept(())
-            }).disposed(by: disposeBag)
-
-        input.tapHelp
-            .subscribe(onNext: { [weak self] _ in
-                self?.output.goToHelp.accept(())
             }).disposed(by: disposeBag)
 
         input.tapBack

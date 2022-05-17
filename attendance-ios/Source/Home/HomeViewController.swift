@@ -124,6 +124,7 @@ final class HomeViewController: UIViewController {
     }
 
     func addSubViews() {
+        attendanceView.viewModel = self.viewModel
         let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
         visualEffectView.frame = view.frame
 
@@ -268,6 +269,7 @@ final class HomeViewController: UIViewController {
                     self?.scrollView.isHidden = false
                     self?.attendanceView.view.isHidden = true
                 case .attendanceCheck:
+                    self?.attendanceView.tableView.reloadData()
                     self?.topView.isHidden = true
                     self?.scrollView.isHidden = true
                     self?.attendanceView.view.isHidden = false

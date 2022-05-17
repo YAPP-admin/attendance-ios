@@ -130,5 +130,13 @@ final class HomeTotalScoreTableViewCell: BaseTableViewCell {
         chartView.attendanceCountLabel.text = String(attendance)
         chartView.absenceCountLabel.text = String(absence)
         chartView.tardyCountLabel.text = String(tardy)
+        switch score {
+        case ..<70:
+            progress.progressShapeColor = .etc_red
+        case 70..<80:
+            progress.progressShapeColor = .etc_yellow
+        default:
+            progress.progressShapeColor = .etc_green
+        }
     }
 }
