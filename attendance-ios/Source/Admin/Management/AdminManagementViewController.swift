@@ -44,7 +44,11 @@ final class AdminManagementViewController: UIViewController {
         return collectionView
     }()
 
-    private let bottomSheetView = AdminBottomSheetView()
+    private let bottomSheetView: AdminBottomSheetView = {
+        let view = AdminBottomSheetView()
+        view.isHidden = true
+        return view
+    }()
 
     private var session: Session
 
@@ -233,11 +237,8 @@ extension AdminManagementViewController: UICollectionViewDelegateFlowLayout, UIC
 private extension AdminManagementViewController {
 
     func showBottomSheet() {
-        view.addSubviews([bottomSheetView])
-
-        bottomSheetView.snp.makeConstraints {
-            $0.top.bottom.left.right.equalToSuperview()
-        }
+        bottomSheetView.isHidden = false
+        bottomSheetView.showBottomSheet()
     }
 
 }
@@ -263,11 +264,14 @@ private extension AdminManagementViewController {
     }
 
     func configureLayout() {
-        view.addSubview(teamCollectionView)
+        view.addSubviews([teamCollectionView, bottomSheetView])
 
         teamCollectionView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(Constants.topPadding)
             $0.bottom.left.right.equalToSuperview()
+        }
+        bottomSheetView.snp.makeConstraints {
+            $0.top.bottom.left.right.equalToSuperview()
         }
     }
 

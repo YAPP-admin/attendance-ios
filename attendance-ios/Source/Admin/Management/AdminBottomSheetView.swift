@@ -22,6 +22,7 @@ final class AdminBottomSheetView: UIView {
         static let bottomSheetHeight: CGFloat = 300
         static let bottomSheetCornerRadius: CGFloat = 20
         static let bottomSheetCellHeight: CGFloat = 52
+        static let animationDuration: CGFloat = 0.5
     }
 
     private let backgroundView: UIView = {
@@ -65,26 +66,25 @@ final class AdminBottomSheetView: UIView {
 }
 
 // MARK: - Animation
-private extension AdminBottomSheetView {
+extension AdminBottomSheetView {
 
-    // TODO: - 애니메이션
     func showBottomSheet() {
-        UIView.animate(withDuration: 2, delay: 0, options: .curveEaseInOut, animations: { [weak self] in
+        UIView.animate(withDuration: Constants.animationDuration, delay: 0, options: .curveEaseInOut, animations: { [weak self] in
             self?.containerView.snp.updateConstraints {
                 $0.bottom.equalToSuperview().inset(0)
             }
-            self?.containerView.layoutIfNeeded()
+            self?.containerView.superview?.layoutIfNeeded()
         })
     }
 
     func hideBottomSheet() {
-        UIView.animate(withDuration: 2, delay: 0, options: .curveEaseInOut, animations: { [weak self] in
+        UIView.animate(withDuration: Constants.animationDuration, delay: 0, options: .curveEaseInOut, animations: { [weak self] in
             self?.containerView.snp.updateConstraints {
-                $0.bottom.equalToSuperview().inset(-Constants.bottomSheetHeight)
+                $0.bottom.equalToSuperview().offset(Constants.bottomSheetHeight)
             }
-            self?.containerView.layoutIfNeeded()
+            self?.containerView.superview?.layoutIfNeeded()
         }, completion: { [weak self] _ in
-            self?.removeFromSuperview()
+            self?.isHidden = true
         })
     }
 }
@@ -99,7 +99,7 @@ extension AdminBottomSheetView: UICollectionViewDelegateFlowLayout, UICollection
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        AttendanceType.allCases.count
+        return AttendanceType.allCases.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -110,11 +110,13 @@ extension AdminBottomSheetView: UICollectionViewDelegateFlowLayout, UICollection
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(width: collectionView.bounds.width, height: Constants.bottomSheetCellHeight)
+        let width = collectionView.bounds.width
+        let height = Constants.bottomSheetCellHeight
+        return CGSize(width: width, height: height)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        0
+        return 0
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -141,7 +143,7 @@ private extension AdminBottomSheetView {
 
         tapGesture.rx.event
             .bind(onNext: { [weak self] _ in
-                self?.removeFromSuperview()
+                self?.hideBottomSheet()
             }).disposed(by: disposeBag)
     }
 
@@ -161,7 +163,7 @@ private extension AdminBottomSheetView {
             $0.top.bottom.left.right.equalToSuperview()
         }
         containerView.snp.makeConstraints {
-            $0.bottom.equalToSuperview().inset(-Constants.bottomSheetHeight)
+            $0.bottom.equalToSuperview().offset(Constants.bottomSheetHeight)
             $0.left.right.equalToSuperview()
             $0.height.equalTo(Constants.bottomSheetHeight)
         }
@@ -169,8 +171,6 @@ private extension AdminBottomSheetView {
             $0.top.equalToSuperview().offset(Constants.topPadding)
             $0.left.right.bottom.equalToSuperview()
         }
-
-        showBottomSheet()
     }
 
 }
