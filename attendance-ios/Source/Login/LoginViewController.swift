@@ -74,6 +74,12 @@ final class LoginViewController: UIViewController, ASAuthorizationControllerDele
 
     private let secretAdminButton: UIButton = UIButton()
 
+    private let easterEggView: EasterEggView = {
+        let view = EasterEggView()
+        view.isHidden = true
+        return view
+    }()
+
     private let authorizationController: ASAuthorizationController = {
         let appleIDProvider = ASAuthorizationAppleIDProvider()
         let request = appleIDProvider.createRequest()
@@ -87,8 +93,8 @@ final class LoginViewController: UIViewController, ASAuthorizationControllerDele
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        bindSubviews()
         bindViewModel()
+        bindSubviews()
 
         setupAppleLogin()
         setupDelegate()
@@ -103,24 +109,6 @@ final class LoginViewController: UIViewController, ASAuthorizationControllerDele
 
 // MARK: - Bind
 private extension LoginViewController {
-
-    func bindSubviews() {
-        appleLoginButton.rx.tap
-            .throttle(.seconds(3), latest: false, scheduler: MainScheduler.instance)
-            .bind(onNext: loginWithApple)
-            .disposed(by: disposeBag)
-
-        kakaoLoginButton.rx.tap
-            .throttle(.seconds(3), latest: false, scheduler: MainScheduler.instance)
-            .bind(to: viewModel.input.tapKakaoTalkLogin)
-            .disposed(by: disposeBag)
-
-        secretAdminButton.rx.tap
-            .bind { [weak self] _ in
-                self?.goToAdminVC()
-            }
-            .disposed(by: disposeBag)
-    }
 
     func bindViewModel() {
         viewModel.output.goToSignUp
@@ -137,6 +125,47 @@ private extension LoginViewController {
             .observe(on: MainScheduler.instance)
             .bind(onNext: goToAdminVC)
             .disposed(by: disposeBag)
+
+        viewModel.output.showEasterEgg
+            .observe(on: MainScheduler.instance)
+            .bind(onNext: showEasterEgg)
+            .disposed(by: disposeBag)
+
+        viewModel.output.isEasterEggKeyValid
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] isValid in
+                self?.clearTextField()
+                if isValid == true {
+                    self?.easterEggView.isHidden = true
+                }
+            })
+            .disposed(by: disposeBag)
+    }
+
+    func bindSubviews() {
+        appleLoginButton.rx.tap
+            .throttle(.seconds(3), latest: false, scheduler: MainScheduler.instance)
+            .bind(onNext: loginWithApple)
+            .disposed(by: disposeBag)
+
+        kakaoLoginButton.rx.tap
+            .throttle(.seconds(3), latest: false, scheduler: MainScheduler.instance)
+            .bind(to: viewModel.input.tapKakaoTalkLogin)
+            .disposed(by: disposeBag)
+
+        secretAdminButton.rx.tap
+            .bind(to: viewModel.input.tapEasterEgg)
+            .disposed(by: disposeBag)
+
+        easterEggView.rightButton.rx.tap
+            .bind(to: viewModel.input.tapEasterEggOkButton)
+            .disposed(by: disposeBag)
+
+        easterEggView.textField.rx.text
+            .subscribe(onNext: { [weak self] text in
+                guard let text = text else { return }
+                self?.viewModel.input.easterEggKey.onNext(text)
+            }).disposed(by: disposeBag)
     }
 
 }
@@ -216,6 +245,19 @@ extension LoginViewController: WKNavigationDelegate {
 
 }
 
+// MARK: - Easter Egg
+extension LoginViewController {
+
+    func showEasterEgg() {
+        easterEggView.isHidden = false
+    }
+
+    func clearTextField() {
+        easterEggView.clearTextField()
+    }
+
+}
+
 // MARK: - UI
 private extension LoginViewController {
 
@@ -240,7 +282,7 @@ private extension LoginViewController {
     }
 
     func configureLayout() {
-        view.addSubviews([titleLabel, webView, appleLoginButton, kakaoLoginButton, splashView, secretAdminButton])
+        view.addSubviews([titleLabel, webView, appleLoginButton, kakaoLoginButton, splashView, secretAdminButton, easterEggView])
 
         webView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(40)
@@ -267,8 +309,11 @@ private extension LoginViewController {
             $0.left.right.equalToSuperview().inset(10)
         }
         secretAdminButton.snp.makeConstraints {
-            $0.top.left.equalTo(view.safeAreaLayoutGuide)
-            $0.width.height.equalTo(100)
+            $0.center.equalTo(webView)
+            $0.width.height.equalTo(200)
+        }
+        easterEggView.snp.makeConstraints {
+            $0.top.bottom.left.right.equalToSuperview()
         }
     }
 

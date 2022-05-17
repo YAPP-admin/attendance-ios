@@ -1,8 +1,8 @@
 //
-//  AlertView.swift
+//  EasterEggView.swift
 //  attendance-ios
 //
-//  Created by leeesangheee on 2022/03/08.
+//  Created by leeesangheee on 2022/05/17.
 //
 
 import RxCocoa
@@ -10,17 +10,20 @@ import RxSwift
 import SnapKit
 import UIKit
 
-final class AlertView: UIView {
+final class EasterEggView: UIView {
 
     enum Constants {
-        static let margin: CGFloat = 32
         static let padding: CGFloat = 24
-        static let containerViewHeight: CGFloat = 174
+        static let spacing: CGFloat = 20
+        static let labelStackViewHeight: CGFloat = 56
         static let cornerRadius: CGFloat = 10
-        static let labelSpacing: CGFloat = 10
 
+        static let textFieldHeight: CGFloat = 47
+        static let textFieldFontSize: CGFloat = 16
         static let buttonHeight: CGFloat = 47
         static let buttonSpacing: CGFloat = 12
+
+        static let containerViewHeight: CGFloat = Constants.labelStackViewHeight+textFieldHeight+Constants.buttonHeight+Constants.padding+Constants.spacing*3
     }
 
     private let containerView: UIView = {
@@ -31,10 +34,19 @@ final class AlertView: UIView {
         return view
     }()
 
+    private let labelStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.distribution = .fillEqually
+        stackView.spacing = 4
+        return stackView
+    }()
+
     private let label: UILabel = {
         let label = UILabel()
         label.textColor = .gray_1200
         label.font = .Pretendard(type: .bold, size: 18)
+        label.text = "암호를 대라!"
         return label
     }()
 
@@ -42,7 +54,20 @@ final class AlertView: UIView {
         let label = UILabel()
         label.textColor = .gray_800
         label.font = .Pretendard(type: .medium, size: 16)
+        label.text = "코드 넘버를 입력해주세요"
         return label
+    }()
+
+    let textField: UITextField = {
+        let textField = UITextField()
+        textField.placeholder = "****"
+        textField.backgroundColor = .gray_200
+        textField.layer.cornerRadius = Constants.cornerRadius
+        textField.font = .Pretendard(type: .bold, size: Constants.textFieldFontSize)
+        textField.textColor = .gray_800
+        textField.tintColor = .yapp_orange
+        textField.textAlignment = .center
+        return textField
     }()
 
     private let stackView: UIStackView = {
@@ -59,6 +84,7 @@ final class AlertView: UIView {
         button.setTitleColor(.gray_800, for: .normal)
         button.titleLabel?.font = .Pretendard(type: .bold, size: 16)
         button.layer.cornerRadius = Constants.cornerRadius
+        button.setTitle("취소", for: .normal)
         return button
     }()
 
@@ -68,6 +94,7 @@ final class AlertView: UIView {
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = .Pretendard(type: .bold, size: 16)
         button.layer.cornerRadius = Constants.cornerRadius
+        button.setTitle("확인", for: .normal)
         return button
     }()
 
@@ -75,7 +102,7 @@ final class AlertView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        bindButton()
+        bindSubViews()
         configureUI()
         configureLayout()
     }
@@ -84,21 +111,33 @@ final class AlertView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configureUI(text: String, subText: String, leftButtonText: String, rightButtonText: String) {
-        label.text = text
-        subLabel.text = subText
-        leftButton.setTitle(leftButtonText, for: .normal)
-        rightButton.setTitle(rightButtonText, for: .normal)
+}
+
+// MARK: - TextField
+extension EasterEggView {
+
+    func endEditingTextField() {
+        clearTextField()
+        hideKeyboard()
+    }
+
+    func clearTextField() {
+        textField.text = ""
+    }
+
+    func hideKeyboard() {
+        textField.endEditing(true)
     }
 
 }
 
-private extension AlertView {
+private extension EasterEggView {
 
-    func bindButton() {
+    func bindSubViews() {
         leftButton.rx.controlEvent([.touchUpInside])
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
+                self?.endEditingTextField()
                 self?.isHidden = true
             }).disposed(by: disposeBag)
     }
@@ -109,22 +148,28 @@ private extension AlertView {
 
     func configureLayout() {
         addSubview(containerView)
-        containerView.addSubviews([label, subLabel, stackView])
+        containerView.addSubviews([labelStackView, textField, stackView])
         stackView.addArrangedSubviews([leftButton, rightButton])
+        labelStackView.addArrangedSubviews([label, subLabel])
 
         containerView.snp.makeConstraints {
-            $0.left.right.equalToSuperview().inset(Constants.margin)
+            $0.left.right.equalToSuperview().inset(Constants.padding)
             $0.center.equalToSuperview()
             $0.height.equalTo(Constants.containerViewHeight)
         }
-        label.snp.makeConstraints {
-            $0.top.left.right.equalToSuperview().inset(Constants.padding)
-        }
-        subLabel.snp.makeConstraints {
-            $0.top.equalTo(label.snp.bottom).offset(Constants.labelSpacing)
+        labelStackView.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(Constants.padding)
             $0.left.right.equalToSuperview().inset(Constants.padding)
+            $0.height.equalTo(Constants.labelStackViewHeight)
+        }
+        textField.snp.makeConstraints {
+            $0.top.equalTo(labelStackView.snp.bottom).offset(Constants.padding)
+            $0.left.right.equalToSuperview().inset(Constants.padding)
+            $0.height.equalTo(Constants.textFieldHeight)
         }
         stackView.snp.makeConstraints {
+            $0.top.equalTo(textField.snp.bottom).offset(Constants.padding)
+            $0.bottom.equalToSuperview().offset(Constants.spacing)
             $0.left.right.bottom.equalToSuperview().inset(Constants.padding)
             $0.height.equalTo(Constants.buttonHeight)
         }
