@@ -70,16 +70,21 @@ final class BaseViewModel: ViewModel {
 private extension BaseViewModel {
 
     func checkLoginId() {
-        if let kakaoTalkId = userDefaultsWorker.kakaoTalkId(), kakaoTalkId.isEmpty == false {
-            output.kakaoTalkId.onNext(kakaoTalkId)
-            output.goToHome.accept(())
-            return
-        } else if let appleId = userDefaultsWorker.appleId(), appleId.isEmpty == false {
-            output.appleId.onNext(appleId)
-        } else {
-            // MARK: - UserDefaults에 저장된 id가 없음
-            output.goToSignUp.accept(())
-        }
+        checkKakaoId()
+        checkAppleId()
+    }
+
+    func checkKakaoId() {
+        guard let kakaoTalkId = userDefaultsWorker.kakaoTalkId(), kakaoTalkId.isEmpty == false else { return }
+        output.kakaoTalkId.onNext(kakaoTalkId)
+        print("저장된 kakaoTalkId: \(kakaoTalkId)")
+        output.goToHome.accept(())
+    }
+
+    func checkAppleId() {
+        guard let appleId = userDefaultsWorker.appleId(), appleId.isEmpty == false else { return }
+        print("저장된 appleId: \(appleId)")
+        output.appleId.onNext(appleId)
     }
 
 }
