@@ -228,9 +228,7 @@ extension LoginViewController: WKNavigationDelegate {
 // MARK: - Easter Egg
 extension LoginViewController {
 
-    // TODO: -
     func showEasterEgg() {
-        print("showEasterEgg")
         easterEggView.isHidden = false
     }
 

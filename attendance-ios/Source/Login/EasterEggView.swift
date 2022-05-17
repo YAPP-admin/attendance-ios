@@ -114,12 +114,31 @@ final class EasterEggView: UIView {
 
 }
 
+// MARK: - TextField
+extension EasterEggView {
+
+    func endEditingTextField() {
+        clearTextField()
+        hideKeyboard()
+    }
+
+    func clearTextField() {
+        textField.text = ""
+    }
+
+    func hideKeyboard() {
+        textField.endEditing(true)
+    }
+
+}
+
 private extension EasterEggView {
 
     func bindButton() {
         leftButton.rx.controlEvent([.touchUpInside])
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
+                self?.endEditingTextField()
                 self?.isHidden = true
             }).disposed(by: disposeBag)
     }
