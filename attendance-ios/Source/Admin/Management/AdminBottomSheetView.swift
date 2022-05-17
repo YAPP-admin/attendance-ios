@@ -22,6 +22,7 @@ final class AdminBottomSheetView: UIView {
         static let bottomSheetHeight: CGFloat = 300
         static let bottomSheetCornerRadius: CGFloat = 20
         static let bottomSheetCellHeight: CGFloat = 52
+        static let animationDuration: CGFloat = 0.5
     }
 
     private let backgroundView: UIView = {
@@ -67,24 +68,27 @@ final class AdminBottomSheetView: UIView {
 // MARK: - Animation
 private extension AdminBottomSheetView {
 
-    // TODO: - 애니메이션
+    // TODO: -
     func showBottomSheet() {
-        UIView.animate(withDuration: 2, delay: 0, options: .curveEaseInOut, animations: { [weak self] in
+        UIView.animate(withDuration: Constants.animationDuration, delay: 0, options: .curveEaseInOut, animations: { [weak self] in
             self?.containerView.snp.updateConstraints {
                 $0.bottom.equalToSuperview().inset(0)
             }
-            self?.containerView.layoutIfNeeded()
+            self?.containerView.superview?.layoutIfNeeded()
         })
     }
 
     func hideBottomSheet() {
-        UIView.animate(withDuration: 2, delay: 0, options: .curveEaseInOut, animations: { [weak self] in
+        UIView.animate(withDuration: Constants.animationDuration, delay: 0, options: .curveEaseInOut, animations: { [weak self] in
             self?.containerView.snp.updateConstraints {
                 $0.bottom.equalToSuperview().inset(-Constants.bottomSheetHeight)
             }
-            self?.containerView.layoutIfNeeded()
+            self?.containerView.superview?.layoutIfNeeded()
         }, completion: { [weak self] _ in
             self?.removeFromSuperview()
+            self?.containerView.snp.updateConstraints {
+                $0.bottom.equalToSuperview().inset(0)
+            }
         })
     }
 }
@@ -141,7 +145,7 @@ private extension AdminBottomSheetView {
 
         tapGesture.rx.event
             .bind(onNext: { [weak self] _ in
-                self?.removeFromSuperview()
+                self?.hideBottomSheet()
             }).disposed(by: disposeBag)
     }
 
