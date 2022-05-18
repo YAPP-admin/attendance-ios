@@ -33,7 +33,7 @@ extension UIViewController {
     }
 }
 
-// MARK: - SignUp
+// MARK: - Navigation Button
 extension UIViewController {
 
     func addNavigationBackButton() {
@@ -51,6 +51,6 @@ extension UIViewController {
         backButton.addTarget(self, action: #selector(navigationBackButtonTapped), for: .touchUpInside)
     }
 
-    @objc func navigationBackButtonTapped() {}
+    @objc func navigationBackButtonTapped() { }
 
 }
