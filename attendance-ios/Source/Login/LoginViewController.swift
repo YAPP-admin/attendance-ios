@@ -267,7 +267,7 @@ extension LoginViewController {
 extension LoginViewController {
 
     func showToastWhenFailedToLogin() {
-        showToast(message: "로그인에 실패했습니다.")
+        showToast(message: "로그인에 실패했습니다. 다시 시도해주세요.")
     }
 
 }
