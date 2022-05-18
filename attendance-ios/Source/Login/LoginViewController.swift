@@ -140,6 +140,11 @@ private extension LoginViewController {
                 }
             })
             .disposed(by: disposeBag)
+
+        viewModel.output.failedToLogin
+            .observe(on: MainScheduler.instance)
+            .bind(onNext: showToastWhenFailedToLogin)
+            .disposed(by: disposeBag)
     }
 
     func bindSubviews() {
@@ -254,6 +259,15 @@ extension LoginViewController {
 
     func clearTextField() {
         easterEggView.clearTextField()
+    }
+
+}
+
+// MARK: - Toast
+extension LoginViewController {
+
+    func showToastWhenFailedToLogin() {
+        showToast(message: "로그인에 실패했습니다.")
     }
 
 }

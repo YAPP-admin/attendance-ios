@@ -45,6 +45,7 @@ final class BaseViewModel: ViewModel {
         let easterEggCount = BehaviorSubject<Int>(value: 0)
         let isEasterEggKeyValid = BehaviorSubject<Bool>(value: false)
 
+        let failedToLogin = PublishRelay<Void>()
         let goToSignUp = PublishRelay<Void>()
         let goToHome = PublishRelay<Void>()
         let goToAdmin = PublishRelay<Void>()
@@ -148,10 +149,9 @@ private extension BaseViewModel {
                         // MARK: - 이미 가입한 카카오톡 유저
                         self.userDefaultsWorker.setKakaoTalkId(id: kakaoId)
                         self.output.goToHome.accept(())
-
                     }
                 }
-            case .failure: ()
+            case .failure: self.output.failedToLogin.accept(())
             }
         }
     }
@@ -168,13 +168,10 @@ extension BaseViewModel {
 
     func authorizationController(authorization: ASAuthorization) {
         switch authorization.credential {
-        case let appleIDCredential as ASAuthorizationAppleIDCredential:
-//            let userIdentifier = appleIDCredential.user
-//            let fullName = appleIDCredential.fullName
-//            let email = appleIDCredential.email
+        case _ as ASAuthorizationAppleIDCredential:
             guard checkLoginId() == false else { return }
             signUpWithApple()
-        default: break
+        default: self.output.failedToLogin.accept(())
         }
     }
 
