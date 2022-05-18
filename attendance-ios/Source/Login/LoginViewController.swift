@@ -168,6 +168,7 @@ private extension LoginViewController {
             .subscribe(onNext: { [weak self] text in
                 guard let text = text else { return }
                 self?.viewModel.input.easterEggKey.onNext(text)
+                self?.easterEggView.hideWrongMessage()
             }).disposed(by: disposeBag)
     }
 
