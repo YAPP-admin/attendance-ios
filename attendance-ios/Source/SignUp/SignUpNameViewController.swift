@@ -59,12 +59,6 @@ final class SignUpNameViewController: UIViewController {
         return button
     }()
 
-    private let backButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(named: "back"), for: .normal)
-        return button
-    }()
-
     private lazy var accessoryView: UIView = {
         let view = UIView(frame: .init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: Constants.buttonHeight))
         return view
@@ -82,10 +76,7 @@ final class SignUpNameViewController: UIViewController {
     private let alertView: AlertView = {
         let view = AlertView()
         view.isHidden = true
-        view.configureUI(text: "입력을 취소할까요?",
-                         subText: "언제든 다시 돌아올 수 있어요",
-                         leftButtonText: "아니요",
-                         rightButtonText: "취소합니다")
+        view.configureUI(text: "입력을 취소할까요?", subText: "언제든 다시 돌아올 수 있어요", leftButtonText: "아니요", rightButtonText: "취소합니다")
         return view
     }()
 
@@ -113,11 +104,16 @@ final class SignUpNameViewController: UIViewController {
         configureLayout()
         configureAccessoryViewLayout()
         configureAlertViewLayout()
+        addNavigationBackButton()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationItem.hidesBackButton = true
+    }
+
+    override func navigationBackButtonTapped() {
+        alertView.isHidden.toggle()
     }
 
 }
@@ -228,13 +224,8 @@ private extension SignUpNameViewController {
     }
 
     func configureLayout() {
-        view.addSubviews([backButton, titleLabel, subTitleLabel, textField, nextButton])
+        view.addSubviews([titleLabel, subTitleLabel, textField, nextButton])
 
-        backButton.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(56)
-            $0.left.equalToSuperview().offset(Constants.padding/2)
-            $0.width.height.equalTo(40)
-        }
         titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(120)
             $0.left.right.equalToSuperview().inset(Constants.padding)
