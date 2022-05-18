@@ -67,6 +67,7 @@ final class EasterEggView: UIView {
         textField.textColor = .gray_800
         textField.tintColor = .yapp_orange
         textField.textAlignment = .center
+        textField.isSecureTextEntry = true
         return textField
     }()
 
