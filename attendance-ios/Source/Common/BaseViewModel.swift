@@ -44,6 +44,7 @@ final class BaseViewModel: ViewModel {
         let yappConfig = BehaviorSubject<YappConfig?>(value: nil)
         let easterEggCount = BehaviorSubject<Int>(value: 0)
         let isEasterEggKeyValid = BehaviorSubject<Bool>(value: false)
+        let isFirstSplash = BehaviorSubject<Bool>(value: true)
 
         let goToSignUp = PublishRelay<Void>()
         let goToHome = PublishRelay<Void>()
@@ -62,6 +63,7 @@ final class BaseViewModel: ViewModel {
 
     init() {
         setupConfig()
+        setIsFirstSplash()
         subscribeInput()
     }
 
@@ -225,6 +227,21 @@ private extension BaseViewModel {
         if isValid == true {
             output.goToAdmin.accept(())
         }
+    }
+
+}
+
+// MARK: - Splash
+extension BaseViewModel {
+
+    func setupAfterSplashShowed() {
+        userDefaultsWorker.setIsFirstSplash(isFirst: false)
+        output.isFirstSplash.onNext(false)
+    }
+
+    func setIsFirstSplash() {
+        let isFirst = userDefaultsWorker.getIsFirstSplash()
+        output.isFirstSplash.onNext(isFirst ?? true)
     }
 
 }

@@ -246,10 +246,9 @@ extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizatio
 extension LoginViewController: WKNavigationDelegate {
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        let userDefaultsWorker = UserDefaultsWorker()
-        let isFirstSplash = userDefaultsWorker.getIsFirstSplash()
+        guard let isFirst = try? viewModel.output.isFirstSplash.value() else { return }
 
-        guard isFirstSplash == false else {
+        guard isFirst == true else {
             removeSplashView()
             return
         }
@@ -260,7 +259,7 @@ extension LoginViewController: WKNavigationDelegate {
                 self.hideSplashBackgroundView()
                 self.removeSplashView()
                 self.viewModel.checkKakaoId()
-                userDefaultsWorker.setIsFirstSplash(isFirst: true)
+                self.viewModel.setupAfterSplashShowed()
             }
         }
     }
