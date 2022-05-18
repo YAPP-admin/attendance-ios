@@ -20,10 +20,11 @@ final class EasterEggView: UIView {
 
         static let textFieldHeight: CGFloat = 47
         static let textFieldFontSize: CGFloat = 16
+        static let wrongLabelHeight: CGFloat = 20
         static let buttonHeight: CGFloat = 47
         static let buttonSpacing: CGFloat = 12
 
-        static let containerViewHeight: CGFloat = Constants.labelStackViewHeight+textFieldHeight+Constants.buttonHeight+Constants.padding+Constants.spacing*3
+        static let containerViewHeight: CGFloat = Constants.labelStackViewHeight+textFieldHeight+Constants.wrongLabelHeight+Constants.buttonHeight+Constants.padding+Constants.spacing*4
     }
 
     private let containerView: UIView = {
@@ -69,6 +70,14 @@ final class EasterEggView: UIView {
         textField.textAlignment = .center
         textField.isSecureTextEntry = true
         return textField
+    }()
+
+    private let wrongLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .etc_red
+        label.font = .Pretendard(type: .semiBold, size: 16)
+        label.text = "틀린 비밀번호입니다"
+        return label
     }()
 
     private let stackView: UIStackView = {
@@ -149,7 +158,7 @@ private extension EasterEggView {
 
     func configureLayout() {
         addSubview(containerView)
-        containerView.addSubviews([labelStackView, textField, stackView])
+        containerView.addSubviews([labelStackView, textField, wrongLabel, stackView])
         stackView.addArrangedSubviews([leftButton, rightButton])
         labelStackView.addArrangedSubviews([label, subLabel])
 
@@ -164,12 +173,17 @@ private extension EasterEggView {
             $0.height.equalTo(Constants.labelStackViewHeight)
         }
         textField.snp.makeConstraints {
-            $0.top.equalTo(labelStackView.snp.bottom).offset(Constants.padding)
+            $0.top.equalTo(labelStackView.snp.bottom).offset(Constants.spacing)
             $0.left.right.equalToSuperview().inset(Constants.padding)
             $0.height.equalTo(Constants.textFieldHeight)
         }
+        wrongLabel.snp.makeConstraints {
+            $0.top.equalTo(textField.snp.bottom).offset(Constants.spacing)
+            $0.left.right.equalToSuperview().inset(Constants.padding)
+            $0.height.equalTo(Constants.wrongLabelHeight)
+        }
         stackView.snp.makeConstraints {
-            $0.top.equalTo(textField.snp.bottom).offset(Constants.padding)
+            $0.top.equalTo(wrongLabel.snp.bottom).offset(Constants.spacing)
             $0.bottom.equalToSuperview().offset(Constants.spacing)
             $0.left.right.bottom.equalToSuperview().inset(Constants.padding)
             $0.height.equalTo(Constants.buttonHeight)
