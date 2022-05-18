@@ -11,7 +11,7 @@ import SnapKit
 import UIKit
 import WebKit
 
-final class LoginViewController: UIViewController, ASAuthorizationControllerDelegate {
+final class LoginViewController: UIViewController {
 
     enum Constants {
         static let padding: CGFloat = 24
@@ -25,12 +25,21 @@ final class LoginViewController: UIViewController, ASAuthorizationControllerDele
 
     private let webView: WKWebView = {
         let webView = WKWebView()
+        webView.isOpaque = false
+        webView.backgroundColor = UIColor.clear
+        webView.scrollView.backgroundColor = UIColor.clear
         return webView
     }()
 
     private let splashView: WKWebView = {
         let webView = WKWebView()
         return webView
+    }()
+
+    private let splashBackgroundView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .yapp_orange
+        return view
     }()
 
     private let titleLabel: UILabel = {
@@ -207,7 +216,7 @@ private extension LoginViewController {
 }
 
 // MARK: - Apple Login
-extension LoginViewController: ASAuthorizationControllerPresentationContextProviding {
+extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
 
     func setupAppleLogin() {
         authorizationController.delegate = self
@@ -239,6 +248,7 @@ extension LoginViewController: WKNavigationDelegate {
         if webView == splashView {
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                 self.splashView.removeFromSuperview()
+                self.splashBackgroundView.removeFromSuperview()
                 self.viewModel.checkKakaoId()
             }
         }
@@ -283,7 +293,7 @@ private extension LoginViewController {
     }
 
     func configureLayout() {
-        view.addSubviews([titleLabel, webView, appleLoginButton, kakaoLoginButton, splashView, secretAdminButton, easterEggView])
+        view.addSubviews([titleLabel, webView, appleLoginButton, kakaoLoginButton, splashBackgroundView, splashView, secretAdminButton, easterEggView])
 
         webView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(40)
@@ -303,6 +313,9 @@ private extension LoginViewController {
             $0.top.equalTo(appleLoginButton.snp.bottom).offset(Constants.buttonSpacing)
             $0.left.right.equalToSuperview().inset(Constants.padding)
             $0.height.equalTo(Constants.buttonHeight)
+        }
+        splashBackgroundView.snp.makeConstraints {
+            $0.top.bottom.left.right.equalToSuperview()
         }
         splashView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(40)
