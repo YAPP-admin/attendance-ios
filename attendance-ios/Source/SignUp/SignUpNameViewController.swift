@@ -140,12 +140,6 @@ private extension SignUpNameViewController {
                 self?.goToPositionVC()
             }).disposed(by: disposeBag)
 
-        backButton.rx.controlEvent([.touchUpInside])
-            .asObservable()
-            .subscribe(onNext: { [weak self] _ in
-                self?.alertView.isHidden.toggle()
-            }).disposed(by: disposeBag)
-
         alertView.rightButton.rx.controlEvent([.touchUpInside])
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
