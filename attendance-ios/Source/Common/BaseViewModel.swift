@@ -31,6 +31,7 @@ final class BaseViewModel: ViewModel {
 
     struct Input {
         let tapKakaoTalkLogin = PublishRelay<Void>()
+        let tapAppleLogin = PublishRelay<Void>()
         let tapEasterEgg = PublishRelay<Void>()
         let easterEggKey = BehaviorSubject<String>(value: "")
         let tapEasterEggOkButton = PublishRelay<Void>()
@@ -44,6 +45,7 @@ final class BaseViewModel: ViewModel {
         let yappConfig = BehaviorSubject<YappConfig?>(value: nil)
         let easterEggCount = BehaviorSubject<Int>(value: 0)
         let isEasterEggKeyValid = BehaviorSubject<Bool?>(value: nil)
+        let isLoading = BehaviorSubject<Bool>(value: false)
 
         let failedToLogin = PublishRelay<Void>()
         let goToSignUp = PublishRelay<Void>()
@@ -71,7 +73,13 @@ final class BaseViewModel: ViewModel {
     private func subscribeInput() {
         input.tapKakaoTalkLogin
             .subscribe(onNext: { [weak self] _ in
+                self?.output.isLoading.onNext(true)
                 self?.loginWithKakao()
+            }).disposed(by: disposeBag)
+
+        input.tapAppleLogin
+            .subscribe(onNext: { [weak self] _ in
+                self?.output.isLoading.onNext(true)
             }).disposed(by: disposeBag)
 
         input.tapEasterEgg
@@ -130,6 +138,7 @@ private extension BaseViewModel {
                     // MARK: - 애플 로그인을 통해 이미 가입한 유저라면 기존 문서 이름 변경
                     if let appleId = try? self.output.appleId.value() {
                         self.firebaseWorker.changeMemberDocumentName(appleId, to: kakaoId) { result in
+                            self.output.isLoading.onNext(false)
                             switch result {
                             case .success:
                                 self.userDefaultsWorker.removeAppleId()
@@ -141,6 +150,7 @@ private extension BaseViewModel {
 
                     // MARK: - 이미 가입한 카카오톡 유저인지 확인
                     self.firebaseWorker.checkIsRegisteredUser(id: kakaoId) { isRegistered in
+                        self.output.isLoading.onNext(false)
                         // MARK: - 가입하지 않은 카카오톡 유저
                         guard isRegistered == true else {
                             self.output.goToSignUp.accept(())
@@ -151,7 +161,9 @@ private extension BaseViewModel {
                         self.output.goToHome.accept(())
                     }
                 }
-            case .failure: self.output.failedToLogin.accept(())
+            case .failure:
+                self.output.isLoading.onNext(false)
+                self.output.failedToLogin.accept(())
             }
         }
     }
@@ -179,6 +191,7 @@ extension BaseViewModel {
         let randomId = Int.random(in: 1000000000..<10000000000)
         let stringId = String(randomId)
         output.appleId.onNext(stringId)
+        output.isLoading.onNext(false)
         output.goToSignUp.accept(())
     }
 

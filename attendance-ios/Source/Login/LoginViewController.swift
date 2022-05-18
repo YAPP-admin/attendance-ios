@@ -148,6 +148,13 @@ private extension LoginViewController {
             .observe(on: MainScheduler.instance)
             .bind(onNext: showToastWhenFailedToLogin)
             .disposed(by: disposeBag)
+
+        viewModel.output.isLoading
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] isLoading in
+                isLoading ? self?.showLoadingView() : self?.hideLoadingView()
+            })
+            .disposed(by: disposeBag)
     }
 
     func bindSubviews() {
@@ -218,12 +225,13 @@ private extension LoginViewController {
 // MARK: - Apple Login
 extension LoginViewController: ASAuthorizationControllerPresentationContextProviding {
 
-    func setupAppleLogin() {
+    private func setupAppleLogin() {
         authorizationController.delegate = self
         authorizationController.presentationContextProvider = self
     }
 
-    func loginWithApple() {
+    private func loginWithApple() {
+        viewModel.input.tapAppleLogin.accept(())
         authorizationController.performRequests()
     }
 
