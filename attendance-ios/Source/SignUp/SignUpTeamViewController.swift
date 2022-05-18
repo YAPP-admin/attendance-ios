@@ -47,6 +47,7 @@ final class SignUpTeamViewController: UIViewController {
         layout.scrollDirection = .vertical
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.showsVerticalScrollIndicator = false
+        collectionView.isScrollEnabled = false
         return collectionView
     }()
 
@@ -56,6 +57,7 @@ final class SignUpTeamViewController: UIViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.showsVerticalScrollIndicator = false
         collectionView.isHidden = true
+        collectionView.isScrollEnabled = false
         return collectionView
     }()
 
