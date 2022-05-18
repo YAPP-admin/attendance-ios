@@ -23,24 +23,21 @@ final class LoginViewController: UIViewController {
         static let kakaoBlack: UIColor = UIColor(red: 25/255, green: 25/255, blue: 25/255, alpha: 1)
     }
 
+    private let loginSplashView: WKWebView = {
+        let webView = WKWebView()
+        return webView
+    }()
+
     private let mainSplashView: WKWebView = {
         let webView = WKWebView()
-        webView.isOpaque = false
-        webView.backgroundColor = UIColor.clear
-        webView.scrollView.backgroundColor = UIColor.clear
         return webView
     }()
 
     private let splashBackgroundView: UIView = {
         let view = UIView()
-        view.backgroundColor = .yapp_orange
-        view.isHidden = true
+        view.backgroundColor = .white
+        view.isHidden = false
         return view
-    }()
-
-    private let loginSplashView: WKWebView = {
-        let webView = WKWebView()
-        return webView
     }()
 
     private let titleLabel: UILabel = {
@@ -61,7 +58,7 @@ final class LoginViewController: UIViewController {
         button.setTitleColor(UIColor.white, for: .normal)
         button.titleLabel?.font = .Pretendard(type: .regular, size: 19)
         button.setTitleColor(UIColor.white, for: .normal)
-        button.setImage(UIImage(systemName: "applelogo"), for: .normal) // 이미지 수정
+        button.setImage(UIImage(systemName: "applelogo"), for: .normal)
         button.titleEdgeInsets = .init(top: 0, left: Constants.leftButtonHalfWidth, bottom: 0, right: -Constants.leftButtonHalfWidth)
         button.imageEdgeInsets = .init(top: 0, left: -Constants.leftButtonHalfWidth, bottom: 0, right: Constants.leftButtonHalfWidth)
         button.layer.cornerRadius = Constants.cornerRadius
@@ -246,16 +243,14 @@ extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizatio
 extension LoginViewController: WKNavigationDelegate {
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        guard let isFirst = try? viewModel.output.isFirstSplash.value() else { return }
-
-        guard isFirst == true else {
+        guard let isFirst = try? viewModel.output.isFirstSplash.value(), isFirst == true else {
             removeSplashView()
             return
         }
         showSplashBackgroundView()
 
         if webView == loginSplashView {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.95) {
                 self.hideSplashBackgroundView()
                 self.removeSplashView()
                 self.viewModel.checkKakaoId()

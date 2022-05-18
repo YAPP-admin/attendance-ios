@@ -21,11 +21,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         window = UIWindow(windowScene: windowScene)
 
+        UserDefaultsWorker().setIsFirstSplash(isFirst: true)
         let navigationController = UINavigationController()
         let loginVC = LoginViewController()
 
         navigationController.viewControllers = [loginVC]
-        UserDefaultsWorker().setIsFirstSplash(isFirst: true)
 
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
