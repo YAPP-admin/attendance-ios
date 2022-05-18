@@ -21,6 +21,7 @@ final class SignUpTeamViewController: UIViewController {
 
         static let cellHeight: CGFloat = 47
         static let cellSpacing: CGFloat = 12
+        static let collectionViewHeightMargin: CGFloat = 4
     }
 
     private let titleLabel: UILabel = {
@@ -325,7 +326,7 @@ private extension SignUpTeamViewController {
             $0.top.equalTo(titleLabel.snp.bottom).offset(28)
             $0.left.equalToSuperview().inset(Constants.padding)
             $0.width.equalTo(260)
-            $0.height.equalTo(Constants.cellHeight*2+Constants.cellSpacing)
+            $0.height.equalTo(Constants.cellHeight*2+Constants.cellSpacing+Constants.collectionViewHeightMargin)
         }
         subTitleLabel.snp.makeConstraints {
             $0.top.equalTo(teamTypeCollectionView.snp.bottom).offset(32)
@@ -334,7 +335,7 @@ private extension SignUpTeamViewController {
         teamNumberCollectionView.snp.makeConstraints {
             $0.top.equalTo(subTitleLabel.snp.bottom).offset(10)
             $0.left.right.equalToSuperview().inset(Constants.padding)
-            $0.height.equalTo(Constants.cellHeight)
+            $0.height.equalTo(Constants.cellHeight+Constants.collectionViewHeightMargin)
         }
         okButton.snp.makeConstraints {
             $0.left.right.equalToSuperview().inset(Constants.padding)

@@ -18,6 +18,7 @@ final class SignUpPositionViewController: UIViewController {
 
         static let cellHeight: CGFloat = 47
         static let cellSpacing: CGFloat = 12
+        static let collectionViewHeightMargin: CGFloat = 4
     }
 
     private let titleLabel: UILabel = {
@@ -216,7 +217,7 @@ private extension SignUpPositionViewController {
             $0.top.equalTo(titleLabel.snp.bottom).offset(28)
             $0.left.equalToSuperview().inset(Constants.padding)
             $0.width.equalTo(250)
-            $0.height.equalTo(Constants.cellHeight*3+Constants.cellSpacing*2)
+            $0.height.equalTo(Constants.cellHeight*3+Constants.cellSpacing*2+Constants.collectionViewHeightMargin)
         }
         nextButton.snp.makeConstraints {
             $0.left.right.equalToSuperview().inset(Constants.padding)
