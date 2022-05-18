@@ -43,7 +43,7 @@ final class BaseViewModel: ViewModel {
 
         let yappConfig = BehaviorSubject<YappConfig?>(value: nil)
         let easterEggCount = BehaviorSubject<Int>(value: 0)
-        let isEasterEggKeyValid = BehaviorSubject<Bool>(value: false)
+        let isEasterEggKeyValid = BehaviorSubject<Bool?>(value: nil)
 
         let goToSignUp = PublishRelay<Void>()
         let goToHome = PublishRelay<Void>()
@@ -218,7 +218,6 @@ private extension BaseViewModel {
         output.showEasterEgg.accept(())
     }
 
-    // TODO: -
     func checkEasterEggKey() {
         guard let key = try? input.easterEggKey.value(),
               let adminPassword = try? output.yappConfig.value()?.adminPassword else { return }
