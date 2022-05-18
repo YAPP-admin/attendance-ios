@@ -5,7 +5,7 @@
 //  Created by 김보민 on 2022/02/21.
 //
 
-import Foundation
+import SnapKit
 import UIKit
 
 extension UIViewController {
@@ -31,4 +31,26 @@ extension UIViewController {
             toastLabel.removeFromSuperview()
         })
     }
+}
+
+// MARK: - Navigation Button
+extension UIViewController {
+
+    func addNavigationBackButton() {
+        let backButton: UIButton = {
+            let button = UIButton()
+            button.setImage(UIImage(named: "back"), for: .normal)
+            return button
+        }()
+        view.addSubview(backButton)
+        backButton.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(56)
+            $0.left.equalToSuperview().offset(12)
+            $0.width.height.equalTo(40)
+        }
+        backButton.addTarget(self, action: #selector(navigationBackButtonTapped), for: .touchUpInside)
+    }
+
+    @objc func navigationBackButtonTapped() { }
+
 }

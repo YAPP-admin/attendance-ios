@@ -18,6 +18,7 @@ final class SignUpPositionViewController: UIViewController {
 
         static let cellHeight: CGFloat = 47
         static let cellSpacing: CGFloat = 12
+        static let collectionViewHeightMargin: CGFloat = 4
     }
 
     private let titleLabel: UILabel = {
@@ -34,6 +35,7 @@ final class SignUpPositionViewController: UIViewController {
         layout.scrollDirection = .vertical
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.showsVerticalScrollIndicator = false
+        collectionView.isScrollEnabled = false
         return collectionView
     }()
 
@@ -47,19 +49,10 @@ final class SignUpPositionViewController: UIViewController {
         return button
     }()
 
-    private let backButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(named: "back"), for: .normal)
-        return button
-    }()
-
     private let alertView: AlertView = {
         let view = AlertView()
         view.isHidden = true
-        view.configureUI(text: "입력을 취소할까요?",
-                         subText: "언제든 다시 돌아올 수 있어요",
-                         leftButtonText: "아니요",
-                         rightButtonText: "취소합니다")
+        view.configureUI(text: "입력을 취소할까요?", subText: "언제든 다시 돌아올 수 있어요", leftButtonText: "아니요", rightButtonText: "취소합니다")
         return view
     }()
 
@@ -82,13 +75,15 @@ final class SignUpPositionViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        bindViewModel()
         bindButton()
+
         setupDelegate()
         setupCollectionView()
+
         configureUI()
         configureLayout()
         configureAlertViewLayout()
+        addNavigationBackButton()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -96,26 +91,20 @@ final class SignUpPositionViewController: UIViewController {
         navigationItem.hidesBackButton = true
     }
 
+    override func navigationBackButtonTapped() {
+        alertView.isHidden.toggle()
+    }
+
 }
 
 // MARK: - Bind
 private extension SignUpPositionViewController {
-
-    func bindViewModel() {
-
-    }
 
     func bindButton() {
         nextButton.rx.controlEvent([.touchUpInside])
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
                 self?.goToTeamVC()
-            }).disposed(by: disposeBag)
-
-        backButton.rx.controlEvent([.touchUpInside])
-            .asObservable()
-            .subscribe(onNext: { [weak self] _ in
-                self?.alertView.isHidden.toggle()
             }).disposed(by: disposeBag)
 
         alertView.rightButton.rx.controlEvent([.touchUpInside])
@@ -138,7 +127,7 @@ extension SignUpPositionViewController: UICollectionViewDelegateFlowLayout, UICo
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        PositionType.allCases.count
+        return PositionType.allCases.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -157,11 +146,11 @@ extension SignUpPositionViewController: UICollectionViewDelegateFlowLayout, UICo
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        Constants.cellSpacing
+        return Constants.cellSpacing
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        Constants.cellSpacing
+        return Constants.cellSpacing
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -218,13 +207,8 @@ private extension SignUpPositionViewController {
     }
 
     func configureLayout() {
-        view.addSubviews([backButton, titleLabel, collectionView, nextButton])
+        view.addSubviews([titleLabel, collectionView, nextButton])
 
-        backButton.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(56)
-            $0.left.equalToSuperview().offset(Constants.padding)
-            $0.width.height.equalTo(24)
-        }
         titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(120)
             $0.left.right.equalToSuperview().inset(Constants.padding)
@@ -232,8 +216,8 @@ private extension SignUpPositionViewController {
         collectionView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(28)
             $0.left.equalToSuperview().inset(Constants.padding)
-            $0.right.equalToSuperview().inset(Constants.padding*6)
-            $0.height.equalTo(Constants.cellHeight*3+Constants.cellSpacing*2)
+            $0.width.equalTo(250)
+            $0.height.equalTo(Constants.cellHeight*3+Constants.cellSpacing*2+Constants.collectionViewHeightMargin)
         }
         nextButton.snp.makeConstraints {
             $0.left.right.equalToSuperview().inset(Constants.padding)

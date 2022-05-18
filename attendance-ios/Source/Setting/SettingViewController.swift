@@ -67,10 +67,7 @@ final class SettingViewController: UIViewController {
     let alertView: AlertView = {
         let view = AlertView()
         view.isHidden = true
-        view.configureUI(text: "정말 탈퇴하시겠어요?",
-                         subText: "탈퇴하면 모든 정보가 사라져요.",
-                         leftButtonText: "취소",
-                         rightButtonText: "탈퇴합니다")
+        view.configureUI(text: "정말 탈퇴하시겠어요?", subText: "탈퇴하면 모든 정보가 사라져요.", leftButtonText: "취소", rightButtonText: "탈퇴합니다")
         return view
     }()
 

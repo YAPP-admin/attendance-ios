@@ -21,6 +21,7 @@ final class SignUpTeamViewController: UIViewController {
 
         static let cellHeight: CGFloat = 47
         static let cellSpacing: CGFloat = 12
+        static let collectionViewHeightMargin: CGFloat = 4
     }
 
     private let titleLabel: UILabel = {
@@ -47,6 +48,7 @@ final class SignUpTeamViewController: UIViewController {
         layout.scrollDirection = .vertical
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.showsVerticalScrollIndicator = false
+        collectionView.isScrollEnabled = false
         return collectionView
     }()
 
@@ -56,6 +58,7 @@ final class SignUpTeamViewController: UIViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.showsVerticalScrollIndicator = false
         collectionView.isHidden = true
+        collectionView.isScrollEnabled = false
         return collectionView
     }()
 
@@ -69,19 +72,10 @@ final class SignUpTeamViewController: UIViewController {
         return button
     }()
 
-    private let backButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(named: "back"), for: .normal)
-        return button
-    }()
-
     private let alertView: AlertView = {
         let view = AlertView()
         view.isHidden = true
-        view.configureUI(text: "입력을 취소할까요?",
-                         subText: "언제든 다시 돌아올 수 있어요",
-                         leftButtonText: "아니요",
-                         rightButtonText: "취소합니다")
+        view.configureUI(text: "입력을 취소할까요?", subText: "언제든 다시 돌아올 수 있어요", leftButtonText: "아니요", rightButtonText: "취소합니다")
         return view
     }()
 
@@ -113,11 +107,16 @@ final class SignUpTeamViewController: UIViewController {
         configureUI()
         configureLayout()
         configureAlertViewLayout()
+        addNavigationBackButton()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationItem.hidesBackButton = true
+    }
+
+    override func navigationBackButtonTapped() {
+        alertView.isHidden.toggle()
     }
 
 }
@@ -130,12 +129,6 @@ private extension SignUpTeamViewController {
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
                 self?.viewModel.input.registerInfo.accept(())
-            }).disposed(by: disposeBag)
-
-        backButton.rx.controlEvent([.touchUpInside])
-            .asObservable()
-            .subscribe(onNext: { [weak self] _ in
-                self?.alertView.isHidden.toggle()
             }).disposed(by: disposeBag)
 
         alertView.rightButton.rx.controlEvent([.touchUpInside])
@@ -189,12 +182,6 @@ private extension SignUpTeamViewController {
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
                 self?.viewModel.registerInfo()
-            }).disposed(by: disposeBag)
-
-        backButton.rx.controlEvent([.touchUpInside])
-            .asObservable()
-            .subscribe(onNext: { [weak self] _ in
-                self?.alertView.isHidden.toggle()
             }).disposed(by: disposeBag)
 
         alertView.rightButton.rx.controlEvent([.touchUpInside])
@@ -329,13 +316,8 @@ private extension SignUpTeamViewController {
     }
 
     func configureLayout() {
-        view.addSubviews([backButton, titleLabel, teamTypeCollectionView, subTitleLabel, teamNumberCollectionView, okButton])
+        view.addSubviews([titleLabel, teamTypeCollectionView, subTitleLabel, teamNumberCollectionView, okButton])
 
-        backButton.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(56)
-            $0.left.equalToSuperview().offset(Constants.padding)
-            $0.width.height.equalTo(24)
-        }
         titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(120)
             $0.left.right.equalToSuperview().inset(Constants.padding)
@@ -343,8 +325,8 @@ private extension SignUpTeamViewController {
         teamTypeCollectionView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(28)
             $0.left.equalToSuperview().inset(Constants.padding)
-            $0.right.equalToSuperview().inset(Constants.padding*4)
-            $0.height.equalTo(Constants.cellHeight*2+Constants.cellSpacing)
+            $0.width.equalTo(260)
+            $0.height.equalTo(Constants.cellHeight*2+Constants.cellSpacing+Constants.collectionViewHeightMargin)
         }
         subTitleLabel.snp.makeConstraints {
             $0.top.equalTo(teamTypeCollectionView.snp.bottom).offset(32)
@@ -353,7 +335,7 @@ private extension SignUpTeamViewController {
         teamNumberCollectionView.snp.makeConstraints {
             $0.top.equalTo(subTitleLabel.snp.bottom).offset(10)
             $0.left.right.equalToSuperview().inset(Constants.padding)
-            $0.height.equalTo(Constants.cellHeight)
+            $0.height.equalTo(Constants.cellHeight+Constants.collectionViewHeightMargin)
         }
         okButton.snp.makeConstraints {
             $0.left.right.equalToSuperview().inset(Constants.padding)
