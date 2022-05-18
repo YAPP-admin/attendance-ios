@@ -223,8 +223,8 @@ private extension SignUpPositionViewController {
 
         backButton.snp.makeConstraints {
             $0.top.equalToSuperview().offset(56)
-            $0.left.equalToSuperview().offset(Constants.padding)
-            $0.width.height.equalTo(24)
+            $0.left.equalToSuperview().offset(Constants.padding/2)
+            $0.width.height.equalTo(40)
         }
         titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(120)
