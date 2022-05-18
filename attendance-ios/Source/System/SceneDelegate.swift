@@ -23,9 +23,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         let navigationController = UINavigationController()
         let loginVC = LoginViewController()
-        let homeVC = HomeViewController()
 
         navigationController.viewControllers = [loginVC]
+        UserDefaultsWorker().setIsFirstSplash(isFirst: false)
 
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()

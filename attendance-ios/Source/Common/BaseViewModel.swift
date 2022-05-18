@@ -95,7 +95,7 @@ extension BaseViewModel {
 
     @discardableResult
     func checkKakaoId() -> Bool {
-        guard let kakaoTalkId = userDefaultsWorker.kakaoTalkId(), kakaoTalkId.isEmpty == false else { return false }
+        guard let kakaoTalkId = userDefaultsWorker.getKakaoTalkId(), kakaoTalkId.isEmpty == false else { return false }
         output.kakaoTalkId.onNext(kakaoTalkId)
         output.goToHome.accept(())
         return true
@@ -103,7 +103,7 @@ extension BaseViewModel {
 
     @discardableResult
     private func checkAppleId() -> Bool {
-        guard let appleId = userDefaultsWorker.appleId(), appleId.isEmpty == false else { return false }
+        guard let appleId = userDefaultsWorker.getAppleId(), appleId.isEmpty == false else { return false }
         output.appleId.onNext(appleId)
         return true
     }

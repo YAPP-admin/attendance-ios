@@ -7,16 +7,14 @@
 
 import Foundation
 
-enum UserDefaultsKey: String {
-    case kakaoTalkId
-    case appleId
-    case generation
-    case session
-    case memberId
-    case name
-}
-
 final class UserDefaultsWorker {
+
+    enum UserDefaultsKey: String {
+        case kakaoTalkId, appleId
+        case generation, session
+        case memberId, name
+        case isFirstSplash
+    }
 
     private let defaults = UserDefaults.standard
 
@@ -27,6 +25,10 @@ final class UserDefaultsWorker {
 
     func set(_ value: String, forKey key: UserDefaultsKey) {
         guard value.isEmpty == false else { return }
+        defaults.set(value, forKey: key.rawValue)
+    }
+
+    func set(_ value: Bool, forKey key: UserDefaultsKey) {
         defaults.set(value, forKey: key.rawValue)
     }
 
@@ -59,13 +61,11 @@ final class UserDefaultsWorker {
 // MARK: - LoginId
 extension UserDefaultsWorker {
 
-    func hasId() -> Bool {
-        if let kakaoTalkId = kakaoTalkId(), kakaoTalkId.isEmpty == false {
-            return true
-        }
-        if let appId = appleId(), appId.isEmpty == false {
-            return true
-        }
+    func hasLoginId() -> Bool {
+        lazy var kakaoTalkId = getKakaoTalkId()
+        lazy var appId = getAppleId()
+
+        guard kakaoTalkId?.isEmpty == true, appId?.isEmpty == true else { return true }
         return false
     }
 
@@ -77,11 +77,11 @@ extension UserDefaultsWorker {
         set(id, forKey: .appleId)
     }
 
-    func kakaoTalkId() -> String? {
+    func getKakaoTalkId() -> String? {
         get(forKey: .kakaoTalkId)
     }
 
-    func appleId() -> String? {
+    func getAppleId() -> String? {
         get(forKey: .appleId)
     }
 
@@ -129,5 +129,16 @@ extension UserDefaultsWorker {
 
     func getName() -> String? {
         get(forKey: .name)
+    }
+}
+
+// MARK: - Splash
+extension UserDefaultsWorker {
+    func setIsFirstSplash(isFirst: Bool) {
+        set(isFirst, forKey: .isFirstSplash)
+    }
+
+    func getIsFirstSplash() -> Bool? {
+        get(forKey: .isFirstSplash)
     }
 }
