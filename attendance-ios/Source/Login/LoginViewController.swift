@@ -239,6 +239,7 @@ extension LoginViewController: WKNavigationDelegate {
         if webView == splashView {
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                 self.splashView.removeFromSuperview()
+                self.viewModel.checkKakaoId()
             }
         }
     }

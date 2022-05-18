@@ -27,13 +27,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         navigationController.viewControllers = [loginVC]
 
-        if AuthApi.hasToken() {
-            UserApi.shared.accessTokenInfo { _, error in
-                guard error == nil else { return }
-                navigationController.viewControllers.append(homeVC)
-            }
-        }
-
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
     }

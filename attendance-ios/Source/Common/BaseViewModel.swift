@@ -61,8 +61,6 @@ final class BaseViewModel: ViewModel {
     private let configWorker = ConfigWorker()
 
     init() {
-        checkLoginId()
-
         setupConfig()
         subscribeInput()
     }
@@ -87,10 +85,10 @@ final class BaseViewModel: ViewModel {
 }
 
 // MARK: - Check
-private extension BaseViewModel {
+extension BaseViewModel {
 
     @discardableResult
-    func checkLoginId() -> Bool {
+    private func checkLoginId() -> Bool {
         guard checkKakaoId() == false, checkAppleId() == false else { return true }
         return false
     }
@@ -104,7 +102,7 @@ private extension BaseViewModel {
     }
 
     @discardableResult
-    func checkAppleId() -> Bool {
+    private func checkAppleId() -> Bool {
         guard let appleId = userDefaultsWorker.appleId(), appleId.isEmpty == false else { return false }
         output.appleId.onNext(appleId)
         return true
