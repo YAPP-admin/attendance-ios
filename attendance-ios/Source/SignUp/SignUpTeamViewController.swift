@@ -324,7 +324,7 @@ private extension SignUpTeamViewController {
         teamTypeCollectionView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(28)
             $0.left.equalToSuperview().inset(Constants.padding)
-            $0.right.equalToSuperview().inset(Constants.padding*4)
+            $0.width.equalTo(260)
             $0.height.equalTo(Constants.cellHeight*2+Constants.cellSpacing)
         }
         subTitleLabel.snp.makeConstraints {
