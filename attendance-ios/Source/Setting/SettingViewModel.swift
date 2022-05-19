@@ -107,10 +107,10 @@ final class SettingViewModel: ViewModel {
     }
 
     func checkLoginId() {
-        if let kakaoTalkId = userDefaultsWorker.kakaoTalkId(), kakaoTalkId.isEmpty == false {
+        if let kakaoTalkId = userDefaultsWorker.getKakaoTalkId(), kakaoTalkId.isEmpty == false {
             myId.accept(kakaoTalkId)
             getUserData()
-        } else if let appleId = userDefaultsWorker.appleId(), appleId.isEmpty == false {
+        } else if let appleId = userDefaultsWorker.getAppleId(), appleId.isEmpty == false {
             myId.accept(appleId)
             getUserData()
         }

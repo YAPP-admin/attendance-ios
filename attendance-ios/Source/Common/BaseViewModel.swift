@@ -44,6 +44,7 @@ final class BaseViewModel: ViewModel {
         let yappConfig = BehaviorSubject<YappConfig?>(value: nil)
         let easterEggCount = BehaviorSubject<Int>(value: 0)
         let isEasterEggKeyValid = BehaviorSubject<Bool?>(value: nil)
+        let isFirstSplash = BehaviorSubject<Bool>(value: true)
 
         let failedToLogin = PublishRelay<Void>()
         let goToSignUp = PublishRelay<Void>()
@@ -62,9 +63,8 @@ final class BaseViewModel: ViewModel {
     private let configWorker = ConfigWorker()
 
     init() {
-        checkLoginId()
-
         setupConfig()
+        setIsFirstSplash()
         subscribeInput()
     }
 
@@ -88,25 +88,25 @@ final class BaseViewModel: ViewModel {
 }
 
 // MARK: - Check
-private extension BaseViewModel {
+extension BaseViewModel {
 
     @discardableResult
-    func checkLoginId() -> Bool {
+    private func checkLoginId() -> Bool {
         guard checkKakaoId() == false, checkAppleId() == false else { return true }
         return false
     }
 
     @discardableResult
     func checkKakaoId() -> Bool {
-        guard let kakaoTalkId = userDefaultsWorker.kakaoTalkId(), kakaoTalkId.isEmpty == false else { return false }
+        guard let kakaoTalkId = userDefaultsWorker.getKakaoTalkId(), kakaoTalkId.isEmpty == false else { return false }
         output.kakaoTalkId.onNext(kakaoTalkId)
         output.goToHome.accept(())
         return true
     }
 
     @discardableResult
-    func checkAppleId() -> Bool {
-        guard let appleId = userDefaultsWorker.appleId(), appleId.isEmpty == false else { return false }
+    private func checkAppleId() -> Bool {
+        guard let appleId = userDefaultsWorker.getAppleId(), appleId.isEmpty == false else { return false }
         output.appleId.onNext(appleId)
         return true
     }
@@ -223,6 +223,21 @@ private extension BaseViewModel {
         if isValid == true {
             output.goToAdmin.accept(())
         }
+    }
+
+}
+
+// MARK: - Splash
+extension BaseViewModel {
+
+    func setupAfterSplashShowed() {
+        userDefaultsWorker.setIsFirstSplash(isFirst: false)
+        output.isFirstSplash.onNext(false)
+    }
+
+    func setIsFirstSplash() {
+        let isFirst = userDefaultsWorker.getIsFirstSplash()
+        output.isFirstSplash.onNext(isFirst ?? true)
     }
 
 }
