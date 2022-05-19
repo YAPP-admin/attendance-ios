@@ -21,18 +21,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         window = UIWindow(windowScene: windowScene)
 
+        UserDefaultsWorker().setIsFirstSplash(isFirst: true)
         let navigationController = UINavigationController()
         let loginVC = LoginViewController()
-        let homeVC = HomeViewController()
 
         navigationController.viewControllers = [loginVC]
-
-        if AuthApi.hasToken() {
-            UserApi.shared.accessTokenInfo { _, error in
-                guard error == nil else { return }
-                navigationController.viewControllers.append(homeVC)
-            }
-        }
 
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
