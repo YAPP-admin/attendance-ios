@@ -54,3 +54,52 @@ extension UIViewController {
     @objc func navigationBackButtonTapped() { }
 
 }
+
+// MARK: - Loading View
+extension UIViewController {
+
+    static var loadingView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white.withAlphaComponent(0.6)
+
+        let dotDiameter: CGFloat = 10
+        let spacing: CGFloat = 8
+        let dotStackView: UIStackView = {
+            let stackView = UIStackView()
+            stackView.axis = .horizontal
+            stackView.spacing = spacing
+            return stackView
+        }()
+        (1...3).forEach { _ in
+            let dot = UIView()
+            dot.snp.makeConstraints {
+                $0.width.height.equalTo(dotDiameter)
+            }
+            dot.layer.cornerRadius = dotDiameter/2
+            dot.backgroundColor = .yapp_orange
+            dotStackView.addArrangedSubview(dot)
+        }
+        view.addSubview(dotStackView)
+        dotStackView.snp.makeConstraints {
+            $0.center.equalToSuperview()
+            $0.width.equalTo(dotDiameter*3+spacing*2)
+            $0.height.equalTo(dotDiameter)
+        }
+
+        return view
+    }()
+
+    func showLoadingView() {
+        let loadingView = UIViewController.loadingView
+        view.addSubview(loadingView)
+        loadingView.snp.makeConstraints {
+            $0.top.bottom.left.right.equalToSuperview()
+        }
+    }
+
+    func hideLoadingView() {
+        let loadingView = UIViewController.loadingView
+        loadingView.removeFromSuperview()
+    }
+
+}
