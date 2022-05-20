@@ -15,7 +15,7 @@ extension SettingViewController {
     func addSubViews() {
         view.addSubview(navigationBarView)
         navigationBarView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            $0.top.equalTo(view.snp.top).offset(44)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(44)
         }

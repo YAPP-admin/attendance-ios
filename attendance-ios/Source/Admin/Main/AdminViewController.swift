@@ -18,7 +18,6 @@ final class AdminViewController: UIViewController {
         static let topPadding: CGFloat = 88
         static let dividerViewHeight: CGFloat = 12
         static let todayViewHeight: CGFloat = 80
-        static let logoutButtonSize: CGSize = .init(width: 28, height: 28)
         static let cellHeight: CGFloat = 60
     }
 
@@ -30,13 +29,6 @@ final class AdminViewController: UIViewController {
     private let contentView: UIView = {
         let view = UIView()
         return view
-    }()
-
-    private let logoutButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .clear
-        button.setImage(UIImage(named: "logout"), for: .normal)
-        return button
     }()
 
     private let titleLabel: UILabel = {
@@ -86,6 +78,11 @@ final class AdminViewController: UIViewController {
 
         configureUI()
         configureLayout()
+        addNavigationLogoutButton()
+    }
+
+    override func navigationLogoutButtonTapped() {
+        viewModel.input.tapLogoutButton.accept(())
     }
 
 }
@@ -141,12 +138,6 @@ private extension AdminViewController {
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
                 self?.goToTodayManagementVC()
-            }).disposed(by: disposeBag)
-
-        logoutButton.rx.controlEvent([.touchUpInside])
-            .asObservable()
-            .subscribe(onNext: { [weak self] _ in
-                self?.viewModel.input.tapLogoutButton.accept(())
             }).disposed(by: disposeBag)
     }
 
@@ -254,7 +245,7 @@ private extension AdminViewController {
     func configureLayout() {
         view.addSubviews([scrollView])
         scrollView.addSubviews([contentView])
-        contentView.addSubviews([logoutButton, cardView, dividerView, titleLabel, todayView, sessionTitleLabel, sessionCollectionView])
+        contentView.addSubviews([cardView, dividerView, titleLabel, todayView, sessionTitleLabel, sessionCollectionView])
 
         scrollView.snp.makeConstraints {
             $0.top.bottom.left.right.equalToSuperview()
@@ -263,11 +254,6 @@ private extension AdminViewController {
             $0.top.bottom.left.right.equalToSuperview()
             $0.width.equalToSuperview()
             $0.bottom.equalTo(sessionCollectionView.snp.bottom)
-        }
-        logoutButton.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(40)
-            $0.right.equalToSuperview().inset(Constants.horizontalPadding)
-            $0.width.height.equalTo(Constants.logoutButtonSize.width)
         }
         cardView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(90)
