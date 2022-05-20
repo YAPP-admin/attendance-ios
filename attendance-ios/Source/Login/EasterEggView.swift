@@ -21,6 +21,7 @@ final class EasterEggView: UIView {
         static let textFieldHeight: CGFloat = 47
         static let textFieldFontSize: CGFloat = 16
         static let wrongMessageLabelHeight: CGFloat = 20
+        static let keyboardPadding: CGFloat = 40
         static let buttonHeight: CGFloat = 47
         static let buttonSpacing: CGFloat = 12
 
@@ -139,6 +140,29 @@ extension EasterEggView {
 
     func hideKeyboard() {
         textField.endEditing(true)
+    }
+
+}
+
+// MARK: - Keyboard
+extension EasterEggView {
+
+    func animateWhenKeyboardShow(with keyboardHeight: CGFloat) {
+        let viewHeight = bounds.height
+        let containerHeight = containerView.bounds.height
+        let padding = Constants.keyboardPadding
+        let offset = viewHeight/2-(keyboardHeight+containerHeight/2+padding)
+        guard offset < 0 else { return }
+
+        containerView.snp.updateConstraints {
+            $0.centerY.equalToSuperview().offset(offset)
+        }
+    }
+
+    func animateWhenKeyboardHide() {
+        containerView.snp.updateConstraints {
+            $0.centerY.equalToSuperview().offset(0)
+        }
     }
 
 }
