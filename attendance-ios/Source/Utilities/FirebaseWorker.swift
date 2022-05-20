@@ -142,15 +142,17 @@ extension FirebaseWorker {
             for document in documents {
                 guard let member = try? document.data(as: Member.self), member.id == memberId else { continue }
                 let ref = self.memberCollectionRef.document(document.documentID)
-
-                ref.setData([
+                let fields: [String: Any] = [
                     "id": memberId,
                     "name": member.name,
                     "position": member.position.rawValue,
                     "team": ["number": member.team.number,
                              "type": member.team.type.rawValue],
-                    "attendances": ["attendances": attendances.decode()]
-                ])
+                    "attendances": attendances.decode()
+                ]
+                ref.setData(fields) { _ in
+                    return
+                }
             }
         }
     }
