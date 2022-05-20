@@ -154,15 +154,24 @@ extension EasterEggView {
         let offset = viewHeight/2-(keyboardHeight+containerHeight/2+padding)
         guard offset < 0 else { return }
 
-        containerView.snp.updateConstraints {
-            $0.centerY.equalToSuperview().offset(offset)
-        }
+        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut, animations: { [weak self] in
+            self?.containerView.snp.updateConstraints {
+                $0.centerY.equalToSuperview().offset(offset)
+            }
+            self?.containerView.superview?.layoutIfNeeded()
+        })
     }
 
     func animateWhenKeyboardHide() {
         containerView.snp.updateConstraints {
             $0.centerY.equalToSuperview().offset(0)
         }
+        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut, animations: { [weak self] in
+            self?.containerView.snp.updateConstraints {
+                $0.centerY.equalToSuperview().offset(0)
+            }
+            self?.containerView.superview?.layoutIfNeeded()
+        })
     }
 
 }
