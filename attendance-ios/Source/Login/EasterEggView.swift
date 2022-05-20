@@ -205,6 +205,7 @@ private extension EasterEggView {
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
                 self?.endEditingTextField()
+                self?.hideWrongMessage()
                 self?.isHidden = true
             }).disposed(by: disposeBag)
     }
