@@ -105,6 +105,7 @@ final class LoginViewController: UIViewController {
 
         setupAppleLogin()
         setupDelegate()
+        setKeyboardObserver()
 
         setupLoginSplashView()
         setupMainSplashView()
@@ -302,6 +303,22 @@ extension LoginViewController {
         easterEggView.clearTextField()
     }
 
+    func setKeyboardObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardHeight = keyboardFrame.cgRectValue.height
+            easterEggView.animateWhenKeyboardShow(with: keyboardHeight)
+        }
+    }
+
+    @objc func keyboardWillHide(notification: NSNotification) {
+        easterEggView.animateWhenKeyboardHide()
+    }
+
 }
 
 // MARK: - Toast
@@ -337,22 +354,8 @@ private extension LoginViewController {
     }
 
     func configureLayout() {
-        view.addSubviews([titleLabel, appleLoginButton, kakaoLoginButton, secretAdminButton, easterEggView])
-        view.addSubviews([mainSplashView, splashBackgroundView, loginSplashView])
-
-        loginSplashView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(40)
-            $0.bottom.equalToSuperview().inset(80)
-            $0.left.right.equalToSuperview().inset(10)
-        }
-        splashBackgroundView.snp.makeConstraints {
-            $0.top.bottom.left.right.equalToSuperview()
-        }
-        mainSplashView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(40)
-            $0.left.right.equalToSuperview().inset(68)
-            $0.height.equalTo(view.bounds.width)
-        }
+        view.addSubviews([titleLabel, appleLoginButton, kakaoLoginButton])
+        view.addSubviews([loginSplashView, splashBackgroundView, mainSplashView, secretAdminButton, easterEggView])
 
         titleLabel.snp.makeConstraints {
             $0.top.equalTo(mainSplashView.snp.bottom)
@@ -367,6 +370,20 @@ private extension LoginViewController {
             $0.top.equalTo(appleLoginButton.snp.bottom).offset(Constants.buttonSpacing)
             $0.left.right.equalToSuperview().inset(Constants.padding)
             $0.height.equalTo(Constants.buttonHeight)
+        }
+
+        loginSplashView.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(40)
+            $0.bottom.equalToSuperview().inset(80)
+            $0.left.right.equalToSuperview().inset(10)
+        }
+        splashBackgroundView.snp.makeConstraints {
+            $0.top.bottom.left.right.equalToSuperview()
+        }
+        mainSplashView.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(40)
+            $0.left.right.equalToSuperview().inset(68)
+            $0.height.equalTo(view.bounds.width)
         }
         secretAdminButton.snp.makeConstraints {
             $0.center.equalTo(mainSplashView)
