@@ -53,6 +53,23 @@ extension UIViewController {
 
     @objc func navigationBackButtonTapped() { }
 
+    func addNavigationLogoutButton() {
+        let logoutButton: UIButton = {
+            let button = UIButton()
+            button.setImage(UIImage(named: "logout"), for: .normal)
+            return button
+        }()
+        view.addSubview(logoutButton)
+        logoutButton.snp.makeConstraints {
+            $0.top.equalTo(view.snp.top).offset(44)
+            $0.right.equalToSuperview().inset(10)
+            $0.width.height.equalTo(44)
+        }
+        logoutButton.addTarget(self, action: #selector(navigationLogoutButtonTapped), for: .touchUpInside)
+    }
+
+    @objc func navigationLogoutButtonTapped() { }
+
 }
 
 // MARK: - Loading View

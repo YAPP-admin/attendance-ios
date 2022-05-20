@@ -31,13 +31,6 @@ final class AdminViewController: UIViewController {
         return view
     }()
 
-    private let logoutButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .clear
-        button.setImage(UIImage(named: "logout"), for: .normal)
-        return button
-    }()
-
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "출결 관리"
@@ -85,6 +78,11 @@ final class AdminViewController: UIViewController {
 
         configureUI()
         configureLayout()
+        addNavigationLogoutButton()
+    }
+
+    override func navigationLogoutButtonTapped() {
+        viewModel.input.tapLogoutButton.accept(())
     }
 
 }
@@ -140,12 +138,6 @@ private extension AdminViewController {
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
                 self?.goToTodayManagementVC()
-            }).disposed(by: disposeBag)
-
-        logoutButton.rx.controlEvent([.touchUpInside])
-            .asObservable()
-            .subscribe(onNext: { [weak self] _ in
-                self?.viewModel.input.tapLogoutButton.accept(())
             }).disposed(by: disposeBag)
     }
 
@@ -253,7 +245,7 @@ private extension AdminViewController {
     func configureLayout() {
         view.addSubviews([scrollView])
         scrollView.addSubviews([contentView])
-        contentView.addSubviews([logoutButton, cardView, dividerView, titleLabel, todayView, sessionTitleLabel, sessionCollectionView])
+        contentView.addSubviews([cardView, dividerView, titleLabel, todayView, sessionTitleLabel, sessionCollectionView])
 
         scrollView.snp.makeConstraints {
             $0.top.bottom.left.right.equalToSuperview()
@@ -262,11 +254,6 @@ private extension AdminViewController {
             $0.top.bottom.left.right.equalToSuperview()
             $0.width.equalToSuperview()
             $0.bottom.equalTo(sessionCollectionView.snp.bottom)
-        }
-        logoutButton.snp.makeConstraints {
-            $0.top.equalTo(view.snp.top).offset(44)
-            $0.right.equalToSuperview().inset(7)
-            $0.width.height.equalTo(44)
         }
         cardView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(90)
