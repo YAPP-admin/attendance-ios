@@ -136,15 +136,22 @@ extension FirebaseWorker {
 
 extension FirebaseWorker {
 
-    // TODO: - 출결 업데이트 체크
     func updateMemberAttendances(memberId: Int, attendances: [Attendance]) {
         memberCollectionRef.getDocuments { snapshot, error in
             guard error == nil, let documents = snapshot?.documents else { return }
             for document in documents {
                 guard let member = try? document.data(as: Member.self), member.id == memberId else { continue }
                 let ref = self.memberCollectionRef.document(document.documentID)
-                ref.updateData(["attendances": member.attendances.decode()]) { error in
-                    print("출결 업데이트 error: \(error)")
+                let fields: [String: Any] = [
+                    "id": memberId,
+                    "name": member.name,
+                    "position": member.position.rawValue,
+                    "team": ["number": member.team.number,
+                             "type": member.team.type.rawValue],
+                    "attendances": attendances.decode()
+                ]
+                ref.setData(fields) { _ in
+                    return
                 }
             }
         }
