@@ -292,14 +292,24 @@ final class HomeViewController: UIViewController {
 		guard let time = getKoreaDateTypeToString(), let session = viewModel.output.sessionList.value.todaySession() else { return }
 		guard let startTime = format.date(from: time), let endTime = format.date(from: session.date) else { return }
 		let useTime = Int(endTime.timeIntervalSince(startTime))
-		if time.stringPrefix() == session.date.stringPrefix() {
-			if useTime <= 1800 {
-				let vc = QRViewController()
-				vc.modalPresentationStyle = .overFullScreen
+		if time.stringPrefix() == session.date.stringPrefix(), session.type == .needAttendance, viewModel.currentType.value == .absence {
+			let vc = QRViewController()
+			vc.modalPresentationStyle = .overFullScreen
+			vc.viewModel.output.memberData.onNext(self.viewModel.memberData.value)
+			vc.updateHomeData = { data in
+				if data { self.viewModel.getUserData() }
+			}
+			if useTime <= 300 {
+				vc.viewModel.output.currentType.accept(.attendance)
+				self.present(vc, animated: true, completion: nil)
+			} else if useTime > 300, useTime <= 1800 {
+				vc.viewModel.output.currentType.accept(.tardy)
 				self.present(vc, animated: true, completion: nil)
 			} else {
 				showToast(message: "지금은 출석할 수 없어요.")
 			}
+		} else if session.type == .needAttendance, viewModel.currentType.value == .attendance {
+			showToast(message: "이미 출석을 완료했어요.")
 		} else {
 			showToast(message: "지금은 출석할 수 없어요.")
 		}
@@ -331,16 +341,18 @@ final class HomeViewController: UIViewController {
         if let data = viewModel.memberData.value {
             let id = data.attendances.filter { $0.sessionId == session.sessionId }.map { $0.sessionId }.first
             let text = data.attendances.filter { $0.sessionId == id }.map { $0.type.text }
-            if text.first == "출석" {
-                infoLabel.text = "출석을 완료했어요"
-                infoLabel.textColor = .yapp_orange
-                checkButton.setImage(UIImage(named: "info_check_enabled"), for: .normal)
-                illustView.image = UIImage(named: "illust_member_home_enabled")
+            if text.first == "결석" {
+				infoLabel.text = "아직 출석 전이에요"
+				infoLabel.textColor = .gray_600
+				checkButton.setImage(UIImage(named: "info_check_disabled"), for: .normal)
+				illustView.image = UIImage(named: "illust_member_home_disabled")
+				viewModel.currentType.accept(.absence)
             } else {
-                infoLabel.text = "아직 출석 전이에요"
-                infoLabel.textColor = .gray_600
-                checkButton.setImage(UIImage(named: "info_check_disabled"), for: .normal)
-                illustView.image = UIImage(named: "illust_member_home_disabled")
+				infoLabel.text = "출석을 완료했어요"
+				infoLabel.textColor = .yapp_orange
+				checkButton.setImage(UIImage(named: "info_check_enabled"), for: .normal)
+				illustView.image = UIImage(named: "illust_member_home_enabled")
+				viewModel.currentType.accept(.attendance)
             }
         }
     }

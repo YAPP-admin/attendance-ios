@@ -46,6 +46,7 @@ final class HomeViewModel: ViewModel {
     let homeType = BehaviorRelay<HomeType>(value: .todaySession)
     let myId = BehaviorRelay<String>(value: "")
     let memberData = BehaviorRelay<Member?>(value: nil)
+	let currentType = BehaviorRelay<AttendanceType>(value: .attendance)
 
     private let userDefaultsWorker = UserDefaultsWorker()
     private let firebaseWorker = FirebaseWorker()
