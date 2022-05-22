@@ -34,6 +34,7 @@ final class SignUpViewModel: ViewModel {
 
         let complete = PublishRelay<Void>()
         let goToHome = PublishRelay<Void>()
+		let goToLoginVC = PublishRelay<Void>()
     }
 
     let input = Input()
@@ -128,7 +129,7 @@ extension SignUpViewModel {
         firebaseWorker.registerKakaoUserInfo(id: id, newUser: newUser) { [weak self] result in
             switch result {
             case .success: self?.output.goToHome.accept(())
-            case .failure: ()
+            case .failure: self?.output.goToLoginVC.accept(())
             }
         }
     }
@@ -136,9 +137,8 @@ extension SignUpViewModel {
     func registerWithApple(id: String, newUser: FirebaseNewMember) {
         firebaseWorker.registerAppleUserInfo(id: id, newUser: newUser) { [weak self] result in
             switch result {
-            case .success:
-                self?.output.goToHome.accept(())
-            case .failure: ()
+            case .success: self?.output.goToHome.accept(())
+            case .failure: self?.output.goToLoginVC.accept(())
             }
         }
     }
