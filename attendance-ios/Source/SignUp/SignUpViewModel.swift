@@ -116,8 +116,10 @@ extension SignUpViewModel {
         let newUser = FirebaseNewMember(name: name, positionType: positionType, teamType: teamType, teamNumber: teamNumber)
 
         if kakaoTalkId.isEmpty == false, let id = Int(kakaoTalkId) {
+			userDefaultsWorker.setKakaoTalkId(id: kakaoTalkId)
             registerKakaoUserInfo(id: id, newUser: newUser)
         } else if appleId.isEmpty == false {
+			userDefaultsWorker.setAppleId(id: appleId)
             registerWithApple(id: appleId, newUser: newUser)
         }
     }
@@ -135,7 +137,6 @@ extension SignUpViewModel {
         firebaseWorker.registerAppleUserInfo(id: id, newUser: newUser) { [weak self] result in
             switch result {
             case .success:
-                self?.userDefaultsWorker.setAppleId(id: id)
                 self?.output.goToHome.accept(())
             case .failure: ()
             }
