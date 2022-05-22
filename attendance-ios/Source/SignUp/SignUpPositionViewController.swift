@@ -173,8 +173,7 @@ private extension SignUpPositionViewController {
 
     func goToHome() {
         let homeVC = HomeViewController()
-        homeVC.modalPresentationStyle = .fullScreen
-        self.present(homeVC, animated: true, completion: nil)
+		navigationController?.pushViewController(homeVC, animated: true)
     }
 
     func goToLogin() {
