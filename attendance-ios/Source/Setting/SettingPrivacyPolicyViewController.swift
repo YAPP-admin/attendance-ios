@@ -54,17 +54,39 @@ final class SettingPrivacyPolicyViewController: UIViewController {
     }
 
     func bind() {
+		wkWebView.navigationDelegate = self
         navigationBarView.backButton.rx.tap
             .bind(to: viewModel.input.tapBack)
             .disposed(by: disposeBag)
 
         viewModel.output.goToHome
             .observe(on: MainScheduler.instance)
-            .bind(onNext: showHomeVC)
+            .bind(onNext: showSettingVC)
             .disposed(by: disposeBag)
+
+		viewModel.output.isLoading
+			.observe(on: MainScheduler.instance)
+			.subscribe(onNext: { [weak self] isLoading in
+				isLoading ? self?.showLoadingView() : self?.hideLoadingView()
+			})
+			.disposed(by: disposeBag)
     }
 
-    func showHomeVC() {
+    func showSettingVC() {
         self.navigationController?.popViewController(animated: true)
     }
+}
+
+extension SettingPrivacyPolicyViewController: WKNavigationDelegate {
+	func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+		viewModel.output.isLoading.onNext(true)
+	}
+
+	func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+		viewModel.output.isLoading.onNext(false)
+	}
+
+	func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+		showSettingVC()
+	}
 }
