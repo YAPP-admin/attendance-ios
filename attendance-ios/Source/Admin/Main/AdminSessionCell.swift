@@ -105,8 +105,8 @@ private extension AdminSessionCell {
         arrowButton.snp.makeConstraints {
             $0.top.bottom.equalToSuperview()
             $0.right.equalToSuperview().inset(Constants.horizontalPadding)
-            $0.width.equalTo(bounds.height)
-            $0.centerY.equalToSuperview()
+			$0.height.equalTo(50)
+			$0.centerY.equalToSuperview()
         }
     }
 
