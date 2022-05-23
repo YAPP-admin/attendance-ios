@@ -40,6 +40,7 @@ extension UIViewController {
         let backButton: UIButton = {
             let button = UIButton()
             button.setImage(UIImage(named: "back"), for: .normal)
+			button.contentEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
             return button
         }()
         view.addSubview(backButton)

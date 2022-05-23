@@ -27,6 +27,7 @@ final class SettingViewModel: ViewModel {
         let showToastWhenError = PublishRelay<Void>()
         var generation = BehaviorRelay<String>(value: "")
         var name = BehaviorRelay<String>(value: "")
+		let isLoading = BehaviorSubject<Bool>(value: false)
     }
 
     let input = Input()

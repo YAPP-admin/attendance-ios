@@ -19,12 +19,15 @@ final class QRViewModel: ViewModel {
         let time = BehaviorSubject<String>(value: "")
         let showToastFail = PublishRelay<Void>()
 		let sessionList = BehaviorRelay<[Session]>(value: [])
+		let memberData = BehaviorSubject<Member?>(value: nil)
+		let currentType = BehaviorRelay<AttendanceType>(value: .attendance)
 	}
 
 	let input = Input()
 	let output = Output()
 	let disposeBag = DisposeBag()
     private let configWorker = ConfigWorker()
+	private let firebaseWorker = FirebaseWorker()
 
 	init() {
 		input.tapClose
@@ -53,4 +56,11 @@ final class QRViewModel: ViewModel {
             }
         }
     }
+
+	func updateAttendances() {
+		guard let member = try? output.memberData.value(), let session = output.sessionList.value.todaySession() else { return }
+		var attendances = member.attendances
+		attendances[session.sessionId].type = AttendanceData(point: output.currentType.value.point, text: output.currentType.value.text)
+		firebaseWorker.updateMemberAttendances(memberId: member.id, attendances: attendances)
+	}
 }

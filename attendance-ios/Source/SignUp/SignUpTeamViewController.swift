@@ -174,8 +174,15 @@ private extension SignUpTeamViewController {
             .subscribe(onNext: { [weak self] _ in
                 self?.goToHome()
             })
-            .disposed(by: disposeBag)
-    }
+			.disposed(by: disposeBag)
+
+		viewModel.output.goToLoginVC
+			.observe(on: MainScheduler.instance)
+			.subscribe(onNext: { [weak self] _ in
+				self?.goToLogin()
+			})
+			.disposed(by: disposeBag)
+	}
 
     func bindButton() {
         okButton.rx.controlEvent([.touchUpInside])
@@ -285,8 +292,7 @@ private extension SignUpTeamViewController {
 
     func goToHome() {
         let homeVC = HomeViewController()
-        homeVC.modalPresentationStyle = .fullScreen
-        self.present(homeVC, animated: true, completion: nil)
+		navigationController?.pushViewController(homeVC, animated: true)
     }
 
     func goToLogin() {

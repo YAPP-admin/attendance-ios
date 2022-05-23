@@ -45,8 +45,9 @@ final class QRViewController: UIViewController {
 	}()
 
 	private let captureSession = AVCaptureSession()
+	var updateHomeData : ((Bool) -> Void)?
 
-	private let viewModel = QRViewModel()
+	var viewModel = QRViewModel()
 	private var disposeBag = DisposeBag()
 
     override func viewWillAppear(_ animated: Bool) {
@@ -119,12 +120,16 @@ final class QRViewController: UIViewController {
     }
 
 	func showCheck() {
+		viewModel.updateAttendances()
         UIView.animate(withDuration: 3.0, delay: 0.1, options: .curveEaseOut, animations: {
+			self.showToast(message: "출석 완료")
             self.checkView.isHidden = false
+			if let updateHomeData = self.updateHomeData {
+				updateHomeData(true)
+			}
 		}, completion: { _ in
-            UIView.animate(withDuration: 3.0, delay: 3.0, options: .curveEaseOut, animations: {
-//                self.showHomeVC()
-				self.showToast(message: "출석 완료")
+            UIView.animate(withDuration: 3.0, delay: 2.0, options: .curveEaseOut, animations: {
+				self.showHomeVC()
             }, completion: nil)
         })
 	}

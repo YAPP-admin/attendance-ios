@@ -84,7 +84,7 @@ final class HomeTotalScoreTableViewCell: BaseTableViewCell {
         helpButton.snp.makeConstraints {
             $0.top.equalToSuperview().offset(40)
             $0.trailing.equalToSuperview().offset(-26)
-            $0.width.height.equalTo(40)
+            $0.width.height.equalTo(44)
         }
         stackView.addArrangedSubview(containerView)
         containerView.snp.makeConstraints {
