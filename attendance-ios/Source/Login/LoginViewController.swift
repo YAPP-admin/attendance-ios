@@ -25,6 +25,7 @@ final class LoginViewController: UIViewController {
 
     private let loginSplashView: WKWebView = {
         let webView = WKWebView()
+        webView.isHidden = true
         return webView
     }()
 
@@ -35,7 +36,7 @@ final class LoginViewController: UIViewController {
 
     private let splashBackgroundView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor(red: 250/255, green: 112/255, blue: 59/255, alpha: 1)
         view.isHidden = false
         return view
     }()
@@ -144,11 +145,7 @@ private extension LoginViewController {
             .subscribe(onNext: { [weak self] isValid in
                 guard let isValid = isValid else { return }
                 self?.clearTextField()
-                if isValid == true {
-                    self?.easterEggView.isHidden = true
-                } else {
-                    self?.easterEggView.showWrongMessage()
-                }
+                self?.setEasterEggView(isValid: isValid)
             })
             .disposed(by: disposeBag)
 
@@ -286,14 +283,22 @@ extension LoginViewController: WKNavigationDelegate {
     }
 
     private func removeSplashView() {
-        self.loginSplashView.removeFromSuperview()
-        self.splashBackgroundView.removeFromSuperview()
+        loginSplashView.removeFromSuperview()
+        splashBackgroundView.removeFromSuperview()
     }
 
 }
 
 // MARK: - Easter Egg
 extension LoginViewController {
+
+    func setEasterEggView(isValid: Bool) {
+        if isValid == true {
+            easterEggView.isHidden = true
+        } else {
+            easterEggView.showWrongMessage()
+        }
+    }
 
     func showEasterEgg() {
         easterEggView.isHidden = false
@@ -339,6 +344,10 @@ private extension LoginViewController {
               let html = NSString(data: data as Data, encoding: String.Encoding.utf8.rawValue) else { return }
 
         loginSplashView.loadHTMLString(html as String, baseURL: Bundle.main.bundleURL)
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.loginSplashView.isHidden = false
+        }
     }
 
     func setupMainSplashView() {
@@ -355,7 +364,7 @@ private extension LoginViewController {
 
     func configureLayout() {
         view.addSubviews([titleLabel, appleLoginButton, kakaoLoginButton])
-        view.addSubviews([loginSplashView, splashBackgroundView, mainSplashView, secretAdminButton, easterEggView])
+        view.addSubviews([mainSplashView, splashBackgroundView, loginSplashView, secretAdminButton, easterEggView])
 
         titleLabel.snp.makeConstraints {
             $0.top.equalTo(mainSplashView.snp.bottom)
