@@ -31,7 +31,32 @@ extension UILabel {
         self.attributedText = attributedString
     }
 
+    func setBoldFont(_ targetTexts: [String]) {
+        guard let fullText = self.text, let font = self.font else { return }
+
+        let attributedString = NSMutableAttributedString(string: fullText)
+        for targetText in targetTexts {
+            let targetRange = (fullText as NSString).range(of: targetText)
+            attributedString.addAttribute(.font, value: UIFont.systemFont(ofSize: font.pointSize, weight: .bold), range: targetRange)
+        }
+        self.attributedText = attributedString
+    }
+
     func style(_ textStyle: TextStyle) {
         self.font = textStyle.font
     }
+
+    func setBulletPointList(text: [String]) {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.headIndent = 12
+        paragraphStyle.minimumLineHeight = 20
+        paragraphStyle.maximumLineHeight = 20
+        paragraphStyle.tabStops = [NSTextTab(textAlignment: .left, location: 15)]
+
+        let stringAttributes = [NSAttributedString.Key.paragraphStyle: paragraphStyle]
+        let string = text.map { "•  \($0)" }.joined(separator: "\n")
+        self.attributedText = NSAttributedString(string: string,
+                                            attributes: stringAttributes)
+    }
+
 }
