@@ -110,11 +110,6 @@ final class SignUpTeamViewController: UIViewController {
         addNavigationBackButton()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationItem.hidesBackButton = true
-    }
-
     override func navigationBackButtonTapped() {
         alertView.isHidden.toggle()
     }

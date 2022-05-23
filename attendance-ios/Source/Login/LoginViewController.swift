@@ -202,14 +202,14 @@ private extension LoginViewController {
         signUpViewModel.input.appleId.onNext(appleId)
 
         navigationItem.backButtonTitle = ""
-        navigationController?.navigationBar.tintColor = .gray_800
+        navigationController?.navigationBar.isHidden = true
         navigationController?.pushViewController(signUpNameVC, animated: true)
     }
 
     func goToHomeVC() {
         let homeVC = HomeViewController()
         navigationItem.backButtonTitle = ""
-        navigationController?.navigationBar.tintColor = .gray_800
+        navigationController?.navigationBar.isHidden = true
         navigationController?.pushViewController(homeVC, animated: true)
     }
 

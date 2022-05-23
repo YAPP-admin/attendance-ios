@@ -107,11 +107,6 @@ final class SignUpNameViewController: UIViewController {
         addNavigationBackButton()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationItem.hidesBackButton = true
-    }
-
     override func navigationBackButtonTapped() {
         alertView.isHidden.toggle()
     }
@@ -182,7 +177,7 @@ private extension SignUpNameViewController {
     func goToPositionVC() {
         let positionVC = SignUpPositionViewController(viewModel: viewModel)
         navigationItem.backButtonTitle = ""
-        navigationController?.navigationBar.tintColor = .gray_800
+        navigationController?.navigationBar.isHidden = true
         navigationController?.pushViewController(positionVC, animated: true)
     }
 
