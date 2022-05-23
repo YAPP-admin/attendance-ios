@@ -214,14 +214,14 @@ private extension AdminViewController {
         guard let todaySession = try? viewModel.output.todaySession.value() else { return }
         let managementVC = AdminManagementViewController(viewModel: viewModel, session: todaySession)
         navigationItem.backButtonTitle = ""
-        navigationController?.navigationBar.tintColor = .gray_800
+        navigationController?.isNavigationBarHidden = true
         navigationController?.pushViewController(managementVC, animated: true)
     }
 
     func goToManagementVC(session: Session) {
         let managementVC = AdminManagementViewController(viewModel: viewModel, session: session)
         navigationItem.backButtonTitle = ""
-        navigationController?.navigationBar.tintColor = .gray_800
+        navigationController?.isNavigationBarHidden = true
         navigationController?.pushViewController(managementVC, animated: true)
     }
 

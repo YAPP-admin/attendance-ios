@@ -85,7 +85,7 @@ final class SettingViewController: UIViewController {
         addSubViews()
         bind()
         bindSubViews()
-        setSwipeRecognizer()
+        setRightSwipeRecognizer()
     }
 
     override func dismissWhenSwipeRight() {

@@ -125,7 +125,7 @@ extension UIViewController {
 // MARK: - Swipe
 extension UIViewController: UIGestureRecognizerDelegate {
 
-    func setSwipeRecognizer() {
+    func setRightSwipeRecognizer() {
         let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture(_:)))
         swipeGesture.direction = UISwipeGestureRecognizer.Direction.right
         self.view.addGestureRecognizer(swipeGesture)

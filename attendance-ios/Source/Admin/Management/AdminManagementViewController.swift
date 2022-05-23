@@ -31,12 +31,6 @@ final class AdminManagementViewController: UIViewController {
         return label
     }()
 
-    private let navigationBackButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(named: "back"), for: .normal)
-        return button
-    }()
-
     private let teamCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -74,7 +68,6 @@ final class AdminManagementViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         bindViewModel()
-        bindSubviews()
 
         setupDelegate()
         setupCollectionView()
@@ -82,12 +75,19 @@ final class AdminManagementViewController: UIViewController {
 
         configureUI()
         configureLayout()
-        configureNavigationLayout()
+
+        addNavigationBackButton()
+        setRightSwipeRecognizer()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationItem.hidesBackButton = true
+    override func navigationBackButtonTapped() {
+        viewModel.input.selectedTeamIndexListInManagement.onNext([])
+        navigationController?.popViewController(animated: true)
+    }
+
+    override func dismissWhenSwipeRight() {
+        viewModel.input.selectedTeamIndexListInManagement.onNext([])
+        navigationController?.popViewController(animated: true)
     }
 
 }
@@ -116,14 +116,6 @@ extension AdminManagementViewController {
             }).disposed(by: disposeBag)
     }
 
-    func bindSubviews() {
-        navigationBackButton.rx.controlEvent([.touchUpInside])
-            .asObservable()
-            .subscribe(onNext: { [weak self] _ in                self?.viewModel.input.selectedTeamIndexListInManagement.onNext([])
-                self?.navigationController?.popViewController(animated: true)
-            }).disposed(by: disposeBag)
-    }
-
 }
 
 // MARK: - Update Attendance
@@ -134,7 +126,6 @@ extension AdminManagementViewController: AdminBottomSheetViewDelegate {
         let sessionId = session.sessionId
         var attendances = member.attendances
         attendances[sessionId].type = AttendanceData(point: type.point, text: type.text)
-        print(attendances.first)
         viewModel.updateAttendances(memberId: member.id, attendances: attendances)
     }
 
@@ -272,21 +263,6 @@ private extension AdminManagementViewController {
         }
         bottomSheetView.snp.makeConstraints {
             $0.top.bottom.left.right.equalToSuperview()
-        }
-    }
-
-    func configureNavigationLayout() {
-        view.addSubviews([navigationTitleLabel, navigationBackButton])
-
-        navigationTitleLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(56)
-            $0.centerX.equalToSuperview()
-            $0.left.right.equalToSuperview().inset(60)
-        }
-        navigationBackButton.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(56)
-            $0.left.equalToSuperview().offset(Constants.horizontalPadding)
-            $0.width.height.equalTo(24)
         }
     }
 
