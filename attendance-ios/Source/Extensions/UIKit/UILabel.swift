@@ -46,17 +46,4 @@ extension UILabel {
         self.font = textStyle.font
     }
 
-    func setBulletPointList(text: [String]) {
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.headIndent = 12
-        paragraphStyle.minimumLineHeight = 20
-        paragraphStyle.maximumLineHeight = 20
-        paragraphStyle.tabStops = [NSTextTab(textAlignment: .left, location: 15)]
-
-        let stringAttributes = [NSAttributedString.Key.paragraphStyle: paragraphStyle]
-        let string = text.map { "•  \($0)" }.joined(separator: "\n")
-        self.attributedText = NSAttributedString(string: string,
-                                            attributes: stringAttributes)
-    }
-
 }
