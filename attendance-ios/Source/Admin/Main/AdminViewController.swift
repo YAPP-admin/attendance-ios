@@ -134,7 +134,7 @@ private extension AdminViewController {
                 self?.viewModel.input.tapCardView.accept(())
             }).disposed(by: disposeBag)
 
-        todayView.managementButton.rx.controlEvent([.touchUpInside])
+        todayView.managementButton.rx.tap
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
                 self?.goToTodayManagementVC()

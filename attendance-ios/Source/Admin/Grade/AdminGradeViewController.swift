@@ -20,15 +20,7 @@ final class AdminGradeViewController: UIViewController {
         static let headerHeight: CGFloat = 104
     }
 
-    private let navigationTitleLabel: UILabel = {
-        let label = UILabel()
-        label.font = .Pretendard(type: .regular, size: 18)
-        label.textColor = .gray_1200
-        label.numberOfLines = 1
-        label.textAlignment = .center
-        label.text = "누적 출결 점수"
-        return label
-    }()
+    private let navigationBarView = BaseNavigationBarView(title: "누적 출결 점수")
 
     private let teamCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -57,19 +49,14 @@ final class AdminGradeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         bindViewModel()
+        bindSubViews()
 
         setupCollectionView()
 
         configureUI()
         configureLayout()
 
-        addNavigationBackButton()
         setRightSwipeRecognizer()
-    }
-
-    override func navigationBackButtonTapped() {
-        viewModel.input.selectedTeamIndexListInGrade.onNext([])
-        navigationController?.popViewController(animated: true)
     }
 
     override func dismissWhenSwipeRight() {
@@ -101,6 +88,16 @@ extension AdminGradeViewController {
             .subscribe(onNext: { [weak self] _ in
                 DispatchQueue.main.async {
                     self?.reloadCollectionView()
+                }
+            }).disposed(by: disposeBag)
+    }
+
+    func bindSubViews() {
+        navigationBarView.backButton.rx.tap
+            .subscribe(onNext: { [weak self] _ in
+                DispatchQueue.main.async {
+                    self?.viewModel.input.selectedTeamIndexListInGrade.onNext([])
+                    self?.navigationController?.popViewController(animated: true)
                 }
             }).disposed(by: disposeBag)
     }
@@ -207,11 +204,16 @@ private extension AdminGradeViewController {
     }
 
     func configureLayout() {
-        view.addSubview(teamCollectionView)
+        view.addSubviews([teamCollectionView, navigationBarView])
 
         teamCollectionView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(Constants.topPadding)
             $0.bottom.left.right.equalToSuperview()
+        }
+        navigationBarView.snp.makeConstraints {
+            $0.top.equalTo(view.snp.top).offset(44)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(44)
         }
     }
 

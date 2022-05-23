@@ -37,15 +37,26 @@ extension UIViewController {
 extension UIViewController {
 
     func addNavigationBackButton() {
+        let barView: UIView = {
+            let view = UIView()
+            view.backgroundColor = .white
+            return view
+        }()
         let backButton: UIButton = {
             let button = UIButton()
             button.setImage(UIImage(named: "back"), for: .normal)
 			button.contentEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
             return button
         }()
-        view.addSubview(backButton)
+        view.addSubview(barView)
+        barView.addSubview(backButton)
+        barView.snp.makeConstraints {
+            $0.top.equalTo(view.snp.top)
+            $0.left.right.equalToSuperview()
+            $0.height.equalTo(88)
+        }
         backButton.snp.makeConstraints {
-            $0.top.equalTo(view.snp.top).offset(44)
+            $0.bottom.equalToSuperview()
             $0.left.equalToSuperview().offset(7)
             $0.width.height.equalTo(44)
         }
@@ -55,14 +66,25 @@ extension UIViewController {
     @objc func navigationBackButtonTapped() { }
 
     func addNavigationLogoutButton() {
+        let barView: UIView = {
+            let view = UIView()
+            view.backgroundColor = .white
+            return view
+        }()
         let logoutButton: UIButton = {
             let button = UIButton()
             button.setImage(UIImage(named: "logout"), for: .normal)
             return button
         }()
-        view.addSubview(logoutButton)
+        view.addSubview(barView)
+        barView.addSubview(logoutButton)
+        barView.snp.makeConstraints {
+            $0.top.equalTo(view.snp.top)
+            $0.left.right.equalToSuperview()
+            $0.height.equalTo(88)
+        }
         logoutButton.snp.makeConstraints {
-            $0.top.equalTo(view.snp.top).offset(44)
+            $0.bottom.equalToSuperview()
             $0.right.equalToSuperview().inset(10)
             $0.width.height.equalTo(44)
         }

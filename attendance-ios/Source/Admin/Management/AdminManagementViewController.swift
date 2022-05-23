@@ -20,16 +20,7 @@ final class AdminManagementViewController: UIViewController {
         static let headerHeight: CGFloat = 104
     }
 
-    private let navigationTitleLabel: UILabel = {
-        let label = UILabel()
-        label.font = .Pretendard(type: .regular, size: 18)
-        label.textColor = .gray_1200
-        label.numberOfLines = 1
-        label.textAlignment = .center
-        label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.5
-        return label
-    }()
+    private let navigationBarView = BaseNavigationBarView(title: "")
 
     private let teamCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -68,6 +59,7 @@ final class AdminManagementViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         bindViewModel()
+        bindSubViews()
 
         setupDelegate()
         setupCollectionView()
@@ -76,13 +68,7 @@ final class AdminManagementViewController: UIViewController {
         configureUI()
         configureLayout()
 
-        addNavigationBackButton()
         setRightSwipeRecognizer()
-    }
-
-    override func navigationBackButtonTapped() {
-        viewModel.input.selectedTeamIndexListInManagement.onNext([])
-        navigationController?.popViewController(animated: true)
     }
 
     override func dismissWhenSwipeRight() {
@@ -113,6 +99,16 @@ extension AdminManagementViewController {
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
                 self?.showBottomSheet()
+            }).disposed(by: disposeBag)
+    }
+
+    func bindSubViews() {
+        navigationBarView.backButton.rx.tap
+            .subscribe(onNext: { [weak self] _ in
+                DispatchQueue.main.async {
+                    self?.viewModel.input.selectedTeamIndexListInManagement.onNext([])
+                    self?.navigationController?.popViewController(animated: true)
+                }
             }).disposed(by: disposeBag)
     }
 
@@ -242,7 +238,7 @@ private extension AdminManagementViewController {
     }
 
     func setupNavigationTitle() {
-        navigationTitleLabel.text = session.title
+        navigationBarView.titleLabel.text = session.title
     }
 
 }
@@ -255,7 +251,7 @@ private extension AdminManagementViewController {
     }
 
     func configureLayout() {
-        view.addSubviews([teamCollectionView, bottomSheetView])
+        view.addSubviews([teamCollectionView, bottomSheetView, navigationBarView])
 
         teamCollectionView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(Constants.topPadding)
@@ -263,6 +259,11 @@ private extension AdminManagementViewController {
         }
         bottomSheetView.snp.makeConstraints {
             $0.top.bottom.left.right.equalToSuperview()
+        }
+        navigationBarView.snp.makeConstraints {
+            $0.top.equalTo(view.snp.top).offset(44)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(44)
         }
     }
 
