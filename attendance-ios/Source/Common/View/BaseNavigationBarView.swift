@@ -58,4 +58,8 @@ final class BaseNavigationBarView: UIView {
             $0.width.height.equalTo(44)
         }
     }
+
+    func hideBackButton() {
+        backButton.isHidden = true
+    }
 }
