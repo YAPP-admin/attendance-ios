@@ -140,6 +140,11 @@ final class HelpViewController: UIViewController {
         view.backgroundColor = .white
         addSubViews()
         bindView()
+        setSwipeRecognizer()
+    }
+
+    override func dismissWhenSwipeRight() {
+        showHomeVC()
     }
 
     private func addSubViews() {
