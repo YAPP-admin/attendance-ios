@@ -910,6 +910,7 @@
 				CODE_SIGN_ENTITLEMENTS = "attendance-ios/attendance-ios.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = T53Y7GLJ7K;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "attendance-ios/Resource/Info.plist";
@@ -942,6 +943,7 @@
 				CODE_SIGN_ENTITLEMENTS = "attendance-ios/attendance-ios.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = T53Y7GLJ7K;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "attendance-ios/Resource/Info.plist";
