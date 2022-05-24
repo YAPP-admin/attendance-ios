@@ -85,6 +85,11 @@ final class SettingViewController: UIViewController {
         addSubViews()
         bind()
         bindSubViews()
+        setRightSwipeRecognizer()
+    }
+
+    override func dismissWhenSwipeRight() {
+        showHomeVC()
     }
 
     func bind() {

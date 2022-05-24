@@ -12,13 +12,10 @@ import RxSwift
 import SnapKit
 
 final class HomeAttendanceCheckViewController: UIViewController {
-    private let titleLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .gray_1200
-        label.font = .Pretendard(type: .regular, size: 18)
-        label.text = "출결 점수 확인"
-        label.textAlignment = .center
-        return label
+    let navigationBarView: BaseNavigationBarView = {
+        let bar = BaseNavigationBarView(title: "출결 점수 확인")
+        bar.hideBackButton()
+        return bar
     }()
     let tableView: UITableView = {
         let tableView = UITableView()
@@ -51,14 +48,15 @@ final class HomeAttendanceCheckViewController: UIViewController {
     }
 
     func addSubViews() {
-        view.addSubview(titleLabel)
+        view.addSubview(navigationBarView)
         view.addSubview(tableView)
-        titleLabel.snp.makeConstraints {
-            $0.top.leading.trailing.equalToSuperview()
+        navigationBarView.snp.makeConstraints {
+            $0.top.equalTo(view.snp.top).offset(24)
+            $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(44)
         }
         tableView.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(11)
+            $0.top.equalTo(navigationBarView.snp.bottom).offset(11)
             $0.bottom.leading.trailing.equalToSuperview()
         }
     }

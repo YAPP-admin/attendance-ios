@@ -20,21 +20,7 @@ final class AdminGradeViewController: UIViewController {
         static let headerHeight: CGFloat = 104
     }
 
-    private let navigationTitleLabel: UILabel = {
-        let label = UILabel()
-        label.font = .Pretendard(type: .regular, size: 18)
-        label.textColor = .gray_1200
-        label.numberOfLines = 1
-        label.textAlignment = .center
-        label.text = "누적 출결 점수"
-        return label
-    }()
-
-    private let navigationBackButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(named: "back"), for: .normal)
-        return button
-    }()
+    private let navigationBarView = BaseNavigationBarView(title: "누적 출결 점수")
 
     private let teamCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -63,18 +49,19 @@ final class AdminGradeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         bindViewModel()
-        bindSubviews()
+        bindSubViews()
 
         setupCollectionView()
 
         configureUI()
         configureLayout()
-        configureNavigationLayout()
+
+        setRightSwipeRecognizer()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationItem.hidesBackButton = true
+    override func dismissWhenSwipeRight() {
+        viewModel.input.selectedTeamIndexListInGrade.onNext([])
+        navigationController?.popViewController(animated: true)
     }
 
 }
@@ -105,12 +92,13 @@ extension AdminGradeViewController {
             }).disposed(by: disposeBag)
     }
 
-    func bindSubviews() {
-        navigationBackButton.rx.controlEvent([.touchUpInside])
-            .asObservable()
+    func bindSubViews() {
+        navigationBarView.backButton.rx.tap
             .subscribe(onNext: { [weak self] _ in
-                self?.viewModel.input.selectedTeamIndexListInGrade.onNext([])
-                self?.navigationController?.popViewController(animated: true)
+                DispatchQueue.main.async {
+                    self?.viewModel.input.selectedTeamIndexListInGrade.onNext([])
+                    self?.navigationController?.popViewController(animated: true)
+                }
             }).disposed(by: disposeBag)
     }
 
@@ -216,26 +204,16 @@ private extension AdminGradeViewController {
     }
 
     func configureLayout() {
-        view.addSubview(teamCollectionView)
+        view.addSubviews([teamCollectionView, navigationBarView])
 
         teamCollectionView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(Constants.topPadding)
             $0.bottom.left.right.equalToSuperview()
         }
-    }
-
-    func configureNavigationLayout() {
-        view.addSubviews([navigationTitleLabel, navigationBackButton])
-
-        navigationTitleLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(56)
-            $0.centerX.equalToSuperview()
-            $0.left.right.equalToSuperview().inset(60)
-        }
-        navigationBackButton.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(56)
-            $0.left.equalToSuperview().offset(Constants.horizontalPadding)
-            $0.width.height.equalTo(24)
+        navigationBarView.snp.makeConstraints {
+            $0.top.equalTo(view.snp.top).offset(44)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(44)
         }
     }
 
