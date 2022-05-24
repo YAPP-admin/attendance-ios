@@ -34,4 +34,5 @@ extension UILabel {
     func style(_ textStyle: TextStyle) {
         self.font = textStyle.font
     }
+
 }

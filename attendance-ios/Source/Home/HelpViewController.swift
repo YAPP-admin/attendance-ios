@@ -115,20 +115,15 @@ final class HelpViewController: UIViewController {
         return label
     }()
     private let readContentLabel: UILabel = {
-        let fullText = "- 출결 점수는 100점에서 시작해요.\n- 점수가 70점 미만이 되는 회원은 운영진의 심의 하에 제명될 수 있으니 출결에 유의해주세요.\n- 회비 납부 무단 연체 시 연체 1일마다 5점이 감점돼요.\n- 아르바이트, 인턴, 직장인 우대사항은 없어요."
-        let attributes: [NSAttributedString.Key: Any] = [.font: TextStyle.Caption2.font, .foregroundColor: UIColor.gray_800]
-        let range100 = (fullText as NSString).range(of: "100점")
-        let range70 = (fullText as NSString).range(of: "70점 미만")
-        let attributedString = NSMutableAttributedString(string: fullText)
-        attributedString.addAttributes(attributes, range: range100)
-        attributedString.addAttributes(attributes, range: range70)
-
         let label = UILabel()
         label.textColor = .gray_600
         label.font = .Pretendard(type: .medium, size: 12)
-        label.attributedText = attributedString
         label.numberOfLines = 0
-        label.setLineSpacing(4)
+
+        let bulletTexts = ["출결 점수는 100점에서 시작해요.", "점수가 70점 미만이 되는 회원은 운영진의 심의 하에 제명될 수 있으니 출결에 유의해주세요.", "회비 납부 무단 연체 시 연체 1일마다 5점이 감점돼요.", "아르바이트, 인턴, 직장인 우대사항은 없어요."]
+        let boldTexts = ["100점", "70점 미만"]
+        label.setBulletPointList(bulletTexts: bulletTexts, boldTexts: boldTexts)
+
         return label
     }()
 
@@ -210,9 +205,9 @@ final class HelpViewController: UIViewController {
         bottomView.addSubview(readContentLabel)
         readContentLabel.snp.makeConstraints {
             $0.top.equalTo(readLabel.snp.bottom).offset(12)
-            $0.leading.equalToSuperview().offset(24)
+            $0.leading.equalToSuperview().offset(28)
             $0.trailing.equalToSuperview().offset(-24)
-            $0.bottom.lessThanOrEqualToSuperview().offset(-128)
+            $0.bottom.lessThanOrEqualToSuperview().offset(-100)
         }
     }
 
@@ -230,4 +225,30 @@ final class HelpViewController: UIViewController {
     func showHomeVC() {
         self.navigationController?.popViewController(animated: true)
     }
+}
+
+private extension UILabel {
+
+    func setBulletPointList(bulletTexts: [String], boldTexts: [String]) {
+        guard let font = self.font else { return }
+        let fullText = bulletTexts.map { "•  \($0)" }.joined(separator: "\n")
+
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.headIndent = 12
+        paragraphStyle.minimumLineHeight = 20
+        paragraphStyle.maximumLineHeight = 20
+        paragraphStyle.tabStops = [NSTextTab(textAlignment: .left, location: 15)]
+
+        let stringAttributes = [NSAttributedString.Key.paragraphStyle: paragraphStyle]
+        let attributedString = NSMutableAttributedString(string: fullText)
+        let fullRange = (fullText as NSString).range(of: fullText)
+        attributedString.addAttributes(stringAttributes, range: fullRange)
+
+        for boldText in boldTexts {
+            let targetRange = (fullText as NSString).range(of: boldText)
+            attributedString.addAttributes([.font: UIFont.systemFont(ofSize: font.pointSize, weight: .bold), .foregroundColor: UIColor.gray_800], range: targetRange)
+        }
+        self.attributedText = attributedString
+    }
+
 }
