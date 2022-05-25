@@ -22,15 +22,6 @@ final class AdminTodayView: UIView {
         return label
     }()
 
-    private let stackView: UIStackView = {
-        let view = UIStackView()
-        view.axis = .horizontal
-        view.spacing = 4
-        view.alignment = .fill
-        view.distribution = .fill
-        return view
-    }()
-
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .Pretendard(type: .semiBold, size: 18)
@@ -85,20 +76,24 @@ extension AdminTodayView {
 private extension AdminTodayView {
 
     func configureLayout() {
-        addSubviews([dateLabel, stackView, dividerView])
-        stackView.addArrangedSubviews([titleLabel, managementButton])
+        addSubviews([dateLabel, titleLabel, managementButton, dividerView])
 
         dateLabel.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.left.right.equalToSuperview()
+            $0.height.equalTo(15)
         }
-        stackView.snp.makeConstraints {
+        titleLabel.snp.makeConstraints {
             $0.top.equalTo(dateLabel.snp.bottom).offset(6)
-            $0.left.right.equalToSuperview()
+            $0.left.equalToSuperview()
+            $0.right.equalToSuperview().inset(Constants.buttonSize.width+8)
             $0.height.equalTo(Constants.buttonSize.height)
         }
         managementButton.snp.makeConstraints {
+            $0.top.equalTo(dateLabel.snp.bottom).offset(6)
+            $0.right.equalToSuperview()
             $0.width.equalTo(Constants.buttonSize.width)
+            $0.height.equalTo(Constants.buttonSize.height)
         }
         dividerView.snp.makeConstraints {
             $0.bottom.left.right.equalToSuperview()
