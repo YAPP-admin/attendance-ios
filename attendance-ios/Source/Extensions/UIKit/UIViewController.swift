@@ -39,7 +39,6 @@ extension UIViewController {
     func addNavigationBackButton() {
         let barView: UIView = {
             let view = UIView()
-            view.backgroundColor = .white
             return view
         }()
         let backButton: UIButton = {
