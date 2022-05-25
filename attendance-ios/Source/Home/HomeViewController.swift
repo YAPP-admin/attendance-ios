@@ -24,6 +24,10 @@ final class HomeViewController: UIViewController {
         button.contentEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         return button
     }()
+    private let refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        return refreshControl
+    }()
     private lazy var tabView: HomeBottomTabView = {
         let view = HomeBottomTabView(viewModel.homeType.value)
         return view
@@ -121,6 +125,7 @@ final class HomeViewController: UIViewController {
         addSubViews()
         bind()
         updateSessionInfo()
+        setRefreshControl()
     }
 
     func addSubViews() {
@@ -160,7 +165,8 @@ final class HomeViewController: UIViewController {
         infoStackView.addArrangedSubview(infoLabel)
         contentView.addSubview(contentsInfoView)
         scrollView.snp.makeConstraints {
-            $0.top.equalTo(view.snp.top)
+//            $0.top.equalTo(view.snp.top)
+            $0.top.equalTo(topView.snp.bottom)
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalTo(tabView.snp.top)
         }
@@ -283,6 +289,14 @@ final class HomeViewController: UIViewController {
                     self?.updateAttendancesData()
                 }
             }).disposed(by: disposeBag)
+
+        viewModel.isRefreshing
+            .subscribe(onNext: { [weak self] isRefreshing in
+                guard isRefreshing == false else { return }
+                DispatchQueue.main.async {
+                    self?.scrollView.refreshControl?.endRefreshing()
+                }
+            }).disposed(by: disposeBag)
     }
 
     func showQRVC() {
@@ -356,4 +370,18 @@ final class HomeViewController: UIViewController {
             }
         }
     }
+}
+
+// MARK: - Refresh Control
+private extension HomeViewController {
+
+    func setRefreshControl() {
+        scrollView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
+    }
+
+    @objc func refresh() {
+        viewModel.isRefreshing.accept(true)
+    }
+
 }
