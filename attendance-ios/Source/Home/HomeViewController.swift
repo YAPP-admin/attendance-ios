@@ -165,8 +165,7 @@ final class HomeViewController: UIViewController {
         infoStackView.addArrangedSubview(infoLabel)
         contentView.addSubview(contentsInfoView)
         scrollView.snp.makeConstraints {
-//            $0.top.equalTo(view.snp.top)
-            $0.top.equalTo(topView.snp.bottom)
+            $0.top.equalTo(view.snp.top)
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalTo(tabView.snp.top)
         }
