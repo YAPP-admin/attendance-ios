@@ -258,11 +258,11 @@ final class HomeViewController: UIViewController {
         }
         errorImageView.snp.makeConstraints {
             $0.left.right.equalToSuperview().inset(67)
-            $0.centerY.equalToSuperview().inset(100)
+            $0.centerY.equalToSuperview()
             $0.height.equalTo(172)
         }
         errorLabel.snp.makeConstraints {
-            $0.top.equalTo(errorImageView.snp.bottom).offset(12)
+            $0.top.equalTo(errorImageView.snp.bottom).offset(16)
             $0.centerX.equalToSuperview()
         }
     }
