@@ -24,6 +24,10 @@ final class HomeViewController: UIViewController {
         button.contentEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         return button
     }()
+    private let activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView()
+        return indicator
+    }()
     private let refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
         return refreshControl
@@ -121,6 +125,7 @@ final class HomeViewController: UIViewController {
         view.backgroundColor = .white
         navigationController?.isNavigationBarHidden = true
         attendanceView.view.isHidden = true
+        setScrollViewDelegate()
 
         addSubViews()
         bind()
@@ -233,6 +238,12 @@ final class HomeViewController: UIViewController {
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalTo(tabView.snp.top)
         }
+
+        view.addSubview(activityIndicator)
+        activityIndicator.snp.makeConstraints {
+            $0.top.equalTo(topView.snp.bottom).offset(16)
+            $0.centerX.equalToSuperview()
+        }
     }
 
     func bind() {
@@ -291,7 +302,10 @@ final class HomeViewController: UIViewController {
 
         viewModel.isRefreshing
             .subscribe(onNext: { [weak self] isRefreshing in
-                guard isRefreshing == false else { return }
+                guard isRefreshing == false else {
+                    self?.activityIndicator.startAnimating()
+                    return
+                }
                 DispatchQueue.main.async {
                     self?.scrollView.refreshControl?.endRefreshing()
                 }
@@ -381,6 +395,18 @@ private extension HomeViewController {
 
     @objc func refresh() {
         viewModel.isRefreshing.accept(true)
+    }
+
+}
+
+extension HomeViewController: UIScrollViewDelegate {
+
+    private func setScrollViewDelegate() {
+        scrollView.delegate = self
+    }
+
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        activityIndicator.stopAnimating()
     }
 
 }
