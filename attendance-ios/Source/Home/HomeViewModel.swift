@@ -48,6 +48,7 @@ final class HomeViewModel: ViewModel {
     let myId = BehaviorRelay<String>(value: "")
     let memberData = BehaviorRelay<Member?>(value: nil)
 	let currentType = BehaviorRelay<AttendanceType>(value: .attendance)
+    let isRefreshing = BehaviorRelay<Bool>(value: false)
 
     private let userDefaultsWorker = UserDefaultsWorker()
     private let firebaseWorker = FirebaseWorker()
@@ -75,6 +76,13 @@ final class HomeViewModel: ViewModel {
             }
         }
 
+        isRefreshing
+            .subscribe(onNext: { [weak self] isRefreshing in
+                guard isRefreshing == true else { return }
+                self?.setupConfig()
+                self?.checkLoginId()
+            }).disposed(by: disposeBag)
+
         setupConfig()
         checkLoginId()
     }
@@ -101,7 +109,6 @@ final class HomeViewModel: ViewModel {
             getUserData()
         } else {
             output.goToLoginVC.accept(())
-            return
         }
     }
 
@@ -115,6 +122,7 @@ final class HomeViewModel: ViewModel {
             case .failure:
                 self.output.hasError.accept(true)
             }
+            self.isRefreshing.accept(false)
         }
     }
 

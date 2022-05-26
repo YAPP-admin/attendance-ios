@@ -24,6 +24,14 @@ final class HomeViewController: UIViewController {
         button.contentEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         return button
     }()
+    private let activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView()
+        return indicator
+    }()
+    private let refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        return refreshControl
+    }()
     private lazy var tabView: HomeBottomTabView = {
         let view = HomeBottomTabView(viewModel.homeType.value)
         return view
@@ -137,11 +145,13 @@ final class HomeViewController: UIViewController {
         view.backgroundColor = .white
         navigationController?.isNavigationBarHidden = true
         attendanceView.view.isHidden = true
+        setScrollViewDelegate()
 
         addSubViews()
         addErrorSubViews()
         bind()
         updateSessionInfo()
+        setRefreshControl()
     }
 
     func addSubViews() {
@@ -245,6 +255,12 @@ final class HomeViewController: UIViewController {
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalTo(tabView.snp.top)
         }
+
+        view.addSubview(activityIndicator)
+        activityIndicator.snp.makeConstraints {
+            $0.top.equalTo(topView.snp.bottom).offset(16)
+            $0.centerX.equalToSuperview()
+        }
     }
 
     func addErrorSubViews() {
@@ -322,6 +338,17 @@ final class HomeViewController: UIViewController {
             .subscribe(onNext: { [weak self] _ in
                 DispatchQueue.main.async {
                     self?.updateAttendancesData()
+                }
+            }).disposed(by: disposeBag)
+
+        viewModel.isRefreshing
+            .subscribe(onNext: { [weak self] isRefreshing in
+                guard isRefreshing == false else {
+                    self?.activityIndicator.startAnimating()
+                    return
+                }
+                DispatchQueue.main.async {
+                    self?.scrollView.refreshControl?.endRefreshing()
                 }
             }).disposed(by: disposeBag)
 
@@ -406,4 +433,30 @@ final class HomeViewController: UIViewController {
             }
         }
     }
+}
+
+// MARK: - Refresh Control
+private extension HomeViewController {
+
+    func setRefreshControl() {
+        scrollView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
+    }
+
+    @objc func refresh() {
+        viewModel.isRefreshing.accept(true)
+    }
+
+}
+
+extension HomeViewController: UIScrollViewDelegate {
+
+    private func setScrollViewDelegate() {
+        scrollView.delegate = self
+    }
+
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        activityIndicator.stopAnimating()
+    }
+
 }
