@@ -116,6 +116,26 @@ final class HomeViewController: UIViewController {
         return label
     }()
     private let attendanceView = HomeAttendanceCheckViewController()
+    private let errorView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.isHidden = true
+        return view
+    }()
+    private let errorImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "illust_error")
+        imageView.backgroundColor = .white
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+    private let errorLabel: UILabel = {
+        let label = UILabel()
+        label.text = "정보를 불러오지 못했어요"
+        label.textColor = .gray_600
+        label.font = .Pretendard(type: .semiBold, size: 18)
+        return label
+    }()
 
     private let viewModel = HomeViewModel()
     private var disposeBag = DisposeBag()
@@ -128,6 +148,7 @@ final class HomeViewController: UIViewController {
         setScrollViewDelegate()
 
         addSubViews()
+        addErrorSubViews()
         bind()
         updateSessionInfo()
         setRefreshControl()
@@ -138,12 +159,10 @@ final class HomeViewController: UIViewController {
         let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
         visualEffectView.frame = view.frame
 
-        view.addSubview(tabView)
-        view.addSubview(scrollView)
+        view.addSubviews([tabView, scrollView, topView])
         scrollView.addSubview(contentView)
-        view.addSubview(topView)
-        topView.addSubview(visualEffectView)
-        topView.addSubview(settingButton)
+        topView.addSubviews([visualEffectView, settingButton])
+
         topView.snp.makeConstraints {
             $0.top.equalTo(view.snp.top)
             $0.leading.trailing.equalToSuperview()
@@ -166,9 +185,9 @@ final class HomeViewController: UIViewController {
         bgView.addSubview(illustView)
         contentView.addSubview(infoView)
         infoView.addSubview(infoStackView)
-        infoStackView.addArrangedSubview(checkButton)
-        infoStackView.addArrangedSubview(infoLabel)
+        infoStackView.addArrangedSubviews([checkButton, infoLabel])
         contentView.addSubview(contentsInfoView)
+
         scrollView.snp.makeConstraints {
             $0.top.equalTo(view.snp.top)
             $0.leading.trailing.equalToSuperview()
@@ -210,9 +229,7 @@ final class HomeViewController: UIViewController {
             $0.leading.trailing.equalToSuperview()
         }
 
-        contentsInfoView.addSubview(dateLabel)
-        contentsInfoView.addSubview(titleLabel)
-        contentsInfoView.addSubview(contentsLabel)
+        contentsInfoView.addSubviews([dateLabel, titleLabel, contentsLabel])
         dateLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(24)
             $0.leading.equalToSuperview().offset(24)
@@ -244,6 +261,30 @@ final class HomeViewController: UIViewController {
             $0.top.equalTo(topView.snp.bottom).offset(16)
             $0.centerX.equalToSuperview()
         }
+    }
+
+    func addErrorSubViews() {
+        view.addSubview(errorView)
+        errorView.addSubviews([errorImageView, errorLabel])
+
+        errorView.snp.makeConstraints {
+            $0.top.equalTo(topView.snp.bottom)
+            $0.bottom.equalTo(tabView.snp.top)
+            $0.left.right.equalToSuperview()
+        }
+        errorImageView.snp.makeConstraints {
+            $0.left.right.equalToSuperview().inset(67)
+            $0.centerY.equalToSuperview()
+            $0.height.equalTo(172)
+        }
+        errorLabel.snp.makeConstraints {
+            $0.top.equalTo(errorImageView.snp.bottom).offset(16)
+            $0.centerX.equalToSuperview()
+        }
+    }
+
+    func showErrorView() {
+        errorView.isHidden = false
     }
 
     func bind() {
@@ -308,6 +349,15 @@ final class HomeViewController: UIViewController {
                 }
                 DispatchQueue.main.async {
                     self?.scrollView.refreshControl?.endRefreshing()
+                }
+            }).disposed(by: disposeBag)
+
+        viewModel.output.hasError
+            .subscribe(onNext: { [weak self] hasError in
+                print("hasError: \(hasError)")
+                guard hasError == true else { return }
+                DispatchQueue.main.async {
+                    self?.showErrorView()
                 }
             }).disposed(by: disposeBag)
     }
