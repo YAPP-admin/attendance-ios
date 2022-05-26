@@ -354,7 +354,6 @@ final class HomeViewController: UIViewController {
 
         viewModel.output.hasError
             .subscribe(onNext: { [weak self] hasError in
-                print("hasError: \(hasError)")
                 guard hasError == true else { return }
                 DispatchQueue.main.async {
                     self?.showErrorView()
@@ -366,8 +365,15 @@ final class HomeViewController: UIViewController {
 		let format = DateFormatter()
 		format.dateFormat = "yyyy-MM-dd HH:mm:ss"
 		format.timeZone = TimeZone(abbreviation: "UTC")
-		guard let time = getKoreaDateTypeToString(), let session = viewModel.output.sessionList.value.todaySession() else { return }
-		guard let startTime = format.date(from: time), let endTime = format.date(from: session.date) else { return }
+
+		guard let time = getKoreaDateTypeToString(),
+              let session = viewModel.output.sessionList.value.todaySession(),
+              let startTime = format.date(from: time),
+              let endTime = format.date(from: session.date) else {
+            showToastWhenCannotAttend()
+            return
+        }
+
 		let useTime = Int(endTime.timeIntervalSince(startTime))
 		if time.stringPrefix() == session.date.stringPrefix(), session.type == .needAttendance, viewModel.currentType.value == .absence {
 			let vc = QRViewController()
@@ -383,14 +389,22 @@ final class HomeViewController: UIViewController {
 				vc.viewModel.output.currentType.accept(.tardy)
 				self.present(vc, animated: true, completion: nil)
 			} else {
-				showToast(message: "지금은 출석할 수 없어요.")
+                showToastWhenCannotAttend()
 			}
 		} else if session.type == .needAttendance, viewModel.currentType.value == .attendance {
-			showToast(message: "이미 출석을 완료했어요.")
+            showToastWhenAlreadyAttended()
 		} else {
-			showToast(message: "지금은 출석할 수 없어요.")
+            showToastWhenCannotAttend()
 		}
 	}
+
+    func showToastWhenCannotAttend() {
+        showToast(message: "지금은 출석할 수 없어요.")
+    }
+
+    func showToastWhenAlreadyAttended() {
+        showToast(message: "이미 출석을 완료했어요.")
+    }
 
 	func getKoreaDateTypeToString() -> String? {
 		let current = Date()
@@ -407,10 +421,19 @@ final class HomeViewController: UIViewController {
     }
 
     func updateSessionInfo() {
-        guard let session = viewModel.output.sessionList.value.todaySession() else { return }
+        guard let session = viewModel.output.sessionList.value.todaySession() else {
+            updateWhenAllSessionsCompleted()
+            return
+        }
         dateLabel.text = session.date.date()?.mmdd() ?? ""
         titleLabel.text = session.title
         contentsLabel.text = session.description
+    }
+
+    func updateWhenAllSessionsCompleted() {
+        dateLabel.text = ""
+        titleLabel.text = "모든 세션을 끝마쳤습니다"
+        contentsLabel.text = ""
     }
 
     func updateAttendancesData() {
