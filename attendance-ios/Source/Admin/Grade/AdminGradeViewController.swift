@@ -20,7 +20,11 @@ final class AdminGradeViewController: UIViewController {
         static let headerHeight: CGFloat = 104
     }
 
-    private let navigationBarView = BaseNavigationBarView(title: "누적 출결 점수")
+    private let navigationBarView: BaseNavigationBarView = {
+        let barView = BaseNavigationBarView(title: "누적 출결 점수")
+        barView.navigationBarView.backgroundColor = .clear
+        return barView
+    }()
 
     private let teamCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -204,16 +208,16 @@ private extension AdminGradeViewController {
     }
 
     func configureLayout() {
-        view.addSubviews([teamCollectionView, navigationBarView])
+        view.addSubviews([navigationBarView, teamCollectionView])
 
-        teamCollectionView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(Constants.topPadding)
-            $0.bottom.left.right.equalToSuperview()
-        }
         navigationBarView.snp.makeConstraints {
             $0.top.equalTo(view.snp.top).offset(44)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(44)
+        }
+        teamCollectionView.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(Constants.topPadding)
+            $0.bottom.left.right.equalToSuperview()
         }
     }
 

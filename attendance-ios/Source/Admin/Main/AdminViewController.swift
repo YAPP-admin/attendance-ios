@@ -208,7 +208,7 @@ private extension AdminViewController {
     func goToGradeVC() {
         let gradeVC = AdminGradeViewController(viewModel: viewModel)
         navigationItem.backButtonTitle = ""
-        navigationController?.navigationBar.tintColor = .gray_800
+        navigationController?.isNavigationBarHidden = true
         navigationController?.pushViewController(gradeVC, animated: true)
     }
 
