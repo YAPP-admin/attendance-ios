@@ -76,7 +76,7 @@ extension FirebaseWorker {
         getMemberDocumentIdList { result in
             switch result {
             case .success(let list):
-                guard list.contains(appleId) else { return }
+                guard list.contains(appleId) == true else { return }
 
                 let docRef = self.memberCollectionRef.document(appleId)
 

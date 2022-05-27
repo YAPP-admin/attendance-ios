@@ -92,6 +92,11 @@ extension UserDefaultsWorker {
     func removeAppleId() {
         remove(forKey: .appleId)
     }
+
+    func removeAllLoginId() {
+        removeKakaoTalkId()
+        removeAppleId()
+    }
 }
 
 // MARK: - YappConfig

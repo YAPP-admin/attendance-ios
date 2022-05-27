@@ -136,7 +136,7 @@ private extension BaseViewModel {
                     self.output.kakaoTalkId.onNext(kakaoId)
 
                     // MARK: - 애플 로그인을 통해 이미 가입한 유저라면 기존 문서 이름 변경
-                    if let appleId = try? self.output.appleId.value() {
+                    if let appleId = self.userDefaultsWorker.getAppleId() {
                         self.firebaseWorker.changeMemberDocumentName(appleId, to: kakaoId) { result in
                             self.output.isLoading.onNext(false)
                             switch result {
