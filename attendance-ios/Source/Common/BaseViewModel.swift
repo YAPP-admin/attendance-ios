@@ -181,9 +181,13 @@ extension BaseViewModel {
     func authorizationController(authorization: ASAuthorization) {
         switch authorization.credential {
         case _ as ASAuthorizationAppleIDCredential:
-            guard hasLoginId() == false else { return }
-            signUpWithApple()
-        default: self.output.failedToLogin.accept(())
+            guard hasLoginId() == true else {
+                signUpWithApple()
+                return
+            }
+            output.isLoading.onNext(false)
+            output.goToHome.accept(())
+        default: output.failedToLogin.accept(())
         }
     }
 
