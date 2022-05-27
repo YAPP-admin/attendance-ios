@@ -269,7 +269,7 @@ extension LoginViewController: WKNavigationDelegate {
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.95) {
                 self.view.backgroundColor = .white
                 self.removeSplashView()
-                self.viewModel.checkKakaoId()
+                self.viewModel.hasKakaoId()
                 self.viewModel.setupAfterSplashShowed()
             }
         }

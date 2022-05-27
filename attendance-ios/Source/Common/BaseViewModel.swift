@@ -99,13 +99,13 @@ final class BaseViewModel: ViewModel {
 extension BaseViewModel {
 
     @discardableResult
-    private func checkLoginId() -> Bool {
-        guard checkKakaoId() == false, checkAppleId() == false else { return true }
+    private func hasLoginId() -> Bool {
+        guard hasKakaoId() == false, hasAppleId() == false else { return true }
         return false
     }
 
     @discardableResult
-    func checkKakaoId() -> Bool {
+    func hasKakaoId() -> Bool {
         guard let kakaoTalkId = userDefaultsWorker.getKakaoTalkId(), kakaoTalkId.isEmpty == false else { return false }
         output.kakaoTalkId.onNext(kakaoTalkId)
         output.goToHome.accept(())
@@ -113,7 +113,7 @@ extension BaseViewModel {
     }
 
     @discardableResult
-    private func checkAppleId() -> Bool {
+    private func hasAppleId() -> Bool {
         guard let appleId = userDefaultsWorker.getAppleId(), appleId.isEmpty == false else { return false }
         output.appleId.onNext(appleId)
         return true
@@ -136,7 +136,7 @@ private extension BaseViewModel {
                     self.output.kakaoTalkId.onNext(kakaoId)
 
                     // MARK: - 애플 로그인을 통해 이미 가입한 유저라면 기존 문서 이름 변경
-                    if let appleId = try? self.output.appleId.value() {
+                    if let appleId = self.userDefaultsWorker.getAppleId() {
                         self.firebaseWorker.changeMemberDocumentName(appleId, to: kakaoId) { result in
                             self.output.isLoading.onNext(false)
                             switch result {
@@ -181,9 +181,13 @@ extension BaseViewModel {
     func authorizationController(authorization: ASAuthorization) {
         switch authorization.credential {
         case _ as ASAuthorizationAppleIDCredential:
-            guard checkLoginId() == false else { return }
-            signUpWithApple()
-        default: self.output.failedToLogin.accept(())
+            guard hasLoginId() == true else {
+                signUpWithApple()
+                return
+            }
+            output.isLoading.onNext(false)
+            output.goToHome.accept(())
+        default: output.failedToLogin.accept(())
         }
     }
 
@@ -242,14 +246,14 @@ private extension BaseViewModel {
 // MARK: - Splash
 extension BaseViewModel {
 
-    func setupAfterSplashShowed() {
-        userDefaultsWorker.setIsFirstSplash(isFirst: false)
-        output.isFirstSplash.onNext(false)
-    }
-
     func setIsFirstSplash() {
         let isFirst = userDefaultsWorker.getIsFirstSplash()
         output.isFirstSplash.onNext(isFirst ?? true)
+    }
+
+    func setupAfterSplashShowed() {
+        userDefaultsWorker.setIsFirstSplash(isFirst: false)
+        output.isFirstSplash.onNext(false)
     }
 
 }
