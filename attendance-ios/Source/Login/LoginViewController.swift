@@ -417,11 +417,11 @@ private extension LoginViewController {
     }
 
     func configureLayout() {
-        view.addSubviews([titleLabel, appleLoginButton, kakaoLoginButton])
         view.addSubviews([mainSplashView, mainSplashStillView, secretAdminButton, easterEggView])
+        view.addSubviews([titleLabel, appleLoginButton, kakaoLoginButton])
 
         titleLabel.snp.makeConstraints {
-            $0.top.equalTo(mainSplashView.snp.bottom)
+            $0.bottom.equalToSuperview().inset(Constants.buttonBottomSpacing+Constants.buttonHeight+76)
             $0.left.right.equalToSuperview().inset(Constants.padding)
         }
         appleLoginButton.snp.makeConstraints {
