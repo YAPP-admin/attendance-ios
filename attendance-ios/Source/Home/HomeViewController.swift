@@ -24,6 +24,14 @@ final class HomeViewController: UIViewController {
         button.contentEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         return button
     }()
+    private let activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView()
+        return indicator
+    }()
+    private let refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        return refreshControl
+    }()
     private lazy var tabView: HomeBottomTabView = {
         let view = HomeBottomTabView(viewModel.homeType.value)
         return view
@@ -108,6 +116,26 @@ final class HomeViewController: UIViewController {
         return label
     }()
     private let attendanceView = HomeAttendanceCheckViewController()
+    private let errorView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.isHidden = true
+        return view
+    }()
+    private let errorImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "illust_error")
+        imageView.backgroundColor = .white
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+    private let errorLabel: UILabel = {
+        let label = UILabel()
+        label.text = "정보를 불러오지 못했어요"
+        label.textColor = .gray_600
+        label.font = .Pretendard(type: .semiBold, size: 18)
+        return label
+    }()
 
     private let viewModel = HomeViewModel()
     private var disposeBag = DisposeBag()
@@ -117,10 +145,13 @@ final class HomeViewController: UIViewController {
         view.backgroundColor = .white
         navigationController?.isNavigationBarHidden = true
         attendanceView.view.isHidden = true
+        setScrollViewDelegate()
 
         addSubViews()
+        addErrorSubViews()
         bind()
         updateSessionInfo()
+        setRefreshControl()
     }
 
     func addSubViews() {
@@ -128,12 +159,10 @@ final class HomeViewController: UIViewController {
         let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
         visualEffectView.frame = view.frame
 
-        view.addSubview(tabView)
-        view.addSubview(scrollView)
+        view.addSubviews([tabView, scrollView, topView])
         scrollView.addSubview(contentView)
-        view.addSubview(topView)
-        topView.addSubview(visualEffectView)
-        topView.addSubview(settingButton)
+        topView.addSubviews([visualEffectView, settingButton])
+
         topView.snp.makeConstraints {
             $0.top.equalTo(view.snp.top)
             $0.leading.trailing.equalToSuperview()
@@ -156,9 +185,9 @@ final class HomeViewController: UIViewController {
         bgView.addSubview(illustView)
         contentView.addSubview(infoView)
         infoView.addSubview(infoStackView)
-        infoStackView.addArrangedSubview(checkButton)
-        infoStackView.addArrangedSubview(infoLabel)
+        infoStackView.addArrangedSubviews([checkButton, infoLabel])
         contentView.addSubview(contentsInfoView)
+
         scrollView.snp.makeConstraints {
             $0.top.equalTo(view.snp.top)
             $0.leading.trailing.equalToSuperview()
@@ -200,9 +229,7 @@ final class HomeViewController: UIViewController {
             $0.leading.trailing.equalToSuperview()
         }
 
-        contentsInfoView.addSubview(dateLabel)
-        contentsInfoView.addSubview(titleLabel)
-        contentsInfoView.addSubview(contentsLabel)
+        contentsInfoView.addSubviews([dateLabel, titleLabel, contentsLabel])
         dateLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(24)
             $0.leading.equalToSuperview().offset(24)
@@ -228,6 +255,36 @@ final class HomeViewController: UIViewController {
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalTo(tabView.snp.top)
         }
+
+        view.addSubview(activityIndicator)
+        activityIndicator.snp.makeConstraints {
+            $0.top.equalTo(topView.snp.bottom).offset(16)
+            $0.centerX.equalToSuperview()
+        }
+    }
+
+    func addErrorSubViews() {
+        view.addSubview(errorView)
+        errorView.addSubviews([errorImageView, errorLabel])
+
+        errorView.snp.makeConstraints {
+            $0.top.equalTo(topView.snp.bottom)
+            $0.bottom.equalTo(tabView.snp.top)
+            $0.left.right.equalToSuperview()
+        }
+        errorImageView.snp.makeConstraints {
+            $0.left.right.equalToSuperview().inset(67)
+            $0.centerY.equalToSuperview()
+            $0.height.equalTo(172)
+        }
+        errorLabel.snp.makeConstraints {
+            $0.top.equalTo(errorImageView.snp.bottom).offset(16)
+            $0.centerX.equalToSuperview()
+        }
+    }
+
+    func showErrorView() {
+        errorView.isHidden = false
     }
 
     func bind() {
@@ -283,14 +340,40 @@ final class HomeViewController: UIViewController {
                     self?.updateAttendancesData()
                 }
             }).disposed(by: disposeBag)
+
+        viewModel.isRefreshing
+            .subscribe(onNext: { [weak self] isRefreshing in
+                guard isRefreshing == false else {
+                    self?.activityIndicator.startAnimating()
+                    return
+                }
+                DispatchQueue.main.async {
+                    self?.scrollView.refreshControl?.endRefreshing()
+                }
+            }).disposed(by: disposeBag)
+
+        viewModel.output.hasError
+            .subscribe(onNext: { [weak self] hasError in
+                guard hasError == true else { return }
+                DispatchQueue.main.async {
+                    self?.showErrorView()
+                }
+            }).disposed(by: disposeBag)
     }
 
     func showQRVC() {
 		let format = DateFormatter()
 		format.dateFormat = "yyyy-MM-dd HH:mm:ss"
 		format.timeZone = TimeZone(abbreviation: "UTC")
-		guard let time = getKoreaDateTypeToString(), let session = viewModel.output.sessionList.value.todaySession() else { return }
-		guard let startTime = format.date(from: time), let endTime = format.date(from: session.date) else { return }
+
+		guard let time = getKoreaDateTypeToString(),
+              let session = viewModel.output.sessionList.value.todaySession(),
+              let startTime = format.date(from: time),
+              let endTime = format.date(from: session.date) else {
+            showToastWhenCannotAttend()
+            return
+        }
+
 		let useTime = Int(endTime.timeIntervalSince(startTime))
 		if time.stringPrefix() == session.date.stringPrefix(), session.type == .needAttendance, viewModel.currentType.value == .absence {
 			let vc = QRViewController()
@@ -306,14 +389,22 @@ final class HomeViewController: UIViewController {
 				vc.viewModel.output.currentType.accept(.tardy)
 				self.present(vc, animated: true, completion: nil)
 			} else {
-				showToast(message: "지금은 출석할 수 없어요.")
+                showToastWhenCannotAttend()
 			}
 		} else if session.type == .needAttendance, viewModel.currentType.value == .attendance {
-			showToast(message: "이미 출석을 완료했어요.")
+            showToastWhenAlreadyAttended()
 		} else {
-			showToast(message: "지금은 출석할 수 없어요.")
+            showToastWhenCannotAttend()
 		}
 	}
+
+    func showToastWhenCannotAttend() {
+        showToast(message: "지금은 출석할 수 없어요.")
+    }
+
+    func showToastWhenAlreadyAttended() {
+        showToast(message: "이미 출석을 완료했어요.")
+    }
 
 	func getKoreaDateTypeToString() -> String? {
 		let current = Date()
@@ -330,10 +421,19 @@ final class HomeViewController: UIViewController {
     }
 
     func updateSessionInfo() {
-        guard let session = viewModel.output.sessionList.value.todaySession() else { return }
+        guard let session = viewModel.output.sessionList.value.todaySession() else {
+            updateWhenAllSessionsCompleted()
+            return
+        }
         dateLabel.text = session.date.date()?.mmdd() ?? ""
         titleLabel.text = session.title
         contentsLabel.text = session.description
+    }
+
+    func updateWhenAllSessionsCompleted() {
+        dateLabel.text = ""
+        titleLabel.text = "모든 세션을 끝마쳤습니다"
+        contentsLabel.text = ""
     }
 
     func updateAttendancesData() {
@@ -356,4 +456,30 @@ final class HomeViewController: UIViewController {
             }
         }
     }
+}
+
+// MARK: - Refresh Control
+private extension HomeViewController {
+
+    func setRefreshControl() {
+        scrollView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
+    }
+
+    @objc func refresh() {
+        viewModel.isRefreshing.accept(true)
+    }
+
+}
+
+extension HomeViewController: UIScrollViewDelegate {
+
+    private func setScrollViewDelegate() {
+        scrollView.delegate = self
+    }
+
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        activityIndicator.stopAnimating()
+    }
+
 }

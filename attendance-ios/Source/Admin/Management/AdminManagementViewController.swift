@@ -20,7 +20,11 @@ final class AdminManagementViewController: UIViewController {
         static let headerHeight: CGFloat = 104
     }
 
-    private let navigationBarView = BaseNavigationBarView(title: "")
+    private let navigationBarView: BaseNavigationBarView = {
+        let barView = BaseNavigationBarView(title: "")
+        barView.navigationBarView.backgroundColor = .clear
+        return barView
+    }()
 
     private let teamCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -251,19 +255,19 @@ private extension AdminManagementViewController {
     }
 
     func configureLayout() {
-        view.addSubviews([teamCollectionView, bottomSheetView, navigationBarView])
+        view.addSubviews([navigationBarView, teamCollectionView, bottomSheetView])
 
+        navigationBarView.snp.makeConstraints {
+            $0.top.equalTo(view.snp.top).offset(44)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(44)
+        }
         teamCollectionView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(Constants.topPadding)
             $0.bottom.left.right.equalToSuperview()
         }
         bottomSheetView.snp.makeConstraints {
             $0.top.bottom.left.right.equalToSuperview()
-        }
-        navigationBarView.snp.makeConstraints {
-            $0.top.equalTo(view.snp.top).offset(44)
-            $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(44)
         }
     }
 

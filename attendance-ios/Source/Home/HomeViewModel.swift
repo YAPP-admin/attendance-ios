@@ -27,6 +27,7 @@ final class HomeViewModel: ViewModel {
         let goToSetting = PublishRelay<Void>()
         let goToHome = PublishRelay<Void>()
         let goToLoginVC = PublishRelay<Void>()
+        let hasError = BehaviorRelay<Bool>(value: false)
         let yappConfig = BehaviorSubject<YappConfig?>(value: nil)
 
         let kakaoAccessToken = PublishSubject<String>()
@@ -47,6 +48,7 @@ final class HomeViewModel: ViewModel {
     let myId = BehaviorRelay<String>(value: "")
     let memberData = BehaviorRelay<Member?>(value: nil)
 	let currentType = BehaviorRelay<AttendanceType>(value: .attendance)
+    let isRefreshing = BehaviorRelay<Bool>(value: false)
 
     private let userDefaultsWorker = UserDefaultsWorker()
     private let firebaseWorker = FirebaseWorker()
@@ -70,9 +72,16 @@ final class HomeViewModel: ViewModel {
         configWorker.decodeSessionList { [weak self] result in
             switch result {
             case .success(let list): self?.output.sessionList.accept(list)
-            case .failure: ()
+            case .failure: self?.output.hasError.accept(true)
             }
         }
+
+        isRefreshing
+            .subscribe(onNext: { [weak self] isRefreshing in
+                guard isRefreshing == true else { return }
+                self?.setupConfig()
+                self?.checkLoginId()
+            }).disposed(by: disposeBag)
 
         setupConfig()
         checkLoginId()
@@ -85,7 +94,8 @@ final class HomeViewModel: ViewModel {
                 self?.output.yappConfig.onNext(config)
                 self?.userDefaultsWorker.setGeneration(generation: config.generation)
                 self?.userDefaultsWorker.setSessionCount(session: config.sessionCount)
-            case .failure: ()
+            case .failure:
+                self?.output.hasError.accept(true)
             }
         }
     }
@@ -99,7 +109,6 @@ final class HomeViewModel: ViewModel {
             getUserData()
         } else {
             output.goToLoginVC.accept(())
-            return
         }
     }
 
@@ -110,8 +119,10 @@ final class HomeViewModel: ViewModel {
                 self.memberData.accept(member)
                 self.userDefaultsWorker.setName(name: member.name)
                 self.calculateScore()
-            case .failure: ()
+            case .failure:
+                self.output.hasError.accept(true)
             }
+            self.isRefreshing.accept(false)
         }
     }
 

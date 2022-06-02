@@ -134,11 +134,8 @@ private extension AdminViewController {
                 self?.viewModel.input.tapCardView.accept(())
             }).disposed(by: disposeBag)
 
-        let tapGestureForTodayView = UITapGestureRecognizer()
-        todayView.addGestureRecognizer(tapGestureForTodayView)
-
-        tapGestureForTodayView.rx.event
-            .bind(onNext: { [weak self] _ in
+        todayView.managementButton.rx.tap
+            .subscribe(onNext: { [weak self] _ in
                 self?.goToTodayManagementVC()
             }).disposed(by: disposeBag)
     }
@@ -215,7 +212,7 @@ private extension AdminViewController {
     func goToGradeVC() {
         let gradeVC = AdminGradeViewController(viewModel: viewModel)
         navigationItem.backButtonTitle = ""
-        navigationController?.navigationBar.tintColor = .gray_800
+        navigationController?.isNavigationBarHidden = true
         navigationController?.pushViewController(gradeVC, animated: true)
     }
 

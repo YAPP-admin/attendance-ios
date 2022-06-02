@@ -15,11 +15,11 @@ extension UIViewController {
         toastLabel.textColor = .white
         toastLabel.textAlignment = .center
         toastLabel.text = message
-		toastLabel.style(.Body2)
+		toastLabel.style(.Body1)
         toastLabel.numberOfLines = 0
         self.view.addSubview(toastLabel)
         toastLabel.snp.makeConstraints {
-            $0.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-110)
+			$0.bottom.equalTo(self.view.snp.bottom).offset(-110)
             $0.leading.equalToSuperview().offset(24)
             $0.trailing.equalToSuperview().offset(-24)
             $0.width.greaterThanOrEqualTo(44)
@@ -39,7 +39,6 @@ extension UIViewController {
     func addNavigationBackButton() {
         let barView: UIView = {
             let view = UIView()
-            view.backgroundColor = .white
             return view
         }()
         let backButton: UIButton = {

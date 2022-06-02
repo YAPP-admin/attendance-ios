@@ -11,11 +11,6 @@ import FirebaseRemoteConfig
 import KakaoSDKUser
 import UIKit
 
-final class FirebaseWorker {
-    private let memberCollectionRef = Firestore.firestore().collection("member")
-}
-
-// MARK: - Register
 struct FirebaseNewMember {
     let name: String
     let positionType: PositionType
@@ -23,16 +18,52 @@ struct FirebaseNewMember {
     let teamNumber: Int
 }
 
+final class FirebaseWorker {
+
+    private let memberCollectionRef = Firestore.firestore().collection("member")
+    private var attendances: [[String: Any]] = []
+    private let configWorker = ConfigWorker()
+
+    init() {
+        setEmptyAttendances()
+    }
+
+}
+
 extension FirebaseWorker {
 
+    private func setEmptyAttendances() {
+        configWorker.decodeSessionList { [weak self] result in
+            switch result {
+            case .success(let sessionList):
+                var attendances: [[String: Any]] = []
+
+                for id in 0..<sessionList.count {
+                    let session = sessionList[id]
+                    let attendanceType: AttendanceType = session.type == .needAttendance ? .absence : .attendanceMarked
+                    let text = attendanceType.text
+                    let point = attendanceType.point
+
+                    let empty: [String: Any] = ["sessionId": id,
+                                                "type": ["text": text, "point": point]]
+                    attendances.append(empty)
+                }
+
+                self?.attendances = attendances
+            case .failure: ()
+            }
+        }
+    }
+
     func registerKakaoUserInfo(id: Int, newUser: FirebaseNewMember, completion: @escaping (Result<Void, Error>) -> Void) {
-        memberCollectionRef.document("\(id)").setData([
+
+        self.memberCollectionRef.document("\(id)").setData([
             "id": id,
             "name": newUser.name,
             "position": newUser.positionType.rawValue,
             "team": ["number": newUser.teamNumber,
                      "type": newUser.teamType.rawValue],
-            "attendances": self.makeEmptyAttendances()
+            "attendances": attendances
         ]) { error in
             guard let error = error else {
                 completion(.success(()))
@@ -44,13 +75,14 @@ extension FirebaseWorker {
 
     func registerAppleUserInfo(id: String, newUser: FirebaseNewMember, completion: @escaping (Result<Void, Error>) -> Void) {
         guard let intId = Int(id) else { return }
-        memberCollectionRef.document("\(id)").setData([
+
+        self.memberCollectionRef.document("\(id)").setData([
             "id": intId,
             "name": newUser.name,
             "position": newUser.positionType.rawValue,
             "team": ["number": newUser.teamNumber,
                      "type": newUser.teamType.rawValue],
-            "attendances": self.makeEmptyAttendances()
+            "attendances": attendances
         ]) { error in
             guard let error = error else {
                 completion(.success(()))
@@ -60,23 +92,12 @@ extension FirebaseWorker {
         }
     }
 
-    private func makeEmptyAttendances() -> [[String: Any]] {
-        var attendances: [[String: Any]] = []
-        let sessionCount = 20
-        for id in 0..<sessionCount {
-            let empty: [String: Any] = ["sessionId": id,
-                                        "type": ["text": "결석", "point": -20]]
-            attendances.append(empty)
-        }
-        return attendances
-    }
-
     /// 문서 이름을 애플 아이디에서 카카오톡 아이디로 변경합니다.
     func changeMemberDocumentName(_ appleId: String, to kakaoId: String, completion: @escaping (Result<Void, Error>) -> Void) {
         getMemberDocumentIdList { result in
             switch result {
             case .success(let list):
-                guard list.contains(appleId) else { return }
+                guard list.contains(appleId) == true else { return }
 
                 let docRef = self.memberCollectionRef.document(appleId)
 

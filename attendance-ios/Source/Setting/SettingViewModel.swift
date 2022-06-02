@@ -98,8 +98,7 @@ final class SettingViewModel: ViewModel {
             guard let self = self else { return }
             switch result {
             case .success:
-                self.userDefaultsWorker.removeKakaoTalkId()
-                self.userDefaultsWorker.removeAppleId()
+                self.userDefaultsWorker.removeAllLoginId()
                 self.output.goToLoginVC.accept(())
             case .failure:
                 self.output.showToastWhenError.accept(())

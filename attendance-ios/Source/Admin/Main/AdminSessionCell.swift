@@ -36,7 +36,7 @@ final class AdminSessionCell: UICollectionViewCell {
         return label
     }()
 
-    private let arrowButton: UIButton = {
+    var arrowButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "cheron_right"), for: .normal)
         button.tintColor = .gray_600
@@ -46,14 +46,21 @@ final class AdminSessionCell: UICollectionViewCell {
         return button
     }()
 
+
     override init(frame: CGRect) {
         super.init(frame: frame)
+        setupArrowButton()
         configureUI()
         configureLayout()
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        setupArrowButton()
     }
 
 }
@@ -86,6 +93,15 @@ extension AdminSessionCell {
 
 // MARK: - UI
 private extension AdminSessionCell {
+
+    private func setupArrowButton() {
+        let button = UIButton()
+        button.setImage(UIImage(named: "cheron_right"), for: .normal)
+        button.tintColor = .gray_600
+        button.imageView?.contentMode = .scaleAspectFit
+        button.isHidden = true
+        arrowButton = button
+    }
 
     func configureUI() {
         backgroundColor = .white
