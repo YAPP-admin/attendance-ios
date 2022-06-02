@@ -37,7 +37,7 @@ extension SettingViewController {
             $0.top.equalTo(generationView.snp.bottom).offset(28)
             $0.leading.equalToSuperview().offset(24)
             $0.trailing.equalToSuperview().offset(-24)
-            $0.height.equalTo(113)
+			$0.height.equalTo((UIScreen.main.bounds.width - 48) * 0.34)
         }
         nameLabel.snp.makeConstraints {
             $0.top.equalTo(illustView.snp.bottom).offset(16)
