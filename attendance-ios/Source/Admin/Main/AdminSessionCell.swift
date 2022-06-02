@@ -42,6 +42,7 @@ final class AdminSessionCell: UICollectionViewCell {
         button.tintColor = .gray_600
         button.imageView?.contentMode = .scaleAspectFit
         button.isHidden = true
+        button.isUserInteractionEnabled = false
         return button
     }()
 
