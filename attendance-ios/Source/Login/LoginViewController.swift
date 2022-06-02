@@ -377,9 +377,9 @@ private extension LoginViewController {
         view.addSubviews([splashBackgroundView, loginSplashView])
 
         loginSplashView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(40)
-            $0.bottom.equalToSuperview().inset(80)
+            $0.top.equalToSuperview().offset(162)
             $0.left.right.equalToSuperview().inset(10)
+            $0.height.equalTo(loginSplashView.snp.width)
         }
         splashBackgroundView.snp.makeConstraints {
             $0.top.bottom.left.right.equalToSuperview()
@@ -406,7 +406,7 @@ private extension LoginViewController {
         }
 
         mainSplashView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(40)
+            $0.top.equalToSuperview().offset(57)
             $0.left.right.equalToSuperview().inset(68)
             $0.height.equalTo(view.bounds.width)
         }
