@@ -124,11 +124,13 @@ final class LoginViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        setupMainSplashView()
         stopMainSplashWhenFirshSplash()
     }
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
+        mainSplashView.isHidden = false
         mainSplashStillView.isHidden = true
     }
 
