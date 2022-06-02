@@ -56,26 +56,26 @@ extension SettingViewController {
         versionView.snp.makeConstraints {
             $0.top.equalTo(sectionView.snp.bottom).offset(28)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(59)
+            $0.height.equalTo(60)
         }
         view.addSubview(policyView)
         policyView.snp.makeConstraints {
             $0.top.equalTo(versionView.snp.bottom)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(59)
+            $0.height.equalTo(60)
         }
 
         view.addSubview(logoutView)
         logoutView.snp.makeConstraints {
             $0.top.equalTo(policyView.snp.bottom).offset(32)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(51)
+            $0.height.equalTo(52)
         }
         view.addSubview(memberoutView)
         memberoutView.snp.makeConstraints {
             $0.top.equalTo(logoutView.snp.bottom)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(51)
+            $0.height.equalTo(52)
         }
 
         view.addSubview(alertView)

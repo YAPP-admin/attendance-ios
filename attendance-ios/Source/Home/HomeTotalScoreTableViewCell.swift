@@ -51,6 +51,11 @@ final class HomeTotalScoreTableViewCell: BaseTableViewCell {
         view.backgroundColor = .background_base
         return view
     }()
+	private let emptyView: UIView = {
+		let view = UIView()
+		view.backgroundColor = .clear
+		return view
+	}()
     private var progress = MKMagneticProgress()
     private let chartView = HomeChartView()
 
@@ -83,7 +88,7 @@ final class HomeTotalScoreTableViewCell: BaseTableViewCell {
         contentView.addSubview(helpButton)
         helpButton.snp.makeConstraints {
             $0.top.equalToSuperview().offset(40)
-            $0.trailing.equalToSuperview().offset(-26)
+            $0.trailing.equalToSuperview().offset(-14)
             $0.width.height.equalTo(44)
         }
         stackView.addArrangedSubview(containerView)
@@ -121,6 +126,10 @@ final class HomeTotalScoreTableViewCell: BaseTableViewCell {
         sectionView.snp.makeConstraints {
             $0.height.equalTo(12)
         }
+		stackView.addArrangedSubview(emptyView)
+		emptyView.snp.makeConstraints {
+			$0.height.equalTo(28)
+		}
     }
 
     func updateUI(total: Int, attendance: Int, absence: Int, tardy: Int) {
