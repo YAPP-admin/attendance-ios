@@ -17,7 +17,7 @@ final class AdminGradeMemberCell: UICollectionViewCell {
     private let nameStackView: UIStackView = {
         let view = UIStackView()
         view.alignment = .leading
-        view.spacing = 6
+        view.spacing = 8
         view.alignment = .center
         return view
     }()

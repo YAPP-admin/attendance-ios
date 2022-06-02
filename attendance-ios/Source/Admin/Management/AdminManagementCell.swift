@@ -16,7 +16,7 @@ final class AdminManagementCell: UICollectionViewCell {
         static let horizontalPadding: CGFloat = 24
         static let cornerRadius: CGFloat = 8
         static let buttonSize: CGSize = .init(width: 77, height: 33)
-        static let cellHeight: CGFloat = 60
+        static let cellHeight: CGFloat = 64
     }
 
     private let collectionView: UICollectionView = {
@@ -172,7 +172,6 @@ extension AdminManagementCell: UICollectionViewDelegateFlowLayout, UICollectionV
         return members.count
     }
 
-    // TODO: -
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AdminManagementMemberCell.identifier, for: indexPath) as? AdminManagementMemberCell else { return UICollectionViewCell() }
         let member = members[indexPath.row]

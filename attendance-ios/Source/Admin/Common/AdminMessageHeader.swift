@@ -26,7 +26,7 @@ final class AdminMessageHeader: UICollectionReusableView {
 
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = .Pretendard(type: .regular, size: 16)
+        label.font = .Pretendard(type: .medium, size: 16)
         label.textAlignment = .center
         label.textColor = .yapp_orange
         return label

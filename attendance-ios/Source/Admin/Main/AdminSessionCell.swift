@@ -102,10 +102,9 @@ private extension AdminSessionCell {
         dateLabel.snp.makeConstraints {
             $0.width.equalTo(63)
         }
-        arrowButton.backgroundColor = .yapp_orange_opacity
         arrowButton.snp.makeConstraints {
             $0.bottom.equalToSuperview()
-            $0.right.equalToSuperview().inset(Constants.horizontalPadding/2)
+            $0.right.equalToSuperview().inset(18)
 			$0.height.equalTo(50)
 			$0.centerY.equalToSuperview()
         }

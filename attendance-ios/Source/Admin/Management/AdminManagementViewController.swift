@@ -16,7 +16,7 @@ final class AdminManagementViewController: UIViewController {
         static let verticalPadding: CGFloat = 28
         static let horizontalPadding: CGFloat = 24
         static let topPadding: CGFloat = 88
-        static let cellHeight: CGFloat = 60
+        static let cellHeight: CGFloat = 64
         static let headerHeight: CGFloat = 104
     }
 
