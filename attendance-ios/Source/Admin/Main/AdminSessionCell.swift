@@ -36,7 +36,7 @@ final class AdminSessionCell: UICollectionViewCell {
         return label
     }()
 
-    let arrowButton: UIButton = {
+    private let arrowButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "cheron_right"), for: .normal)
         button.tintColor = .gray_600
