@@ -272,7 +272,7 @@ extension LoginViewController: WKNavigationDelegate {
         configureFirstSplashLayout()
 
         if webView == loginSplashView {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.95) { [weak self] in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [weak self] in
                 self?.view.backgroundColor = .white
                 self?.removeSplashView()
                 self?.setupMainSplashView()
