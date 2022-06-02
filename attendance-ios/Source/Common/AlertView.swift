@@ -113,8 +113,8 @@ private extension AlertView {
         stackView.addArrangedSubviews([leftButton, rightButton])
 
         containerView.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(270)
             $0.left.right.equalToSuperview().inset(Constants.margin)
-            $0.center.equalToSuperview()
             $0.height.equalTo(Constants.containerViewHeight)
         }
         label.snp.makeConstraints {
