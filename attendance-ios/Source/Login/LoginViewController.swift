@@ -35,6 +35,14 @@ final class LoginViewController: UIViewController {
         return webView
     }()
 
+    private let mainSplashStillView: UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage(named: "splash_main_still")
+        view.contentMode = .scaleAspectFit
+        view.isHidden = true
+        return view
+    }()
+
     private let splashBackgroundView: UIView = {
         let view = UIView()
         view.backgroundColor = Constants.splashOrange
@@ -112,6 +120,16 @@ final class LoginViewController: UIViewController {
         setupLoginSplashView()
         setupMainSplashView()
         setBackgroundColor()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        stopMainSplashWhenFirshSplash()
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        mainSplashStillView.isHidden = true
     }
 
 }
@@ -266,18 +284,42 @@ extension LoginViewController: WKNavigationDelegate {
         configureFirstSplashLayout()
 
         if webView == loginSplashView {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.95) {
-                self.view.backgroundColor = .white
-                self.removeSplashView()
-                self.viewModel.hasKakaoId()
-                self.viewModel.setupAfterSplashShowed()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.95) { [weak self] in
+                self?.view.backgroundColor = .white
+                self?.removeSplashView()
+                self?.viewModel.hasKakaoId()
+                self?.viewModel.setupAfterSplashShowed()
             }
         }
+        if webView == mainSplashView {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 5.1) { [weak self] in
+                self?.stopMainSplash()
+            }
+        }
+    }
+
+    private func loginSplashViewsafsafsda() {
+        view.backgroundColor = .white
+        removeSplashView()
+        viewModel.hasKakaoId()
+        viewModel.setupAfterSplashShowed()
     }
 
     private func removeSplashView() {
         loginSplashView.removeFromSuperview()
         splashBackgroundView.removeFromSuperview()
+    }
+
+    private func stopMainSplash() {
+        mainSplashStillView.isHidden = false
+        mainSplashView.isHidden = true
+    }
+
+    private func stopMainSplashWhenFirshSplash() {
+        guard let isFirstSplash = try? viewModel.output.isFirstSplash.value(), isFirstSplash == false else { return }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.1) { [weak self] in
+            self?.stopMainSplash()
+        }
     }
 
 }
@@ -374,7 +416,7 @@ private extension LoginViewController {
 
     func configureLayout() {
         view.addSubviews([titleLabel, appleLoginButton, kakaoLoginButton])
-        view.addSubviews([mainSplashView, secretAdminButton, easterEggView])
+        view.addSubviews([mainSplashView, mainSplashStillView, secretAdminButton, easterEggView])
 
         titleLabel.snp.makeConstraints {
             $0.top.equalTo(mainSplashView.snp.bottom)
@@ -395,6 +437,11 @@ private extension LoginViewController {
             $0.top.equalToSuperview().offset(40)
             $0.left.right.equalToSuperview().inset(68)
             $0.height.equalTo(view.bounds.width)
+        }
+        mainSplashStillView.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(62)
+            $0.left.right.equalToSuperview().inset(9)
+            $0.height.equalTo(mainSplashStillView.snp.width)
         }
         secretAdminButton.snp.makeConstraints {
             $0.center.equalTo(mainSplashView)
