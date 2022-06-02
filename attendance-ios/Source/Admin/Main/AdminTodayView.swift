@@ -12,7 +12,7 @@ final class AdminTodayView: UIView {
 
     enum Constants {
         static let cornerRadius: CGFloat = 8
-        static let buttonSize: CGSize = .init(width: 57, height: 33)
+        static let managementButtonSize: CGSize = .init(width: 60, height: 36)
     }
 
     private let dateLabel: UILabel = {
@@ -86,14 +86,14 @@ private extension AdminTodayView {
         titleLabel.snp.makeConstraints {
             $0.top.equalTo(dateLabel.snp.bottom).offset(6)
             $0.left.equalToSuperview()
-            $0.right.equalToSuperview().inset(Constants.buttonSize.width+8)
-            $0.height.equalTo(Constants.buttonSize.height)
+            $0.right.equalToSuperview().inset(Constants.managementButtonSize.width+8)
+            $0.height.equalTo(Constants.managementButtonSize.height)
         }
         managementButton.snp.makeConstraints {
             $0.top.equalTo(dateLabel.snp.bottom).offset(6)
             $0.right.equalToSuperview()
-            $0.width.equalTo(Constants.buttonSize.width)
-            $0.height.equalTo(Constants.buttonSize.height)
+            $0.width.equalTo(Constants.managementButtonSize.width)
+            $0.height.equalTo(Constants.managementButtonSize.height)
         }
         dividerView.snp.makeConstraints {
             $0.bottom.left.right.equalToSuperview()

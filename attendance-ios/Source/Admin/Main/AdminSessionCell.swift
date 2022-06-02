@@ -24,7 +24,7 @@ final class AdminSessionCell: UICollectionViewCell {
 
     private let dateLabel: UILabel = {
         let label = UILabel()
-        label.font = .Pretendard(type: .semiBold, size: 16)
+        label.font = .Pretendard(type: .regular, size: 16)
         label.textColor = .gray_400
         return label
     }()
@@ -102,9 +102,10 @@ private extension AdminSessionCell {
         dateLabel.snp.makeConstraints {
             $0.width.equalTo(63)
         }
+        arrowButton.backgroundColor = .yapp_orange_opacity
         arrowButton.snp.makeConstraints {
-            $0.top.bottom.equalToSuperview()
-            $0.right.equalToSuperview().inset(Constants.horizontalPadding)
+            $0.bottom.equalToSuperview()
+            $0.right.equalToSuperview().inset(Constants.horizontalPadding/2)
 			$0.height.equalTo(50)
 			$0.centerY.equalToSuperview()
         }
