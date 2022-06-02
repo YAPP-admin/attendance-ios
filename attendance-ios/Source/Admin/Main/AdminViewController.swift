@@ -173,13 +173,13 @@ extension AdminViewController: UICollectionViewDelegateFlowLayout, UICollectionV
         let session = sessionList[indexPath.row]
         cell.updateUI(with: session)
 
-        cell.arrowButton.rx.tap
-            .asObservable()
-            .subscribe(onNext: { [weak self] _ in
-                guard let session = sessionList[safe: indexPath.row],
-                      session.type == .needAttendance else { return }
-                self?.goToManagementVC(session: session)
-            }).disposed(by: disposeBag)
+//        cell.arrowButton.rx.tap
+//            .asObservable()
+//            .subscribe(onNext: { [weak self] _ in
+//                guard let session = sessionList[safe: indexPath.row],
+//                      session.type == .needAttendance else { return }
+//                self?.goToManagementVC(session: session)
+//            }).disposed(by: disposeBag)
 
         return cell
     }
@@ -190,6 +190,13 @@ extension AdminViewController: UICollectionViewDelegateFlowLayout, UICollectionV
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         0
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let sessionList = try? viewModel.output.sessionList.value(),
+              let session = sessionList[safe: indexPath.row],
+              session.type == .needAttendance else { return }
+        goToManagementVC(session: session)
     }
 
 }
@@ -257,7 +264,7 @@ private extension AdminViewController {
         cardView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(90)
             $0.left.right.equalToSuperview().inset(Constants.horizontalPadding)
-            $0.height.equalTo(Constants.topPadding)
+            $0.height.equalTo(100)
         }
         dividerView.snp.makeConstraints {
             $0.top.equalTo(cardView.snp.bottom).offset(Constants.verticalPadding)
@@ -279,7 +286,7 @@ private extension AdminViewController {
         }
         sessionCollectionView.snp.makeConstraints {
             $0.top.equalTo(sessionTitleLabel.snp.bottom).offset(4)
-            $0.left.right.equalToSuperview().inset(Constants.horizontalPadding)
+            $0.left.right.equalToSuperview()
             $0.bottom.equalToSuperview()
             $0.height.equalTo(Constants.cellHeight*20)
         }

@@ -24,7 +24,7 @@ final class AdminSessionCell: UICollectionViewCell {
 
     private let dateLabel: UILabel = {
         let label = UILabel()
-        label.font = .Pretendard(type: .semiBold, size: 16)
+        label.font = .Pretendard(type: .regular, size: 16)
         label.textColor = .gray_400
         return label
     }()
@@ -36,7 +36,15 @@ final class AdminSessionCell: UICollectionViewCell {
         return label
     }()
 
-    var arrowButton = UIButton()
+    var arrowButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "cheron_right"), for: .normal)
+        button.tintColor = .gray_600
+        button.imageView?.contentMode = .scaleAspectFit
+        button.isHidden = true
+        button.isUserInteractionEnabled = false
+        return button
+    }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -111,8 +119,8 @@ private extension AdminSessionCell {
             $0.width.equalTo(63)
         }
         arrowButton.snp.makeConstraints {
-            $0.top.bottom.equalToSuperview()
-            $0.right.equalToSuperview().inset(Constants.horizontalPadding)
+            $0.bottom.equalToSuperview()
+            $0.right.equalToSuperview().inset(18)
 			$0.height.equalTo(50)
 			$0.centerY.equalToSuperview()
         }
