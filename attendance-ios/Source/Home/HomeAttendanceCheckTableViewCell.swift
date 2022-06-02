@@ -56,7 +56,7 @@ final class HomeAttendanceCheckTableViewCell: BaseTableViewCell {
     private let descriptionLabel: UILabel = {
         let label = UILabel()
         label.textColor = .gray_800
-        label.font = .Pretendard(type: .regular, size: 16)
+        label.font = .Pretendard(type: .medium, size: 16)
         label.text = "새롭게 만난 팀원들과 함께 앞으로의 팀 방향성을 함께 생각해보아요! 새롭게 만난 팀원들과 인사도 나눠보고 즐거운 시간을 보내세요."
         label.numberOfLines = 2
         return label
