@@ -26,6 +26,7 @@ final class SignUpPositionViewController: UIViewController {
         label.text = "속한 직군을 \n알려주세요"
         label.font = .Pretendard(type: .bold, size: 24)
         label.textColor = .gray_1200
+        label.setLineSpacing(4)
         label.numberOfLines = 0
         return label
     }()
@@ -41,7 +42,7 @@ final class SignUpPositionViewController: UIViewController {
 
     private let nextButton: UIButton = {
         let button = UIButton()
-        button.setTitle("확인", for: .normal)
+        button.setTitle("다음", for: .normal)
         button.titleLabel?.font = .Pretendard(type: .bold, size: 18)
         button.backgroundColor = .gray_400
         button.layer.cornerRadius = 10

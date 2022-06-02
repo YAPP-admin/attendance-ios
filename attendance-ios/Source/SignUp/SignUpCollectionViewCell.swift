@@ -17,7 +17,7 @@ final class SignUpCollectionViewCell: UICollectionViewCell {
 
     private let positionLabel: UILabel = {
         let label = UILabel()
-        label.font = .Pretendard(type: .medium, size: 16)
+        label.font = .Pretendard(type: .semiBold, size: 16)
         label.textColor = .gray_800
         label.textAlignment = .center
         return label
