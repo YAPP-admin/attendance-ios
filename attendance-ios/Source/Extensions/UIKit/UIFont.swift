@@ -9,7 +9,7 @@ import UIKit
 
 extension UIFont {
     class func Pretendard(type: PretendardType, size: CGFloat) -> UIFont {
-        guard let font = UIFont(name: type.name, size: size) else { return UIFont() }
+        guard let font = UIFont(name: type.name, size: size+1) else { return UIFont() }
         return font
     }
 
