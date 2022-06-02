@@ -36,30 +36,23 @@ final class AdminSessionCell: UICollectionViewCell {
         return label
     }()
 
-    var arrowButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(named: "cheron_right"), for: .normal)
-        button.tintColor = .gray_600
-        button.imageView?.contentMode = .scaleAspectFit
-        button.isHidden = true
-        button.isUserInteractionEnabled = false
-        return button
+    private let arrowImageView: UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage(named: "cheron_right")
+        view.image?.withTintColor(.gray_600)
+        view.contentMode = .scaleAspectFit
+        view.isHidden = true
+        return view
     }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupArrowButton()
         configureUI()
         configureLayout()
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        setupArrowButton()
     }
 
 }
@@ -80,34 +73,25 @@ extension AdminSessionCell {
     private func updateUIWhenNeedAttendance() {
         dateLabel.textColor = .gray_1200
         titleLabel.textColor = .gray_1200
-        arrowButton.isHidden = false
+        arrowImageView.isHidden = false
     }
 
     private func updateUIWhenDontNeedAttendance() {
         dateLabel.textColor = .gray_400
         titleLabel.textColor = .gray_400
-        arrowButton.isHidden = true
+        arrowImageView.isHidden = true
     }
 }
 
 // MARK: - UI
 private extension AdminSessionCell {
 
-    private func setupArrowButton() {
-        let button = UIButton()
-        button.setImage(UIImage(named: "cheron_right"), for: .normal)
-        button.tintColor = .gray_600
-        button.imageView?.contentMode = .scaleAspectFit
-        button.isHidden = true
-        arrowButton = button
-    }
-
     func configureUI() {
         backgroundColor = .white
     }
 
     func configureLayout() {
-        addSubviews([labelStackView, arrowButton])
+        addSubviews([labelStackView, arrowImageView])
         labelStackView.addArrangedSubviews([dateLabel, titleLabel])
 
         labelStackView.snp.makeConstraints {
@@ -118,7 +102,7 @@ private extension AdminSessionCell {
         dateLabel.snp.makeConstraints {
             $0.width.equalTo(63)
         }
-        arrowButton.snp.makeConstraints {
+        arrowImageView.snp.makeConstraints {
             $0.bottom.equalToSuperview()
             $0.right.equalToSuperview().inset(18)
 			$0.height.equalTo(50)

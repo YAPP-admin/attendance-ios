@@ -12,7 +12,7 @@ final class AdminTodayView: UIView {
 
     enum Constants {
         static let cornerRadius: CGFloat = 8
-        static let managementButtonSize: CGSize = .init(width: 60, height: 36)
+        static let managementButtonSize: CGSize = .init(width: 58, height: 33)
     }
 
     private let dateLabel: UILabel = {
