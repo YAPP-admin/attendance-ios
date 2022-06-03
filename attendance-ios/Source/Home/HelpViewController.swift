@@ -20,11 +20,15 @@ final class HelpViewController: UIViewController {
         let attributedString = NSMutableAttributedString(string: fullText)
         attributedString.addAttributes(attributes, range: range)
 
+		let paragraphStyle = NSMutableParagraphStyle()
+		paragraphStyle.lineSpacing = 2.0
+		attributedString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attributedString.length))
+
         let label = UILabel()
         label.textColor = .gray_1200
         label.style(.H3)
-        label.attributedText = attributedString
         label.numberOfLines = 2
+		label.attributedText = attributedString
         return label
     }()
     private let descLabel: UILabel = {
