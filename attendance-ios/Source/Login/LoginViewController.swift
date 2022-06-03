@@ -1,3 +1,4 @@
+//
 //  LoginViewController.swift
 //  attendance-ios
 //
@@ -33,14 +34,6 @@ final class LoginViewController: UIViewController {
     private let mainSplashView: WKWebView = {
         let webView = WKWebView()
         return webView
-    }()
-
-    private let mainSplashStillView: UIImageView = {
-        let view = UIImageView()
-        view.image = UIImage(named: "splash_main_still")
-        view.contentMode = .scaleAspectFit
-        view.isHidden = true
-        return view
     }()
 
     private let splashBackgroundView: UIView = {
@@ -125,13 +118,6 @@ final class LoginViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupMainSplashView()
-        stopMainSplashWhenFirshSplash()
-    }
-
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        mainSplashView.isHidden = false
-        mainSplashStillView.isHidden = true
     }
 
 }
@@ -286,16 +272,12 @@ extension LoginViewController: WKNavigationDelegate {
         configureFirstSplashLayout()
 
         if webView == loginSplashView {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.95) { [weak self] in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [weak self] in
                 self?.view.backgroundColor = .white
                 self?.removeSplashView()
+                self?.setupMainSplashView()
                 self?.viewModel.hasKakaoId()
                 self?.viewModel.setupAfterSplashShowed()
-            }
-        }
-        if webView == mainSplashView {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 5.1) { [weak self] in
-                self?.stopMainSplash()
             }
         }
     }
@@ -310,18 +292,6 @@ extension LoginViewController: WKNavigationDelegate {
     private func removeSplashView() {
         loginSplashView.removeFromSuperview()
         splashBackgroundView.removeFromSuperview()
-    }
-
-    private func stopMainSplash() {
-        mainSplashStillView.isHidden = false
-        mainSplashView.isHidden = true
-    }
-
-    private func stopMainSplashWhenFirshSplash() {
-        guard let isFirstSplash = try? viewModel.output.isFirstSplash.value(), isFirstSplash == false else { return }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.1) { [weak self] in
-            self?.stopMainSplash()
-        }
     }
 
 }
@@ -407,9 +377,9 @@ private extension LoginViewController {
         view.addSubviews([splashBackgroundView, loginSplashView])
 
         loginSplashView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(40)
-            $0.bottom.equalToSuperview().inset(80)
+            $0.top.equalToSuperview().offset(162)
             $0.left.right.equalToSuperview().inset(10)
+            $0.height.equalTo(loginSplashView.snp.width)
         }
         splashBackgroundView.snp.makeConstraints {
             $0.top.bottom.left.right.equalToSuperview()
@@ -418,7 +388,7 @@ private extension LoginViewController {
 
     func configureLayout() {
         view.addSubviews([mainSplashView, titleLabel, appleLoginButton, kakaoLoginButton])
-        view.addSubviews([mainSplashStillView, secretAdminButton, easterEggView])
+        view.addSubviews([secretAdminButton, easterEggView])
 
         titleLabel.snp.makeConstraints {
             $0.bottom.equalToSuperview().inset(Constants.buttonBottomSpacing+Constants.buttonHeight+76)
@@ -436,14 +406,9 @@ private extension LoginViewController {
         }
 
         mainSplashView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(40)
+            $0.top.equalToSuperview().offset(57)
             $0.left.right.equalToSuperview().inset(68)
             $0.height.equalTo(view.bounds.width)
-        }
-        mainSplashStillView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(62)
-            $0.left.right.equalToSuperview().inset(9)
-            $0.height.equalTo(mainSplashStillView.snp.width)
         }
         secretAdminButton.snp.makeConstraints {
             $0.center.equalTo(mainSplashView)
