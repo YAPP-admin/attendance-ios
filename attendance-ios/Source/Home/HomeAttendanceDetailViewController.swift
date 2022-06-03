@@ -47,7 +47,7 @@ final class HomeAttendanceDetailViewController: UIViewController {
     private let dateLabel: UILabel = {
         let label = UILabel()
         label.textColor = .gray_600
-        label.font = .Pretendard(type: .regular, size: 16)
+		label.style(.Body1)
         label.text = "01.01"
         label.textAlignment = .right
         return label
@@ -55,7 +55,7 @@ final class HomeAttendanceDetailViewController: UIViewController {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .gray_1000
-        label.font = .Pretendard(type: .bold, size: 24)
+		label.style(.H1)
         label.text = "오리엔테이션"
         label.numberOfLines = 0
         return label
@@ -66,6 +66,7 @@ final class HomeAttendanceDetailViewController: UIViewController {
         label.style(.Body1)
         label.text = "새롭게 만난 팀원들과 함께 앞으로의 팀 방향성을 함께 생각해보아요! 새롭게 만난 팀원들과 인사도 나눠보고 즐거운 시간을 보내세요."
         label.numberOfLines = 0
+		label.setLineSpacing(1.5)
         return label
     }()
 
