@@ -441,19 +441,27 @@ final class HomeViewController: UIViewController {
         if let data = viewModel.memberData.value {
             let id = data.attendances.filter { $0.sessionId == session.sessionId }.map { $0.sessionId }.first
             let text = data.attendances.filter { $0.sessionId == id }.map { $0.type.text }
-            if text.first == "결석" {
-				infoLabel.text = "아직 출석 전이에요"
-				infoLabel.textColor = .gray_600
-				checkButton.setImage(UIImage(named: "info_check_disabled"), for: .normal)
-				illustView.image = UIImage(named: "illust_member_home_disabled")
-				viewModel.currentType.accept(.absence)
-            } else {
+			if session.type == .dayOff {
 				infoLabel.text = "출석을 완료했어요"
 				infoLabel.textColor = .yapp_orange
 				checkButton.setImage(UIImage(named: "info_check_enabled"), for: .normal)
 				illustView.image = UIImage(named: "illust_member_home_enabled")
 				viewModel.currentType.accept(.attendance)
-            }
+			} else {
+				if text.first == "결석" {
+					infoLabel.text = "아직 출석 전이에요"
+					infoLabel.textColor = .gray_600
+					checkButton.setImage(UIImage(named: "info_check_disabled"), for: .normal)
+					illustView.image = UIImage(named: "illust_member_home_disabled")
+					viewModel.currentType.accept(.absence)
+				} else {
+					infoLabel.text = "출석을 완료했어요"
+					infoLabel.textColor = .yapp_orange
+					checkButton.setImage(UIImage(named: "info_check_enabled"), for: .normal)
+					illustView.image = UIImage(named: "illust_member_home_enabled")
+					viewModel.currentType.accept(.attendance)
+				}
+			}
         }
     }
 }
