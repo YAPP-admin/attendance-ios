@@ -382,8 +382,8 @@ final class HomeViewController: UIViewController {
             return
         }
 
-		let useTime = Int(endTime.timeIntervalSince(startTime))
-		if time.stringPrefix() == session.date.stringPrefix(), session.type == .needAttendance, viewModel.currentType.value == .absence {
+		let useTime = Int(endTime.timeIntervalSince(startTime)).magnitude
+		if time.stringPrefix(endNum: -10) == session.date.stringPrefix(endNum: -10), session.type == .needAttendance, viewModel.currentType.value == .absence {
 			let vc = QRViewController()
 			vc.modalPresentationStyle = .overFullScreen
 			vc.viewModel.output.memberData.onNext(self.viewModel.memberData.value)
@@ -393,7 +393,7 @@ final class HomeViewController: UIViewController {
 			if useTime <= 300 {
 				vc.viewModel.output.currentType.accept(.attendance)
 				self.present(vc, animated: true, completion: nil)
-			} else if useTime > 300, useTime <= 1800 {
+			} else if useTime > 300, useTime <= 1800, time.stringPrefix(endNum: -7) == session.date.stringPrefix(endNum: -7) {
 				vc.viewModel.output.currentType.accept(.tardy)
 				self.present(vc, animated: true, completion: nil)
 			} else {
