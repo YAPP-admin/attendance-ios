@@ -326,13 +326,21 @@ final class HomeViewController: UIViewController {
                     self?.scrollView.isHidden = false
                     self?.attendanceView.view.isHidden = true
                 case .attendanceCheck:
-                    self?.attendanceView.tableView.reloadData()
                     self?.topView.isHidden = true
                     self?.scrollView.isHidden = true
                     self?.attendanceView.view.isHidden = false
+					self?.viewModel.getUserData()
                 }
                 self?.tabView.setHomeType(type)
             }).disposed(by: disposeBag)
+
+		viewModel.output.isReload
+			.subscribe(onNext: { [weak self] isReload in
+				guard isReload == true else { return }
+				DispatchQueue.main.async {
+					self?.attendanceView.tableView.reloadData()
+				}
+			}).disposed(by: disposeBag)
 
         viewModel.memberData
             .subscribe(onNext: { [weak self] _ in

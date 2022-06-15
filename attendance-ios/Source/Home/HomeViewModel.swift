@@ -28,6 +28,7 @@ final class HomeViewModel: ViewModel {
         let goToHome = PublishRelay<Void>()
         let goToLoginVC = PublishRelay<Void>()
         let hasError = BehaviorRelay<Bool>(value: false)
+		let isReload = BehaviorRelay<Bool>(value: false)
         let yappConfig = BehaviorSubject<YappConfig?>(value: nil)
 
         let kakaoAccessToken = PublishSubject<String>()
@@ -137,7 +138,7 @@ final class HomeViewModel: ViewModel {
             if data.attendances[idx].sessionId < session.sessionId, output.sessionList.value[idx].type == .needAttendance {
                 let currentScore = output.totalScore.value
                 output.totalScore.accept(currentScore + data.attendances[idx].type.point)
-                if data.attendances[idx].type.text == "출석" {
+                if data.attendances[idx].type.text == "출석" || data.attendances[idx].type.text == "출석 인정" {
                     let attendanceScore = output.attendanceScore.value
                     output.attendanceScore.accept(attendanceScore + 1)
                 } else if data.attendances[idx].type.text == "결석" {
@@ -149,5 +150,6 @@ final class HomeViewModel: ViewModel {
                 }
             }
         }
+		output.isReload.accept(true)
     }
 }

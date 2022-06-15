@@ -32,11 +32,6 @@ final class HomeAttendanceCheckViewController: UIViewController {
     var viewModel = HomeViewModel()
     private var disposeBag = DisposeBag()
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        viewModel.calculateScore()
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -117,7 +112,7 @@ extension HomeAttendanceCheckViewController: UITableViewDelegate {
             self.navigationController?.pushViewController(detailVC, animated: true)
 		}
 	}
-	
+
 	func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
 		if indexPath.row == 0 || indexPath.row == tableView.numberOfRows(inSection: indexPath.section) - 1 {
 			cell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: tableView.bounds.width)
