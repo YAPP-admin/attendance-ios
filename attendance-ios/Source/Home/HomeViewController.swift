@@ -326,13 +326,21 @@ final class HomeViewController: UIViewController {
                     self?.scrollView.isHidden = false
                     self?.attendanceView.view.isHidden = true
                 case .attendanceCheck:
-                    self?.attendanceView.tableView.reloadData()
                     self?.topView.isHidden = true
                     self?.scrollView.isHidden = true
                     self?.attendanceView.view.isHidden = false
+					self?.viewModel.getUserData()
                 }
                 self?.tabView.setHomeType(type)
             }).disposed(by: disposeBag)
+
+		viewModel.output.isReload
+			.subscribe(onNext: { [weak self] isReload in
+				guard isReload == true else { return }
+				DispatchQueue.main.async {
+					self?.attendanceView.tableView.reloadData()
+				}
+			}).disposed(by: disposeBag)
 
         viewModel.memberData
             .subscribe(onNext: { [weak self] _ in
@@ -374,8 +382,8 @@ final class HomeViewController: UIViewController {
             return
         }
 
-		let useTime = Int(endTime.timeIntervalSince(startTime))
-		if time.stringPrefix() == session.date.stringPrefix(), session.type == .needAttendance, viewModel.currentType.value == .absence {
+		let useTime = Int(endTime.timeIntervalSince(startTime)).magnitude
+		if time.stringPrefix(endNum: -10) == session.date.stringPrefix(endNum: -10), session.type == .needAttendance, viewModel.currentType.value == .absence {
 			let vc = QRViewController()
 			vc.modalPresentationStyle = .overFullScreen
 			vc.viewModel.output.memberData.onNext(self.viewModel.memberData.value)
@@ -385,7 +393,7 @@ final class HomeViewController: UIViewController {
 			if useTime <= 300 {
 				vc.viewModel.output.currentType.accept(.attendance)
 				self.present(vc, animated: true, completion: nil)
-			} else if useTime > 300, useTime <= 1800 {
+			} else if useTime > 300, useTime <= 1800, time.stringPrefix(endNum: -7) == session.date.stringPrefix(endNum: -7) {
 				vc.viewModel.output.currentType.accept(.tardy)
 				self.present(vc, animated: true, completion: nil)
 			} else {
@@ -441,19 +449,27 @@ final class HomeViewController: UIViewController {
         if let data = viewModel.memberData.value {
             let id = data.attendances.filter { $0.sessionId == session.sessionId }.map { $0.sessionId }.first
             let text = data.attendances.filter { $0.sessionId == id }.map { $0.type.text }
-            if text.first == "결석" {
-				infoLabel.text = "아직 출석 전이에요"
-				infoLabel.textColor = .gray_600
-				checkButton.setImage(UIImage(named: "info_check_disabled"), for: .normal)
-				illustView.image = UIImage(named: "illust_member_home_disabled")
-				viewModel.currentType.accept(.absence)
-            } else {
+			if session.type == .dayOff {
 				infoLabel.text = "출석을 완료했어요"
 				infoLabel.textColor = .yapp_orange
 				checkButton.setImage(UIImage(named: "info_check_enabled"), for: .normal)
 				illustView.image = UIImage(named: "illust_member_home_enabled")
 				viewModel.currentType.accept(.attendance)
-            }
+			} else {
+				if text.first == "결석" {
+					infoLabel.text = "아직 출석 전이에요"
+					infoLabel.textColor = .gray_600
+					checkButton.setImage(UIImage(named: "info_check_disabled"), for: .normal)
+					illustView.image = UIImage(named: "illust_member_home_disabled")
+					viewModel.currentType.accept(.absence)
+				} else {
+					infoLabel.text = "출석을 완료했어요"
+					infoLabel.textColor = .yapp_orange
+					checkButton.setImage(UIImage(named: "info_check_enabled"), for: .normal)
+					illustView.image = UIImage(named: "illust_member_home_enabled")
+					viewModel.currentType.accept(.attendance)
+				}
+			}
         }
     }
 }

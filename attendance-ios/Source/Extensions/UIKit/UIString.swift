@@ -25,8 +25,8 @@ extension String {
 		return dateFormatter.date(from: self)
 	}
 
-	func stringPrefix() -> String {
-		let strRange = self.index(self.startIndex, offsetBy: 0) ... self.index(self.endIndex, offsetBy: -10)
+	func stringPrefix(endNum: Int) -> String {
+		let strRange = self.index(self.startIndex, offsetBy: 0) ... self.index(self.endIndex, offsetBy: endNum)
 		return String(self[strRange])
 	}
 
