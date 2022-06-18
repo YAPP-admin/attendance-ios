@@ -64,6 +64,7 @@ final class QRViewController: UIViewController {
 	}
 
 	func setup() {
+		viewModel.setupQrPassword()
 		view.addSubview(closeButton)
 		view.addSubview(guideLabel)
 		view.addSubview(frameView)
@@ -168,9 +169,12 @@ extension QRViewController: AVCaptureMetadataOutputObjectsDelegate {
 
 	func metadataOutput(_ captureOutput: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
 		guard let metadataObject = metadataObjects.first, let readableObject = metadataObject as? AVMetadataMachineReadableCodeObject, let stringValue = readableObject.stringValue else { return }
-		if let res = try? JSONSerialization.jsonObject(with: Data(stringValue.utf8), options: []) as? [String: Int] {
-			guard let id = res["session_id"], let session = self.viewModel.output.sessionList.value.todaySession() else { return }
-			if id == session.sessionId {
+		if let res = try? JSONSerialization.jsonObject(with: Data(stringValue.utf8), options: []) as? [String: String] {
+			let qrPassword = self.viewModel.output.qrPassword.value
+			guard let id = res["session_id"],
+				  let password = res["password"],
+				  let session = self.viewModel.output.sessionList.value.todaySession() else { return }
+			if id == String(session.sessionId), password == qrPassword {
 				self.captureSession.stopRunning()
 				showCheck()
 			}
