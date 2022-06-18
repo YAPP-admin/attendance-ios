@@ -21,6 +21,7 @@ final class QRViewModel: ViewModel {
 		let sessionList = BehaviorRelay<[Session]>(value: [])
 		let memberData = BehaviorSubject<Member?>(value: nil)
 		let currentType = BehaviorRelay<AttendanceType>(value: .attendance)
+		let qrPassword = BehaviorRelay<String>(value: "")
 	}
 
 	let input = Input()
@@ -63,4 +64,15 @@ final class QRViewModel: ViewModel {
 		attendances[session.sessionId].type = AttendanceData(point: output.currentType.value.point, text: output.currentType.value.text)
 		firebaseWorker.updateMemberAttendances(memberId: member.id, attendances: attendances)
 	}
+
+	func setupQrPassword() {
+		configWorker.decodeQrPassword { [weak self] result in
+			switch result {
+			case .success(let config):
+				self?.output.qrPassword.accept(config)
+			case .failure: ()
+			}
+		}
+	}
+
 }

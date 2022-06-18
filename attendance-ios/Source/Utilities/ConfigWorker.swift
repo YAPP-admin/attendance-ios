@@ -69,4 +69,15 @@ final class ConfigWorker {
         }
     }
 
+	/// 출석 QR에 포함된 비밀번호(임의로 QR을 생성하여 출석을 진행하지 않도록 하기 위함) 값을 반환합니다.
+	func decodeQrPassword(completion: @escaping (Result<String, Error>) -> Void) {
+		remoteConfig.fetch { [weak self] status, _ in
+			guard let self = self, status == .success else { return }
+			self.remoteConfig.activate { _, _ in
+				guard let qrPassword = self.remoteConfig[Config.qrPassword.rawValue].stringValue else { return }
+				completion(.success(qrPassword))
+			}
+		}
+	}
+
 }
