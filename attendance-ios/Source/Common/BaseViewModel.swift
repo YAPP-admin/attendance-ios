@@ -142,6 +142,7 @@ private extension BaseViewModel {
                             switch result {
                             case .success:
                                 self.userDefaultsWorker.removeAppleId()
+                                self.userDefaultsWorker.setKakaoTalkId(id: kakaoId)
                                 self.output.goToHome.accept(())
                             case .failure: self.output.goToSignUp.accept(())
                             }
