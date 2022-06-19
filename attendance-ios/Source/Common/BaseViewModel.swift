@@ -189,7 +189,6 @@ extension BaseViewModel {
                 return
             }
             output.isLoading.onNext(false)
-            output.goToHome.accept(())
         default: output.failedToLogin.accept(())
         }
     }
