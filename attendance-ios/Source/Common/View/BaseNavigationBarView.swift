@@ -51,6 +51,7 @@ final class BaseNavigationBarView: UIView {
         }
         titleLabel.snp.makeConstraints {
             $0.center.equalToSuperview()
+            $0.left.right.equalToSuperview().inset(44)
         }
         backButton.snp.makeConstraints {
             $0.centerY.equalToSuperview()
