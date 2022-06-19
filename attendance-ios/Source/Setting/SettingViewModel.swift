@@ -90,7 +90,7 @@ final class SettingViewModel: ViewModel {
 
     func memberOut() {
         guard let member = memberData.value else {
-            self.output.showToastWhenError.accept(())
+            self.output.goToLoginVC.accept(())
             return
         }
 
@@ -122,7 +122,8 @@ final class SettingViewModel: ViewModel {
             case .success(let member):
                 self.memberData.accept(member)
                 self.userDefaultsWorker.setName(name: member.name)
-            case .failure: ()
+            case .failure:
+                self.output.goToLoginVC.accept(())
             }
         }
     }
