@@ -144,9 +144,11 @@ private extension BaseViewModel {
                                 self.userDefaultsWorker.removeAppleId()
                                 self.userDefaultsWorker.setKakaoTalkId(id: kakaoId)
                                 self.output.goToHome.accept(())
-                            case .failure: self.output.goToSignUp.accept(())
+                            case .failure:
+                                self.output.goToSignUp.accept(())
                             }
                         }
+                        return
                     }
 
                     // MARK: - 이미 가입한 카카오톡 유저인지 확인
