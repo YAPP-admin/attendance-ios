@@ -36,7 +36,7 @@ final class HomeChartView: UIView {
         stackView.axis = .horizontal
         stackView.spacing = 4
         stackView.alignment = .center
-        stackView.layoutMargins = UIEdgeInsets(top: 10, left: 30, bottom: 10, right: 30)
+        stackView.layoutMargins = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
         stackView.isLayoutMarginsRelativeArrangement = true
         return stackView
     }()
@@ -51,6 +51,8 @@ final class HomeChartView: UIView {
         label.textColor = .gray_600
         label.font = .Pretendard(type: .medium, size: 14)
         label.text = "출석"
+		label.setContentCompressionResistancePriority(.required, for: .horizontal)
+		label.textAlignment = .center
         return label
     }()
     var attendanceCountLabel: UILabel = {
@@ -67,7 +69,7 @@ final class HomeChartView: UIView {
         stackView.axis = .horizontal
         stackView.spacing = 4
         stackView.alignment = .center
-        stackView.layoutMargins = UIEdgeInsets(top: 10, left: 30, bottom: 10, right: 30)
+        stackView.layoutMargins = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
         stackView.isLayoutMarginsRelativeArrangement = true
         return stackView
     }()
@@ -82,6 +84,8 @@ final class HomeChartView: UIView {
         label.textColor = .gray_600
         label.font = .Pretendard(type: .medium, size: 14)
         label.text = "지각"
+		label.setContentCompressionResistancePriority(.required, for: .horizontal)
+		label.textAlignment = .center
         return label
     }()
     var tardyCountLabel: UILabel = {
@@ -98,7 +102,7 @@ final class HomeChartView: UIView {
         stackView.axis = .horizontal
         stackView.spacing = 4
         stackView.alignment = .center
-        stackView.layoutMargins = UIEdgeInsets(top: 10, left: 30, bottom: 10, right: 30)
+        stackView.layoutMargins = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
         stackView.isLayoutMarginsRelativeArrangement = true
         return stackView
     }()
@@ -113,6 +117,8 @@ final class HomeChartView: UIView {
         label.textColor = .gray_600
         label.font = .Pretendard(type: .medium, size: 14)
         label.text = "결석"
+		label.setContentCompressionResistancePriority(.required, for: .horizontal)
+		label.textAlignment = .center
         return label
     }()
     var absenceCountLabel: UILabel = {
