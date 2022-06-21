@@ -37,7 +37,7 @@ enum PositionType: String, CaseIterable, Codable {
     case android = "DEV_ANDROID"
     case ios = "DEV_IOS"
     case web = "DEV_WEB"
-    case server = "DEV_SEVER"
+    case server = "DEV_SERVER"
 
     var shortValue: String {
         switch self {
