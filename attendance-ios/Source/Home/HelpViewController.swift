@@ -103,6 +103,7 @@ final class HelpViewController: UIViewController {
         label.textColor = .gray_600
         label.style(.Body1)
         label.text = "* 운영진에게 요청 시 결석 1회는 출석으로 인정돼요."
+		label.numberOfLines = 0
         return label
     }()
 
