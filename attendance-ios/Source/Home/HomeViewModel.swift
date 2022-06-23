@@ -150,7 +150,6 @@ final class HomeViewModel: ViewModel {
                 }
             }
         }
-		if output.totalScore.value <= 0 { output.totalScore.accept(0) }
 		output.isReload.accept(true)
     }
 }

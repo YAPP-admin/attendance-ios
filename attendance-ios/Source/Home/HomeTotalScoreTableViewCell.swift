@@ -134,7 +134,11 @@ final class HomeTotalScoreTableViewCell: BaseTableViewCell {
 
     func updateUI(total: Int, attendance: Int, absence: Int, tardy: Int) {
 		var score = total
-		if score > 0 { score = 100 + score }
+		if score < -100 {
+			score = 0
+		} else {
+			score = 100 + score
+		}
 		scoreLabel.text = String(score)
 		progress.setProgress(progress: CGFloat(Float(score)/100.0), animated: true)
         chartView.attendanceCountLabel.text = String(attendance)
