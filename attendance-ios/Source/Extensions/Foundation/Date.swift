@@ -13,6 +13,8 @@ extension Date {
     func mmdd() -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM.dd"
+		dateFormatter.locale = Locale(identifier: "ko_KR")
+		dateFormatter.timeZone = TimeZone(abbreviation: "KST")
         return dateFormatter.string(from: self)
     }
 
@@ -20,6 +22,8 @@ extension Date {
 	func yyyymmdd() -> String {
 		let dateFormatter = DateFormatter()
 		dateFormatter.dateFormat = "yyyy-MM-dd"
+		dateFormatter.locale = Locale(identifier: "ko_KR")
+		dateFormatter.timeZone = TimeZone(abbreviation: "KST")
 		return dateFormatter.string(from: self)
 	}
 
