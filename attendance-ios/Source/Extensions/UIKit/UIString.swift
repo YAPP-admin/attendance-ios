@@ -12,16 +12,16 @@ extension String {
     func date() -> Date? {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-		dateFormatter.locale =  Locale(identifier: "ko_kr")
-		dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+		dateFormatter.locale =  Locale(identifier: "ko_KR")
+		dateFormatter.timeZone = TimeZone(abbreviation: "KST")
         return dateFormatter.date(from: self)
     }
 
 	func dateYYMMDD() -> Date? {
 		let dateFormatter = DateFormatter()
 		dateFormatter.dateFormat = "yyyy-MM-dd"
-		dateFormatter.locale =  Locale(identifier: "ko_kr")
-		dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+		dateFormatter.locale =  Locale(identifier: "ko_KR")
+		dateFormatter.timeZone = TimeZone(abbreviation: "KST")
 		return dateFormatter.date(from: self)
 	}
 
