@@ -27,8 +27,8 @@ extension Date {
 	func yyyymmdd() -> Date? {
 		let dateFormatter = DateFormatter()
 		dateFormatter.dateFormat = "yyyy-MM-dd"
-		dateFormatter.locale = Locale(identifier: "ko_kr")
-		dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+		dateFormatter.locale = Locale(identifier: "ko_KR")
+		dateFormatter.timeZone = TimeZone(abbreviation: "KST")
 		return dateFormatter.string(from: self).dateYYMMDD()
 	}
 

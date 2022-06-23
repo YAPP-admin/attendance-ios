@@ -372,7 +372,8 @@ final class HomeViewController: UIViewController {
     func showQRVC() {
 		let format = DateFormatter()
 		format.dateFormat = "yyyy-MM-dd HH:mm:ss"
-		format.timeZone = TimeZone(abbreviation: "UTC")
+		format.locale = Locale(identifier: "ko_KR")
+		format.timeZone = TimeZone(abbreviation: "KST")
 
 		guard let time = getKoreaDateTypeToString(),
               let session = viewModel.output.sessionList.value.todaySession(),
@@ -417,8 +418,8 @@ final class HomeViewController: UIViewController {
 	func getKoreaDateTypeToString() -> String? {
 		let current = Date()
 		let formatter = DateFormatter()
-		formatter.locale = Locale(identifier: "ko_kr")
-		formatter.timeZone = TimeZone(abbreviation: "UTC")
+		formatter.locale = Locale(identifier: "ko_KR")
+		formatter.timeZone = TimeZone(abbreviation: "KST")
 		formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
 		return formatter.string(from: current)
 	}
