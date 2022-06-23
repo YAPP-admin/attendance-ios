@@ -15,6 +15,7 @@ final class HomeAttendanceCheckViewController: UIViewController {
     let navigationBarView: BaseNavigationBarView = {
         let bar = BaseNavigationBarView(title: "출결 점수 확인")
         bar.hideBackButton()
+		bar.titleLabel.textAlignment = .center
         return bar
     }()
     let tableView: UITableView = {
