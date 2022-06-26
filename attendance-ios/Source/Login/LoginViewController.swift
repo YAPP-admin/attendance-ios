@@ -6,11 +6,11 @@
 //
 
 import AuthenticationServices
+import Lottie
 import RxCocoa
 import RxSwift
 import SnapKit
 import UIKit
-import WebKit
 
 final class LoginViewController: UIViewController {
 
@@ -22,26 +22,7 @@ final class LoginViewController: UIViewController {
         static let buttonBottomSpacing: CGFloat = 133
         static let cornerRadius: CGFloat = 12
         static let kakaoBlack: UIColor = UIColor(red: 25/255, green: 25/255, blue: 25/255, alpha: 1)
-        static let splashOrange: UIColor = UIColor(red: 250/255, green: 112/255, blue: 59/255, alpha: 1)
     }
-
-    private let loginSplashView: WKWebView = {
-        let webView = WKWebView()
-        webView.isHidden = true
-        return webView
-    }()
-
-    private let mainSplashView: WKWebView = {
-        let webView = WKWebView()
-        return webView
-    }()
-
-    private let splashBackgroundView: UIView = {
-        let view = UIView()
-        view.backgroundColor = Constants.splashOrange
-        view.isHidden = false
-        return view
-    }()
 
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -98,26 +79,28 @@ final class LoginViewController: UIViewController {
         return authorizationController
     }()
 
+    private let mainSplashView = AnimationView(name: "splash_main")
+
     private let viewModel = BaseViewModel()
     private var disposeBag = DisposeBag()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .yapp_orange
+
         bindViewModel()
         bindSubviews()
 
         setupAppleLogin()
-        setupDelegate()
         setKeyboardObserver()
 
-        setupLoginSplashView()
-        setupMainSplashView()
         setBackgroundColor()
-    }
+        configureMainSplashView()
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        setupMainSplashView()
+        mainSplashView.play { [weak self] _ in
+            self?.view.backgroundColor = .white
+            self?.configureLayout()
+        }
     }
 
 }
@@ -226,11 +209,6 @@ private extension LoginViewController {
         self.present(navC, animated: true)
     }
 
-    func setupDelegate() {
-        mainSplashView.navigationDelegate = self
-        loginSplashView.navigationDelegate = self
-    }
-
 }
 
 // MARK: - Apple Login
@@ -256,42 +234,6 @@ extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizatio
 
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
         self.view.window!
-    }
-
-}
-
-// MARK: - Splash
-extension LoginViewController: WKNavigationDelegate {
-
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        guard let isFirst = try? viewModel.output.isFirstSplash.value(), isFirst == true else {
-            configureLayout()
-            return
-        }
-        configureLayout()
-        configureFirstSplashLayout()
-
-        if webView == loginSplashView {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [weak self] in
-                self?.view.backgroundColor = .white
-                self?.removeSplashView()
-                self?.setupMainSplashView()
-                self?.viewModel.hasKakaoId()
-                self?.viewModel.setupAfterSplashShowed()
-            }
-        }
-    }
-
-    private func loginSplashViewsafsafsda() {
-        view.backgroundColor = .white
-        removeSplashView()
-        viewModel.hasKakaoId()
-        viewModel.setupAfterSplashShowed()
-    }
-
-    private func removeSplashView() {
-        loginSplashView.removeFromSuperview()
-        splashBackgroundView.removeFromSuperview()
     }
 
 }
@@ -345,53 +287,30 @@ extension LoginViewController {
 // MARK: - UI
 private extension LoginViewController {
 
-    func setupLoginSplashView() {
-        guard let filePath = Bundle.main.path(forResource: "splash_login", ofType: "html"),
-              let data = NSData(contentsOfFile: filePath),
-              let html = NSString(data: data as Data, encoding: String.Encoding.utf8.rawValue) else { return }
-
-        loginSplashView.loadHTMLString(html as String, baseURL: Bundle.main.bundleURL)
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            self.loginSplashView.isHidden = false
-        }
-    }
-
-    func setupMainSplashView() {
-        guard let filePath = Bundle.main.path(forResource: "splash_main", ofType: "html"),
-              let data = NSData(contentsOfFile: filePath),
-              let html = NSString(data: data as Data, encoding: String.Encoding.utf8.rawValue) else { return }
-
-        mainSplashView.loadHTMLString(html as String, baseURL: Bundle.main.bundleURL)
-    }
-
     func setBackgroundColor() {
         guard let isFirst = try? viewModel.output.isFirstSplash.value(), isFirst == true else {
             view.backgroundColor = .white
             return
         }
-        view.backgroundColor = Constants.splashOrange
+        view.backgroundColor = .yapp_orange
     }
 
-    func configureFirstSplashLayout() {
-        view.addSubviews([splashBackgroundView, loginSplashView])
+    func configureMainSplashView() {
+        view.addSubview(mainSplashView)
 
-        loginSplashView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(162)
-            $0.left.right.equalToSuperview().inset(10)
-            $0.height.equalTo(loginSplashView.snp.width)
-        }
-        splashBackgroundView.snp.makeConstraints {
-            $0.top.bottom.left.right.equalToSuperview()
+        mainSplashView.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(120)
+            $0.left.right.equalToSuperview()
+            $0.height.equalTo(view.bounds.width)
         }
     }
 
     func configureLayout() {
-        view.addSubviews([mainSplashView, titleLabel, appleLoginButton, kakaoLoginButton])
+        view.addSubviews([titleLabel, appleLoginButton, kakaoLoginButton])
         view.addSubviews([secretAdminButton, easterEggView])
 
         titleLabel.snp.makeConstraints {
-            $0.bottom.equalToSuperview().inset(Constants.buttonBottomSpacing+Constants.buttonHeight+76)
+            $0.bottom.equalToSuperview().inset(253)
             $0.left.right.equalToSuperview().inset(Constants.padding)
         }
         appleLoginButton.snp.makeConstraints {
@@ -405,11 +324,6 @@ private extension LoginViewController {
             $0.height.equalTo(Constants.buttonHeight)
         }
 
-        mainSplashView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(57)
-            $0.left.right.equalToSuperview().inset(68)
-            $0.height.equalTo(view.bounds.width)
-        }
         secretAdminButton.snp.makeConstraints {
             $0.center.equalTo(mainSplashView)
             $0.width.height.equalTo(200)

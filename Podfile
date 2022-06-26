@@ -6,6 +6,7 @@ target 'attendance-ios' do
   use_frameworks!
 
   # Pods for attendance-ios
+  pod 'lottie-ios'
   pod 'RxCocoa', '6.5.0'
   pod 'RxSwift', '6.5.0'
   pod 'SnapKit', '~> 5.0.0'

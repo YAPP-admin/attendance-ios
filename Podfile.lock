@@ -327,6 +327,7 @@ PODS:
   - KakaoSDKUser (2.8.6):
     - KakaoSDKAuth (= 2.8.6)
   - leveldb-library (1.22.1)
+  - lottie-ios (3.3.0)
   - nanopb (1.30906.0):
     - nanopb/decode (= 1.30906.0)
     - nanopb/encode (= 1.30906.0)
@@ -369,6 +370,7 @@ DEPENDENCIES:
   - Firebase/Firestore
   - Firebase/RemoteConfig
   - FirebaseFirestoreSwift
+  - lottie-ios
   - RxCocoa (= 6.5.0)
   - RxKakaoSDKAuth
   - RxKakaoSDKCommon
@@ -400,6 +402,7 @@ SPEC REPOS:
     - KakaoSDKCommon
     - KakaoSDKUser
     - leveldb-library
+    - lottie-ios
     - nanopb
     - PromisesObjC
     - RxAlamofire
@@ -434,6 +437,7 @@ SPEC CHECKSUMS:
   KakaoSDKCommon: 7e56600ff4c1bd82bed93fea4299b5a37f47e6a5
   KakaoSDKUser: e79480355fa789f42e628dfba359fc21e9914f4c
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
+  lottie-ios: 6ac74dcc09904798f59b18cb3075c089d76be9ae
   nanopb: 59317e09cf1f1a0af72f12af412d54edf52603fc
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
   RxAlamofire: beb75a1c452d0de225651db4903f5d29d034a620
@@ -446,6 +450,6 @@ SPEC CHECKSUMS:
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SwiftLint: 2c16e8fa99dac2e440dc0c70ea74d2532048f6cf
 
-PODFILE CHECKSUM: cfba88bd969b7146ab19fe132fc03387a13fe007
+PODFILE CHECKSUM: 382e1d098217a44929142deceae7acd5f7cb23f3
 
 COCOAPODS: 1.11.2
