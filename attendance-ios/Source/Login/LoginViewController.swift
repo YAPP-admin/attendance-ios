@@ -80,6 +80,7 @@ final class LoginViewController: UIViewController {
     }()
 
     private let mainSplashView = AnimationView(name: "splash_main")
+    private let loginSplashView = AnimationView(name: "splash_main")
 
     private let viewModel = BaseViewModel()
     private var disposeBag = DisposeBag()
@@ -94,13 +95,8 @@ final class LoginViewController: UIViewController {
         setupAppleLogin()
         setKeyboardObserver()
 
-        setBackgroundColor()
+        setupFirstSpash()
         configureMainSplashView()
-
-        mainSplashView.play { [weak self] _ in
-            self?.view.backgroundColor = .white
-            self?.configureLayout()
-        }
     }
 
 }
@@ -287,12 +283,20 @@ extension LoginViewController {
 // MARK: - UI
 private extension LoginViewController {
 
-    func setBackgroundColor() {
+    func setupFirstSpash() {
         guard let isFirst = try? viewModel.output.isFirstSplash.value(), isFirst == true else {
             view.backgroundColor = .white
+            configureLayout()
+            loginSplashView.play(fromFrame: 106, toFrame: 107)
             return
         }
         view.backgroundColor = .yapp_orange
+
+        mainSplashView.play { [weak self] _ in
+            self?.view.backgroundColor = .white
+            self?.configureLayout()
+            self?.viewModel.setupAfterSplashShowed()
+        }
     }
 
     func configureMainSplashView() {
@@ -306,9 +310,14 @@ private extension LoginViewController {
     }
 
     func configureLayout() {
-        view.addSubviews([titleLabel, appleLoginButton, kakaoLoginButton])
+        view.addSubviews([loginSplashView, titleLabel, appleLoginButton, kakaoLoginButton])
         view.addSubviews([secretAdminButton, easterEggView])
 
+        loginSplashView.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(120)
+            $0.left.right.equalToSuperview()
+            $0.height.equalTo(view.bounds.width)
+        }
         titleLabel.snp.makeConstraints {
             $0.bottom.equalToSuperview().inset(253)
             $0.left.right.equalToSuperview().inset(Constants.padding)
@@ -325,12 +334,14 @@ private extension LoginViewController {
         }
 
         secretAdminButton.snp.makeConstraints {
-            $0.center.equalTo(mainSplashView)
-            $0.width.height.equalTo(200)
+            $0.top.equalToSuperview().offset(120)
+            $0.left.right.equalToSuperview()
+            $0.height.equalTo(view.bounds.width)
         }
         easterEggView.snp.makeConstraints {
             $0.top.bottom.left.right.equalToSuperview()
         }
+
     }
 
 }
