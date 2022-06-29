@@ -905,7 +905,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "attendance-ios/attendance-ios.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = T53Y7GLJ7K;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "attendance-ios/Resource/Info.plist";
@@ -937,7 +937,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "attendance-ios/attendance-ios.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = T53Y7GLJ7K;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "attendance-ios/Resource/Info.plist";
