@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
 
         FirebaseApp.configure()
-        RxKakaoSDK.initSDK(appKey: "72806b8322ff87c0ab3ec377e4f99e6a")
+        RxKakaoSDK.initSDK(appKey: "2f6bbf74b7c57d625551dc49ec0f669d")
 
         return true
     }
