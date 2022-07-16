@@ -32,6 +32,7 @@ final class BaseViewModel: ViewModel {
     struct Input {
         let tapKakaoTalkLogin = PublishRelay<Void>()
         let tapAppleLogin = PublishRelay<Void>()
+        let tapGuestLogin = PublishRelay<Void>()
         let tapEasterEgg = PublishRelay<Void>()
         let easterEggKey = BehaviorSubject<String>(value: "")
         let tapEasterEggOkButton = PublishRelay<Void>()
@@ -41,6 +42,7 @@ final class BaseViewModel: ViewModel {
         let kakaoAccessToken = PublishSubject<String>()
         let kakaoTalkId = BehaviorSubject<String>(value: "")
         let appleId = BehaviorSubject<String>(value: "")
+        let isGuest = BehaviorSubject<Bool>(value: false)
 
         let yappConfig = BehaviorSubject<YappConfig?>(value: nil)
         let easterEggCount = BehaviorSubject<Int>(value: 0)
@@ -80,6 +82,12 @@ final class BaseViewModel: ViewModel {
         input.tapAppleLogin
             .subscribe(onNext: { [weak self] _ in
                 self?.output.isLoading.onNext(true)
+            }).disposed(by: disposeBag)
+
+        input.tapGuestLogin
+            .subscribe(onNext: { [weak self] _ in
+                self?.output.isLoading.onNext(true)
+                self?.guestLogin()
             }).disposed(by: disposeBag)
 
         input.tapEasterEgg
@@ -198,6 +206,18 @@ extension BaseViewModel {
         let stringId = String(randomId)
         output.appleId.onNext(stringId)
         output.isLoading.onNext(false)
+        output.goToSignUp.accept(())
+    }
+
+}
+
+// MARK: - Guest Login
+extension BaseViewModel {
+
+    func guestLogin() {
+        print("게스트 로그인")
+        output.isLoading.onNext(false)
+        output.isGuest.onNext(true)
         output.goToSignUp.accept(())
     }
 
