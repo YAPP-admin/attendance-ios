@@ -215,7 +215,6 @@ extension BaseViewModel {
 extension BaseViewModel {
 
     func guestLogin() {
-        print("게스트 로그인")
         output.isLoading.onNext(false)
         output.isGuest.onNext(true)
         output.goToSignUp.accept(())

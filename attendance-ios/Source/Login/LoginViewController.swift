@@ -65,7 +65,7 @@ final class LoginViewController: UIViewController {
 
     private let guestLoginButton: UIButton = {
         let button = UIButton()
-        button.setTitle("게스트 로그인", for: .normal)
+        button.setTitle("Guest로 로그인", for: .normal)
         button.backgroundColor = .black
         button.tintColor = .white
         button.setTitleColor(UIColor.white, for: .normal)
