@@ -63,6 +63,18 @@ final class LoginViewController: UIViewController {
         return button
     }()
 
+    private let guestLoginButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Guest로 로그인", for: .normal)
+        button.backgroundColor = .black
+        button.tintColor = .white
+        button.setTitleColor(UIColor.white, for: .normal)
+        button.titleLabel?.font = .Pretendard(type: .regular, size: 19)
+        button.layer.cornerRadius = Constants.cornerRadius
+        button.isHidden = true
+        return button
+    }()
+
     private let secretAdminButton: UIButton = UIButton()
 
     private let easterEggView: EasterEggView = {
@@ -145,6 +157,14 @@ private extension LoginViewController {
                 isLoading ? self?.showLoadingView() : self?.hideLoadingView()
             })
             .disposed(by: disposeBag)
+
+        viewModel.output.shouldShowGuestButton
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] showButton in
+                guard showButton == true else { return }
+                self?.showGuestButton()
+            })
+            .disposed(by: disposeBag)
     }
 
     func bindSubviews() {
@@ -156,6 +176,11 @@ private extension LoginViewController {
         kakaoLoginButton.rx.tap
             .throttle(.seconds(3), latest: false, scheduler: MainScheduler.instance)
             .bind(to: viewModel.input.tapKakaoTalkLogin)
+            .disposed(by: disposeBag)
+
+        guestLoginButton.rx.tap
+            .throttle(.seconds(3), latest: false, scheduler: MainScheduler.instance)
+            .bind(to: viewModel.input.tapGuestLogin)
             .disposed(by: disposeBag)
 
         secretAdminButton.rx.tap
@@ -179,12 +204,15 @@ private extension LoginViewController {
 private extension LoginViewController {
 
     func goToSignUpNameVC() {
-        guard let kakaoTalkId = try? viewModel.output.kakaoTalkId.value(), let appleId = try? viewModel.output.appleId.value() else { return }
+        guard let kakaoTalkId = try? viewModel.output.kakaoTalkId.value(),
+              let appleId = try? viewModel.output.appleId.value(),
+              let isGuest = try? viewModel.output.isGuest.value() else { return }
 
         let signUpViewModel = SignUpViewModel()
         let signUpNameVC = SignUpNameViewController(viewModel: signUpViewModel)
         signUpViewModel.input.kakaoTalkId.onNext(kakaoTalkId)
         signUpViewModel.input.appleId.onNext(appleId)
+        signUpViewModel.input.isGuest.onNext(isGuest)
 
         navigationItem.backButtonTitle = ""
         navigationController?.navigationBar.isHidden = true
@@ -230,6 +258,15 @@ extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizatio
 
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
         self.view.window!
+    }
+
+}
+
+// MARK: - Guest Login
+extension LoginViewController {
+
+    func showGuestButton() {
+        guestLoginButton.isHidden = false
     }
 
 }
@@ -310,7 +347,7 @@ private extension LoginViewController {
     }
 
     func configureLayout() {
-        view.addSubviews([loginSplashView, titleLabel, appleLoginButton, kakaoLoginButton])
+        view.addSubviews([loginSplashView, titleLabel, appleLoginButton, kakaoLoginButton, guestLoginButton])
         view.addSubviews([secretAdminButton, easterEggView])
 
         loginSplashView.snp.makeConstraints {
@@ -329,6 +366,11 @@ private extension LoginViewController {
         }
         kakaoLoginButton.snp.makeConstraints {
             $0.top.equalTo(appleLoginButton.snp.bottom).offset(Constants.buttonSpacing)
+            $0.left.right.equalToSuperview().inset(Constants.padding)
+            $0.height.equalTo(Constants.buttonHeight)
+        }
+        guestLoginButton.snp.makeConstraints {
+            $0.top.equalTo(kakaoLoginButton.snp.bottom).offset(Constants.buttonSpacing)
             $0.left.right.equalToSuperview().inset(Constants.padding)
             $0.height.equalTo(Constants.buttonHeight)
         }

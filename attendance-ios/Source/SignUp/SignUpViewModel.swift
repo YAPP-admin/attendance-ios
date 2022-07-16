@@ -14,6 +14,7 @@ final class SignUpViewModel: ViewModel {
     struct Input {
         let kakaoTalkId = BehaviorSubject<String>(value: "")
         let appleId = BehaviorSubject<String>(value: "")
+        let isGuest = BehaviorSubject<Bool>(value: false)
 
         let name = BehaviorSubject<String?>(value: nil)
         let positionType = BehaviorSubject<PositionType?>(value: nil)
@@ -109,6 +110,7 @@ extension SignUpViewModel {
     func registerInfo() {
         guard let appleId = try? input.appleId.value(),
               let kakaoTalkId = try? input.kakaoTalkId.value(),
+              let isGuest = try? input.isGuest.value(),
               let name = try? input.name.value(),
               let positionType = try? input.positionType.value(),
               let teamType = try? input.teamType.value(),
@@ -122,6 +124,8 @@ extension SignUpViewModel {
         } else if appleId.isEmpty == false {
 			userDefaultsWorker.setAppleId(id: appleId)
             registerWithApple(id: appleId, newUser: newUser)
+        } else if isGuest == true {
+            registerGuestUser(newUser: newUser)
         }
     }
 
@@ -136,6 +140,16 @@ extension SignUpViewModel {
 
     func registerWithApple(id: String, newUser: FirebaseNewMember) {
         firebaseWorker.registerAppleUserInfo(id: id, newUser: newUser) { [weak self] result in
+            switch result {
+            case .success: self?.output.goToHome.accept(())
+            case .failure: self?.output.goToLoginVC.accept(())
+            }
+        }
+    }
+
+    func registerGuestUser(newUser: FirebaseNewMember) {
+        let randomId = Int.random(in: 1000000000..<10000000000)
+        firebaseWorker.registerKakaoUserInfo(id: randomId, newUser: newUser) { [weak self] result in
             switch result {
             case .success: self?.output.goToHome.accept(())
             case .failure: self?.output.goToLoginVC.accept(())

@@ -13,6 +13,7 @@ enum Config: String {
     case selectTeams = "attendance_select_teams"
     case maginotlineTime = "attendance_maginotline_time"
 	case qrPassword = "attendance_qr_password"
+    case showGuestButton = "should_show_guest_button"
 }
 
 struct YappConfig: Codable {
