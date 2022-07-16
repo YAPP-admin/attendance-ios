@@ -71,6 +71,7 @@ final class LoginViewController: UIViewController {
         button.setTitleColor(UIColor.white, for: .normal)
         button.titleLabel?.font = .Pretendard(type: .regular, size: 19)
         button.layer.cornerRadius = Constants.cornerRadius
+        button.isHidden = true
         return button
     }()
 
@@ -154,6 +155,14 @@ private extension LoginViewController {
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] isLoading in
                 isLoading ? self?.showLoadingView() : self?.hideLoadingView()
+            })
+            .disposed(by: disposeBag)
+
+        viewModel.output.shouldShowGuestButton
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] showButton in
+                guard showButton == true else { return }
+                self?.showGuestButton()
             })
             .disposed(by: disposeBag)
     }
@@ -249,6 +258,15 @@ extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizatio
 
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
         self.view.window!
+    }
+
+}
+
+// MARK: - Guest Login
+extension LoginViewController {
+
+    func showGuestButton() {
+        guestLoginButton.isHidden = false
     }
 
 }

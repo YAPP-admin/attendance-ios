@@ -19,7 +19,7 @@ final class ConfigWorker {
         return remoteConfig
     }()
 
-    /// YAPP 세션 리스트를 반환합니다.
+    /// attendance_session_list
     func decodeSessionList(completion: @escaping (Result<[Session], Error>) -> Void) {
         remoteConfig.fetch { [weak self] status, _ in
             guard let self = self, status == .success else { return }
@@ -32,7 +32,7 @@ final class ConfigWorker {
         }
     }
 
-    /// 전반적인 앱 설정값을 반환합니다.
+    /// config
     func decodeYappConfig(completion: @escaping (Result<YappConfig, Error>) -> Void) {
         remoteConfig.fetch { [weak self] status, _ in
             guard let self = self, status == .success else { return }
@@ -45,7 +45,7 @@ final class ConfigWorker {
         }
     }
 
-    /// 선택할 팀 배열을 반환합니다.
+    /// attendance_select_teams
     func decodeSelectTeams(completion: @escaping (Result<[Team], Error>) -> Void) {
         remoteConfig.fetch { [weak self] status, _ in
             guard let self = self, status == .success else { return }
@@ -58,7 +58,7 @@ final class ConfigWorker {
         }
     }
 
-    /// 출석 체크 시간 값을 반환합니다.
+    /// attendance_maginotline_time
     func decodeMaginotlineTime(completion: @escaping (Result<String, Error>) -> Void) {
         remoteConfig.fetch { [weak self] status, _ in
             guard let self = self, status == .success else { return }
@@ -69,7 +69,7 @@ final class ConfigWorker {
         }
     }
 
-	/// 출석 QR에 포함된 비밀번호(임의로 QR을 생성하여 출석을 진행하지 않도록 하기 위함) 값을 반환합니다.
+    /// attendance_qr_password
 	func decodeQrPassword(completion: @escaping (Result<String, Error>) -> Void) {
 		remoteConfig.fetch { [weak self] status, _ in
 			guard let self = self, status == .success else { return }
@@ -79,5 +79,16 @@ final class ConfigWorker {
 			}
 		}
 	}
+
+    /// should_show_guest_button
+    func decodeShouldShowGuestButton(completion: @escaping (Result<Bool, Error>) -> Void) {
+        remoteConfig.fetch { [weak self] status, _ in
+            guard let self = self, status == .success else { return }
+            self.remoteConfig.activate { _, _ in
+                let showGuestButton = self.remoteConfig[Config.showGuestButton.rawValue].boolValue
+                completion(.success(showGuestButton))
+            }
+        }
+    }
 
 }

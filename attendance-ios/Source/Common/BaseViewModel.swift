@@ -55,6 +55,7 @@ final class BaseViewModel: ViewModel {
         let goToHome = PublishRelay<Void>()
         let goToAdmin = PublishRelay<Void>()
         let showEasterEgg = PublishRelay<Void>()
+        let shouldShowGuestButton = BehaviorSubject<Bool>(value: false)
     }
 
     let input = Input()
@@ -232,6 +233,14 @@ private extension BaseViewModel {
                 self?.output.yappConfig.onNext(config)
                 self?.userDefaultsWorker.setGeneration(generation: config.generation)
                 self?.userDefaultsWorker.setSessionCount(session: config.sessionCount)
+            case .failure: ()
+            }
+        }
+
+        configWorker.decodeShouldShowGuestButton { result in
+            switch result {
+            case .success(let showGuestButton):
+                self.output.shouldShowGuestButton.onNext(showGuestButton)
             case .failure: ()
             }
         }
