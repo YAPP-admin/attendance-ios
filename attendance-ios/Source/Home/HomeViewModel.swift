@@ -108,6 +108,9 @@ final class HomeViewModel: ViewModel {
         } else if let appleId = userDefaultsWorker.getAppleId(), appleId.isEmpty == false {
             myId.accept(appleId)
             getUserData()
+        } else if let guestId = userDefaultsWorker.getGuestId(), guestId.isEmpty == false {
+            myId.accept(guestId)
+            getUserData()
         } else {
             output.goToLoginVC.accept(())
         }

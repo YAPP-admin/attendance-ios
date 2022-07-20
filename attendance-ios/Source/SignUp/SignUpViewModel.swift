@@ -125,7 +125,9 @@ extension SignUpViewModel {
 			userDefaultsWorker.setAppleId(id: appleId)
             registerWithApple(id: appleId, newUser: newUser)
         } else if isGuest == true {
-            registerGuestUser(newUser: newUser)
+            let randomId = Int.random(in: 1000000000..<10000000000)
+            userDefaultsWorker.setGuestId(id: String(randomId))
+            registerGuestUser(id: randomId, newUser: newUser)
         }
     }
 
@@ -147,9 +149,8 @@ extension SignUpViewModel {
         }
     }
 
-    func registerGuestUser(newUser: FirebaseNewMember) {
-        let randomId = Int.random(in: 1000000000..<10000000000)
-        firebaseWorker.registerKakaoUserInfo(id: randomId, newUser: newUser) { [weak self] result in
+    func registerGuestUser(id: Int, newUser: FirebaseNewMember) {
+        firebaseWorker.registerKakaoUserInfo(id: id, newUser: newUser) { [weak self] result in
             switch result {
             case .success: self?.output.goToHome.accept(())
             case .failure: self?.output.goToLoginVC.accept(())

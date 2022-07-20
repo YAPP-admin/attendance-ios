@@ -216,9 +216,22 @@ extension BaseViewModel {
 extension BaseViewModel {
 
     func guestLogin() {
-        output.isLoading.onNext(false)
-        output.isGuest.onNext(true)
-        output.goToSignUp.accept(())
+        guard let id = userDefaultsWorker.getGuestId() else {
+            output.isGuest.onNext(true)
+            output.isLoading.onNext(false)
+            output.goToSignUp.accept(())
+            return
+        }
+
+        firebaseWorker.checkIsRegisteredUser(id: id) { [weak self] isRegistered in
+            self?.output.isLoading.onNext(false)
+
+            if isRegistered {
+                self?.output.goToHome.accept(())
+            } else {
+                self?.output.goToSignUp.accept(())
+            }
+        }
     }
 
 }
@@ -227,6 +240,14 @@ extension BaseViewModel {
 private extension BaseViewModel {
 
     func setupConfig() {
+        configWorker.decodeShouldShowGuestButton { result in
+            switch result {
+            case .success(let showGuestButton):
+                self.output.shouldShowGuestButton.onNext(showGuestButton)
+            case .failure: ()
+            }
+        }
+
         configWorker.decodeYappConfig { [weak self] result in
             switch result {
             case .success(let config):
@@ -237,13 +258,6 @@ private extension BaseViewModel {
             }
         }
 
-        configWorker.decodeShouldShowGuestButton { result in
-            switch result {
-            case .success(let showGuestButton):
-                self.output.shouldShowGuestButton.onNext(showGuestButton)
-            case .failure: ()
-            }
-        }
     }
 
     func tapEasterEgg() {

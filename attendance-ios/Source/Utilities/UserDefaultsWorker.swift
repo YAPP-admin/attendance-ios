@@ -10,7 +10,7 @@ import Foundation
 final class UserDefaultsWorker {
 
     enum UserDefaultsKey: String {
-        case kakaoTalkId, appleId
+        case kakaoTalkId, appleId, guestId
         case generation, session
         case memberId, name
         case isFirstSplash
@@ -64,8 +64,9 @@ extension UserDefaultsWorker {
     func hasLoginId() -> Bool {
         lazy var kakaoTalkId = getKakaoTalkId()
         lazy var appId = getAppleId()
+        lazy var guestId = getGuestId()
 
-        guard kakaoTalkId?.isEmpty == true, appId?.isEmpty == true else { return true }
+        guard kakaoTalkId?.isEmpty == true, appId?.isEmpty == true, guestId?.isEmpty == true else { return true }
         return false
     }
 
@@ -77,12 +78,20 @@ extension UserDefaultsWorker {
         set(id, forKey: .appleId)
     }
 
+    func setGuestId(id: String) {
+        set(id, forKey: .guestId)
+    }
+
     func getKakaoTalkId() -> String? {
         get(forKey: .kakaoTalkId)
     }
 
     func getAppleId() -> String? {
         get(forKey: .appleId)
+    }
+
+    func getGuestId() -> String? {
+        get(forKey: .guestId)
     }
 
     func removeKakaoTalkId() {
@@ -93,9 +102,14 @@ extension UserDefaultsWorker {
         remove(forKey: .appleId)
     }
 
+    func removeGuestId() {
+        remove(forKey: .guestId)
+    }
+
     func removeAllLoginId() {
         removeKakaoTalkId()
         removeAppleId()
+        removeGuestId()
     }
 }
 

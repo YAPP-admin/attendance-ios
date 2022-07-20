@@ -82,7 +82,10 @@ final class ConfigWorker {
 
     /// should_show_guest_button
     func decodeShouldShowGuestButton(completion: @escaping (Result<Bool, Error>) -> Void) {
-        remoteConfig.fetch { [weak self] status, _ in
+        remoteConfig.fetch { [weak self] status, error in
+            if let error = error {
+                completion(.failure(error))
+            }
             guard let self = self, status == .success else { return }
             self.remoteConfig.activate { _, _ in
                 let showGuestButton = self.remoteConfig[Config.showGuestButton.rawValue].boolValue
