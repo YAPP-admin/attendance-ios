@@ -906,10 +906,11 @@
 				CODE_SIGN_ENTITLEMENTS = "attendance-ios/attendance-ios.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = 6CADU5385F;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "attendance-ios/Resource/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = YAPP;
 				INFOPLIST_KEY_NSCameraUsageDescription = "YAPP이 카메라 사용을 요청합니다";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -940,10 +941,11 @@
 				CODE_SIGN_ENTITLEMENTS = "attendance-ios/attendance-ios.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = 6CADU5385F;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "attendance-ios/Resource/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = YAPP;
 				INFOPLIST_KEY_NSCameraUsageDescription = "YAPP이 카메라 사용을 요청합니다";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
