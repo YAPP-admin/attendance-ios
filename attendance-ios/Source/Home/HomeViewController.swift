@@ -402,6 +402,16 @@ final class HomeViewController: UIViewController {
 			}
 		} else if session.type == .needAttendance, viewModel.currentType.value == .attendance {
             showToastWhenAlreadyAttended()
+		} else if viewModel.isGuest.value == true {
+			let vc = QRViewController()
+			vc.modalPresentationStyle = .overFullScreen
+			vc.viewModel.output.memberData.onNext(self.viewModel.memberData.value)
+			vc.viewModel.output.isPass.accept(true)
+			vc.updateHomeData = { data in
+				if data { self.viewModel.getUserData() }
+			}
+			vc.viewModel.output.currentType.accept(.attendance)
+			self.present(vc, animated: true, completion: nil)
 		} else {
             showToastWhenCannotAttend()
 		}
@@ -498,5 +508,4 @@ extension HomeViewController: UIScrollViewDelegate {
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         activityIndicator.stopAnimating()
     }
-
 }

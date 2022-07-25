@@ -178,6 +178,9 @@ extension QRViewController: AVCaptureMetadataOutputObjectsDelegate {
 				self.captureSession.stopRunning()
 				showCheck()
 			}
+		} else if viewModel.output.isPass.value == true {
+			self.captureSession.stopRunning()
+			showCheck()
 		}
 	}
 }

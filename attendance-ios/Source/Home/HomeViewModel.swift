@@ -50,6 +50,7 @@ final class HomeViewModel: ViewModel {
     let memberData = BehaviorRelay<Member?>(value: nil)
 	let currentType = BehaviorRelay<AttendanceType>(value: .absence)
     let isRefreshing = BehaviorRelay<Bool>(value: false)
+	let isGuest = BehaviorRelay<Bool>(value: false)
 
     private let userDefaultsWorker = UserDefaultsWorker()
     private let firebaseWorker = FirebaseWorker()
@@ -109,6 +110,7 @@ final class HomeViewModel: ViewModel {
             myId.accept(appleId)
             getUserData()
         } else if let guestId = userDefaultsWorker.getGuestId(), guestId.isEmpty == false {
+			isGuest.accept(true)
             myId.accept(guestId)
             getUserData()
         } else {

@@ -22,6 +22,7 @@ final class QRViewModel: ViewModel {
 		let memberData = BehaviorSubject<Member?>(value: nil)
 		let currentType = BehaviorRelay<AttendanceType>(value: .attendance)
 		let qrPassword = BehaviorRelay<String>(value: "")
+		let isPass = BehaviorRelay<Bool>(value: false)
 	}
 
 	let input = Input()
