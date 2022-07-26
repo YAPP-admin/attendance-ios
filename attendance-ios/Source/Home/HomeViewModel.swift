@@ -78,6 +78,8 @@ final class HomeViewModel: ViewModel {
             }
         }
 
+        updateSessionList()
+
         isRefreshing
             .subscribe(onNext: { [weak self] isRefreshing in
                 guard isRefreshing == true else { return }
@@ -101,6 +103,16 @@ final class HomeViewModel: ViewModel {
             }
         }
     }
+
+    func updateSessionList() {
+        configWorker.decodeSessionList { [weak self] result in
+            switch result {
+            case .success(let list): self?.output.sessionList.accept(list)
+            case .failure: self?.output.hasError.accept(true)
+            }
+        }
+    }
+
 
     func checkLoginId() {
         if let kakaoTalkId = userDefaultsWorker.getKakaoTalkId(), kakaoTalkId.isEmpty == false {

@@ -11,6 +11,10 @@ import RxSwift
 import SnapKit
 import UIKit
 
+protocol QRLoginDelegate: AnyObject {
+    func loggedIn()
+}
+
 final class QRViewController: UIViewController {
 	private let guideLabel: UILabel = {
 		let label = UILabel()
@@ -49,6 +53,7 @@ final class QRViewController: UIViewController {
 
 	var viewModel = QRViewModel()
 	private var disposeBag = DisposeBag()
+    internal weak var delegate: QRLoginDelegate?
 
     override func viewWillAppear(_ animated: Bool) {
         viewModel.getConfigTime()
@@ -131,6 +136,7 @@ final class QRViewController: UIViewController {
 		}, completion: { _ in
             UIView.animate(withDuration: 3.0, delay: 2.0, options: .curveEaseOut, animations: {
 				self.showHomeVC()
+                self.delegate?.loggedIn()
             }, completion: nil)
         })
 	}

@@ -386,6 +386,7 @@ final class HomeViewController: UIViewController {
 		let useTime = Int(endTime.timeIntervalSince(startTime)).magnitude
 		if time.stringPrefix(endNum: -10) == session.date.stringPrefix(endNum: -10), session.type == .needAttendance, viewModel.currentType.value == .absence {
 			let vc = QRViewController()
+            vc.delegate = self
 			vc.modalPresentationStyle = .overFullScreen
 			vc.viewModel.output.memberData.onNext(self.viewModel.memberData.value)
 			vc.updateHomeData = { data in
@@ -404,6 +405,7 @@ final class HomeViewController: UIViewController {
             showToastWhenAlreadyAttended()
 		} else if viewModel.isGuest.value == true {
 			let vc = QRViewController()
+            vc.delegate = self
 			vc.modalPresentationStyle = .overFullScreen
 			vc.viewModel.output.memberData.onNext(self.viewModel.memberData.value)
 			vc.viewModel.output.isPass.accept(true)
@@ -444,6 +446,7 @@ final class HomeViewController: UIViewController {
             updateWhenAllSessionsCompleted()
             return
         }
+
         dateLabel.text = session.date.date()?.mmdd() ?? ""
         titleLabel.text = session.title
         contentsLabel.text = session.description
@@ -461,11 +464,7 @@ final class HomeViewController: UIViewController {
             let id = data.attendances.filter { $0.sessionId == session.sessionId }.map { $0.sessionId }.first
             let text = data.attendances.filter { $0.sessionId == id }.map { $0.type.text }
 			if session.type == .dayOff {
-				infoLabel.text = "출석을 완료했어요"
-				infoLabel.textColor = .yapp_orange
-				checkButton.setImage(UIImage(named: "info_check_enabled"), for: .normal)
-				illustView.image = UIImage(named: "illust_member_home_enabled")
-				viewModel.currentType.accept(.attendance)
+                updateUIWhenAttendance()
 			} else {
 				if text.first == "결석" {
 					infoLabel.text = "아직 출석 전이에요"
@@ -483,6 +482,15 @@ final class HomeViewController: UIViewController {
 			}
         }
     }
+
+    func updateUIWhenAttendance() {
+        infoLabel.text = "출석을 완료했어요"
+        infoLabel.textColor = .yapp_orange
+        checkButton.setImage(UIImage(named: "info_check_enabled"), for: .normal)
+        illustView.image = UIImage(named: "illust_member_home_enabled")
+        viewModel.currentType.accept(.attendance)
+    }
+
 }
 
 // MARK: - Refresh Control
@@ -508,4 +516,12 @@ extension HomeViewController: UIScrollViewDelegate {
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         activityIndicator.stopAnimating()
     }
+}
+
+extension HomeViewController: QRLoginDelegate {
+
+    func loggedIn() {
+        updateUIWhenAttendance()
+    }
+
 }
