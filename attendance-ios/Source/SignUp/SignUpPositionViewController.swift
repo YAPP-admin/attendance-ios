@@ -18,7 +18,7 @@ final class SignUpPositionViewController: UIViewController {
 
         static let cellHeight: CGFloat = 47
         static let cellSpacing: CGFloat = 12
-        static let collectionViewHeightMargin: CGFloat = 4
+        static let collectionViewHeightMargin: CGFloat = 12
     }
 
     private let titleLabel: UILabel = {
