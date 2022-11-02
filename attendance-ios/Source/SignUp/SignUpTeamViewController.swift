@@ -47,6 +47,7 @@ final class SignUpTeamViewController: UIViewController {
         let layout = CollectionViewLeftAlignFlowLayout(cellSpacing: Constants.cellSpacing)
         layout.scrollDirection = .vertical
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .background
         collectionView.showsVerticalScrollIndicator = false
         collectionView.isScrollEnabled = false
         return collectionView
@@ -56,6 +57,7 @@ final class SignUpTeamViewController: UIViewController {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .background
         collectionView.showsVerticalScrollIndicator = false
         collectionView.isHidden = true
         collectionView.isScrollEnabled = false
@@ -313,7 +315,7 @@ private extension SignUpTeamViewController {
     }
 
     func configureUI() {
-        view.backgroundColor = .white
+        view.backgroundColor = .background
     }
 
     func configureLayout() {

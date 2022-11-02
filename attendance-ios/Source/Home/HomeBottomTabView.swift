@@ -16,7 +16,7 @@ final class HomeBottomTabView: UIView {
 
     private let line: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(red: 0.91, green: 0.918, blue: 0.929, alpha: 1)
+        view.backgroundColor = .background_base
         return view
     }()
     private let leftButton: UIButton = {
@@ -97,7 +97,7 @@ final class HomeBottomTabView: UIView {
     }
 
     private func addSubViews() {
-        backgroundColor = .white
+        backgroundColor = .background
         addSubview(line)
         addSubview(qrButton)
         addSubview(leftStackView)

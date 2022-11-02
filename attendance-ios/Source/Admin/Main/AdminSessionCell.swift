@@ -87,7 +87,7 @@ extension AdminSessionCell {
 private extension AdminSessionCell {
 
     func configureUI() {
-        backgroundColor = .white
+        backgroundColor = .background
     }
 
     func configureLayout() {

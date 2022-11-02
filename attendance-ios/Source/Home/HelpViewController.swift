@@ -41,7 +41,7 @@ final class HelpViewController: UIViewController {
     }()
     private let chartView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = .background
         view.layer.cornerRadius = 10
         view.layer.borderColor = UIColor.gray_200.cgColor
         view.layer.borderWidth = 1
@@ -137,7 +137,7 @@ final class HelpViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .background
         addSubViews()
         bindView()
         setRightSwipeRecognizer()

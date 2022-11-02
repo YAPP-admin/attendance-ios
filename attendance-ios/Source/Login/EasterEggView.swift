@@ -32,7 +32,7 @@ final class EasterEggView: UIView {
     private let containerView: UIView = {
         let view = UIView()
         view.layer.cornerRadius = 10
-        view.backgroundColor = .white
+        view.backgroundColor = .background
         view.layer.cornerRadius = Constants.cornerRadius
         return view
     }()

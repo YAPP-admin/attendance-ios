@@ -16,12 +16,12 @@ final class HomeAttendanceDetailViewController: UIViewController {
         view.alwaysBounceVertical = true
         view.showsVerticalScrollIndicator = false
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .white
+        view.backgroundColor = .background
         return view
     }()
     private let contentView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = .background
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -75,7 +75,7 @@ final class HomeAttendanceDetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .background
         navigationController?.isNavigationBarHidden = true
 
         addSubViews()

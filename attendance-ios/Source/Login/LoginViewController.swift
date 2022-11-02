@@ -91,8 +91,8 @@ final class LoginViewController: UIViewController {
         return authorizationController
     }()
 
-    private let mainSplashView = AnimationView(name: "splash_main")
-    private let loginSplashView = AnimationView(name: "splash_main")
+    private let mainSplashView = LottieAnimationView(name: "splash_main")
+    private let loginSplashView = LottieAnimationView(name: "splash_main")
 
     private let viewModel = BaseViewModel()
     private var disposeBag = DisposeBag()
@@ -322,7 +322,7 @@ private extension LoginViewController {
 
     func setupFirstSpash() {
         guard let isFirst = try? viewModel.output.isFirstSplash.value(), isFirst == true else {
-            view.backgroundColor = .white
+            view.backgroundColor = .background
             configureLayout()
             loginSplashView.play(fromFrame: 106, toFrame: 107)
             return
@@ -330,7 +330,7 @@ private extension LoginViewController {
         view.backgroundColor = .yapp_orange
 
         mainSplashView.play { [weak self] _ in
-            self?.view.backgroundColor = .white
+            self?.view.backgroundColor = .background
             self?.configureLayout()
             self?.viewModel.setupAfterSplashShowed()
         }

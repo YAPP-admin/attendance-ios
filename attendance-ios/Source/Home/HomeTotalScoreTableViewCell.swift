@@ -20,7 +20,7 @@ final class HomeTotalScoreTableViewCell: BaseTableViewCell {
     }()
     private let containerView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = .background
         return view
     }()
     let helpButton: UIButton = {

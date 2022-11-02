@@ -77,7 +77,7 @@ extension AdminGradeMemberCell {
 private extension AdminGradeMemberCell {
 
     func configureUI() {
-        backgroundColor = .white
+        backgroundColor = .background
     }
 
     func configureLayout() {

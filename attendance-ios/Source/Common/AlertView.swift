@@ -26,7 +26,7 @@ final class AlertView: UIView {
     private let containerView: UIView = {
         let view = UIView()
         view.layer.cornerRadius = 10
-        view.backgroundColor = .white
+        view.backgroundColor = .background_elevated
         view.layer.cornerRadius = Constants.cornerRadius
         return view
     }()
