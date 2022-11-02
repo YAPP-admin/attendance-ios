@@ -83,7 +83,6 @@
 		5EF69EAA27A7DAF8007E9735 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5EF69EA827A7DAF8007E9735 /* Main.storyboard */; };
 		5EF69EAC27A7DAFA007E9735 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5EF69EAB27A7DAFA007E9735 /* Assets.xcassets */; };
 		5EF69EAF27A7DAFA007E9735 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5EF69EAD27A7DAFA007E9735 /* LaunchScreen.storyboard */; };
-		5EF69EB827A7DCDE007E9735 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 5EF69EB727A7DCDE007E9735 /* .swiftlint.yml */; };
 		5EF69EC227A7EFFF007E9735 /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69EC127A7EFFF007E9735 /* BaseViewModel.swift */; };
 		5EF69EC427A7F8B0007E9735 /* UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69EC327A7F8B0007E9735 /* UILabel.swift */; };
 		5EF69EC627A7FA40007E9735 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69EC527A7FA40007E9735 /* UIColor.swift */; };
@@ -91,7 +90,17 @@
 		5EF69ED427A83BCE007E9735 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69ED327A83BCE007E9735 /* DetailViewController.swift */; };
 		5EF69ED927AAACBA007E9735 /* PolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69ED827AAACBA007E9735 /* PolicyViewController.swift */; };
 		5EF69EDB27AAB0BC007E9735 /* PolicyUnitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69EDA27AAB0BC007E9735 /* PolicyUnitView.swift */; };
-		7F4FBAFCC0259F3E7AF9EDB6 /* Pods_attendance_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDDCE233E5BE7E34BB51BE5D /* Pods_attendance_ios.framework */; };
+		FDA9A3C329124F4500FF4FB4 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = FDA9A3C229124F4500FF4FB4 /* RxCocoa */; };
+		FDA9A3C529124F4500FF4FB4 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = FDA9A3C429124F4500FF4FB4 /* RxSwift */; };
+		FDA9A3C829124F8300FF4FB4 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = FDA9A3C729124F8300FF4FB4 /* SnapKit */; };
+		FDA9A3CB2912503800FF4FB4 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = FDA9A3CA2912503800FF4FB4 /* FirebaseAuth */; };
+		FDA9A3CD2912503800FF4FB4 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = FDA9A3CC2912503800FF4FB4 /* FirebaseFirestore */; };
+		FDA9A3CF2912503800FF4FB4 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = FDA9A3CE2912503800FF4FB4 /* FirebaseFirestoreSwift */; };
+		FDA9A3D12912503800FF4FB4 /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = FDA9A3D02912503800FF4FB4 /* FirebaseRemoteConfig */; };
+		FDA9A3D52912510C00FF4FB4 /* RxKakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = FDA9A3D42912510C00FF4FB4 /* RxKakaoSDKAuth */; };
+		FDA9A3D72912510C00FF4FB4 /* RxKakaoSDKCommon in Frameworks */ = {isa = PBXBuildFile; productRef = FDA9A3D62912510C00FF4FB4 /* RxKakaoSDKCommon */; };
+		FDA9A3D92912510C00FF4FB4 /* RxKakaoSDKUser in Frameworks */ = {isa = PBXBuildFile; productRef = FDA9A3D82912510C00FF4FB4 /* RxKakaoSDKUser */; };
+		FDA9A3DC2912515800FF4FB4 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = FDA9A3DB2912515800FF4FB4 /* Lottie */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -173,7 +182,6 @@
 		5EF69EAB27A7DAFA007E9735 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5EF69EAE27A7DAFA007E9735 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5EF69EB027A7DAFA007E9735 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5EF69EB727A7DCDE007E9735 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		5EF69EC127A7EFFF007E9735 /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
 		5EF69EC327A7F8B0007E9735 /* UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabel.swift; sourceTree = "<group>"; };
 		5EF69EC527A7FA40007E9735 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
@@ -181,9 +189,6 @@
 		5EF69ED327A83BCE007E9735 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		5EF69ED827AAACBA007E9735 /* PolicyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolicyViewController.swift; sourceTree = "<group>"; };
 		5EF69EDA27AAB0BC007E9735 /* PolicyUnitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolicyUnitView.swift; sourceTree = "<group>"; };
-		6F02DCE832A2AB4DFD3E1B31 /* Pods-attendance-ios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-attendance-ios.release.xcconfig"; path = "Target Support Files/Pods-attendance-ios/Pods-attendance-ios.release.xcconfig"; sourceTree = "<group>"; };
-		BD84FC73203EF1BEB1378FE9 /* Pods-attendance-ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-attendance-ios.debug.xcconfig"; path = "Target Support Files/Pods-attendance-ios/Pods-attendance-ios.debug.xcconfig"; sourceTree = "<group>"; };
-		BDDCE233E5BE7E34BB51BE5D /* Pods_attendance_ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_attendance_ios.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -191,21 +196,23 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7F4FBAFCC0259F3E7AF9EDB6 /* Pods_attendance_ios.framework in Frameworks */,
+				FDA9A3C829124F8300FF4FB4 /* SnapKit in Frameworks */,
+				FDA9A3C529124F4500FF4FB4 /* RxSwift in Frameworks */,
+				FDA9A3C329124F4500FF4FB4 /* RxCocoa in Frameworks */,
+				FDA9A3D72912510C00FF4FB4 /* RxKakaoSDKCommon in Frameworks */,
+				FDA9A3D52912510C00FF4FB4 /* RxKakaoSDKAuth in Frameworks */,
+				FDA9A3D12912503800FF4FB4 /* FirebaseRemoteConfig in Frameworks */,
+				FDA9A3DC2912515800FF4FB4 /* Lottie in Frameworks */,
+				FDA9A3CD2912503800FF4FB4 /* FirebaseFirestore in Frameworks */,
+				FDA9A3CB2912503800FF4FB4 /* FirebaseAuth in Frameworks */,
+				FDA9A3D92912510C00FF4FB4 /* RxKakaoSDKUser in Frameworks */,
+				FDA9A3CF2912503800FF4FB4 /* FirebaseFirestoreSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		226262D92DF9722A841BD92B /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				BDDCE233E5BE7E34BB51BE5D /* Pods_attendance_ios.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		297E957D27CFA66C00452222 /* QR */ = {
 			isa = PBXGroup;
 			children = (
@@ -402,11 +409,8 @@
 		5EF69E9627A7DAF8007E9735 = {
 			isa = PBXGroup;
 			children = (
-				5EF69EB727A7DCDE007E9735 /* .swiftlint.yml */,
 				5EF69EA127A7DAF8007E9735 /* attendance-ios */,
 				5EF69EA027A7DAF8007E9735 /* Products */,
-				5EF9D0F13059E0544BF719D1 /* Pods */,
-				226262D92DF9722A841BD92B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -532,15 +536,6 @@
 			path = Policy;
 			sourceTree = "<group>";
 		};
-		5EF9D0F13059E0544BF719D1 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				BD84FC73203EF1BEB1378FE9 /* Pods-attendance-ios.debug.xcconfig */,
-				6F02DCE832A2AB4DFD3E1B31 /* Pods-attendance-ios.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -548,18 +543,28 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5EF69EB327A7DAFA007E9735 /* Build configuration list for PBXNativeTarget "attendance-ios" */;
 			buildPhases = (
-				A9612C58A65410EBF9BA026F /* [CP] Check Pods Manifest.lock */,
 				5EF69E9B27A7DAF8007E9735 /* Sources */,
 				5EF69E9C27A7DAF8007E9735 /* Frameworks */,
 				5EF69E9D27A7DAF8007E9735 /* Resources */,
-				FF0B39995E101DCAF8DC0B48 /* [CP] Embed Pods Frameworks */,
-				5EF69EB627A7DC72007E9735 /* ShellScript */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = "attendance-ios";
+			packageProductDependencies = (
+				FDA9A3C229124F4500FF4FB4 /* RxCocoa */,
+				FDA9A3C429124F4500FF4FB4 /* RxSwift */,
+				FDA9A3C729124F8300FF4FB4 /* SnapKit */,
+				FDA9A3CA2912503800FF4FB4 /* FirebaseAuth */,
+				FDA9A3CC2912503800FF4FB4 /* FirebaseFirestore */,
+				FDA9A3CE2912503800FF4FB4 /* FirebaseFirestoreSwift */,
+				FDA9A3D02912503800FF4FB4 /* FirebaseRemoteConfig */,
+				FDA9A3D42912510C00FF4FB4 /* RxKakaoSDKAuth */,
+				FDA9A3D62912510C00FF4FB4 /* RxKakaoSDKCommon */,
+				FDA9A3D82912510C00FF4FB4 /* RxKakaoSDKUser */,
+				FDA9A3DB2912515800FF4FB4 /* Lottie */,
+			);
 			productName = "attendance-ios";
 			productReference = 5EF69E9F27A7DAF8007E9735 /* attendance-ios.app */;
 			productType = "com.apple.product-type.application";
@@ -572,7 +577,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1320;
-				LastUpgradeCheck = 1320;
+				LastUpgradeCheck = 1400;
 				TargetAttributes = {
 					5EF69E9E27A7DAF8007E9735 = {
 						CreatedOnToolsVersion = 13.2.1;
@@ -588,6 +593,13 @@
 				Base,
 			);
 			mainGroup = 5EF69E9627A7DAF8007E9735;
+			packageReferences = (
+				FDA9A3C129124F4500FF4FB4 /* XCRemoteSwiftPackageReference "RxSwift" */,
+				FDA9A3C629124F8300FF4FB4 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				FDA9A3C92912503800FF4FB4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				FDA9A3D22912507D00FF4FB4 /* XCRemoteSwiftPackageReference "kakao-ios-sdk-rx" */,
+				FDA9A3DA2912515800FF4FB4 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+			);
 			productRefGroup = 5EF69EA027A7DAF8007E9735 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -603,7 +615,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				296C7B0327C523450042B630 /* Pretendard-Medium.otf in Resources */,
-				5EF69EB827A7DCDE007E9735 /* .swiftlint.yml in Resources */,
 				2925E79F27F41A91005533EF /* Pretendard-SemiBold.otf in Resources */,
 				296C7B0127C523390042B630 /* Pretendard-Bold.otf in Resources */,
 				5EE25B2427C7CB700065B816 /* bg_buong.html in Resources */,
@@ -618,65 +629,6 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		5EF69EB627A7DC72007E9735 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint\n";
-		};
-		A9612C58A65410EBF9BA026F /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-attendance-ios-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		FF0B39995E101DCAF8DC0B48 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-attendance-ios/Pods-attendance-ios-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-attendance-ios/Pods-attendance-ios-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-attendance-ios/Pods-attendance-ios-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		5EF69E9B27A7DAF8007E9735 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -689,7 +641,6 @@
 				5EAA79DD27F6045E00BC7397 /* AdminSessionCell.swift in Sources */,
 				5E63BC9B27BBE90F0024FCE3 /* SignUpNameViewController.swift in Sources */,
 				5EAA79D927F5EE1900BC7397 /* UIStackView.swift in Sources */,
-				5E63BC9B27BBE90F0024FCE3 /* SignUpNameViewController.swift in Sources */,
 				5EAA7A0E27FF441600BC7397 /* SignUpPositionViewController.swift in Sources */,
 				5EA97D8A27DBB06A004E2330 /* Config.swift in Sources */,
 				5E6B7FFB28321BBE00F4D88F /* UICollectionReusableView.swift in Sources */,
@@ -899,7 +850,6 @@
 		};
 		5EF69EB427A7DAFA007E9735 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BD84FC73203EF1BEB1378FE9 /* Pods-attendance-ios.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -934,7 +884,6 @@
 		};
 		5EF69EB527A7DAFA007E9735 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6F02DCE832A2AB4DFD3E1B31 /* Pods-attendance-ios.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -989,6 +938,107 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		FDA9A3C129124F4500FF4FB4 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.0.0;
+			};
+		};
+		FDA9A3C629124F8300FF4FB4 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+		FDA9A3C92912503800FF4FB4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
+		FDA9A3D22912507D00FF4FB4 /* XCRemoteSwiftPackageReference "kakao-ios-sdk-rx" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kakao/kakao-ios-sdk-rx";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+		FDA9A3DA2912515800FF4FB4 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		FDA9A3C229124F4500FF4FB4 /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FDA9A3C129124F4500FF4FB4 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
+		};
+		FDA9A3C429124F4500FF4FB4 /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FDA9A3C129124F4500FF4FB4 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
+		};
+		FDA9A3C729124F8300FF4FB4 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FDA9A3C629124F8300FF4FB4 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		FDA9A3CA2912503800FF4FB4 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FDA9A3C92912503800FF4FB4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		FDA9A3CC2912503800FF4FB4 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FDA9A3C92912503800FF4FB4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		FDA9A3CE2912503800FF4FB4 /* FirebaseFirestoreSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FDA9A3C92912503800FF4FB4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestoreSwift;
+		};
+		FDA9A3D02912503800FF4FB4 /* FirebaseRemoteConfig */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FDA9A3C92912503800FF4FB4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseRemoteConfig;
+		};
+		FDA9A3D42912510C00FF4FB4 /* RxKakaoSDKAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FDA9A3D22912507D00FF4FB4 /* XCRemoteSwiftPackageReference "kakao-ios-sdk-rx" */;
+			productName = RxKakaoSDKAuth;
+		};
+		FDA9A3D62912510C00FF4FB4 /* RxKakaoSDKCommon */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FDA9A3D22912507D00FF4FB4 /* XCRemoteSwiftPackageReference "kakao-ios-sdk-rx" */;
+			productName = RxKakaoSDKCommon;
+		};
+		FDA9A3D82912510C00FF4FB4 /* RxKakaoSDKUser */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FDA9A3D22912507D00FF4FB4 /* XCRemoteSwiftPackageReference "kakao-ios-sdk-rx" */;
+			productName = RxKakaoSDKUser;
+		};
+		FDA9A3DB2912515800FF4FB4 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FDA9A3DA2912515800FF4FB4 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 5EF69E9727A7DAF8007E9735 /* Project object */;
 }
