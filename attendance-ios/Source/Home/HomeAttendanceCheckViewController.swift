@@ -23,6 +23,7 @@ final class HomeAttendanceCheckViewController: UIViewController {
         tableView.register(HomeTotalScoreTableViewCell.self, forCellReuseIdentifier: "HomeTotalScoreTableViewCell")
         tableView.register(HomeAttendanceCheckTableViewCell.self, forCellReuseIdentifier: "HomeAttendanceCheckTableViewCell")
         tableView.showsVerticalScrollIndicator = false
+        tableView.backgroundColor = .background
         tableView.separatorStyle = .singleLine
         tableView.separatorColor = .gray_200
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
@@ -35,7 +36,7 @@ final class HomeAttendanceCheckViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .background
         navigationController?.isNavigationBarHidden = true
 
         addSubViews()

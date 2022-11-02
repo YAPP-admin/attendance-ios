@@ -72,7 +72,7 @@ extension AdminManagementMemberCell {
 private extension AdminManagementMemberCell {
 
     func configureUI() {
-        backgroundColor = .white
+        backgroundColor = .background
     }
 
     func configureLayout() {

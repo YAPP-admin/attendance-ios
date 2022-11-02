@@ -68,7 +68,7 @@ extension UIViewController {
     func addNavigationLogoutButton() {
         let barView: UIView = {
             let view = UIView()
-            view.backgroundColor = .white
+            view.backgroundColor = .background
             return view
         }()
         let logoutButton: UIButton = {
@@ -100,7 +100,7 @@ extension UIViewController {
 
     static var loadingView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white.withAlphaComponent(0.6)
+        view.backgroundColor = .background.withAlphaComponent(0.6)
 
         let dotDiameter: CGFloat = 10
         let spacing: CGFloat = 8

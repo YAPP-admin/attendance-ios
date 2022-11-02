@@ -209,7 +209,7 @@ private extension SignUpNameViewController {
     }
 
     func configureUI() {
-        view.backgroundColor = .white
+        view.backgroundColor = .background
     }
 
     func configureLayout() {

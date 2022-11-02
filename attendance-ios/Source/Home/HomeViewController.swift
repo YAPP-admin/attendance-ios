@@ -41,18 +41,18 @@ final class HomeViewController: UIViewController {
         view.alwaysBounceVertical = true
         view.showsVerticalScrollIndicator = false
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .white
+        view.backgroundColor = .background_base
         return view
     }()
     private let contentView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = .background
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     private let bgView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(red: 0.953, green: 0.961, blue: 0.973, alpha: 1)
+        view.backgroundColor = .background_base
         return view
     }()
     private let illustView: UIImageView = {
@@ -63,7 +63,7 @@ final class HomeViewController: UIViewController {
     }()
     private let infoView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = .background
         view.layer.cornerRadius = 10
         view.clipsToBounds = true
         return view
@@ -89,7 +89,7 @@ final class HomeViewController: UIViewController {
     }()
     private let contentsInfoView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = .background
         view.layer.cornerRadius = 15
         view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         return view
@@ -118,14 +118,14 @@ final class HomeViewController: UIViewController {
     private let attendanceView = HomeAttendanceCheckViewController()
     private let errorView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = .background
         view.isHidden = true
         return view
     }()
     private let errorImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "illust_error")
-        imageView.backgroundColor = .white
+        imageView.backgroundColor = .background
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
@@ -142,7 +142,7 @@ final class HomeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .background_base
         navigationController?.isNavigationBarHidden = true
         attendanceView.view.isHidden = true
         setScrollViewDelegate()

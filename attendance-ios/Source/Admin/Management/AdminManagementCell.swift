@@ -201,7 +201,7 @@ extension AdminManagementCell: UICollectionViewDelegateFlowLayout, UICollectionV
 private extension AdminManagementCell {
 
     func configureUI() {
-        backgroundColor = .white
+        backgroundColor = .background
     }
 
     func configureLayout() {

@@ -14,7 +14,7 @@ import UIKit
 final class BaseNavigationBarView: UIView {
     let navigationBarView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = .background
         return view
     }()
     let backButton: UIButton = {

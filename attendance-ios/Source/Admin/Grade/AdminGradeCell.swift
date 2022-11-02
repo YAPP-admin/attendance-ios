@@ -175,7 +175,7 @@ extension AdminGradeCell: UICollectionViewDelegateFlowLayout, UICollectionViewDa
 private extension AdminGradeCell {
 
     func configureUI() {
-        backgroundColor = .white
+        backgroundColor = .background
     }
 
     func configureLayout() {

@@ -27,6 +27,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         navigationController.viewControllers = [loginVC]
 
+        window?.backgroundColor = .background
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
     }

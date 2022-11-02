@@ -16,7 +16,7 @@ final class SettingPrivacyPolicyViewController: UIViewController {
     let navigationBarView = BaseNavigationBarView(title: "개인정보 처리방침")
     var wkWebView: WKWebView = {
         let web = WKWebView()
-        web.backgroundColor = .white
+        web.backgroundColor = .background
         web.isOpaque = false
         web.allowsLinkPreview = false
         web.allowsBackForwardNavigationGestures = true
@@ -28,7 +28,7 @@ final class SettingPrivacyPolicyViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .background
         navigationController?.isNavigationBarHidden = true
         if let url = URL(string: "https://yapprecruit.notion.site/8b561d1b0fa449bba4db395f53a559f3") {
             let request = URLRequest(url: url)

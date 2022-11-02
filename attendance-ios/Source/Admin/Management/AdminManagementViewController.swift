@@ -251,7 +251,7 @@ private extension AdminManagementViewController {
 private extension AdminManagementViewController {
 
     func configureUI() {
-        view.backgroundColor = .white
+        view.backgroundColor = .background
     }
 
     func configureLayout() {

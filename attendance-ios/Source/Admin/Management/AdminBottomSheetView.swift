@@ -33,7 +33,7 @@ final class AdminBottomSheetView: UIView {
 
     private let containerView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = .background
         return view
     }()
 

@@ -46,7 +46,7 @@ final class AdminBottomSheetCell: UICollectionViewCell {
     }
 
     func didDeselect() {
-        backgroundColor = .white
+        backgroundColor = .background
     }
 
     func updateLabel(_ attendance: String) {
@@ -59,7 +59,7 @@ final class AdminBottomSheetCell: UICollectionViewCell {
 private extension AdminBottomSheetCell {
 
     func configureUI() {
-        backgroundColor = .white
+        backgroundColor = .background
     }
 
     func configureLayout() {

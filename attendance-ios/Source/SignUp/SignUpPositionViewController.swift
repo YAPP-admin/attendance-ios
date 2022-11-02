@@ -35,6 +35,7 @@ final class SignUpPositionViewController: UIViewController {
         let layout = CollectionViewLeftAlignFlowLayout(cellSpacing: Constants.cellSpacing)
         layout.scrollDirection = .vertical
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .background
         collectionView.showsVerticalScrollIndicator = false
         collectionView.isScrollEnabled = false
         return collectionView
@@ -198,7 +199,7 @@ private extension SignUpPositionViewController {
     }
 
     func configureUI() {
-        view.backgroundColor = .white
+        view.backgroundColor = .background
     }
 
     func configureLayout() {

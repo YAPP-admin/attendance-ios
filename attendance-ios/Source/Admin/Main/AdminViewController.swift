@@ -244,7 +244,7 @@ private extension AdminViewController {
 private extension AdminViewController {
 
     func configureUI() {
-        view.backgroundColor = .white
+        view.backgroundColor = .background
         navigationController?.navigationBar.isHidden = true
     }
 

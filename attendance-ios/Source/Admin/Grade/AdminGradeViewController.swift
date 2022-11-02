@@ -204,7 +204,7 @@ extension AdminGradeViewController: UICollectionViewDelegateFlowLayout, UICollec
 private extension AdminGradeViewController {
 
     func configureUI() {
-        view.backgroundColor = .white
+        view.backgroundColor = .background
     }
 
     func configureLayout() {
