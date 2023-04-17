@@ -13,7 +13,7 @@ extension Array where Element == Attendance {
         var attendances: [[String: Any]] = []
         self.forEach {
             let attendance: [String: Any] = ["sessionId": $0.sessionId,
-                                       "type": ["text": $0.type.text, "point": $0.type.point]]
+                                             "status": $0.status]
             attendances.append(attendance)
         }
         return attendances

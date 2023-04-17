@@ -20,7 +20,7 @@ struct FirebaseNewMember {
 
 final class FirebaseWorker {
 
-    private let memberCollectionRef = Firestore.firestore().collection("member")
+    private let memberCollectionRef = Firestore.firestore().collection("test")
     private var attendances: [[String: Any]] = []
     private let configWorker = ConfigWorker()
 
@@ -40,12 +40,10 @@ extension FirebaseWorker {
 
                 for id in 0..<sessionList.count {
                     let session = sessionList[id]
-                    let attendanceType: AttendanceType = session.type == .needAttendance ? .absence : .attendanceMarked
-                    let text = attendanceType.text
-                    let point = attendanceType.point
+                    let status: Status = session.type == .needAttendance ? .absent : .normal
 
                     let empty: [String: Any] = ["sessionId": id,
-                                                "type": ["text": text, "point": point]]
+                                                "status": status]
                     attendances.append(empty)
                 }
 

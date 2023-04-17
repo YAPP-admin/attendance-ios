@@ -9,7 +9,14 @@ import Foundation
 
 struct Attendance: Codable {
     let sessionId: Int
-    var type: AttendanceData
+    var status: Status
+}
+
+enum Status: Codable {
+    case absent
+    case late
+    case admit
+    case normal
 }
 
 struct AttendanceData: Codable {
