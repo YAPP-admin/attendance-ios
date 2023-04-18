@@ -43,7 +43,7 @@ extension FirebaseWorker {
                     let status: Status = session.type == .needAttendance ? .absent : .normal
 
                     let empty: [String: Any] = ["sessionId": id,
-                                                "status": status]
+                                                "status": status.serverText]
                     attendances.append(empty)
                 }
 

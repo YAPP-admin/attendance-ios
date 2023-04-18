@@ -13,16 +13,39 @@ struct Attendance: Codable {
 }
 
 enum Status: Codable {
-    case absent
+    case absent 
     case late
     case admit
     case normal
+    
+    var serverText: String {
+        switch self {
+        case .absent: return "ABSENT"
+        case .late: return "LATE"
+        case .admit: return "ADMIT"
+        case .normal: return "NORMAL"
+        }
+    }
+    
+    var text: String {
+        switch self {
+        case .absent: return "출석"
+        case .late: return "지각"
+        case .admit: return "결석"
+        case .normal: return "출석 인정"
+        }
+    }
+
+    var point: Int {
+        switch self {
+        case .attendance: return 0
+        case .tardy: return -10
+        case .absence: return -20
+        case .attendanceMarked: return 0
+        }
+    }
 }
 
-struct AttendanceData: Codable {
-    let point: Int
-    let text: String
-}
 
 enum AttendanceType: Int, Codable, CaseIterable {
     case attendance
