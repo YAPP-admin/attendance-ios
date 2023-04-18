@@ -20,7 +20,7 @@ final class QRViewModel: ViewModel {
         let showToastFail = PublishRelay<Void>()
 		let sessionList = BehaviorRelay<[Session]>(value: [])
 		let memberData = BehaviorSubject<Member?>(value: nil)
-		let currentType = BehaviorRelay<AttendanceType>(value: .attendance)
+        let currentType = BehaviorRelay<Status>(value: .absent)
 		let qrPassword = BehaviorRelay<String>(value: "")
 		let isPass = BehaviorRelay<Bool>(value: false)
 	}
@@ -62,7 +62,7 @@ final class QRViewModel: ViewModel {
 	func updateAttendances() {
 		guard let member = try? output.memberData.value(), let session = output.sessionList.value.todaySession() else { return }
 		var attendances = member.attendances
-		attendances[session.sessionId].type = AttendanceData(point: output.currentType.value.point, text: output.currentType.value.text)
+        attendances[session.sessionId].status = output.currentType.value
 		firebaseWorker.updateMemberAttendances(memberId: member.id, attendances: attendances)
 	}
 

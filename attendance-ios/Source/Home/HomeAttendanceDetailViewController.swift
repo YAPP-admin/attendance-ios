@@ -145,7 +145,7 @@ final class HomeAttendanceDetailViewController: UIViewController {
         self.navigationController?.popViewController(animated: true)
     }
 
-    func setType(_ session: Session, type: AttendanceData) {
+    func setType(_ session: Session, status: Status) {
         navigationBarView.titleLabel.text = "\(session.title)"
         titleLabel.text = session.title
         descriptionLabel.text = session.description
@@ -154,19 +154,9 @@ final class HomeAttendanceDetailViewController: UIViewController {
         case .needAttendance:
             guard let nowDate = Date().startDate() else { return }
             if nowDate.isPast(than: session.date.date()) {
-				if type.text == "출석" || type.text == "출석 인정" {
-					attendanceLabel.text = "출석"
-					attendanceLabel.textColor = .etc_green
-					markImageView.image = UIImage(named: "attendance")
-				} else if type.text == "결석" {
-					attendanceLabel.text = "결석"
-					attendanceLabel.textColor = .etc_red
-					markImageView.image = UIImage(named: "absence")
-				} else {
-					attendanceLabel.text = "지각"
-					attendanceLabel.textColor = .etc_yellow_font
-					markImageView.image = UIImage(named: "tardy")
-				}
+                attendanceLabel.text = status.text
+                attendanceLabel.textColor = status.textColor
+                markImageView.image = status.image
                 titleLabel.textColor = .gray_1200
                 descriptionLabel.textColor = .gray_800
             } else {

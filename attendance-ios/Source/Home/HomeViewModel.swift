@@ -48,7 +48,7 @@ final class HomeViewModel: ViewModel {
     let homeType = BehaviorRelay<HomeType>(value: .todaySession)
     let myId = BehaviorRelay<String>(value: "")
     let memberData = BehaviorRelay<Member?>(value: nil)
-	let currentType = BehaviorRelay<AttendanceType>(value: .absence)
+    let currentType = BehaviorRelay<Status>(value: .absent)
     let isRefreshing = BehaviorRelay<Bool>(value: false)
 	let isGuest = BehaviorRelay<Bool>(value: false)
 

@@ -90,6 +90,8 @@
 		5EF69ED427A83BCE007E9735 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69ED327A83BCE007E9735 /* DetailViewController.swift */; };
 		5EF69ED927AAACBA007E9735 /* PolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69ED827AAACBA007E9735 /* PolicyViewController.swift */; };
 		5EF69EDB27AAB0BC007E9735 /* PolicyUnitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69EDA27AAB0BC007E9735 /* PolicyUnitView.swift */; };
+		F38C03A229EEEF7500573719 /* Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = F38C03A129EEEF7500573719 /* Status.swift */; };
+		F38C03A429EEEF9F00573719 /* AttendenceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F38C03A329EEEF9F00573719 /* AttendenceType.swift */; };
 		F3AB4732292CA69700559E73 /* AppFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AB4731292CA69700559E73 /* AppFlowCoordinator.swift */; };
 		F3AB4735292CA75C00559E73 /* AppDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AB4734292CA75C00559E73 /* AppDIContainer.swift */; };
 		FDA9A3C329124F4500FF4FB4 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = FDA9A3C229124F4500FF4FB4 /* RxCocoa */; };
@@ -191,6 +193,8 @@
 		5EF69ED327A83BCE007E9735 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		5EF69ED827AAACBA007E9735 /* PolicyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolicyViewController.swift; sourceTree = "<group>"; };
 		5EF69EDA27AAB0BC007E9735 /* PolicyUnitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolicyUnitView.swift; sourceTree = "<group>"; };
+		F38C03A129EEEF7500573719 /* Status.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Status.swift; sourceTree = "<group>"; };
+		F38C03A329EEEF9F00573719 /* AttendenceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendenceType.swift; sourceTree = "<group>"; };
 		F3AB4731292CA69700559E73 /* AppFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFlowCoordinator.swift; sourceTree = "<group>"; };
 		F3AB4734292CA75C00559E73 /* AppDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDIContainer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -297,6 +301,8 @@
 				5EA97D8727DBA621004E2330 /* Models.swift */,
 				5EAA79FA27FDE42500BC7397 /* Attendance.swift */,
 				5EA97D8927DBB06A004E2330 /* Config.swift */,
+				F38C03A129EEEF7500573719 /* Status.swift */,
+				F38C03A329EEEF9F00573719 /* AttendenceType.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -696,6 +702,7 @@
 				52BCA07027C4D393001BF86F /* TextStyle.swift in Sources */,
 				5EF06A782823D7250021D25B /* Session.swift in Sources */,
 				F3AB4735292CA75C00559E73 /* AppDIContainer.swift in Sources */,
+				F38C03A429EEEF9F00573719 /* AttendenceType.swift in Sources */,
 				5EF69EA727A7DAF8007E9735 /* LoginViewController.swift in Sources */,
 				5EED02BD27D76D4200C52637 /* SignUpViewModel.swift in Sources */,
 				5EF69EA327A7DAF8007E9735 /* AppDelegate.swift in Sources */,
@@ -703,6 +710,7 @@
 				52EFD5F4280FF92600065FEB /* BaseTableViewCell.swift in Sources */,
 				5EA97D8827DBA621004E2330 /* Models.swift in Sources */,
 				5264EFF9280D5AC00026F560 /* SettingViewController.swift in Sources */,
+				F38C03A229EEEF7500573719 /* Status.swift in Sources */,
 				5E7AEF2A27E223040059FB3A /* AdminManagementViewController.swift in Sources */,
 				5E6179AC27C670D500B1A835 /* UITextField.swift in Sources */,
 				5EF69EA527A7DAF8007E9735 /* SceneDelegate.swift in Sources */,

@@ -107,10 +107,10 @@ extension HomeAttendanceCheckViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row != 0 {
             guard let data = viewModel.memberData.value else { return }
-            let type = data.attendances[indexPath.row - 1].type
+            let status = data.attendances[indexPath.row - 1].status
             let item = viewModel.output.sessionList.value[indexPath.row - 1]
             let detailVC = HomeAttendanceDetailViewController()
-            detailVC.setType(item, type: type)
+            detailVC.setType(item, status: status)
             self.navigationController?.pushViewController(detailVC, animated: true)
 		}
 	}
@@ -141,7 +141,7 @@ extension HomeAttendanceCheckViewController: UITableViewDataSource {
         } else {
             if let cell = tableView.dequeueReusableCell(withIdentifier: "HomeAttendanceCheckTableViewCell", for: indexPath) as? HomeAttendanceCheckTableViewCell {
                 guard let data = viewModel.memberData.value else { return cell }
-                cell.updateUI(viewModel.output.sessionList.value[indexPath.row - 1], data: data.attendances[indexPath.row - 1].type)
+                cell.updateUI(viewModel.output.sessionList.value[indexPath.row - 1], status: data.attendances[indexPath.row - 1].status)
                 return cell
             }
         }
