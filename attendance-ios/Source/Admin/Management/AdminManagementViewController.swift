@@ -121,11 +121,11 @@ extension AdminManagementViewController {
 // MARK: - Update Attendance
 extension AdminManagementViewController: AdminBottomSheetViewDelegate {
 
-    func didSelect(at type: AttendanceType) {
+    func didSelect(at status: Status) {
         guard let member = try? viewModel.input.selectedMemberInManagement.value() else { return }
         let sessionId = session.sessionId
         var attendances = member.attendances
-        attendances[sessionId].type = AttendanceData(point: type.point, text: type.text)
+      attendances[sessionId].status = status
         viewModel.updateAttendances(memberId: member.id, attendances: attendances)
     }
 
@@ -211,7 +211,7 @@ extension AdminManagementViewController: UICollectionViewDelegateFlowLayout, UIC
               let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: AdminMessageHeader.identifier, for: indexPath) as? AdminMessageHeader,
               let memberList = try? viewModel.output.memberList.value() else { return .init() }
 
-        let attendances = memberList.flatMap { $0.attendances }.filter { $0.sessionId == session.sessionId }.filter { $0.type.text != AttendanceType.absence.text }
+        let attendances = memberList.flatMap { $0.attendances }.filter { $0.sessionId == session.sessionId }.filter { $0.status.text != AttendanceType.absence.text }
         header.configureLabel("\(attendances.count)명이 출석했어요")
         return header
     }

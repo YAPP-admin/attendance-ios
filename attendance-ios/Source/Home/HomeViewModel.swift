@@ -154,11 +154,11 @@ final class HomeViewModel: ViewModel {
         for idx in 0..<data.attendances.count {
             if data.attendances[idx].sessionId < session.sessionId, output.sessionList.value[idx].type == .needAttendance {
                 let currentScore = output.totalScore.value
-                output.totalScore.accept(currentScore + data.attendances[idx].type.point)
-                if data.attendances[idx].type.text == "출석" || data.attendances[idx].type.text == "출석 인정" {
+                output.totalScore.accept(currentScore + data.attendances[idx].status.point)
+                if data.attendances[idx].status.text == "출석" || data.attendances[idx].status.text == "출석 인정" {
                     let attendanceScore = output.attendanceScore.value
                     output.attendanceScore.accept(attendanceScore + 1)
-                } else if data.attendances[idx].type.text == "결석" {
+                } else if data.attendances[idx].status.text == "결석" {
                     let absenceScore = output.absenceScore.value
                     output.absenceScore.accept(absenceScore + 1)
                 } else {

@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum Status: Codable {
+enum Status: Codable, CaseIterable {
     case absent
     case late
     case admit
@@ -33,10 +33,10 @@ enum Status: Codable {
 
     var point: Int {
         switch self {
-        case .attendance: return 0
-        case .tardy: return -10
-        case .absence: return -20
-        case .attendanceMarked: return 0
+        case .normal: return 0
+        case .late: return -10
+        case .absent: return -20
+        case .admit: return 0
         }
     }
 }

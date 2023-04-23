@@ -61,7 +61,7 @@ extension AdminGradeMemberCell {
 
     func updateSubViews(with member: Member, sessionId: Int, sessionIdList: [Int]) {
         let attendances = member.attendances.filter { sessionIdList.contains($0.sessionId) && $0.sessionId < sessionId }
-        var totalGrade = attendances.reduce(100, { $0 + $1.type.point })
+      var totalGrade = attendances.reduce(100, { $0 + $1.status.point })
         totalGrade = max(totalGrade, 0)
 
         gradeLabel.text = String(totalGrade)

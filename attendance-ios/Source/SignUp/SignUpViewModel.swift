@@ -35,7 +35,7 @@ final class SignUpViewModel: ViewModel {
 
         let complete = PublishRelay<Void>()
         let goToHome = PublishRelay<Void>()
-		let goToLoginVC = PublishRelay<Void>()
+        let goToLoginVC = PublishRelay<Void>()
     }
 
     let input = Input()

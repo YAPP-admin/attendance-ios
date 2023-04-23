@@ -11,7 +11,7 @@ import SnapKit
 import UIKit
 
 protocol AdminBottomSheetViewDelegate: AnyObject {
-    func didSelect(at type: AttendanceType)
+    func didSelect(at status: Status)
 }
 
 final class AdminBottomSheetView: UIView {
@@ -121,9 +121,9 @@ extension AdminBottomSheetView: UICollectionViewDelegateFlowLayout, UICollection
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) as? AdminBottomSheetCell else { return }
-        let attendanceType = AttendanceType.allCases[indexPath.row]
-        cell.didSelect()
-        delegate?.didSelect(at: attendanceType)
+      let attendanceStatus = Status.allCases[indexPath.row]
+      cell.didSelect()
+      delegate?.didSelect(at: attendanceStatus)
         hideBottomSheet()
     }
 

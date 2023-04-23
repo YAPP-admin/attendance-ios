@@ -58,8 +58,8 @@ final class AdminManagementMemberCell: UICollectionViewCell {
 extension AdminManagementMemberCell {
 
     func updateAttendance(with attendance: Attendance) {
-        attendanceButton.setTitle(attendance.type.text, for: .normal)
-        if attendance.type.text == AttendanceType.attendanceMarked.text {
+        attendanceButton.setTitle(attendance.status.text, for: .normal)
+        if attendance.status.text == AttendanceType.attendanceMarked.text {
             attendanceButton.snp.updateConstraints {
                 $0.width.equalTo(104)
             }

@@ -384,7 +384,7 @@ final class HomeViewController: UIViewController {
         }
 
 		let useTime = Int(endTime.timeIntervalSince(startTime)).magnitude
-		if time.stringPrefix(endNum: -10) == session.date.stringPrefix(endNum: -10), session.type == .needAttendance, viewModel.currentType.value == .absence {
+      if time.stringPrefix(endNum: -10) == session.date.stringPrefix(endNum: -10), session.type == .needAttendance, viewModel.currentType.value == .absent {
 			let vc = QRViewController()
             vc.delegate = self
 			vc.modalPresentationStyle = .overFullScreen
@@ -393,15 +393,15 @@ final class HomeViewController: UIViewController {
 				if data { self.viewModel.getUserData() }
 			}
 			if useTime <= 300 {
-				vc.viewModel.output.currentType.accept(.attendance)
+        vc.viewModel.output.currentType.accept(.normal)
 				self.present(vc, animated: true, completion: nil)
 			} else if useTime > 300, useTime <= 1800, time.stringPrefix(endNum: -7) == session.date.stringPrefix(endNum: -7) {
-				vc.viewModel.output.currentType.accept(.tardy)
+        vc.viewModel.output.currentType.accept(.late)
 				self.present(vc, animated: true, completion: nil)
 			} else {
                 showToastWhenCannotAttend()
 			}
-		} else if session.type == .needAttendance, viewModel.currentType.value == .attendance {
+      } else if session.type == .needAttendance, viewModel.currentType.value == .normal {
             showToastWhenAlreadyAttended()
 		} else if viewModel.isGuest.value == true {
 			let vc = QRViewController()
@@ -412,7 +412,7 @@ final class HomeViewController: UIViewController {
 			vc.updateHomeData = { data in
 				if data { self.viewModel.getUserData() }
 			}
-			vc.viewModel.output.currentType.accept(.attendance)
+      vc.viewModel.output.currentType.accept(.normal)
 			self.present(vc, animated: true, completion: nil)
 		} else {
             showToastWhenCannotAttend()
@@ -462,7 +462,7 @@ final class HomeViewController: UIViewController {
         guard let session = viewModel.output.sessionList.value.todaySession() else { return }
         if let data = viewModel.memberData.value {
             let id = data.attendances.filter { $0.sessionId == session.sessionId }.map { $0.sessionId }.first
-            let text = data.attendances.filter { $0.sessionId == id }.map { $0.type.text }
+            let text = data.attendances.filter { $0.sessionId == id }.map { $0.status.text }
 			if session.type == .dayOff {
                 updateUIWhenAttendance()
 			} else {
@@ -471,13 +471,13 @@ final class HomeViewController: UIViewController {
 					infoLabel.textColor = .gray_600
 					checkButton.setImage(UIImage(named: "info_check_disabled"), for: .normal)
 					illustView.image = UIImage(named: "illust_member_home_disabled")
-					viewModel.currentType.accept(.absence)
+          viewModel.currentType.accept(.absent)
 				} else {
 					infoLabel.text = "출석을 완료했어요"
 					infoLabel.textColor = .yapp_orange
 					checkButton.setImage(UIImage(named: "info_check_enabled"), for: .normal)
 					illustView.image = UIImage(named: "illust_member_home_enabled")
-					viewModel.currentType.accept(.attendance)
+					viewModel.currentType.accept(.normal)
 				}
 			}
         }
@@ -488,7 +488,7 @@ final class HomeViewController: UIViewController {
         infoLabel.textColor = .yapp_orange
         checkButton.setImage(UIImage(named: "info_check_enabled"), for: .normal)
         illustView.image = UIImage(named: "illust_member_home_enabled")
-        viewModel.currentType.accept(.attendance)
+        viewModel.currentType.accept(.normal)
     }
 
 }
