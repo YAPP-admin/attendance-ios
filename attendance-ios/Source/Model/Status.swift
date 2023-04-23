@@ -24,10 +24,10 @@ enum Status: Codable, CaseIterable {
     
     var text: String {
         switch self {
-        case .absent: return "출석"
+        case .absent: return "결석"
         case .late: return "지각"
-        case .admit: return "결석"
-        case .normal: return "출석 인정"
+        case .admit: return "출석 인정"
+        case .normal: return "출석"
         }
     }
 
