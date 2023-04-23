@@ -43,7 +43,7 @@ final class SignUpPositionViewController: UIViewController {
 
     private let nextButton: UIButton = {
         let button = UIButton()
-        button.setTitle("다음", for: .normal)
+        button.setTitle("YAPP 시작하기", for: .normal)
         button.titleLabel?.font = .Pretendard(type: .bold, size: 18)
         button.backgroundColor = .gray_400
         button.layer.cornerRadius = 10
@@ -78,6 +78,7 @@ final class SignUpPositionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         bindButton()
+        bindViewModel()
 
         setupDelegate()
         setupCollectionView()
@@ -96,12 +97,22 @@ final class SignUpPositionViewController: UIViewController {
 
 // MARK: - Bind
 private extension SignUpPositionViewController {
+  
+    func bindViewModel() {
+      viewModel.output.goToHome
+          .observe(on: MainScheduler.instance)
+          .subscribe(onNext: { [weak self] _ in
+              self?.goToHome()
+          })
+          .disposed(by: disposeBag)
+    }
 
+  
     func bindButton() {
         nextButton.rx.controlEvent([.touchUpInside])
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
-                self?.goToTeamVC()
+                self?.viewModel.registerInfo()
             }).disposed(by: disposeBag)
 
         alertView.rightButton.rx.controlEvent([.touchUpInside])
@@ -170,7 +181,7 @@ private extension SignUpPositionViewController {
 
     func goToHome() {
         let homeVC = HomeViewController()
-		navigationController?.pushViewController(homeVC, animated: true)
+        navigationController?.pushViewController(homeVC, animated: true)
     }
 
     func goToLogin() {

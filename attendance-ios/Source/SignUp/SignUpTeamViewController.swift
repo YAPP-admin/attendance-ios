@@ -166,13 +166,6 @@ private extension SignUpTeamViewController {
             })
             .disposed(by: disposeBag)
 
-        viewModel.output.goToHome
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] _ in
-                self?.goToHome()
-            })
-			.disposed(by: disposeBag)
-
 		viewModel.output.goToLoginVC
 			.observe(on: MainScheduler.instance)
 			.subscribe(onNext: { [weak self] _ in

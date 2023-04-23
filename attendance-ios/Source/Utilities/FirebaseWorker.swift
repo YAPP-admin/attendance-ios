@@ -15,7 +15,7 @@ struct FirebaseNewMember {
     let name: String
     let positionType: PositionType
     let teamType: TeamType
-    let teamNumber: Int
+    let teamNumber: Int?
 }
 
 final class FirebaseWorker {
