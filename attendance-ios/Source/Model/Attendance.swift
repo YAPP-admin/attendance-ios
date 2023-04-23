@@ -11,3 +11,28 @@ struct Attendance: Codable {
     let sessionId: Int
     var status: Status
 }
+
+struct AttendanceDTO: Codable {
+    let sessionId: Int
+    var status: String
+  
+    func convert() -> Attendance {
+      return Attendance(sessionId: self.sessionId, status: self.statusToEntity(from: self.status))
+    }
+  
+  func statusToEntity(from status: String) -> Status {
+    switch status {
+    case "ABSENT":
+      return .absent
+    case "LATE":
+      return .late
+    case "ADMIT":
+      return .admit
+    case "NORMAL":
+      return .normal
+    default:
+      return .normal
+    }
+  }
+}
+

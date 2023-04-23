@@ -15,7 +15,7 @@ struct FirebaseNewMember {
     let name: String
     let positionType: PositionType
     let teamType: TeamType
-    let teamNumber: Int?
+    let teamNumber: Int
 }
 
 final class FirebaseWorker {
@@ -213,9 +213,9 @@ extension FirebaseWorker {
             }
             guard let documents = snapshot?.documents else { return }
             for document in documents {
-                guard let member = try? document.data(as: Member.self) else { continue }
+                guard let member = try? document.data(as: MemberDTO.self) else { continue }
                 if member.id == memberId {
-                    completion(.success(member))
+                  completion(.success(member.convert()))
                 }
             }
         }

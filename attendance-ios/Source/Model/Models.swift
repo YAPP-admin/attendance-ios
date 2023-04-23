@@ -15,6 +15,24 @@ struct Member: Codable {
     var attendances: [Attendance]
 }
 
+struct MemberDTO: Codable {
+    let id: Int
+    let name: String
+    let position: PositionType
+    let team: Team
+    var attendances: [AttendanceDTO]
+  
+    func convert() -> Member {
+      return Member(
+        id: self.id,
+        name: self.name,
+        position: self.position,
+        team: self.team,
+        attendances: attendances.map { $0.convert() }
+      )
+    }
+}
+
 struct Session: Codable {
     let sessionId: Int
     let title: String

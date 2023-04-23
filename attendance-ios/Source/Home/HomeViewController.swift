@@ -325,11 +325,12 @@ final class HomeViewController: UIViewController {
                     self?.topView.isHidden = false
                     self?.scrollView.isHidden = false
                     self?.attendanceView.view.isHidden = true
+                    self?.viewModel.getUserData()
                 case .attendanceCheck:
                     self?.topView.isHidden = true
                     self?.scrollView.isHidden = true
                     self?.attendanceView.view.isHidden = false
-					self?.viewModel.getUserData()
+                    self?.viewModel.getUserData()
                 }
                 self?.tabView.setHomeType(type)
             }).disposed(by: disposeBag)
