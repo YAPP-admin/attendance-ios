@@ -60,7 +60,7 @@ enum TeamType: String, Codable {
     case android = "ANDROID"
     case ios = "IOS"
     case web = "WEB"
-    case basecame = "BASECAMP"
+    case basecamp = "BASECAMP"
     case none = "NONE"
 
     var upperCase: String {
@@ -68,7 +68,7 @@ enum TeamType: String, Codable {
         case .android: return "ANDROID"
         case .ios: return "IOS"
         case .web: return "WEB"
-        case .basecame: return "BASECAMP"
+        case .basecamp: return "BASECAMP"
         case .none: return "NONE"
         }
     }
@@ -78,7 +78,7 @@ enum TeamType: String, Codable {
         case .android: return "Android"
         case .ios: return "iOS"
         case .web: return "Web"
-        case .basecame: return "Basecamp"
+        case .basecamp: return "Basecamp"
         case .none: return "None"
         }
     }
