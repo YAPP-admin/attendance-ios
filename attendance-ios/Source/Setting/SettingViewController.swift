@@ -39,6 +39,16 @@ final class SettingViewController: UIViewController {
         label.text = ""
         return label
     }()
+  
+    let teamSelectButton: UIButton = {
+      let button = UIButton()
+      button.setTitle("팀 선택하기", for: .normal)
+      button.titleLabel?.font = .Pretendard(type: .semiBold, size: 14)
+      button.backgroundColor = .yapp_orange
+      button.layer.cornerRadius = 8
+      return button
+    }()
+  
     let sectionView: UIView = {
         let view = UIView()
         view.backgroundColor = .background_base
@@ -167,6 +177,11 @@ final class SettingViewController: UIViewController {
                 self?.viewModel.input.memberOut.accept(())
                 self?.alertView.isHidden.toggle()
             }).disposed(by: disposeBag)
+      
+        teamSelectButton.rx.tap.subscribe(onNext: { [weak self] _ in
+          
+        })
+        .disposed(by: disposeBag)
     }
 
     func showHomeVC() {
@@ -179,6 +194,13 @@ final class SettingViewController: UIViewController {
     }
 
     func goToLoginVC() {
+        let loginVC = LoginViewController()
+        let navC = UINavigationController(rootViewController: loginVC)
+        navC.modalPresentationStyle = .fullScreen
+        self.present(navC, animated: true)
+    }
+  
+    func showTeamSelectVC() {
         let loginVC = LoginViewController()
         let navC = UINavigationController(rootViewController: loginVC)
         navC.modalPresentationStyle = .fullScreen

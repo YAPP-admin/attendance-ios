@@ -1,3 +1,4 @@
+
 //
 //  SignUpTeamViewController.swift
 //  attendance-ios
@@ -13,7 +14,7 @@ import RxSwift
 import SnapKit
 import UIKit
 
-final class SignUpTeamViewController: UIViewController {
+final class SettingTeamViewController: UIViewController {
 
     enum Constants {
         static let padding: CGFloat = 24
@@ -82,14 +83,14 @@ final class SignUpTeamViewController: UIViewController {
     }()
 
     private var disposeBag = DisposeBag()
-    private let viewModel: SignUpViewModel
+    private let viewModel: SettingViewModel
 
-    init(viewModel: SignUpViewModel) {
+    init(viewModel: SettingViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
 
-    init?(coder: NSCoder, viewModel: SignUpViewModel) {
+    init?(coder: NSCoder, viewModel: SettingViewModel) {
         self.viewModel = viewModel
         super.init(coder: coder)
     }
@@ -118,13 +119,13 @@ final class SignUpTeamViewController: UIViewController {
 }
 
 // MARK: - Bind
-private extension SignUpTeamViewController {
+private extension SettingTeamViewController {
 
     func bindSubviews() {
         okButton.rx.controlEvent([.touchUpInside])
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
-                self?.viewModel.input.registerInfo.accept(())
+                self?.viewModel.input.updateInfo.accept(())
             }).disposed(by: disposeBag)
 
         alertView.rightButton.rx.controlEvent([.touchUpInside])
@@ -171,27 +172,27 @@ private extension SignUpTeamViewController {
                 self?.dismiss()
               })
               .disposed(by: disposeBag)
-	}
+  }
 
     func bindButton() {
         okButton.rx.controlEvent([.touchUpInside])
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
-                self?.viewModel.registerInfo()
+                self?.viewModel.updateInfo()
             }).disposed(by: disposeBag)
 
         alertView.rightButton.rx.controlEvent([.touchUpInside])
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
                 self?.alertView.isHidden.toggle()
-                self?.goToLogin()
+                self?.dismiss()
             }).disposed(by: disposeBag)
     }
 
 }
 
 // MARK: - CollectionView
-extension SignUpTeamViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+extension SettingTeamViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
 
     private func setupCollectionView() {
         teamTypeCollectionView.delegate = self
@@ -277,7 +278,7 @@ extension SignUpTeamViewController: UICollectionViewDelegateFlowLayout, UICollec
 }
 
 // MARK: - etc
-private extension SignUpTeamViewController {
+private extension SettingTeamViewController {
 
     func dismiss() {
         navigationController?.dismiss(animated: true)
@@ -285,7 +286,7 @@ private extension SignUpTeamViewController {
 }
 
 // MARK: - UI
-private extension SignUpTeamViewController {
+private extension SettingTeamViewController {
 
     func activateNextButton() {
         okButton.isEnabled = true

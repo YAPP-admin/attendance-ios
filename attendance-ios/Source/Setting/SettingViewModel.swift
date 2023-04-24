@@ -16,7 +16,10 @@ final class SettingViewModel: ViewModel {
         let tapPolicyView = PublishRelay<Void>()
         let tapLogoutView = PublishRelay<Void>()
         let tapMemberView = PublishRelay<Void>()
+        let teamType = BehaviorSubject<TeamType?>(value: nil)
+        let teamNumber = BehaviorSubject<Int?>(value: nil)
         let memberOut = PublishRelay<Void>()
+        let updateInfo = PublishRelay<Void>()
     }
 
     struct Output {
@@ -27,7 +30,10 @@ final class SettingViewModel: ViewModel {
         let showToastWhenError = PublishRelay<Void>()
         var generation = BehaviorRelay<String>(value: "")
         var name = BehaviorRelay<String>(value: "")
-		let isLoading = BehaviorSubject<Bool>(value: false)
+        let isLoading = BehaviorSubject<Bool>(value: false)
+        let showTeamNumber = PublishRelay<Void>()
+        let complete = PublishRelay<Void>()
+        let configTeams = BehaviorSubject<[Team]>(value: [])
     }
 
     let input = Input()
@@ -131,4 +137,46 @@ final class SettingViewModel: ViewModel {
         }
     }
 
+}
+
+extension SettingViewModel {
+  func updateInfo() {
+      guard let appleId = try? input.appleId.value(),
+            let kakaoTalkId = try? input.kakaoTalkId.value(),
+            let isGuest = try? input.isGuest.value(),
+            let name = try? input.name.value(),
+            let positionType = try? input.positionType.value() else { return }
+
+          let newUser = FirebaseNewMember(name: name, positionType: positionType, teamType: TeamType.none, teamNumber: 1)
+
+      if kakaoTalkId.isEmpty == false, let id = Int(kakaoTalkId) {
+    userDefaultsWorker.setKakaoTalkId(id: kakaoTalkId)
+          registerKakaoUserInfo(id: id, newUser: newUser)
+      } else if appleId.isEmpty == false {
+    userDefaultsWorker.setAppleId(id: appleId)
+          registerWithApple(id: appleId, newUser: newUser)
+      } else if isGuest == true {
+          let randomId = Int.random(in: 1000000000..<10000000000)
+          userDefaultsWorker.setGuestId(id: String(randomId))
+          registerGuestUser(id: randomId, newUser: newUser)
+      }
+  }
+
+  func registerKakaoUserInfo(id: Int, newUser: FirebaseNewMember) {
+      firebaseWorker.registerKakaoUserInfo(id: id, newUser: newUser) { [weak self] result in
+          switch result {
+          case .success: self?.output.goToHome.accept(())
+          case .failure: self?.output.goToLoginVC.accept(())
+          }
+      }
+  }
+
+  func registerWithApple(id: String, newUser: FirebaseNewMember) {
+      firebaseWorker.registerAppleUserInfo(id: id, newUser: newUser) { [weak self] result in
+          switch result {
+          case .success: self?.output.goToHome.accept(())
+          case .failure: self?.output.goToLoginVC.accept(())
+          }
+      }
+  }
 }
