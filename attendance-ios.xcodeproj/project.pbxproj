@@ -66,7 +66,6 @@
 		5EAA7A0A27FF2A2200BC7397 /* ConfigWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA7A0927FF2A2200BC7397 /* ConfigWorker.swift */; };
 		5EAA7A0C27FF338800BC7397 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		5EAA7A0E27FF441600BC7397 /* SignUpPositionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA7A0D27FF441600BC7397 /* SignUpPositionViewController.swift */; };
-		5EAA7A1027FF443200BC7397 /* SignUpTeamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA7A0F27FF443200BC7397 /* SignUpTeamViewController.swift */; };
 		5EABC0FE28686E2D009A7770 /* splash_main.json in Resources */ = {isa = PBXBuildFile; fileRef = 5EABC0FD28686E2D009A7770 /* splash_main.json */; };
 		5EE25B2427C7CB700065B816 /* bg_buong.html in Resources */ = {isa = PBXBuildFile; fileRef = 5EE25B2327C7CB700065B816 /* bg_buong.html */; };
 		5EED02BD27D76D4200C52637 /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EED02BC27D76D4200C52637 /* SignUpViewModel.swift */; };
@@ -92,6 +91,7 @@
 		5EF69EDB27AAB0BC007E9735 /* PolicyUnitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69EDA27AAB0BC007E9735 /* PolicyUnitView.swift */; };
 		F38C03A229EEEF7500573719 /* Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = F38C03A129EEEF7500573719 /* Status.swift */; };
 		F38C03A429EEEF9F00573719 /* AttendenceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F38C03A329EEEF9F00573719 /* AttendenceType.swift */; };
+		F38C03A629F828EE00573719 /* SettingTeamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F38C03A529F828EE00573719 /* SettingTeamViewController.swift */; };
 		F3AB4732292CA69700559E73 /* AppFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AB4731292CA69700559E73 /* AppFlowCoordinator.swift */; };
 		F3AB4735292CA75C00559E73 /* AppDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AB4734292CA75C00559E73 /* AppDIContainer.swift */; };
 		FDA9A3C329124F4500FF4FB4 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = FDA9A3C229124F4500FF4FB4 /* RxCocoa */; };
@@ -167,7 +167,6 @@
 		5EAA7A0627FF24CB00BC7397 /* CollectionViewLeftAlignFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewLeftAlignFlowLayout.swift; sourceTree = "<group>"; };
 		5EAA7A0927FF2A2200BC7397 /* ConfigWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigWorker.swift; sourceTree = "<group>"; };
 		5EAA7A0D27FF441600BC7397 /* SignUpPositionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpPositionViewController.swift; sourceTree = "<group>"; };
-		5EAA7A0F27FF443200BC7397 /* SignUpTeamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpTeamViewController.swift; sourceTree = "<group>"; };
 		5EABC0FD28686E2D009A7770 /* splash_main.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = splash_main.json; sourceTree = "<group>"; };
 		5EE25B2327C7CB700065B816 /* bg_buong.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = bg_buong.html; sourceTree = "<group>"; };
 		5EED02BC27D76D4200C52637 /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
@@ -195,6 +194,7 @@
 		5EF69EDA27AAB0BC007E9735 /* PolicyUnitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolicyUnitView.swift; sourceTree = "<group>"; };
 		F38C03A129EEEF7500573719 /* Status.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Status.swift; sourceTree = "<group>"; };
 		F38C03A329EEEF9F00573719 /* AttendenceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendenceType.swift; sourceTree = "<group>"; };
+		F38C03A529F828EE00573719 /* SettingTeamViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingTeamViewController.swift; sourceTree = "<group>"; };
 		F3AB4731292CA69700559E73 /* AppFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFlowCoordinator.swift; sourceTree = "<group>"; };
 		F3AB4734292CA75C00559E73 /* AppDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDIContainer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -234,6 +234,7 @@
 			isa = PBXGroup;
 			children = (
 				5264EFF8280D5AC00026F560 /* SettingViewController.swift */,
+				F38C03A529F828EE00573719 /* SettingTeamViewController.swift */,
 				5264EFFA280D5AE80026F560 /* SettingViewModel.swift */,
 				5264EFFC280D5B060026F560 /* SettingCellView.swift */,
 				5264EFFE280D5B210026F560 /* SettingViewController+UI.swift */,
@@ -374,7 +375,6 @@
 				5EED02BC27D76D4200C52637 /* SignUpViewModel.swift */,
 				5E63BC9A27BBE90F0024FCE3 /* SignUpNameViewController.swift */,
 				5EAA7A0D27FF441600BC7397 /* SignUpPositionViewController.swift */,
-				5EAA7A0F27FF443200BC7397 /* SignUpTeamViewController.swift */,
 				5E9CC7BB27D0F79D006D8B12 /* SignUpCollectionViewCell.swift */,
 				5EAA7A0627FF24CB00BC7397 /* CollectionViewLeftAlignFlowLayout.swift */,
 			);
@@ -697,7 +697,6 @@
 				5E3D7691280717090067286A /* AdminGradeCell.swift in Sources */,
 				5EF69EDB27AAB0BC007E9735 /* PolicyUnitView.swift in Sources */,
 				52A85C59281A4AE900593749 /* HelpViewController.swift in Sources */,
-				5EAA7A1027FF443200BC7397 /* SignUpTeamViewController.swift in Sources */,
 				5EAA7A0A27FF2A2200BC7397 /* ConfigWorker.swift in Sources */,
 				52BCA07027C4D393001BF86F /* TextStyle.swift in Sources */,
 				5EF06A782823D7250021D25B /* Session.swift in Sources */,
@@ -715,6 +714,7 @@
 				5E6179AC27C670D500B1A835 /* UITextField.swift in Sources */,
 				5EF69EA527A7DAF8007E9735 /* SceneDelegate.swift in Sources */,
 				5EAA79DB27F601ED00BC7397 /* AdminBottomSheetView.swift in Sources */,
+				F38C03A629F828EE00573719 /* SettingTeamViewController.swift in Sources */,
 				5EAA79D727F5ED7B00BC7397 /* UIView.swift in Sources */,
 				5EF06A6F2823A8AE0021D25B /* AdminGradeMemberCell.swift in Sources */,
 				52578C39280EB55F00C0D569 /* HomeAttendanceCheckViewController.swift in Sources */,

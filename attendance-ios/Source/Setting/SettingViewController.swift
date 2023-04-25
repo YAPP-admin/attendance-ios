@@ -22,7 +22,7 @@ final class SettingViewController: UIViewController {
         let label = UILabel()
         label.textColor = .yapp_orange
         label.style(.Body1)
-        label.text = "YAPP 20기 회원"
+        label.text = "YAPP 22기 회원"
         return label
     }()
     let illustView: UIImageView = {
@@ -179,7 +179,7 @@ final class SettingViewController: UIViewController {
             }).disposed(by: disposeBag)
       
         teamSelectButton.rx.tap.subscribe(onNext: { [weak self] _ in
-          
+            self?.showTeamSelectVC()
         })
         .disposed(by: disposeBag)
     }
@@ -201,10 +201,11 @@ final class SettingViewController: UIViewController {
     }
   
     func showTeamSelectVC() {
-        let loginVC = LoginViewController()
-        let navC = UINavigationController(rootViewController: loginVC)
-        navC.modalPresentationStyle = .fullScreen
-        self.present(navC, animated: true)
+        let teamVC = SettingTeamViewController(viewModel: viewModel)
+        teamVC.modalPresentationStyle = .overFullScreen
+        navigationItem.backButtonTitle = ""
+        navigationController?.navigationBar.isHidden = true
+        navigationController?.present(teamVC, animated: true)
     }
 
     func showDialogWhenMemberOut() {

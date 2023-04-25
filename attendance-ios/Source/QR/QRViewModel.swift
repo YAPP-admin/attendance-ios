@@ -28,7 +28,7 @@ final class QRViewModel: ViewModel {
 	let input = Input()
 	let output = Output()
 	let disposeBag = DisposeBag()
-    private let configWorker = ConfigWorker()
+    private let configWorker = ConfigWorker.shared
 	private let firebaseWorker = FirebaseWorker()
 
 	init() {

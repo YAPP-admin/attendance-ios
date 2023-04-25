@@ -188,13 +188,6 @@ private extension SignUpPositionViewController {
         navigationController?.popToRootViewController(animated: true)
     }
 
-    func goToTeamVC() {
-        let teamVC = SignUpTeamViewController(viewModel: viewModel)
-        navigationItem.backButtonTitle = ""
-        navigationController?.navigationBar.isHidden = true
-        navigationController?.pushViewController(teamVC, animated: true)
-    }
-
     func setupDelegate() {
 
     }

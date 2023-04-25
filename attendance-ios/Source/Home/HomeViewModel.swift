@@ -44,7 +44,7 @@ final class HomeViewModel: ViewModel {
     let input = Input()
     let output = Output()
     let disposeBag = DisposeBag()
-    let configWorker = ConfigWorker()
+    let configWorker = ConfigWorker.shared
     let homeType = BehaviorRelay<HomeType>(value: .todaySession)
     let myId = BehaviorRelay<String>(value: "")
     let memberData = BehaviorRelay<Member?>(value: nil)

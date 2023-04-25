@@ -37,7 +37,7 @@ final class AdminViewModel: ViewModel {
     let output = Output()
     let disposeBag = DisposeBag()
     private let firebaseWorker = FirebaseWorker()
-    private let configWorker = ConfigWorker()
+    private let configWorker = ConfigWorker.shared
 
     init() {
         subscribeInputs()

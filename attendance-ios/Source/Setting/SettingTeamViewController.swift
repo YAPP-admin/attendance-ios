@@ -94,40 +94,41 @@ final class SettingTeamViewController: UIViewController {
         self.viewModel = viewModel
         super.init(coder: coder)
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         bindSubviews()
         bindViewModel()
-
+        
         setupCollectionView()
-
+        
         configureUI()
         configureLayout()
         configureAlertViewLayout()
         addNavigationBackButton()
     }
-
+    
     override func navigationBackButtonTapped() {
         alertView.isHidden.toggle()
     }
-
+    
 }
 
 // MARK: - Bind
 private extension SettingTeamViewController {
-
+    
     func bindSubviews() {
         okButton.rx.controlEvent([.touchUpInside])
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
-                self?.viewModel.input.updateInfo.accept(())
+                self?.viewModel.updateInfo()
+                self?.dismiss()
             }).disposed(by: disposeBag)
-
+        
         alertView.rightButton.rx.controlEvent([.touchUpInside])
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
@@ -135,7 +136,7 @@ private extension SettingTeamViewController {
                 self?.dismiss()
             }).disposed(by: disposeBag)
     }
-
+    
     func bindViewModel() {
         viewModel.input.teamType
             .observe(on: MainScheduler.instance)
@@ -143,7 +144,7 @@ private extension SettingTeamViewController {
                 self?.teamNumberCollectionView.reloadData()
             })
             .disposed(by: disposeBag)
-
+        
         viewModel.input.teamNumber
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] _ in
@@ -158,36 +159,22 @@ private extension SettingTeamViewController {
                 self?.teamNumberCollectionView.isHidden = false
             })
             .disposed(by: disposeBag)
-
+        
         viewModel.output.complete
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] _ in
                 self?.activateNextButton()
             })
             .disposed(by: disposeBag)
-
-            viewModel.output.goToLoginVC
-              .observe(on: MainScheduler.instance)
-              .subscribe(onNext: { [weak self] _ in
-                self?.dismiss()
-              })
-              .disposed(by: disposeBag)
-  }
-
-    func bindButton() {
-        okButton.rx.controlEvent([.touchUpInside])
-            .asObservable()
+        
+        viewModel.output.goToLoginVC
+            .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] _ in
-                self?.viewModel.updateInfo()
-            }).disposed(by: disposeBag)
-
-        alertView.rightButton.rx.controlEvent([.touchUpInside])
-            .asObservable()
-            .subscribe(onNext: { [weak self] _ in
-                self?.alertView.isHidden.toggle()
                 self?.dismiss()
-            }).disposed(by: disposeBag)
+            })
+            .disposed(by: disposeBag)
     }
+    
 
 }
 
@@ -281,7 +268,7 @@ extension SettingTeamViewController: UICollectionViewDelegateFlowLayout, UIColle
 private extension SettingTeamViewController {
 
     func dismiss() {
-        navigationController?.dismiss(animated: true)
+        dismiss(animated: true)
     }
 }
 

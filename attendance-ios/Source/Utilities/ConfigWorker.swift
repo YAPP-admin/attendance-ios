@@ -10,6 +10,12 @@ import FirebaseRemoteConfig
 
 /// Firebase의 Config를 관리하는 클래스입니다.
 final class ConfigWorker {
+    
+    static let shared = ConfigWorker()
+    
+    private init() {
+        
+    }
 
     private let remoteConfig: RemoteConfig = {
         let remoteConfig = RemoteConfig.remoteConfig()

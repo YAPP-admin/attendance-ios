@@ -65,7 +65,7 @@ final class BaseViewModel: ViewModel {
     private let kakaoLoginWorker = KakaoLoginWorker()
     private let firebaseWorker = FirebaseWorker()
     private let userDefaultsWorker = UserDefaultsWorker()
-    private let configWorker = ConfigWorker()
+    private let configWorker = ConfigWorker.shared
 
     init() {
         setupConfig()

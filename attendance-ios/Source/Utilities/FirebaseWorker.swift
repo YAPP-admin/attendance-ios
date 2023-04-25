@@ -22,7 +22,7 @@ final class FirebaseWorker {
 
     private let memberCollectionRef = Firestore.firestore().collection("test")
     private var attendances: [[String: Any]] = []
-    private let configWorker = ConfigWorker()
+    private let configWorker = ConfigWorker.shared
 
     init() {
         setEmptyAttendances()
@@ -168,6 +168,31 @@ extension FirebaseWorker {
                     "team": ["number": member.team.number,
                              "type": member.team.type.rawValue],
                     "attendances": attendances.decode()
+                ]
+                ref.setData(fields) { _ in
+                    return
+                }
+            }
+        }
+    }
+    
+    func updateMemberInfo(memberId: Int, team: Team, completion: @escaping () -> Void) {
+        memberCollectionRef.getDocuments { snapshot, error in
+            guard error == nil, let documents = snapshot?.documents else { return }
+            for document in documents {
+                guard let memberDTO = try? document.data(as: MemberDTO.self),
+                      memberDTO.id == memberId else {
+                    continue
+                }
+                let ref = self.memberCollectionRef.document(document.documentID)
+                let member = memberDTO.convert()
+                let fields: [String: Any] = [
+                    "id": memberId,
+                    "name": member.name,
+                    "position": member.position.rawValue,
+                    "team": ["number": team.number,
+                             "type": team.type.rawValue],
+                    "attendances": member.attendances.decode()
                 ]
                 ref.setData(fields) { _ in
                     return

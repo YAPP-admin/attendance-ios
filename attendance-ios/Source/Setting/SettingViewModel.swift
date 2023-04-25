@@ -20,6 +20,7 @@ final class SettingViewModel: ViewModel {
         let teamNumber = BehaviorSubject<Int?>(value: nil)
         let memberOut = PublishRelay<Void>()
         let updateInfo = PublishRelay<Void>()
+        let dismiss =  PublishRelay<Void>()
     }
 
     struct Output {
@@ -45,9 +46,18 @@ final class SettingViewModel: ViewModel {
     var memberData = BehaviorRelay<Member?>(value: nil)
 
     private let userDefaultsWorker = UserDefaultsWorker()
+    private let configWorker = ConfigWorker.shared
     private let firebaseWorker = FirebaseWorker()
 
     init() {
+        bindInput()
+        checkLoginId()
+        checkGeneration()
+        setupName()
+        setConfig()
+    }
+    
+    func bindInput() {
         input.tapBack
             .subscribe(onNext: { [weak self] _ in
                 self?.output.goToHome.accept(())
@@ -72,10 +82,16 @@ final class SettingViewModel: ViewModel {
             .subscribe(onNext: { [weak self] _ in
                 self?.memberOut()
             }).disposed(by: disposeBag)
+        
+        input.teamType
+            .subscribe(onNext: { [weak self] _ in
+                self?.output.showTeamNumber.accept(())
+            }).disposed(by: disposeBag)
 
-        checkLoginId()
-        checkGeneration()
-        setupName()
+        input.teamNumber
+            .subscribe(onNext: { [weak self] _ in
+                self?.output.complete.accept(())
+            }).disposed(by: disposeBag)
     }
 
     func checkGeneration() {
@@ -87,6 +103,15 @@ final class SettingViewModel: ViewModel {
      func setupName() {
         if let name = userDefaultsWorker.getName(), name.isEmpty == false {
             output.name.accept(name)
+        }
+    }
+    
+    func setConfig() {
+        configWorker.decodeSelectTeams { [weak self] result in
+            switch result {
+            case .success(let teams): self?.output.configTeams.onNext(teams)
+            case .failure: ()
+            }
         }
     }
 
@@ -141,42 +166,14 @@ final class SettingViewModel: ViewModel {
 
 extension SettingViewModel {
   func updateInfo() {
-      guard let appleId = try? input.appleId.value(),
-            let kakaoTalkId = try? input.kakaoTalkId.value(),
-            let isGuest = try? input.isGuest.value(),
-            let name = try? input.name.value(),
-            let positionType = try? input.positionType.value() else { return }
+      guard let member = self.memberData.value,
+            let teamType = try? input.teamType.value(),
+            let teamNumber = try? input.teamNumber.value() else { return }
 
-          let newUser = FirebaseNewMember(name: name, positionType: positionType, teamType: TeamType.none, teamNumber: 1)
+      let team = Team(type: teamType, number: teamNumber)
 
-      if kakaoTalkId.isEmpty == false, let id = Int(kakaoTalkId) {
-    userDefaultsWorker.setKakaoTalkId(id: kakaoTalkId)
-          registerKakaoUserInfo(id: id, newUser: newUser)
-      } else if appleId.isEmpty == false {
-    userDefaultsWorker.setAppleId(id: appleId)
-          registerWithApple(id: appleId, newUser: newUser)
-      } else if isGuest == true {
-          let randomId = Int.random(in: 1000000000..<10000000000)
-          userDefaultsWorker.setGuestId(id: String(randomId))
-          registerGuestUser(id: randomId, newUser: newUser)
-      }
-  }
-
-  func registerKakaoUserInfo(id: Int, newUser: FirebaseNewMember) {
-      firebaseWorker.registerKakaoUserInfo(id: id, newUser: newUser) { [weak self] result in
-          switch result {
-          case .success: self?.output.goToHome.accept(())
-          case .failure: self?.output.goToLoginVC.accept(())
-          }
-      }
-  }
-
-  func registerWithApple(id: String, newUser: FirebaseNewMember) {
-      firebaseWorker.registerAppleUserInfo(id: id, newUser: newUser) { [weak self] result in
-          switch result {
-          case .success: self?.output.goToHome.accept(())
-          case .failure: self?.output.goToLoginVC.accept(())
-          }
+      firebaseWorker.updateMemberInfo(memberId: member.id, team: team) {
+          self.input.dismiss.accept(())
       }
   }
 }

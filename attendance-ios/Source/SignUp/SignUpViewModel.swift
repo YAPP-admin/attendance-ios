@@ -42,7 +42,7 @@ final class SignUpViewModel: ViewModel {
     let output = Output()
     let disposeBag = DisposeBag()
 
-    private let configWorker = ConfigWorker()
+    private let configWorker = ConfigWorker.shared
     private let firebaseWorker = FirebaseWorker()
     private let userDefaultsWorker = UserDefaultsWorker()
 
@@ -60,16 +60,6 @@ private extension SignUpViewModel {
         input.name
             .subscribe(onNext: { [weak self] name in
                 self?.output.isNameTextFieldValid.onNext(name?.isEmpty == false)
-            }).disposed(by: disposeBag)
-
-        input.teamType
-            .subscribe(onNext: { [weak self] _ in
-                self?.output.showTeamNumber.accept(())
-            }).disposed(by: disposeBag)
-
-        input.teamNumber
-            .subscribe(onNext: { [weak self] _ in
-                self?.output.complete.accept(())
             }).disposed(by: disposeBag)
 
         input.registerInfo
