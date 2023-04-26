@@ -20,7 +20,7 @@ struct FirebaseNewMember {
 
 final class FirebaseWorker {
 
-    private let memberCollectionRef = Firestore.firestore().collection("test")
+    private let memberCollectionRef = Firestore.firestore().collection("release-member")
     private var attendances: [[String: Any]] = []
     private let configWorker = ConfigWorker.shared
 
@@ -104,7 +104,7 @@ extension FirebaseWorker {
                         completion(.failure(error))
                     }
 
-                    guard let self = self, let newId = Int(kakaoId), let member = try? snapshot?.data(as: Member.self) else { return }
+                    guard let self = self, let newId = Int(kakaoId), let member = try? snapshot?.data(as: MemberDTO.self) else { return }
 
                     let newUser = FirebaseNewMember(name: member.name, positionType: member.position, teamType: member.team.type, teamNumber: member.team.number)
 
@@ -159,7 +159,7 @@ extension FirebaseWorker {
         memberCollectionRef.getDocuments { snapshot, error in
             guard error == nil, let documents = snapshot?.documents else { return }
             for document in documents {
-                guard let member = try? document.data(as: Member.self), member.id == memberId else { continue }
+                guard let member = try? document.data(as: MemberDTO.self), member.id == memberId else { continue }
                 let ref = self.memberCollectionRef.document(document.documentID)
                 let fields: [String: Any] = [
                     "id": memberId,
@@ -208,9 +208,9 @@ extension FirebaseWorker {
             }
             guard let documents = snapshot?.documents else { return }
             for document in documents {
-                guard let member = try? document.data(as: Member.self) else { continue }
+                guard let member = try? document.data(as: MemberDTO.self) else { continue }
                 if member.id == memberId {
-                    completion(.success(member))
+                    completion(.success(member.convert()))
                 }
             }
         }
@@ -223,7 +223,7 @@ extension FirebaseWorker {
             }
             guard let documents = snapshot?.documents else { return }
             for document in documents {
-                guard let member = try? document.data(as: Member.self) else { continue }
+                guard let member = try? document.data(as: MemberDTO.self) else { continue }
                 if member.id == memberId {
                     completion(.success(document.documentID))
                 }
@@ -257,7 +257,8 @@ extension FirebaseWorker {
                 completion(.failure(error))
             }
             guard let documents = snapshot?.documents else { return }
-            let members = documents.compactMap { try? $0.data(as: Member.self) }
+            let memberDTOs = documents.compactMap { try? $0.data(as: MemberDTO.self) }
+            let members = memberDTOs.map { $0.convert() }
             completion(.success(members))
         }
     }

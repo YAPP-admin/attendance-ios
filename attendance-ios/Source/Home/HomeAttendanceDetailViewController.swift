@@ -153,7 +153,7 @@ final class HomeAttendanceDetailViewController: UIViewController {
         switch session.type {
         case .needAttendance:
             guard let nowDate = Date().startDate() else { return }
-            if nowDate.isPast(than: session.date.date()) {
+            if Date().isPast(than: session.date.date()) {
                 attendanceLabel.text = status.text
                 attendanceLabel.textColor = status.textColor
                 markImageView.image = status.image

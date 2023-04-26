@@ -472,7 +472,7 @@ final class HomeViewController: UIViewController {
 					infoLabel.textColor = .gray_600
 					checkButton.setImage(UIImage(named: "info_check_disabled"), for: .normal)
 					illustView.image = UIImage(named: "illust_member_home_disabled")
-          viewModel.currentType.accept(.absent)
+                    viewModel.currentType.accept(.absent)
 				} else {
 					infoLabel.text = "출석을 완료했어요"
 					infoLabel.textColor = .yapp_orange

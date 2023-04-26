@@ -125,7 +125,7 @@ extension AdminManagementViewController: AdminBottomSheetViewDelegate {
         guard let member = try? viewModel.input.selectedMemberInManagement.value() else { return }
         let sessionId = session.sessionId
         var attendances = member.attendances
-      attendances[sessionId].status = status
+        attendances[sessionId].status = status
         viewModel.updateAttendances(memberId: member.id, attendances: attendances)
     }
 

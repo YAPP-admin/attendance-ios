@@ -59,7 +59,7 @@ extension AdminManagementMemberCell {
 
     func updateAttendance(with attendance: Attendance) {
         attendanceButton.setTitle(attendance.status.text, for: .normal)
-        if attendance.status.text == AttendanceType.attendanceMarked.text {
+        if attendance.status == Status.admit {
             attendanceButton.snp.updateConstraints {
                 $0.width.equalTo(104)
             }

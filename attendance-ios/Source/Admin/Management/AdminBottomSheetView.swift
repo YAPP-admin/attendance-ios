@@ -104,7 +104,7 @@ extension AdminBottomSheetView: UICollectionViewDelegateFlowLayout, UICollection
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AdminBottomSheetCell.identifier, for: indexPath) as? AdminBottomSheetCell else { return UICollectionViewCell() }
-        let attendance = AttendanceType.allCases[indexPath.row].text
+        let attendance = Status.allCases[indexPath.row].text
         cell.updateLabel(attendance)
         return cell
     }

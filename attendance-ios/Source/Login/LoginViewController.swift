@@ -161,7 +161,7 @@ private extension LoginViewController {
         viewModel.output.shouldShowGuestButton
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] showButton in
-                guard showButton == true else { return }
+                guard showButton == false else { return }
                 self?.showGuestButton()
             })
             .disposed(by: disposeBag)
