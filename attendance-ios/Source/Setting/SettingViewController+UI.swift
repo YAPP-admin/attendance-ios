@@ -45,17 +45,15 @@ extension SettingViewController {
             $0.trailing.equalToSuperview().offset(-24)
         }
       
-//      view.addSubview(teamSelectButton)
-//      teamSelectButton.snp.makeConstraints {
-//          $0.top.equalTo(nameLabel.snp.bottom).offset(28)
-//          $0.centerX.equalToSuperview()
-//          $0.height.equalTo(33)
-//          $0.width.equalTo(96)
-//      }
+      view.addSubview(teamStackView)
+      teamStackView.snp.makeConstraints {
+          $0.top.equalTo(nameLabel.snp.bottom).offset(28)
+          $0.centerX.equalToSuperview()
+      }
 
         view.addSubview(sectionView)
         sectionView.snp.makeConstraints {
-            $0.top.equalTo(nameLabel.snp.bottom).offset(36)
+            $0.top.equalTo(teamStackView.snp.bottom).offset(36)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(12)
         }

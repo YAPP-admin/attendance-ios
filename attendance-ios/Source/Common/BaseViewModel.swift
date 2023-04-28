@@ -257,7 +257,6 @@ private extension BaseViewModel {
             case .failure: ()
             }
         }
-
     }
 
     func tapEasterEgg() {

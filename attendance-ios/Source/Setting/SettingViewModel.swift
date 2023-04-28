@@ -35,6 +35,7 @@ final class SettingViewModel: ViewModel {
         let showTeamNumber = PublishRelay<Void>()
         let complete = PublishRelay<Void>()
         let configTeams = BehaviorSubject<[Team]>(value: [])
+        let isSelectTeam = PublishSubject<Bool>()
     }
 
     let input = Input()
@@ -155,6 +156,7 @@ final class SettingViewModel: ViewModel {
             switch result {
             case .success(let member):
                 self.memberData.accept(member)
+                self.output.isSelectTeam.onNext(member.team.type != TeamType.none)
                 self.userDefaultsWorker.setName(name: member.name)
             case .failure:
                 self.output.goToLoginVC.accept(())
@@ -172,8 +174,9 @@ extension SettingViewModel {
 
       let team = Team(type: teamType, number: teamNumber)
 
-      firebaseWorker.updateMemberInfo(memberId: member.id, team: team) {
-          self.input.dismiss.accept(())
-      }
+    firebaseWorker.updateMemberInfo(memberId: member.id, team: team) {
+      self.output.isSelectTeam.onNext(teamType != TeamType.none)
+      self.getUserData()
+    }
   }
 }

@@ -198,6 +198,7 @@ extension FirebaseWorker {
                     return
                 }
             }
+          completion()
         }
     }
 

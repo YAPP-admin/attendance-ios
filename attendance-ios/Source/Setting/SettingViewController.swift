@@ -40,6 +40,23 @@ final class SettingViewController: UIViewController {
         return label
     }()
   
+    let teamStackView: UIStackView = {
+        let view = UIStackView()
+        view.axis = .vertical
+        view.alignment = .center
+        view.backgroundColor = .white
+        return view
+    }()
+  
+    let teamLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .gray_800
+        label.style(.Body1)
+        label.textAlignment = .center
+        label.text = ""
+        return label
+    }()
+  
     let teamSelectButton: UIButton = {
       let button = UIButton()
       button.setTitle("팀 선택하기", for: .normal)
@@ -149,6 +166,38 @@ final class SettingViewController: UIViewController {
                 }
             })
             .disposed(by: disposeBag)
+      
+        viewModel.output.isSelectTeam
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] isSelect in
+              self?.addSubViews()
+              self?.setLayoutby(isSelectTeam: isSelect)
+              
+              self?.view.layoutIfNeeded()
+            })
+            .disposed(by: disposeBag)
+    }
+  
+    func setLayoutby(isSelectTeam: Bool) {
+      if isSelectTeam {
+        teamSelectButton.isHidden = true
+        guard let teamData = self.viewModel.memberData.value?.team,
+              let positionData = self.viewModel.memberData.value?.position else { return }
+        
+        
+        teamLabel.text = "\(teamData.type.lowerCase) \(teamData.number)팀 (\(positionData.shortValue))"
+        
+        teamStackView.addArrangedSubview(teamLabel)
+
+      } else {
+        teamStackView.addArrangedSubview(teamSelectButton)
+        
+        teamSelectButton.snp.makeConstraints {
+            $0.height.equalTo(33)
+            $0.width.equalTo(96)
+        }
+      }
+      
     }
 
     func bindSubViews() {

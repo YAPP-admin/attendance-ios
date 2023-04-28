@@ -161,8 +161,7 @@ private extension LoginViewController {
         viewModel.output.shouldShowGuestButton
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] showButton in
-                guard showButton == false else { return }
-                self?.showGuestButton()
+                self?.isShowGuestButton(showButton)
             })
             .disposed(by: disposeBag)
     }
@@ -269,8 +268,8 @@ extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizatio
 // MARK: - Guest Login
 extension LoginViewController {
 
-    func showGuestButton() {
-        guestLoginButton.isHidden = false
+    func isShowGuestButton(_ isShow: Bool) {
+        guestLoginButton.isHidden = !isShow
     }
 
 }
