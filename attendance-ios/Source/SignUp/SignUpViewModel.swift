@@ -17,7 +17,7 @@ final class SignUpViewModel: ViewModel {
         let isGuest = BehaviorSubject<Bool>(value: false)
 
         let name = BehaviorSubject<String?>(value: nil)
-        let positionType = BehaviorSubject<PositionType?>(value: nil)
+        let positionType = BehaviorSubject<Position?>(value: nil)
         let teamType = BehaviorSubject<TeamType?>(value: nil)
         let teamNumber = BehaviorSubject<Int?>(value: nil)
 

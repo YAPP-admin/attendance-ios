@@ -13,7 +13,7 @@ import UIKit
 
 struct FirebaseNewMember {
     let name: String
-    let positionType: PositionType
+    let positionType: Position
     let teamType: TeamType
     let teamNumber: Int
 }

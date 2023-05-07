@@ -53,7 +53,6 @@
 		5E7AEF2A27E223040059FB3A /* AdminManagementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7AEF2927E223040059FB3A /* AdminManagementViewController.swift */; };
 		5E94967A2833788100C0CE7E /* EasterEggView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9496792833788100C0CE7E /* EasterEggView.swift */; };
 		5E9CC7BC27D0F79E006D8B12 /* SignUpCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9CC7BB27D0F79D006D8B12 /* SignUpCollectionViewCell.swift */; };
-		5EA97D8827DBA621004E2330 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA97D8727DBA621004E2330 /* Models.swift */; };
 		5EA97D8A27DBB06A004E2330 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA97D8927DBB06A004E2330 /* Config.swift */; };
 		5EAA79D527F5D6B400BC7397 /* AdminTodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA79D427F5D6B400BC7397 /* AdminTodayView.swift */; };
 		5EAA79D727F5ED7B00BC7397 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA79D627F5ED7B00BC7397 /* UIView.swift */; };
@@ -73,8 +72,7 @@
 		5EF06A6B2822B4B10021D25B /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF06A6A2822B4B10021D25B /* Array.swift */; };
 		5EF06A6D2822B7010021D25B /* PrintFn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF06A6C2822B7010021D25B /* PrintFn.swift */; };
 		5EF06A6F2823A8AE0021D25B /* AdminGradeMemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF06A6E2823A8AE0021D25B /* AdminGradeMemberCell.swift */; };
-		5EF06A712823D1660021D25B /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF06A702823D1660021D25B /* Team.swift */; };
-		5EF06A782823D7250021D25B /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF06A772823D7250021D25B /* Session.swift */; };
+		5EF06A782823D7250021D25B /* Sessions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF06A772823D7250021D25B /* Sessions.swift */; };
 		5EF06A7A2823E5F60021D25B /* AdminManagementMemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF06A792823E5F60021D25B /* AdminManagementMemberCell.swift */; };
 		5EF69EA327A7DAF8007E9735 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69EA227A7DAF8007E9735 /* AppDelegate.swift */; };
 		5EF69EA527A7DAF8007E9735 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69EA427A7DAF8007E9735 /* SceneDelegate.swift */; };
@@ -90,10 +88,13 @@
 		5EF69ED927AAACBA007E9735 /* PolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69ED827AAACBA007E9735 /* PolicyViewController.swift */; };
 		5EF69EDB27AAB0BC007E9735 /* PolicyUnitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69EDA27AAB0BC007E9735 /* PolicyUnitView.swift */; };
 		F38C03A229EEEF7500573719 /* Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = F38C03A129EEEF7500573719 /* Status.swift */; };
-		F38C03A429EEEF9F00573719 /* AttendenceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F38C03A329EEEF9F00573719 /* AttendenceType.swift */; };
 		F38C03A629F828EE00573719 /* SettingTeamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F38C03A529F828EE00573719 /* SettingTeamViewController.swift */; };
 		F3AB4732292CA69700559E73 /* AppFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AB4731292CA69700559E73 /* AppFlowCoordinator.swift */; };
 		F3AB4735292CA75C00559E73 /* AppDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AB4734292CA75C00559E73 /* AppDIContainer.swift */; };
+		FD0B2B032A07E133004BA8E9 /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0B2B022A07E133004BA8E9 /* Member.swift */; };
+		FD0B2B052A07E14A004BA8E9 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0B2B042A07E14A004BA8E9 /* Session.swift */; };
+		FD0B2B072A07E16D004BA8E9 /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0B2B062A07E16D004BA8E9 /* Team.swift */; };
+		FD0B2B092A07E506004BA8E9 /* Position.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0B2B082A07E506004BA8E9 /* Position.swift */; };
 		FDA9A3C329124F4500FF4FB4 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = FDA9A3C229124F4500FF4FB4 /* RxCocoa */; };
 		FDA9A3C529124F4500FF4FB4 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = FDA9A3C429124F4500FF4FB4 /* RxSwift */; };
 		FDA9A3C829124F8300FF4FB4 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = FDA9A3C729124F8300FF4FB4 /* SnapKit */; };
@@ -155,7 +156,6 @@
 		5E7AEF2927E223040059FB3A /* AdminManagementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminManagementViewController.swift; sourceTree = "<group>"; };
 		5E9496792833788100C0CE7E /* EasterEggView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EasterEggView.swift; sourceTree = "<group>"; };
 		5E9CC7BB27D0F79D006D8B12 /* SignUpCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpCollectionViewCell.swift; sourceTree = "<group>"; };
-		5EA97D8727DBA621004E2330 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		5EA97D8927DBB06A004E2330 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		5EAA79D427F5D6B400BC7397 /* AdminTodayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminTodayView.swift; sourceTree = "<group>"; };
 		5EAA79D627F5ED7B00BC7397 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
@@ -174,8 +174,7 @@
 		5EF06A6A2822B4B10021D25B /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		5EF06A6C2822B7010021D25B /* PrintFn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrintFn.swift; sourceTree = "<group>"; };
 		5EF06A6E2823A8AE0021D25B /* AdminGradeMemberCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminGradeMemberCell.swift; sourceTree = "<group>"; };
-		5EF06A702823D1660021D25B /* Team.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Team.swift; sourceTree = "<group>"; };
-		5EF06A772823D7250021D25B /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
+		5EF06A772823D7250021D25B /* Sessions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sessions.swift; sourceTree = "<group>"; };
 		5EF06A792823E5F60021D25B /* AdminManagementMemberCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminManagementMemberCell.swift; sourceTree = "<group>"; };
 		5EF69E9F27A7DAF8007E9735 /* attendance-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "attendance-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5EF69EA227A7DAF8007E9735 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -193,10 +192,13 @@
 		5EF69ED827AAACBA007E9735 /* PolicyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolicyViewController.swift; sourceTree = "<group>"; };
 		5EF69EDA27AAB0BC007E9735 /* PolicyUnitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolicyUnitView.swift; sourceTree = "<group>"; };
 		F38C03A129EEEF7500573719 /* Status.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Status.swift; sourceTree = "<group>"; };
-		F38C03A329EEEF9F00573719 /* AttendenceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendenceType.swift; sourceTree = "<group>"; };
 		F38C03A529F828EE00573719 /* SettingTeamViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingTeamViewController.swift; sourceTree = "<group>"; };
 		F3AB4731292CA69700559E73 /* AppFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFlowCoordinator.swift; sourceTree = "<group>"; };
 		F3AB4734292CA75C00559E73 /* AppDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDIContainer.swift; sourceTree = "<group>"; };
+		FD0B2B022A07E133004BA8E9 /* Member.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
+		FD0B2B042A07E14A004BA8E9 /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
+		FD0B2B062A07E16D004BA8E9 /* Team.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Team.swift; sourceTree = "<group>"; };
+		FD0B2B082A07E506004BA8E9 /* Position.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Position.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -299,11 +301,13 @@
 		5EA97D8427DBA5C4004E2330 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				5EA97D8727DBA621004E2330 /* Models.swift */,
 				5EAA79FA27FDE42500BC7397 /* Attendance.swift */,
 				5EA97D8927DBB06A004E2330 /* Config.swift */,
 				F38C03A129EEEF7500573719 /* Status.swift */,
-				F38C03A329EEEF9F00573719 /* AttendenceType.swift */,
+				FD0B2B022A07E133004BA8E9 /* Member.swift */,
+				FD0B2B042A07E14A004BA8E9 /* Session.swift */,
+				FD0B2B062A07E16D004BA8E9 /* Team.swift */,
+				FD0B2B082A07E506004BA8E9 /* Position.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -384,8 +388,7 @@
 		5EF06A722823D1950021D25B /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				5EF06A702823D1660021D25B /* Team.swift */,
-				5EF06A772823D7250021D25B /* Session.swift */,
+				5EF06A772823D7250021D25B /* Sessions.swift */,
 				5E6B7FFC283271C100F4D88F /* Attendances.swift */,
 			);
 			path = Models;
@@ -664,6 +667,7 @@
 				5EAA7A0E27FF441600BC7397 /* SignUpPositionViewController.swift in Sources */,
 				5EA97D8A27DBB06A004E2330 /* Config.swift in Sources */,
 				5E6B7FFB28321BBE00F4D88F /* UICollectionReusableView.swift in Sources */,
+				FD0B2B092A07E506004BA8E9 /* Position.swift in Sources */,
 				5E9CC7BC27D0F79E006D8B12 /* SignUpCollectionViewCell.swift in Sources */,
 				5E7AEF2227E212690059FB3A /* AdminViewController.swift in Sources */,
 				5EF69ED427A83BCE007E9735 /* DetailViewController.swift in Sources */,
@@ -699,26 +703,26 @@
 				52A85C59281A4AE900593749 /* HelpViewController.swift in Sources */,
 				5EAA7A0A27FF2A2200BC7397 /* ConfigWorker.swift in Sources */,
 				52BCA07027C4D393001BF86F /* TextStyle.swift in Sources */,
-				5EF06A782823D7250021D25B /* Session.swift in Sources */,
+				5EF06A782823D7250021D25B /* Sessions.swift in Sources */,
 				F3AB4735292CA75C00559E73 /* AppDIContainer.swift in Sources */,
-				F38C03A429EEEF9F00573719 /* AttendenceType.swift in Sources */,
 				5EF69EA727A7DAF8007E9735 /* LoginViewController.swift in Sources */,
 				5EED02BD27D76D4200C52637 /* SignUpViewModel.swift in Sources */,
 				5EF69EA327A7DAF8007E9735 /* AppDelegate.swift in Sources */,
 				5EED02C027D7854F00C52637 /* AlertView.swift in Sources */,
 				52EFD5F4280FF92600065FEB /* BaseTableViewCell.swift in Sources */,
-				5EA97D8827DBA621004E2330 /* Models.swift in Sources */,
+				FD0B2B072A07E16D004BA8E9 /* Team.swift in Sources */,
 				5264EFF9280D5AC00026F560 /* SettingViewController.swift in Sources */,
 				F38C03A229EEEF7500573719 /* Status.swift in Sources */,
 				5E7AEF2A27E223040059FB3A /* AdminManagementViewController.swift in Sources */,
 				5E6179AC27C670D500B1A835 /* UITextField.swift in Sources */,
 				5EF69EA527A7DAF8007E9735 /* SceneDelegate.swift in Sources */,
 				5EAA79DB27F601ED00BC7397 /* AdminBottomSheetView.swift in Sources */,
+				FD0B2B052A07E14A004BA8E9 /* Session.swift in Sources */,
 				F38C03A629F828EE00573719 /* SettingTeamViewController.swift in Sources */,
+				FD0B2B032A07E133004BA8E9 /* Member.swift in Sources */,
 				5EAA79D727F5ED7B00BC7397 /* UIView.swift in Sources */,
 				5EF06A6F2823A8AE0021D25B /* AdminGradeMemberCell.swift in Sources */,
 				52578C39280EB55F00C0D569 /* HomeAttendanceCheckViewController.swift in Sources */,
-				5EF06A712823D1660021D25B /* Team.swift in Sources */,
 				5E6ACB3A2808648700ADF2BB /* FirebaseWorker.swift in Sources */,
 				5EAA79D527F5D6B400BC7397 /* AdminTodayView.swift in Sources */,
 				5264EFFB280D5AE80026F560 /* SettingViewModel.swift in Sources */,

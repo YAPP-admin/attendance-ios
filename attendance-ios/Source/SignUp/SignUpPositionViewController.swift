@@ -135,18 +135,18 @@ extension SignUpPositionViewController: UICollectionViewDelegateFlowLayout, UICo
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return PositionType.allCases.count
+        return Position.allCases.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SignUpCollectionViewCell.identifier, for: indexPath) as? SignUpCollectionViewCell else { return UICollectionViewCell() }
-        cell.configureUI(text: PositionType.allCases[indexPath.row].shortValue)
+        cell.configureUI(text: Position.allCases[indexPath.row].shortValue)
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let dummyCell = SignUpCollectionViewCell(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: Constants.cellHeight))
-        let text = PositionType.allCases[indexPath.row].shortValue
+        let text = Position.allCases[indexPath.row].shortValue
         dummyCell.configureUI(text: text)
         dummyCell.layoutIfNeeded()
         let estimatedSize = dummyCell.systemLayoutSizeFitting(CGSize(width: 80, height: Constants.cellHeight))
@@ -163,7 +163,7 @@ extension SignUpPositionViewController: UICollectionViewDelegateFlowLayout, UICo
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) as? SignUpCollectionViewCell else { return }
-        let positionType = PositionType.allCases[indexPath.row]
+        let positionType = Position.allCases[indexPath.row]
         viewModel.input.positionType.onNext(positionType)
         cell.didSelect()
         activateNextButton()

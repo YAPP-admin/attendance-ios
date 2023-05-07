@@ -171,7 +171,7 @@ extension AdminManagementViewController: UICollectionViewDelegateFlowLayout, UIC
         cell.updateSubViews()
 
         if let teamList = try? viewModel.output.teamList.value(), let team = teamList[safe: index] {
-            let teamNames = teamList.map { $0.name() }
+            let teamNames = teamList.map { $0.displayName() }
             let teamName = teamNames[indexPath.row]
             cell.updateTeamNameLabel(name: teamName)
 
@@ -211,7 +211,7 @@ extension AdminManagementViewController: UICollectionViewDelegateFlowLayout, UIC
               let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: AdminMessageHeader.identifier, for: indexPath) as? AdminMessageHeader,
               let memberList = try? viewModel.output.memberList.value() else { return .init() }
 
-        let attendances = memberList.flatMap { $0.attendances }.filter { $0.sessionId == session.sessionId }.filter { $0.status.text != AttendanceType.absence.text }
+        let attendances = memberList.flatMap { $0.attendances }.filter { $0.sessionId == session.sessionId }.filter { $0.status != .absent }
         header.configureLabel("\(attendances.count)명이 출석했어요")
         return header
     }

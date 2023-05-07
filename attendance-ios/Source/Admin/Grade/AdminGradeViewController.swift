@@ -153,7 +153,7 @@ extension AdminGradeViewController: UICollectionViewDelegateFlowLayout, UICollec
         cell.updateSubViews()
 
         if let teamList = try? viewModel.output.teamList.value(), let team = teamList[safe: index] {
-            let teamNames = teamList.map { $0.name() }
+            let teamNames = teamList.map { $0.displayName() }
             let teamName = teamNames[indexPath.row]
             cell.updateTeamNameLabel(name: teamName)
 
