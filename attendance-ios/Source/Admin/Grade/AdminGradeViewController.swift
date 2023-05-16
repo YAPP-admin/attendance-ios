@@ -10,8 +10,7 @@ import RxSwift
 import SnapKit
 import UIKit
 
-final class AdminGradeViewController: UIViewController {
-
+final class AdminGradeViewController: BaseAdminViewController {
     enum Constants {
         static let verticalPadding: CGFloat = 28
         static let horizontalPadding: CGFloat = 24
@@ -19,12 +18,6 @@ final class AdminGradeViewController: UIViewController {
         static let cellHeight: CGFloat = 60
         static let headerHeight: CGFloat = 104
     }
-
-    private let navigationBarView: BaseNavigationBarView = {
-        let barView = BaseNavigationBarView(title: "누적 출결 점수")
-        barView.navigationBarView.backgroundColor = .clear
-        return barView
-    }()
 
     private let teamCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -36,14 +29,14 @@ final class AdminGradeViewController: UIViewController {
     private let viewModel: AdminViewModel
     private var disposeBag = DisposeBag()
 
-    init(viewModel: AdminViewModel) {
+    override init(viewModel: AdminViewModel) {
         self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
+        super.init(viewModel: viewModel)
     }
 
-    init?(coder: NSCoder, viewModel: AdminViewModel) {
+    override init?(coder: NSCoder, viewModel: AdminViewModel) {
         self.viewModel = viewModel
-        super.init(coder: coder)
+        super.init(coder: coder, viewModel: viewModel)
     }
 
     required init?(coder: NSCoder) {
@@ -52,9 +45,10 @@ final class AdminGradeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        bindViewModel()
-        bindSubViews()
+        super.bindSubViews()
 
+        bindViewModel()
+        
         setupCollectionView()
 
         configureUI()
@@ -72,7 +66,6 @@ final class AdminGradeViewController: UIViewController {
 
 // MARK: - Bind
 extension AdminGradeViewController {
-
     func bindViewModel() {
         viewModel.input.selectedTeamIndexListInGrade
             .subscribe(onNext: { [weak self] _ in
@@ -95,17 +88,6 @@ extension AdminGradeViewController {
                 }
             }).disposed(by: disposeBag)
     }
-
-    func bindSubViews() {
-        navigationBarView.backButton.rx.tap
-            .subscribe(onNext: { [weak self] _ in
-                DispatchQueue.main.async {
-                    self?.viewModel.input.selectedTeamIndexListInGrade.onNext([])
-                    self?.navigationController?.popViewController(animated: true)
-                }
-            }).disposed(by: disposeBag)
-    }
-
 }
 
 // MARK: - CollectionView
@@ -205,18 +187,14 @@ private extension AdminGradeViewController {
 
     func configureUI() {
         view.backgroundColor = .background
+        navigationBarView.titleLabel.text = "누적 출결 점수"
     }
 
     func configureLayout() {
-        view.addSubviews([navigationBarView, teamCollectionView])
+        view.addSubviews([teamCollectionView])
 
-        navigationBarView.snp.makeConstraints {
-            $0.top.equalTo(view.snp.top).offset(44)
-            $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(44)
-        }
         teamCollectionView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(Constants.topPadding)
+            $0.top.equalTo(segmentContainerView.snp.bottom).offset(24)
             $0.bottom.left.right.equalToSuperview()
         }
     }

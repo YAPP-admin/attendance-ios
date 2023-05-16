@@ -106,6 +106,7 @@
 		FDA9A3D72912510C00FF4FB4 /* RxKakaoSDKCommon in Frameworks */ = {isa = PBXBuildFile; productRef = FDA9A3D62912510C00FF4FB4 /* RxKakaoSDKCommon */; };
 		FDA9A3D92912510C00FF4FB4 /* RxKakaoSDKUser in Frameworks */ = {isa = PBXBuildFile; productRef = FDA9A3D82912510C00FF4FB4 /* RxKakaoSDKUser */; };
 		FDA9A3DC2912515800FF4FB4 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = FDA9A3DB2912515800FF4FB4 /* Lottie */; };
+		FDC30B502A1429BE00E86FDE /* BaseAdminViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC30B4F2A1429BE00E86FDE /* BaseAdminViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -199,6 +200,7 @@
 		FD0B2B042A07E14A004BA8E9 /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		FD0B2B062A07E16D004BA8E9 /* Team.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Team.swift; sourceTree = "<group>"; };
 		FD0B2B082A07E506004BA8E9 /* Position.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Position.swift; sourceTree = "<group>"; };
+		FDC30B4F2A1429BE00E86FDE /* BaseAdminViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseAdminViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -294,6 +296,7 @@
 				5EAA79F527FDD7B800BC7397 /* Grade */,
 				5EAA79F627FDD7BE00BC7397 /* Management */,
 				5EAA79F727FDD82900BC7397 /* Common */,
+				FDC30B4F2A1429BE00E86FDE /* BaseAdminViewController.swift */,
 			);
 			path = Admin;
 			sourceTree = "<group>";
@@ -667,6 +670,7 @@
 				5EAA7A0E27FF441600BC7397 /* SignUpPositionViewController.swift in Sources */,
 				5EA97D8A27DBB06A004E2330 /* Config.swift in Sources */,
 				5E6B7FFB28321BBE00F4D88F /* UICollectionReusableView.swift in Sources */,
+				FDC30B502A1429BE00E86FDE /* BaseAdminViewController.swift in Sources */,
 				FD0B2B092A07E506004BA8E9 /* Position.swift in Sources */,
 				5E9CC7BC27D0F79E006D8B12 /* SignUpCollectionViewCell.swift in Sources */,
 				5E7AEF2227E212690059FB3A /* AdminViewController.swift in Sources */,
