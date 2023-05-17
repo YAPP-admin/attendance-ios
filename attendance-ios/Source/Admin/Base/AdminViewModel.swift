@@ -11,11 +11,16 @@ import RxSwift
 import UIKit
 
 final class AdminViewModel: ViewModel {
-
+    enum SegmentType: Int {
+        case team
+        case position
+    }
+    
     struct Input {
         let tapCardView = PublishRelay<Void>()
         let tapLogoutButton = PublishRelay<Void>()
 
+        let selectedSegmentControl = BehaviorSubject<Int>(value: 0)
         let selectedTeamIndexListInGrade = BehaviorSubject<[Int]>(value: [])
         let selectedTeamIndexListInManagement = BehaviorSubject<[Int]>(value: [])
         let selectedMemberInManagement = BehaviorSubject<Member?>(value: nil)
@@ -24,7 +29,7 @@ final class AdminViewModel: ViewModel {
     struct Output {
         let memberList = BehaviorSubject<[Member]>(value: [])
         let sessionList = BehaviorSubject<[Session]>(value: [])
-        let teamList = BehaviorSubject<[Team]>(value: [])
+        let itemList = BehaviorSubject<[DisplayableItem]>(value: [])
         let todaySession = BehaviorSubject<Session?>(value: nil)
         let isFinished = BehaviorSubject<Bool>(value: false)
 
@@ -42,10 +47,17 @@ final class AdminViewModel: ViewModel {
     init() {
         subscribeInputs()
         subscribeOutputs()
-
         setupMemberList()
         setupSessionList()
-        setupTeamList()
+    }
+    
+    func setup(segmentType: SegmentType) {
+        switch segmentType {
+        case .team:
+            setupTeamList()
+        case .position:
+            setupPositionList()
+        }
     }
 
 }
@@ -81,6 +93,13 @@ private extension AdminViewModel {
         input.selectedMemberInManagement
             .subscribe(onNext: { [weak self] _ in
                 self?.output.showBottomsheet.accept(())
+            }).disposed(by: disposeBag)
+        
+        input.selectedSegmentControl
+            .subscribe(onNext: { [weak self] idx in
+                self?.input.selectedTeamIndexListInGrade.onNext([])
+                self?.input.selectedTeamIndexListInGrade.onNext([])
+                self?.setup(segmentType: SegmentType(rawValue: idx) ?? .team)
             }).disposed(by: disposeBag)
     }
 
@@ -120,10 +139,14 @@ private extension AdminViewModel {
             switch result {
             case .success(let teams):
                 let allTeams = self.makeTeamList(teams)
-                self.output.teamList.onNext(allTeams)
+                self.output.itemList.onNext(allTeams)
             case .failure: ()
             }
         }
+    }
+    
+    func setupPositionList() {
+        output.itemList.onNext(Position.allCases)
     }
 
     private func makeTeamList(_ teams: [Team]) -> [Team] {

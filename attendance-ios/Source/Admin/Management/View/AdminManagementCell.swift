@@ -64,7 +64,6 @@ final class AdminManagementCell: UICollectionViewCell {
     }()
 
     var sessionId: Int = 0
-    var team: Team?
     var members: [Member] = []
     var isShownMembers: Bool = true
 
@@ -100,10 +99,6 @@ extension AdminManagementCell {
 
     func setupSessionId(sessionId: Int) {
         self.sessionId = sessionId
-    }
-
-    func setupTeam(team: Team) {
-        self.team = team
     }
 
     func setupMembers(members: [Member]) {

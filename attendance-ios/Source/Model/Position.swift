@@ -26,3 +26,9 @@ enum Position: String, CaseIterable, Codable {
         }
     }
 }
+
+extension Position: DisplayableItem {
+    func displayName() -> String {
+        return "\(self.shortValue)"
+    }
+}

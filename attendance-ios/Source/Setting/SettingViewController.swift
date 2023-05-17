@@ -44,7 +44,7 @@ final class SettingViewController: UIViewController {
         let view = UIStackView()
         view.axis = .vertical
         view.alignment = .center
-        view.backgroundColor = .white
+        view.backgroundColor = .background
         return view
     }()
   
@@ -73,7 +73,8 @@ final class SettingViewController: UIViewController {
     }()
     let versionView: SettingCellView = {
         let view = SettingCellView()
-        view.setVersionTypeButton(title: "버전 정보", "1.0.0")
+        let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0.0"
+        view.setVersionTypeButton(title: "버전 정보", appVersion)
         return view
     }()
     let policyView: SettingCellView = {

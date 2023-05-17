@@ -76,6 +76,8 @@ extension AdminGradeMemberCell {
         
         if totalGrade < 70 {
             iconImageView.isHidden = false
+        } else {
+            iconImageView.isHidden = true
         }
     }
 

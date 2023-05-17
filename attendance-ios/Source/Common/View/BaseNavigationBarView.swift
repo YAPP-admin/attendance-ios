@@ -46,8 +46,7 @@ final class BaseNavigationBarView: UIView {
         navigationBarView.addSubview(backButton)
         navigationBarView.addSubview(titleLabel)
         navigationBarView.snp.makeConstraints {
-            $0.top.leading.trailing.equalTo(safeAreaLayoutGuide)
-            $0.height.equalTo(44)
+            $0.top.leading.trailing.bottom.equalToSuperview()
         }
         titleLabel.snp.makeConstraints {
             $0.center.equalToSuperview()

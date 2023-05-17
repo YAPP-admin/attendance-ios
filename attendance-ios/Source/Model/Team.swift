@@ -7,12 +7,16 @@
 
 import Foundation
 
+protocol DisplayableItem {
+    func displayName() -> String
+}
+
 struct Team: Codable, Equatable {
     var type: TeamType
     var number: Int
 }
 
-extension Team {
+extension Team: DisplayableItem {
     func displayName() -> String {
         return "\(self.type.lowerCase) \(self.number)"
     }

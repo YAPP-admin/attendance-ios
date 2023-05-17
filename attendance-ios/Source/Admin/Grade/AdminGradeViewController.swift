@@ -19,7 +19,7 @@ final class AdminGradeViewController: BaseAdminViewController {
         static let headerHeight: CGFloat = 48
     }
 
-    private let teamCollectionView: UICollectionView = {
+    private let groupCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.sectionInset = UIEdgeInsets(top: Constants.verticalPadding, left: 0, bottom: 0, right: 0)
@@ -75,7 +75,7 @@ extension AdminGradeViewController {
                 }
             }).disposed(by: disposeBag)
 
-        viewModel.output.teamList
+        viewModel.output.itemList
             .subscribe(onNext: { [weak self] _ in
                 DispatchQueue.main.async {
                     self?.reloadCollectionView()
@@ -95,14 +95,14 @@ extension AdminGradeViewController {
 extension AdminGradeViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
 
     private func setupCollectionView() {
-        teamCollectionView.delegate = self
-        teamCollectionView.dataSource = self
-        teamCollectionView.register(AdminGradeCell.self, forCellWithReuseIdentifier: AdminGradeCell.identifier)
-        teamCollectionView.register(AdminMessageHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: AdminMessageHeader.identifier)
+        groupCollectionView.delegate = self
+        groupCollectionView.dataSource = self
+        groupCollectionView.register(AdminGradeCell.self, forCellWithReuseIdentifier: AdminGradeCell.identifier)
+        groupCollectionView.register(AdminMessageHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: AdminMessageHeader.identifier)
     }
 
     private func reloadCollectionView() {
-        teamCollectionView.reloadData()
+        groupCollectionView.reloadData()
     }
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -110,8 +110,8 @@ extension AdminGradeViewController: UICollectionViewDelegateFlowLayout, UICollec
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let teamList = try? viewModel.output.teamList.value() else { return .zero }
-        return teamList.count
+        guard let itemList = try? viewModel.output.itemList.value() else { return .zero }
+        return itemList.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -135,12 +135,13 @@ extension AdminGradeViewController: UICollectionViewDelegateFlowLayout, UICollec
         cell.needAttendanceSessionIdList = sessionList.filter { $0.type == .needAttendance }.map { $0.sessionId }
         cell.updateSubViews()
 
-        if let teamList = try? viewModel.output.teamList.value(), let team = teamList[safe: index] {
-            let teamNames = teamList.map { $0.displayName() }
-            let teamName = teamNames[indexPath.row]
-            cell.updateTeamNameLabel(name: teamName)
+        if let itemList = try? viewModel.output.itemList.value(), let item = itemList[safe: index] {
+            cell.updateTeamNameLabel(name: item.displayName())
 
-            let members = memberList.filter { $0.team == team }
+            let members = memberList.filter {
+                (item as? Team) == $0.team ||
+                (item as? Position) == $0.position
+            }
             cell.setupMembers(members: members)
         }
 
@@ -150,13 +151,16 @@ extension AdminGradeViewController: UICollectionViewDelegateFlowLayout, UICollec
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         var size = CGSize(width: collectionView.bounds.width, height: Constants.cellHeight)
 
-        guard let teamList = try? viewModel.output.teamList.value(),
+        guard let itemList = try? viewModel.output.itemList.value(),
               let memberList = try? viewModel.output.memberList.value(),
               let indexList = try? viewModel.input.selectedTeamIndexListInGrade.value(),
               indexList.contains(indexPath.row) == true else { return size }
 
-        if let team = teamList[safe: indexPath.row] {
-            let members = memberList.filter { $0.team == team }
+        if let item = itemList[safe: indexPath.row] {
+            let members = memberList.filter {
+                (item as? Team) == $0.team ||
+                (item as? Position) == $0.position
+            }
             size.height = Constants.cellHeight*CGFloat(members.count+1)
         }
 
@@ -192,9 +196,9 @@ private extension AdminGradeViewController {
     }
 
     func configureLayout() {
-        view.addSubviews([teamCollectionView])
+        view.addSubviews([groupCollectionView])
 
-        teamCollectionView.snp.makeConstraints {
+        groupCollectionView.snp.makeConstraints {
             $0.top.equalTo(segmentContainerView.snp.bottom).offset(24)
             $0.bottom.left.right.equalToSuperview()
         }

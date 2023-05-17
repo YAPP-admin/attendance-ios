@@ -82,6 +82,10 @@ class BaseAdminViewController: UIViewController {
                     self?.navigationController?.popViewController(animated: true)
                 }
             }).disposed(by: disposeBag)
+        
+        segmentedControl.rx.selectedSegmentIndex
+            .bind(to: viewModel.input.selectedSegmentControl)
+        .disposed(by: disposeBag)
     }
     
     @objc func segmentControlIndexChanged(_ sender: UISegmentedControl) {
@@ -132,8 +136,7 @@ private extension BaseAdminViewController {
         view.addSubviews([navigationBarView, segmentContainerView])
         
         navigationBarView.snp.makeConstraints {
-            $0.top.equalTo(view.snp.top).offset(44)
-            $0.leading.trailing.equalToSuperview()
+            $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             $0.height.equalTo(44)
         }
         
