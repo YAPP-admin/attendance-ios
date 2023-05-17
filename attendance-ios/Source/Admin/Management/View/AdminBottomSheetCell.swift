@@ -18,10 +18,16 @@ final class AdminBottomSheetCell: UICollectionViewCell {
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.alignment = .center
-        stackView.distribution = .fillProportionally
+        stackView.spacing = 7.5
         return stackView
     }()
-
+    
+    private let attendanceIconImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        return imageView
+    }()
+    
     private let attendanceLabel: UILabel = {
         let label = UILabel()
         label.font = .Pretendard(type: .semiBold, size: 16)
@@ -49,8 +55,9 @@ final class AdminBottomSheetCell: UICollectionViewCell {
         backgroundColor = .background
     }
 
-    func updateLabel(_ attendance: String) {
-        attendanceLabel.text = attendance
+    func updateCell(_ attendance: Status) {
+        attendanceIconImageView.image = attendance.image
+        attendanceLabel.text = attendance.text
     }
 
 }
@@ -64,13 +71,15 @@ private extension AdminBottomSheetCell {
 
     func configureLayout() {
         addSubviews([labelStackView])
+        labelStackView.addArrangedSubviews([attendanceIconImageView, attendanceLabel])
 
         labelStackView.snp.makeConstraints {
-            $0.top.bottom.equalToSuperview()
-            $0.left.right.equalToSuperview()
+            $0.center.equalToSuperview()
         }
-
-        labelStackView.addArrangedSubview(attendanceLabel)
+        
+        attendanceIconImageView.snp.makeConstraints {
+            $0.width.height.equalTo(13)
+        }
     }
 
 }

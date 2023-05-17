@@ -30,9 +30,9 @@ extension TextStyle {
         case .Subhead2:
             return UIFont.Pretendard(type: .semiBold, size: 14)
 		case .Body1:
-			return UIFont.Pretendard(type: .medium, size: 16)
+			return UIFont.Pretendard(type: .regular, size: 16)
 		case .Body2:
-			return UIFont.Pretendard(type: .medium, size: 14)
+            return UIFont.Pretendard(type: .regular, size: 14)
         case .Caption1:
             return UIFont.Pretendard(type: .medium, size: 12)
         case .Caption2:

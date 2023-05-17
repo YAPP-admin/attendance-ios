@@ -14,7 +14,7 @@ struct Team: Codable, Equatable {
 
 extension Team {
     func displayName() -> String {
-        return "\(self.type.lowerCase) \(self.number)팀"
+        return "\(self.type.lowerCase) \(self.number)"
     }
 }
 

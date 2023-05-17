@@ -25,18 +25,19 @@ final class AdminGradeCell: UICollectionViewCell {
         return collectionView
     }()
 
-    private let headerStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.alignment = .center
-        stackView.distribution = .fill
-        return stackView
-    }()
-
+    private let headerView = UIView()
+       
     private let teamNameLabel: UILabel = {
         let label = UILabel()
         label.font = .Pretendard(type: .semiBold, size: 18)
         label.textColor = .gray_1200
+        return label
+    }()
+    
+    private let teamMemberCountLabel: UILabel = {
+        let label = UILabel()
+        label.font = TextStyle.Subhead2.font
+        label.textColor = .yapp_orange
         return label
     }()
 
@@ -92,6 +93,7 @@ extension AdminGradeCell {
 
     func setupMembers(members: [Member]) {
         self.members = members
+        teamMemberCountLabel.text = "\(members.count)"
         reloadCollectionView()
     }
 
@@ -179,19 +181,27 @@ private extension AdminGradeCell {
     }
 
     func configureLayout() {
-        addSubviews([headerStackView, collectionView, topDividerView, bottomDividerView])
-        headerStackView.addArrangedSubviews([teamNameLabel, chevronButton])
+        addSubviews([headerView, collectionView, topDividerView, bottomDividerView])
+        headerView.addSubviews([teamNameLabel, teamMemberCountLabel, chevronButton])
 
-        headerStackView.snp.makeConstraints {
-            $0.top.right.equalToSuperview()
-            $0.left.equalToSuperview().inset(Constants.horizontalPadding)
+        headerView.snp.makeConstraints {
+            $0.top.leading.trailing.equalToSuperview()
             $0.height.equalTo(Constants.cellHeight)
         }
+        teamNameLabel.snp.makeConstraints {
+            $0.leading.equalToSuperview().inset(Constants.horizontalPadding)
+            $0.centerY.equalToSuperview()
+        }
+        teamMemberCountLabel.snp.makeConstraints {
+            $0.leading.equalTo(teamNameLabel.snp.trailing).offset(6)
+            $0.centerY.equalToSuperview()
+        }
         chevronButton.snp.makeConstraints {
-            $0.width.height.equalTo(Constants.cellHeight)
+            $0.trailing.equalToSuperview().inset(Constants.horizontalPadding)
+            $0.centerY.equalToSuperview()
         }
         collectionView.snp.makeConstraints {
-            $0.top.equalTo(headerStackView.snp.bottom)
+            $0.top.equalTo(headerView.snp.bottom)
             $0.bottom.left.right.equalToSuperview()
         }
         topDividerView.snp.makeConstraints {

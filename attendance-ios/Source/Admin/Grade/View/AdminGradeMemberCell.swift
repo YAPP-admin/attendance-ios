@@ -8,7 +8,7 @@
 import SnapKit
 import UIKit
 
-final class AdminGradeMemberCell: UICollectionViewCell {
+final class AdminGradeMemberCell: BaseMemberCell {
 
     enum Constants {
         static let horizontalPadding: CGFloat = 28
@@ -16,24 +16,18 @@ final class AdminGradeMemberCell: UICollectionViewCell {
 
     private let nameStackView: UIStackView = {
         let view = UIStackView()
-        view.alignment = .leading
-        view.spacing = 8
+        view.axis = .horizontal
         view.alignment = .center
+        view.spacing = 6
         return view
     }()
 
     private let iconImageView: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(named: "warning")
+        view.contentMode = .scaleAspectFit
         view.isHidden = true
         return view
-    }()
-
-    private let nameLabel: UILabel = {
-        let label = UILabel()
-        label.font = .Pretendard(type: .regular, size: 16)
-        label.textColor = .gray_800
-        return label
     }()
 
     private let gradeLabel: UILabel = {
@@ -46,14 +40,26 @@ final class AdminGradeMemberCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configureUI()
         configureLayout()
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    override func configureLayout() {
+        addSubviews([nameStackView, gradeLabel])
+        nameStackView.addArrangedSubviews([iconImageView, nameLabel, positionLabel])
 
+        nameStackView.snp.makeConstraints {
+            $0.left.equalToSuperview().offset(Constants.horizontalPadding)
+            $0.centerY.equalToSuperview()
+        }
+        gradeLabel.snp.makeConstraints {
+            $0.right.equalToSuperview().inset(Constants.horizontalPadding)
+            $0.centerY.equalToSuperview()
+        }
+    }
 }
 
 // MARK: - Update
@@ -66,31 +72,10 @@ extension AdminGradeMemberCell {
 
         gradeLabel.text = String(totalGrade)
         nameLabel.text = member.name
+        positionLabel.text = member.position.shortValue
+        
         if totalGrade < 70 {
             iconImageView.isHidden = false
-        }
-    }
-
-}
-
-// MARK: - UI
-private extension AdminGradeMemberCell {
-
-    func configureUI() {
-        backgroundColor = .background
-    }
-
-    func configureLayout() {
-        addSubviews([nameStackView, gradeLabel])
-        nameStackView.addArrangedSubviews([iconImageView, nameLabel])
-
-        nameStackView.snp.makeConstraints {
-            $0.left.equalToSuperview().offset(Constants.horizontalPadding)
-            $0.centerY.equalToSuperview()
-        }
-        gradeLabel.snp.makeConstraints {
-            $0.right.equalToSuperview().inset(Constants.horizontalPadding)
-            $0.centerY.equalToSuperview()
         }
     }
 

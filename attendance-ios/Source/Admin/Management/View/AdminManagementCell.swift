@@ -27,13 +27,7 @@ final class AdminManagementCell: UICollectionViewCell {
         return collectionView
     }()
 
-    private let headerStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.alignment = .center
-        stackView.distribution = .fill
-        return stackView
-    }()
+    private let headerView = UIView()
 
     private let teamNameLabel: UILabel = {
         let label = UILabel()
@@ -42,6 +36,13 @@ final class AdminManagementCell: UICollectionViewCell {
         return label
     }()
 
+    private let attendanceRateLabel: UILabel = {
+        let label = UILabel()
+        label.font = .Pretendard(type: .medium, size: 14)
+        label.textColor = .yapp_orange
+        return label
+    }()
+    
     let chevronButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "chevron_down"), for: .normal)
@@ -106,6 +107,13 @@ extension AdminManagementCell {
     }
 
     func setupMembers(members: [Member]) {
+        let numOfAttendees = members
+            .flatMap { $0.attendances }
+            .filter { $0.sessionId == sessionId }
+            .filter { $0.status != .absent }
+            .count
+        
+        attendanceRateLabel.text = "\(numOfAttendees)/\(members.count)"
         self.members = members
         reloadCollectionView()
     }
@@ -205,19 +213,27 @@ private extension AdminManagementCell {
     }
 
     func configureLayout() {
-        addSubviews([headerStackView, collectionView, topDividerView, bottomDividerView])
-        headerStackView.addArrangedSubviews([teamNameLabel, chevronButton])
+        addSubviews([headerView, collectionView, topDividerView, bottomDividerView])
+        headerView.addSubviews([teamNameLabel, attendanceRateLabel, chevronButton])
 
-        headerStackView.snp.makeConstraints {
-            $0.top.right.equalToSuperview()
-            $0.left.equalToSuperview().inset(Constants.horizontalPadding)
+        headerView.snp.makeConstraints {
+            $0.top.leading.trailing.equalToSuperview()
             $0.height.equalTo(Constants.cellHeight)
         }
+        teamNameLabel.snp.makeConstraints {
+            $0.leading.equalToSuperview().inset(Constants.horizontalPadding)
+            $0.centerY.equalToSuperview()
+        }
+        attendanceRateLabel.snp.makeConstraints {
+            $0.leading.equalTo(teamNameLabel.snp.trailing).offset(6)
+            $0.centerY.equalToSuperview()
+        }
         chevronButton.snp.makeConstraints {
-            $0.width.height.equalTo(Constants.cellHeight)
+            $0.trailing.equalToSuperview().inset(Constants.horizontalPadding)
+            $0.centerY.equalToSuperview()
         }
         collectionView.snp.makeConstraints {
-            $0.top.equalTo(headerStackView.snp.bottom)
+            $0.top.equalTo(headerView.snp.bottom)
             $0.bottom.left.right.equalToSuperview()
         }
         topDividerView.snp.makeConstraints {
@@ -231,5 +247,4 @@ private extension AdminManagementCell {
             $0.height.equalTo(1)
         }
     }
-
 }

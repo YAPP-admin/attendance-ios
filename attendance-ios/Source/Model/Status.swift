@@ -8,10 +8,10 @@
 import UIKit
 
 enum Status: Codable, CaseIterable {
-    case absent
-    case late
-    case admit
     case normal
+    case late
+    case absent
+    case admit
     
     var serverText: String {
         switch self {
@@ -59,8 +59,10 @@ extension Status {
             return UIImage(named: "absence")
         case .late:
             return UIImage(named: "tardy")
-        case .normal, .admit:
+        case .normal:
             return UIImage(named: "attendance")
+        case .admit:
+            return UIImage(named: "admit")
         }
     }
 }

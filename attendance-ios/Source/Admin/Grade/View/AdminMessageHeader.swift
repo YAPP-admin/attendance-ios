@@ -20,15 +20,15 @@ final class AdminMessageHeader: UICollectionReusableView {
     private let containerView: UIView = {
         let view = UIView()
         view.layer.cornerRadius = Constants.cornerRadius
-        view.backgroundColor = .yapp_orange_opacity
+        view.backgroundColor = .gray_200
         return view
     }()
 
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = .Pretendard(type: .medium, size: 16)
+        label.font = TextStyle.Body1.font
         label.textAlignment = .center
-        label.textColor = .yapp_orange
+        label.textColor = .gray_1200
         return label
     }()
 

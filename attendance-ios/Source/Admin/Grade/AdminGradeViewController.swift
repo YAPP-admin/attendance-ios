@@ -16,12 +16,13 @@ final class AdminGradeViewController: BaseAdminViewController {
         static let horizontalPadding: CGFloat = 24
         static let topPadding: CGFloat = 88
         static let cellHeight: CGFloat = 60
-        static let headerHeight: CGFloat = 104
+        static let headerHeight: CGFloat = 48
     }
 
     private let teamCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
+        layout.sectionInset = UIEdgeInsets(top: Constants.verticalPadding, left: 0, bottom: 0, right: 0)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         return collectionView
     }()

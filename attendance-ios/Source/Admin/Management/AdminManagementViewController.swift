@@ -16,12 +16,13 @@ final class AdminManagementViewController: BaseAdminViewController {
         static let horizontalPadding: CGFloat = 24
         static let topPadding: CGFloat = 88
         static let cellHeight: CGFloat = 64
-        static let headerHeight: CGFloat = 104
+        static let headerHeight: CGFloat = 88
     }
 
     private let teamCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
+        layout.sectionInset = UIEdgeInsets(top: Constants.verticalPadding, left: 0, bottom: 0, right: 0)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         return collectionView
     }()
@@ -118,7 +119,7 @@ extension AdminManagementViewController: UICollectionViewDelegateFlowLayout, UIC
         teamCollectionView.delegate = self
         teamCollectionView.dataSource = self
         teamCollectionView.register(AdminManagementCell.self, forCellWithReuseIdentifier: AdminManagementCell.identifier)
-        teamCollectionView.register(AdminMessageHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: AdminMessageHeader.identifier)
+        teamCollectionView.register(AttendanceSummaryHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: AttendanceSummaryHeaderView.identifier)
     }
     
     private func reloadCollectionView() {
@@ -188,11 +189,9 @@ extension AdminManagementViewController: UICollectionViewDelegateFlowLayout, UIC
     // MARK: - Header
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         guard kind == UICollectionView.elementKindSectionHeader,
-              let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: AdminMessageHeader.identifier, for: indexPath) as? AdminMessageHeader,
+              let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: AttendanceSummaryHeaderView.identifier, for: indexPath) as? AttendanceSummaryHeaderView,
               let memberList = try? viewModel.output.memberList.value() else { return .init() }
-        
-        let attendances = memberList.flatMap { $0.attendances }.filter { $0.sessionId == session.sessionId }.filter { $0.status != .absent }
-        header.configureLabel("\(attendances.count)명이 출석했어요")
+        header.configureData(memberList, sessionID: session.sessionId)
         return header
     }
     
