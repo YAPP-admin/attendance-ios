@@ -20,6 +20,7 @@ struct FirebaseNewMember {
 
 final class FirebaseWorker {
 
+    static let shared = FirebaseWorker()
     private let memberCollectionRef = Firestore.firestore().collection("release-member")
     private var attendances: [[String: Any]] = []
     private let configWorker = ConfigWorker.shared

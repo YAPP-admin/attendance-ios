@@ -36,7 +36,6 @@
 		5E37B13D2813D13F0083CE23 /* AdminManagementCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E37B13C2813D13F0083CE23 /* AdminManagementCell.swift */; };
 		5E3D7691280717090067286A /* AdminGradeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3D7690280717090067286A /* AdminGradeCell.swift */; };
 		5E6179AC27C670D500B1A835 /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E6179AB27C670D500B1A835 /* UITextField.swift */; };
-		5E63BC9427BBD2AC0024FCE3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5E63BC9327BBD2AC0024FCE3 /* GoogleService-Info.plist */; };
 		5E63BC9B27BBE90F0024FCE3 /* SignUpNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E63BC9A27BBE90F0024FCE3 /* SignUpNameViewController.swift */; };
 		5E68F167281197810093B985 /* UIString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E68F166281197810093B985 /* UIString.swift */; };
 		5E68F169281197FB0093B985 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E68F168281197FB0093B985 /* Date.swift */; };
@@ -87,10 +86,41 @@
 		5EF69ED427A83BCE007E9735 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69ED327A83BCE007E9735 /* DetailViewController.swift */; };
 		5EF69ED927AAACBA007E9735 /* PolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69ED827AAACBA007E9735 /* PolicyViewController.swift */; };
 		5EF69EDB27AAB0BC007E9735 /* PolicyUnitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69EDA27AAB0BC007E9735 /* PolicyUnitView.swift */; };
+		F315F04B2A6315BE0068B96B /* SignUpCodeCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F315F04A2A6315BE0068B96B /* SignUpCodeCore.swift */; };
+		F315F04D2A6316420068B96B /* SignUpCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F315F04C2A6316420068B96B /* SignUpCodeView.swift */; };
+		F33025802A5954E900EC4527 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = F330257F2A5954E900EC4527 /* ComposableArchitecture */; };
+		F363C9372A6322BE0024E0A2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F363C9362A6322BE0024E0A2 /* GoogleService-Info.plist */; };
+		F363C93A2A632D6D0024E0A2 /* PopupView in Frameworks */ = {isa = PBXBuildFile; productRef = F363C9392A632D6D0024E0A2 /* PopupView */; };
+		F363C9432A633F820024E0A2 /* kakaoSignDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = F363C9422A633F820024E0A2 /* kakaoSignDependency.swift */; };
+		F363C9472A634A2A0024E0A2 /* AppleSignDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = F363C9462A634A2A0024E0A2 /* AppleSignDependency.swift */; };
+		F363C9492A634BC40024E0A2 /* SignInUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F363C9482A634BC40024E0A2 /* SignInUserModel.swift */; };
+		F363C9502A6354030024E0A2 /* AppleAuthRespository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F363C94F2A6354030024E0A2 /* AppleAuthRespository.swift */; };
+		F363C9542A635A870024E0A2 /* FirebaseDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = F363C9532A635A870024E0A2 /* FirebaseDependency.swift */; };
+		F363C9572A63AD350024E0A2 /* HomeTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F363C9562A63AD350024E0A2 /* HomeTabView.swift */; };
+		F363C9592A63ADAE0024E0A2 /* HomeTabCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F363C9582A63ADAE0024E0A2 /* HomeTabCore.swift */; };
+		F363C95C2A63AE620024E0A2 /* SettingCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F363C95B2A63AE620024E0A2 /* SettingCore.swift */; };
+		F363C95E2A63AEA50024E0A2 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F363C95D2A63AEA50024E0A2 /* SettingView.swift */; };
+		F363C9612A63B2070024E0A2 /* ScoreCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F363C9602A63B2070024E0A2 /* ScoreCheckView.swift */; };
+		F363C9632A63B21B0024E0A2 /* ScoreCheckCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F363C9622A63B21B0024E0A2 /* ScoreCheckCore.swift */; };
+		F373D2372A59382A00EBA96B /* YPText.swift in Sources */ = {isa = PBXBuildFile; fileRef = F373D2362A59382A00EBA96B /* YPText.swift */; };
+		F373D2402A593E3C00EBA96B /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = F373D23F2A593E3C00EBA96B /* Color.swift */; };
+		F373D2422A5942F000EBA96B /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = F373D2412A5942F000EBA96B /* Font.swift */; };
+		F37AD34C2A5F066C006694D1 /* NavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37AD34B2A5F066C006694D1 /* NavigationBarView.swift */; };
+		F37AD34E2A6302F4006694D1 /* SignUpPositionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37AD34D2A6302F4006694D1 /* SignUpPositionView.swift */; };
+		F37AD3502A630311006694D1 /* SignUpPositionCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37AD34F2A630311006694D1 /* SignUpPositionCore.swift */; };
+		F37AD3532A6307DB006694D1 /* KeyboardAdaptive.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37AD3522A6307DB006694D1 /* KeyboardAdaptive.swift */; };
+		F37AD3562A630A70006694D1 /* applyIf.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37AD3552A630A6F006694D1 /* applyIf.swift */; };
 		F38C03A229EEEF7500573719 /* Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = F38C03A129EEEF7500573719 /* Status.swift */; };
 		F38C03A629F828EE00573719 /* SettingTeamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F38C03A529F828EE00573719 /* SettingTeamViewController.swift */; };
-		F3AB4732292CA69700559E73 /* AppFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AB4731292CA69700559E73 /* AppFlowCoordinator.swift */; };
-		F3AB4735292CA75C00559E73 /* AppDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AB4734292CA75C00559E73 /* AppDIContainer.swift */; };
+		F3B159AF2A59490300BD0BFC /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B159AE2A59490300BD0BFC /* OnboardingView.swift */; };
+		F3B159ED2A59547100BD0BFC /* OnboardingCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B159EC2A59547100BD0BFC /* OnboardingCore.swift */; };
+		F3DE55772A597165004EB701 /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3DE55762A597165004EB701 /* LottieView.swift */; };
+		F3DE55792A598C63004EB701 /* SignUpNameCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3DE55782A598C63004EB701 /* SignUpNameCore.swift */; };
+		F3DE557B2A598C7F004EB701 /* SignUpNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3DE557A2A598C7F004EB701 /* SignUpNameView.swift */; };
+		F3DE55812A5EEC5B004EB701 /* TodaySessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3DE55802A5EEC5B004EB701 /* TodaySessionView.swift */; };
+		F3DE55832A5EED2C004EB701 /* TodaySessionCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3DE55822A5EED2C004EB701 /* TodaySessionCore.swift */; };
+		F3DE55852A5EFBEC004EB701 /* AppCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3DE55842A5EFBEC004EB701 /* AppCore.swift */; };
+		F3DE55872A5EFC74004EB701 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3DE55862A5EFC74004EB701 /* AppView.swift */; };
 		FD0B2B032A07E133004BA8E9 /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0B2B022A07E133004BA8E9 /* Member.swift */; };
 		FD0B2B052A07E14A004BA8E9 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0B2B042A07E14A004BA8E9 /* Session.swift */; };
 		FD0B2B072A07E16D004BA8E9 /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0B2B062A07E16D004BA8E9 /* Team.swift */; };
@@ -142,7 +172,6 @@
 		5E37B13C2813D13F0083CE23 /* AdminManagementCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminManagementCell.swift; sourceTree = "<group>"; };
 		5E3D7690280717090067286A /* AdminGradeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminGradeCell.swift; sourceTree = "<group>"; };
 		5E6179AB27C670D500B1A835 /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
-		5E63BC9327BBD2AC0024FCE3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5E63BC9A27BBE90F0024FCE3 /* SignUpNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpNameViewController.swift; sourceTree = "<group>"; };
 		5E68F166281197810093B985 /* UIString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIString.swift; sourceTree = "<group>"; };
 		5E68F168281197FB0093B985 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
@@ -195,10 +224,39 @@
 		5EF69ED327A83BCE007E9735 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		5EF69ED827AAACBA007E9735 /* PolicyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolicyViewController.swift; sourceTree = "<group>"; };
 		5EF69EDA27AAB0BC007E9735 /* PolicyUnitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolicyUnitView.swift; sourceTree = "<group>"; };
+		F315F04A2A6315BE0068B96B /* SignUpCodeCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpCodeCore.swift; sourceTree = "<group>"; };
+		F315F04C2A6316420068B96B /* SignUpCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpCodeView.swift; sourceTree = "<group>"; };
+		F363C9362A6322BE0024E0A2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		F363C9422A633F820024E0A2 /* kakaoSignDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = kakaoSignDependency.swift; sourceTree = "<group>"; };
+		F363C9462A634A2A0024E0A2 /* AppleSignDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleSignDependency.swift; sourceTree = "<group>"; };
+		F363C9482A634BC40024E0A2 /* SignInUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInUserModel.swift; sourceTree = "<group>"; };
+		F363C94F2A6354030024E0A2 /* AppleAuthRespository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleAuthRespository.swift; sourceTree = "<group>"; };
+		F363C9532A635A870024E0A2 /* FirebaseDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseDependency.swift; sourceTree = "<group>"; };
+		F363C9562A63AD350024E0A2 /* HomeTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabView.swift; sourceTree = "<group>"; };
+		F363C9582A63ADAE0024E0A2 /* HomeTabCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabCore.swift; sourceTree = "<group>"; };
+		F363C95B2A63AE620024E0A2 /* SettingCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCore.swift; sourceTree = "<group>"; };
+		F363C95D2A63AEA50024E0A2 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
+		F363C9602A63B2070024E0A2 /* ScoreCheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreCheckView.swift; sourceTree = "<group>"; };
+		F363C9622A63B21B0024E0A2 /* ScoreCheckCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreCheckCore.swift; sourceTree = "<group>"; };
+		F373D2362A59382A00EBA96B /* YPText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YPText.swift; sourceTree = "<group>"; };
+		F373D23F2A593E3C00EBA96B /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		F373D2412A5942F000EBA96B /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
+		F37AD34B2A5F066C006694D1 /* NavigationBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarView.swift; sourceTree = "<group>"; };
+		F37AD34D2A6302F4006694D1 /* SignUpPositionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpPositionView.swift; sourceTree = "<group>"; };
+		F37AD34F2A630311006694D1 /* SignUpPositionCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpPositionCore.swift; sourceTree = "<group>"; };
+		F37AD3522A6307DB006694D1 /* KeyboardAdaptive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardAdaptive.swift; sourceTree = "<group>"; };
+		F37AD3552A630A6F006694D1 /* applyIf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = applyIf.swift; sourceTree = "<group>"; };
 		F38C03A129EEEF7500573719 /* Status.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Status.swift; sourceTree = "<group>"; };
 		F38C03A529F828EE00573719 /* SettingTeamViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingTeamViewController.swift; sourceTree = "<group>"; };
-		F3AB4731292CA69700559E73 /* AppFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFlowCoordinator.swift; sourceTree = "<group>"; };
-		F3AB4734292CA75C00559E73 /* AppDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDIContainer.swift; sourceTree = "<group>"; };
+		F3B159AE2A59490300BD0BFC /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		F3B159EC2A59547100BD0BFC /* OnboardingCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCore.swift; sourceTree = "<group>"; };
+		F3DE55762A597165004EB701 /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
+		F3DE55782A598C63004EB701 /* SignUpNameCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpNameCore.swift; sourceTree = "<group>"; };
+		F3DE557A2A598C7F004EB701 /* SignUpNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpNameView.swift; sourceTree = "<group>"; };
+		F3DE55802A5EEC5B004EB701 /* TodaySessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodaySessionView.swift; sourceTree = "<group>"; };
+		F3DE55822A5EED2C004EB701 /* TodaySessionCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodaySessionCore.swift; sourceTree = "<group>"; };
+		F3DE55842A5EFBEC004EB701 /* AppCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCore.swift; sourceTree = "<group>"; };
+		F3DE55862A5EFC74004EB701 /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
 		FD0B2B022A07E133004BA8E9 /* Member.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
 		FD0B2B042A07E14A004BA8E9 /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		FD0B2B062A07E16D004BA8E9 /* Team.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Team.swift; sourceTree = "<group>"; };
@@ -216,6 +274,7 @@
 			files = (
 				FDA9A3C829124F8300FF4FB4 /* SnapKit in Frameworks */,
 				FDA9A3C529124F4500FF4FB4 /* RxSwift in Frameworks */,
+				F33025802A5954E900EC4527 /* ComposableArchitecture in Frameworks */,
 				FDA9A3C329124F4500FF4FB4 /* RxCocoa in Frameworks */,
 				FDA9A3D72912510C00FF4FB4 /* RxKakaoSDKCommon in Frameworks */,
 				FDA9A3D52912510C00FF4FB4 /* RxKakaoSDKAuth in Frameworks */,
@@ -225,6 +284,7 @@
 				FDA9A3CB2912503800FF4FB4 /* FirebaseAuth in Frameworks */,
 				FDA9A3D92912510C00FF4FB4 /* RxKakaoSDKUser in Frameworks */,
 				FDA9A3CF2912503800FF4FB4 /* FirebaseFirestoreSwift in Frameworks */,
+				F363C93A2A632D6D0024E0A2 /* PopupView in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -315,6 +375,7 @@
 				FD0B2B042A07E14A004BA8E9 /* Session.swift */,
 				FD0B2B062A07E16D004BA8E9 /* Team.swift */,
 				FD0B2B082A07E506004BA8E9 /* Position.swift */,
+				F363C9482A634BC40024E0A2 /* SignInUserModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -429,6 +490,7 @@
 			children = (
 				5EF69EA127A7DAF8007E9735 /* attendance-ios */,
 				5EF69EA027A7DAF8007E9735 /* Products */,
+				F330257E2A5954E900EC4527 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -445,7 +507,7 @@
 			children = (
 				F3AB4730292CA3F000559E73 /* Application */,
 				5E6ACB3F2808791E00ADF2BB /* attendance-ios.entitlements */,
-				5E63BC9327BBD2AC0024FCE3 /* GoogleService-Info.plist */,
+				F363C9362A6322BE0024E0A2 /* GoogleService-Info.plist */,
 				5EF69EB927A7DD09007E9735 /* Resource */,
 				5EF69EBA27A7DD10007E9735 /* Source */,
 			);
@@ -466,6 +528,7 @@
 		5EF69EBA27A7DD10007E9735 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				F373D2322A59357A00EBA96B /* New */,
 				527657F827C387C00080DA32 /* Common */,
 				5EA97D8427DBA5C4004E2330 /* Model */,
 				5EF69EC027A7DDE1007E9735 /* Login */,
@@ -545,23 +608,216 @@
 			path = Policy;
 			sourceTree = "<group>";
 		};
+		F330257E2A5954E900EC4527 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F363C9412A633F640024E0A2 /* Dependency */ = {
+			isa = PBXGroup;
+			children = (
+				F363C94E2A6353CB0024E0A2 /* FireBase */,
+				F363C94B2A6353B20024E0A2 /* AppleSign */,
+				F363C94A2A6353A00024E0A2 /* KakaoSign */,
+			);
+			path = Dependency;
+			sourceTree = "<group>";
+		};
+		F363C94A2A6353A00024E0A2 /* KakaoSign */ = {
+			isa = PBXGroup;
+			children = (
+				F363C9422A633F820024E0A2 /* kakaoSignDependency.swift */,
+			);
+			path = KakaoSign;
+			sourceTree = "<group>";
+		};
+		F363C94B2A6353B20024E0A2 /* AppleSign */ = {
+			isa = PBXGroup;
+			children = (
+				F363C9462A634A2A0024E0A2 /* AppleSignDependency.swift */,
+				F363C94F2A6354030024E0A2 /* AppleAuthRespository.swift */,
+			);
+			path = AppleSign;
+			sourceTree = "<group>";
+		};
+		F363C94E2A6353CB0024E0A2 /* FireBase */ = {
+			isa = PBXGroup;
+			children = (
+				F363C9532A635A870024E0A2 /* FirebaseDependency.swift */,
+			);
+			path = FireBase;
+			sourceTree = "<group>";
+		};
+		F363C9552A63AD110024E0A2 /* Tab */ = {
+			isa = PBXGroup;
+			children = (
+				F363C9562A63AD350024E0A2 /* HomeTabView.swift */,
+				F363C9582A63ADAE0024E0A2 /* HomeTabCore.swift */,
+			);
+			path = Tab;
+			sourceTree = "<group>";
+		};
+		F363C95A2A63AE530024E0A2 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				F363C95B2A63AE620024E0A2 /* SettingCore.swift */,
+				F363C95D2A63AEA50024E0A2 /* SettingView.swift */,
+			);
+			path = Setting;
+			sourceTree = "<group>";
+		};
+		F363C95F2A63B1F00024E0A2 /* ScoreCheck */ = {
+			isa = PBXGroup;
+			children = (
+				F363C9602A63B2070024E0A2 /* ScoreCheckView.swift */,
+				F363C9622A63B21B0024E0A2 /* ScoreCheckCore.swift */,
+			);
+			path = ScoreCheck;
+			sourceTree = "<group>";
+		};
+		F373D2322A59357A00EBA96B /* New */ = {
+			isa = PBXGroup;
+			children = (
+				F363C9412A633F640024E0A2 /* Dependency */,
+				F373D2432A59440600EBA96B /* Feature */,
+				F373D23E2A593E2D00EBA96B /* Resource */,
+				F373D23B2A593B8B00EBA96B /* Extensions */,
+				F373D2332A5935A900EBA96B /* DesignSystem */,
+			);
+			path = New;
+			sourceTree = "<group>";
+		};
+		F373D2332A5935A900EBA96B /* DesignSystem */ = {
+			isa = PBXGroup;
+			children = (
+				F37AD3512A6307CC006694D1 /* Modifier */,
+				F3DE55752A597153004EB701 /* Represent */,
+				F373D2352A59381E00EBA96B /* View */,
+				F373D2342A59381500EBA96B /* Component */,
+			);
+			path = DesignSystem;
+			sourceTree = "<group>";
+		};
+		F373D2342A59381500EBA96B /* Component */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Component;
+			sourceTree = "<group>";
+		};
+		F373D2352A59381E00EBA96B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				F373D2362A59382A00EBA96B /* YPText.swift */,
+				F37AD34B2A5F066C006694D1 /* NavigationBarView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		F373D23B2A593B8B00EBA96B /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				F37AD3542A630A5E006694D1 /* SwiftUI */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		F373D23E2A593E2D00EBA96B /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				F373D23F2A593E3C00EBA96B /* Color.swift */,
+				F373D2412A5942F000EBA96B /* Font.swift */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		F373D2432A59440600EBA96B /* Feature */ = {
+			isa = PBXGroup;
+			children = (
+				F363C95F2A63B1F00024E0A2 /* ScoreCheck */,
+				F363C95A2A63AE530024E0A2 /* Setting */,
+				F363C9552A63AD110024E0A2 /* Tab */,
+				F3DE557F2A5EEBD4004EB701 /* TodaySession */,
+				F3DE557C2A5AED2F004EB701 /* App */,
+				F3DE55722A596E61004EB701 /* SignUp */,
+				F3B159AC2A59487600BD0BFC /* OnBoarding */,
+			);
+			path = Feature;
+			sourceTree = "<group>";
+		};
+		F37AD3512A6307CC006694D1 /* Modifier */ = {
+			isa = PBXGroup;
+			children = (
+				F37AD3522A6307DB006694D1 /* KeyboardAdaptive.swift */,
+			);
+			path = Modifier;
+			sourceTree = "<group>";
+		};
+		F37AD3542A630A5E006694D1 /* SwiftUI */ = {
+			isa = PBXGroup;
+			children = (
+				F37AD3552A630A6F006694D1 /* applyIf.swift */,
+			);
+			path = SwiftUI;
+			sourceTree = "<group>";
+		};
 		F3AB4730292CA3F000559E73 /* Application */ = {
 			isa = PBXGroup;
 			children = (
-				F3AB4733292CA74700559E73 /* DIContainer */,
 				5EF69EA227A7DAF8007E9735 /* AppDelegate.swift */,
 				5EF69EA427A7DAF8007E9735 /* SceneDelegate.swift */,
-				F3AB4731292CA69700559E73 /* AppFlowCoordinator.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
 		};
-		F3AB4733292CA74700559E73 /* DIContainer */ = {
+		F3B159AC2A59487600BD0BFC /* OnBoarding */ = {
 			isa = PBXGroup;
 			children = (
-				F3AB4734292CA75C00559E73 /* AppDIContainer.swift */,
+				F3B159AE2A59490300BD0BFC /* OnboardingView.swift */,
+				F3B159EC2A59547100BD0BFC /* OnboardingCore.swift */,
 			);
-			path = DIContainer;
+			path = OnBoarding;
+			sourceTree = "<group>";
+		};
+		F3DE55722A596E61004EB701 /* SignUp */ = {
+			isa = PBXGroup;
+			children = (
+				F3DE55782A598C63004EB701 /* SignUpNameCore.swift */,
+				F3DE557A2A598C7F004EB701 /* SignUpNameView.swift */,
+				F37AD34D2A6302F4006694D1 /* SignUpPositionView.swift */,
+				F37AD34F2A630311006694D1 /* SignUpPositionCore.swift */,
+				F315F04A2A6315BE0068B96B /* SignUpCodeCore.swift */,
+				F315F04C2A6316420068B96B /* SignUpCodeView.swift */,
+			);
+			path = SignUp;
+			sourceTree = "<group>";
+		};
+		F3DE55752A597153004EB701 /* Represent */ = {
+			isa = PBXGroup;
+			children = (
+				F3DE55762A597165004EB701 /* LottieView.swift */,
+			);
+			path = Represent;
+			sourceTree = "<group>";
+		};
+		F3DE557C2A5AED2F004EB701 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				F3DE55842A5EFBEC004EB701 /* AppCore.swift */,
+				F3DE55862A5EFC74004EB701 /* AppView.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		F3DE557F2A5EEBD4004EB701 /* TodaySession */ = {
+			isa = PBXGroup;
+			children = (
+				F3DE55802A5EEC5B004EB701 /* TodaySessionView.swift */,
+				F3DE55822A5EED2C004EB701 /* TodaySessionCore.swift */,
+			);
+			path = TodaySession;
 			sourceTree = "<group>";
 		};
 		FDC30B522A1543C100E86FDE /* View */ = {
@@ -623,6 +879,8 @@
 				FDA9A3D62912510C00FF4FB4 /* RxKakaoSDKCommon */,
 				FDA9A3D82912510C00FF4FB4 /* RxKakaoSDKUser */,
 				FDA9A3DB2912515800FF4FB4 /* Lottie */,
+				F330257F2A5954E900EC4527 /* ComposableArchitecture */,
+				F363C9392A632D6D0024E0A2 /* PopupView */,
 			);
 			productName = "attendance-ios";
 			productReference = 5EF69E9F27A7DAF8007E9735 /* attendance-ios.app */;
@@ -658,6 +916,8 @@
 				FDA9A3C92912503800FF4FB4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				FDA9A3D22912507D00FF4FB4 /* XCRemoteSwiftPackageReference "kakao-ios-sdk-rx" */,
 				FDA9A3DA2912515800FF4FB4 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				F373D2442A59444600EBA96B /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+				F363C9382A632D6D0024E0A2 /* XCRemoteSwiftPackageReference "PopupView" */,
 			);
 			productRefGroup = 5EF69EA027A7DAF8007E9735 /* Products */;
 			projectDirPath = "";
@@ -678,9 +938,9 @@
 				296C7B0127C523390042B630 /* Pretendard-Bold.otf in Resources */,
 				5EE25B2427C7CB700065B816 /* bg_buong.html in Resources */,
 				5EF69EAF27A7DAFA007E9735 /* LaunchScreen.storyboard in Resources */,
-				5E63BC9427BBD2AC0024FCE3 /* GoogleService-Info.plist in Resources */,
 				5EF69EAC27A7DAFA007E9735 /* Assets.xcassets in Resources */,
 				2925E79E27F41A91005533EF /* Pretendard-Regular.otf in Resources */,
+				F363C9372A6322BE0024E0A2 /* GoogleService-Info.plist in Resources */,
 				5EF69EAA27A7DAF8007E9735 /* Main.storyboard in Resources */,
 				5EABC0FE28686E2D009A7770 /* splash_main.json in Resources */,
 			);
@@ -696,10 +956,12 @@
 				527AC9AA281A0AF200B055E3 /* MKMagneticProgress.swift in Sources */,
 				5EAA7A0C27FF338800BC7397 /* (null) in Sources */,
 				52A85C55281A201900593749 /* HomeChartView.swift in Sources */,
+				F37AD3562A630A70006694D1 /* applyIf.swift in Sources */,
 				5E6ACB41280894F800ADF2BB /* UserDefaultsWorker.swift in Sources */,
 				5EAA79DD27F6045E00BC7397 /* AdminSessionCell.swift in Sources */,
 				5E63BC9B27BBE90F0024FCE3 /* SignUpNameViewController.swift in Sources */,
 				5EAA79D927F5EE1900BC7397 /* UIStackView.swift in Sources */,
+				F373D2422A5942F000EBA96B /* Font.swift in Sources */,
 				5EAA7A0E27FF441600BC7397 /* SignUpPositionViewController.swift in Sources */,
 				5EA97D8A27DBB06A004E2330 /* Config.swift in Sources */,
 				5E6B7FFB28321BBE00F4D88F /* UICollectionReusableView.swift in Sources */,
@@ -712,14 +974,24 @@
 				527657FB27C387E40080DA32 /* UILabelWithRound.swift in Sources */,
 				52C4CDE027D0B1D1005EDE78 /* HomeBottomTabView.swift in Sources */,
 				297E957F27CFA68600452222 /* QRViewController.swift in Sources */,
+				F363C95E2A63AEA50024E0A2 /* SettingView.swift in Sources */,
+				F3B159AF2A59490300BD0BFC /* OnboardingView.swift in Sources */,
 				5E68F169281197FB0093B985 /* Date.swift in Sources */,
 				527657F727C384AE0080DA32 /* UIViewController.swift in Sources */,
 				5E94967A2833788100C0CE7E /* EasterEggView.swift in Sources */,
 				5EAA79FB27FDE42500BC7397 /* Attendance.swift in Sources */,
 				5EF69EC427A7F8B0007E9735 /* UILabel.swift in Sources */,
 				FDC30B562A1544F600E86FDE /* BaseMemberCell.swift in Sources */,
+				F373D2372A59382A00EBA96B /* YPText.swift in Sources */,
+				F373D2402A593E3C00EBA96B /* Color.swift in Sources */,
+				F37AD34E2A6302F4006694D1 /* SignUpPositionView.swift in Sources */,
 				52EFD5F0280FF78C00065FEB /* HomeAttendanceCheckTableViewCell.swift in Sources */,
+				F3DE557B2A598C7F004EB701 /* SignUpNameView.swift in Sources */,
+				F363C9632A63B21B0024E0A2 /* ScoreCheckCore.swift in Sources */,
+				F3DE55792A598C63004EB701 /* SignUpNameCore.swift in Sources */,
+				F363C9492A634BC40024E0A2 /* SignInUserModel.swift in Sources */,
 				5EF69EC627A7FA40007E9735 /* UIColor.swift in Sources */,
+				F3DE55852A5EFBEC004EB701 /* AppCore.swift in Sources */,
 				5E37B13D2813D13F0083CE23 /* AdminManagementCell.swift in Sources */,
 				5EF69ECB27A81E56007E9735 /* HomeViewController.swift in Sources */,
 				5EF69EC227A7EFFF007E9735 /* BaseViewModel.swift in Sources */,
@@ -729,47 +1001,63 @@
 				5E6B7FFD283271C100F4D88F /* Attendances.swift in Sources */,
 				5EF69ED927AAACBA007E9735 /* PolicyViewController.swift in Sources */,
 				5EF06A6B2822B4B10021D25B /* Array.swift in Sources */,
+				F315F04B2A6315BE0068B96B /* SignUpCodeCore.swift in Sources */,
 				52A85C57281A4A3000593749 /* BaseNavigationBarView.swift in Sources */,
 				5E7AEF2827E222C30059FB3A /* AdminGradeViewController.swift in Sources */,
 				5264EFFF280D5B210026F560 /* SettingViewController+UI.swift in Sources */,
 				5264EFFD280D5B060026F560 /* SettingCellView.swift in Sources */,
+				F37AD34C2A5F066C006694D1 /* NavigationBarView.swift in Sources */,
+				F3DE55872A5EFC74004EB701 /* AppView.swift in Sources */,
 				5E6ACB382808504800ADF2BB /* AdminBottomSheetCell.swift in Sources */,
-				F3AB4732292CA69700559E73 /* AppFlowCoordinator.swift in Sources */,
 				297E958327CFAC0A00452222 /* QRViewModel.swift in Sources */,
 				5E3D7691280717090067286A /* AdminGradeCell.swift in Sources */,
 				5EF69EDB27AAB0BC007E9735 /* PolicyUnitView.swift in Sources */,
+				F363C95C2A63AE620024E0A2 /* SettingCore.swift in Sources */,
 				52A85C59281A4AE900593749 /* HelpViewController.swift in Sources */,
 				5EAA7A0A27FF2A2200BC7397 /* ConfigWorker.swift in Sources */,
 				52BCA07027C4D393001BF86F /* TextStyle.swift in Sources */,
+				F363C9612A63B2070024E0A2 /* ScoreCheckView.swift in Sources */,
 				5EF06A782823D7250021D25B /* Sessions.swift in Sources */,
-				F3AB4735292CA75C00559E73 /* AppDIContainer.swift in Sources */,
 				5EF69EA727A7DAF8007E9735 /* LoginViewController.swift in Sources */,
 				5EED02BD27D76D4200C52637 /* SignUpViewModel.swift in Sources */,
 				5EF69EA327A7DAF8007E9735 /* AppDelegate.swift in Sources */,
 				5EED02C027D7854F00C52637 /* AlertView.swift in Sources */,
+				F3B159ED2A59547100BD0BFC /* OnboardingCore.swift in Sources */,
 				52EFD5F4280FF92600065FEB /* BaseTableViewCell.swift in Sources */,
 				FD0B2B072A07E16D004BA8E9 /* Team.swift in Sources */,
+				F363C9432A633F820024E0A2 /* kakaoSignDependency.swift in Sources */,
 				5264EFF9280D5AC00026F560 /* SettingViewController.swift in Sources */,
 				F38C03A229EEEF7500573719 /* Status.swift in Sources */,
+				F363C9472A634A2A0024E0A2 /* AppleSignDependency.swift in Sources */,
+				F315F04D2A6316420068B96B /* SignUpCodeView.swift in Sources */,
 				5E7AEF2A27E223040059FB3A /* AdminManagementViewController.swift in Sources */,
 				FDC30B462A12B30800E86FDE /* AttendanceStatusView.swift in Sources */,
 				5E6179AC27C670D500B1A835 /* UITextField.swift in Sources */,
 				5EF69EA527A7DAF8007E9735 /* SceneDelegate.swift in Sources */,
+				F363C9592A63ADAE0024E0A2 /* HomeTabCore.swift in Sources */,
 				5EAA79DB27F601ED00BC7397 /* AdminBottomSheetView.swift in Sources */,
 				FD0B2B052A07E14A004BA8E9 /* Session.swift in Sources */,
+				F3DE55832A5EED2C004EB701 /* TodaySessionCore.swift in Sources */,
+				F363C9572A63AD350024E0A2 /* HomeTabView.swift in Sources */,
 				F38C03A629F828EE00573719 /* SettingTeamViewController.swift in Sources */,
 				FDC30B482A12BF9200E86FDE /* AttendanceSummaryHeaderView.swift in Sources */,
 				FD0B2B032A07E133004BA8E9 /* Member.swift in Sources */,
 				5EAA79D727F5ED7B00BC7397 /* UIView.swift in Sources */,
 				5EF06A6F2823A8AE0021D25B /* AdminGradeMemberCell.swift in Sources */,
 				52578C39280EB55F00C0D569 /* HomeAttendanceCheckViewController.swift in Sources */,
+				F37AD3532A6307DB006694D1 /* KeyboardAdaptive.swift in Sources */,
 				5E6ACB3A2808648700ADF2BB /* FirebaseWorker.swift in Sources */,
+				F3DE55812A5EEC5B004EB701 /* TodaySessionView.swift in Sources */,
 				5EAA79D527F5D6B400BC7397 /* AdminTodayView.swift in Sources */,
+				F363C9502A6354030024E0A2 /* AppleAuthRespository.swift in Sources */,
+				F363C9542A635A870024E0A2 /* FirebaseDependency.swift in Sources */,
 				5264EFFB280D5AE80026F560 /* SettingViewModel.swift in Sources */,
 				5E7AEF2627E21E4C0059FB3A /* AdminCardView.swift in Sources */,
+				F3DE55772A597165004EB701 /* LottieView.swift in Sources */,
 				5EF06A7A2823E5F60021D25B /* AdminManagementMemberCell.swift in Sources */,
 				5EAA79F927FDD84C00BC7397 /* AdminMessageHeader.swift in Sources */,
 				5E6ACB3C28086A7300ADF2BB /* KakaoLoginWorker.swift in Sources */,
+				F37AD3502A630311006694D1 /* SignUpPositionCore.swift in Sources */,
 				5E7AEF2427E21D680059FB3A /* AdminViewModel.swift in Sources */,
 				522EFA45281A649E00EF09C7 /* SettingPrivacyPolicyViewController.swift in Sources */,
 				5EF06A6D2822B7010021D25B /* PrintFn.swift in Sources */,
@@ -851,7 +1139,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -906,7 +1194,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -925,7 +1213,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 9;
-				DEVELOPMENT_TEAM = 6CADU5385F;
+				DEVELOPMENT_TEAM = CADXU3X8JU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "attendance-ios/Resource/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = YAPP;
@@ -936,12 +1224,13 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.1;
-				PRODUCT_BUNDLE_IDENTIFIER = attendance.ios;
+				PRODUCT_BUNDLE_IDENTIFIER = attendance.ios.22;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -959,7 +1248,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 9;
-				DEVELOPMENT_TEAM = 6CADU5385F;
+				DEVELOPMENT_TEAM = CADXU3X8JU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "attendance-ios/Resource/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = YAPP;
@@ -970,12 +1259,13 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.1;
-				PRODUCT_BUNDLE_IDENTIFIER = attendance.ios;
+				PRODUCT_BUNDLE_IDENTIFIER = attendance.ios.22;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1008,6 +1298,22 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		F363C9382A632D6D0024E0A2 /* XCRemoteSwiftPackageReference "PopupView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/exyte/PopupView";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+		F373D2442A59444600EBA96B /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		FDA9A3C129124F4500FF4FB4 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ReactiveX/RxSwift";
@@ -1051,6 +1357,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		F330257F2A5954E900EC4527 /* ComposableArchitecture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F373D2442A59444600EBA96B /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableArchitecture;
+		};
+		F363C9392A632D6D0024E0A2 /* PopupView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F363C9382A632D6D0024E0A2 /* XCRemoteSwiftPackageReference "PopupView" */;
+			productName = PopupView;
+		};
 		FDA9A3C229124F4500FF4FB4 /* RxCocoa */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = FDA9A3C129124F4500FF4FB4 /* XCRemoteSwiftPackageReference "RxSwift" */;

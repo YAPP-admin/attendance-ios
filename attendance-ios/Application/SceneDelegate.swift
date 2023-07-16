@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 import KakaoSDKAuth
 import KakaoSDKUser
 
@@ -20,16 +21,38 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = scene as? UIWindowScene else { return }
 
         window = UIWindow(windowScene: windowScene)
+        
+        self.setNavigationStyle()
 
         UserDefaultsWorker().setIsFirstSplash(isFirst: true)
         let navigationController = UINavigationController()
-        let loginVC = LoginViewController()
-
-        navigationController.viewControllers = [loginVC]
+        let appVC = UIHostingController(rootView: AppView(store: .init(initialState: App.State(), reducer: App())))
+        navigationController.isNavigationBarHidden = true
+        navigationController.viewControllers = [appVC]
 
         window?.backgroundColor = .background
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
+    }
+    
+    func setNavigationStyle() {
+        let backButtonAppearance = UIBarButtonItemAppearance(style: .plain)
+        backButtonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.clear]
+        
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = UIColor.clear
+        appearance.shadowColor = UIColor.clear
+        appearance.backButtonAppearance = backButtonAppearance
+        
+        UINavigationBar.appearance().standardAppearance = appearance
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
+        
+        UINavigationBar.appearance().tintColor = .gray_800
+        UINavigationBar.appearance().titleTextAttributes = [
+            NSAttributedString.Key.foregroundColor: UIColor.gray_1200,
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18, weight: .medium)
+        ]
     }
 
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
