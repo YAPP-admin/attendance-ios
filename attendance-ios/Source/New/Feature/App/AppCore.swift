@@ -41,6 +41,11 @@ struct App: ReducerProtocol {
                 state.path.append(App.Path.State.signUpName(SignUpName.State(userName: userName)))
                 
                 return .none
+            case .path(.element(id: _, action: .signUpCode(.pushHomeTab))):
+                
+                state.path.append(App.Path.State.homeTab(.init(selectedTab: .todaySession)))
+                
+                return .none
             default:
                 return .none
             }

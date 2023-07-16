@@ -12,9 +12,17 @@ import ComposableArchitecture
 struct SignUpCode: ReducerProtocol {
     
     struct State: Equatable {
-        var isEnabledNextButton: Bool = true
+        @BindingState var code: String = ""
+        var isEnabledNextButton: Bool = false
         var isFocus: Bool = false
-        var code: String = ""
+        
+        var firstInputView: Bool = false
+        var secondInputView: Bool = false
+        var thirdInputView: Bool = false
+        var fourthInputView: Bool = false
+        
+        var isIncorrectCode: Bool = false
+        var isConfirmCode: Bool = false
         
         var selectedPosition: Position
         var name: String
@@ -25,13 +33,63 @@ struct SignUpCode: ReducerProtocol {
         }
     }
     
-    enum Action: Equatable {
+    enum Action: Equatable, BindableAction {
+        case binding(BindingAction<State>)
+        
         case focus(Bool)
+        case codeCheck
+        case incorrectCode
+        case pushHomeTab
     }
     
     var body: some ReducerProtocolOf<Self> {
+        BindingReducer()
+        
         Reduce { state, action in
             switch action {
+            case .binding(\.$code):
+                let count = state.code.count
+                let maxInputViews = 4
+                var inputViews = Array(repeating: false, count: maxInputViews)
+                state.isEnabledNextButton = count == 4
+                
+                for index in 0..<min(count, maxInputViews) {
+                    inputViews[index] = true
+                }
+
+                state.firstInputView = inputViews[0]
+                state.secondInputView = inputViews[1]
+                state.thirdInputView = inputViews[2]
+                state.fourthInputView = inputViews[3]
+                
+                return .none
+            case let .focus(isFocus):
+                if state.isIncorrectCode && isFocus {
+                    state.isIncorrectCode = false
+                    state.isConfirmCode = false
+                    state.code = ""
+                    state.firstInputView = false
+                    state.secondInputView = false
+                    state.thirdInputView = false
+                    state.fourthInputView = false
+                }
+                state.isFocus = isFocus
+                return .none
+            case .codeCheck:
+                state.isConfirmCode = true
+                if state.code == "1234" {
+                    return .run { send in
+                        await send(.pushHomeTab)
+                    }
+                } else {
+                    return .run { send in
+                        await send(.incorrectCode)
+                    }
+                }
+            case .incorrectCode:
+                state.isIncorrectCode = true
+                state.isFocus = false
+                return .none
             default:
                 return .none
             }
