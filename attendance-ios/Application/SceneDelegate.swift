@@ -41,9 +41,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = UIColor.clear
-        appearance.shadowColor = UIColor.clear
+        appearance.backgroundColor = UIColor.background
+        appearance.shadowColor = UIColor.background
+        appearance.shadowImage = UIImage(named: "tab-shadow")?.withRenderingMode(.alwaysTemplate)
         appearance.backButtonAppearance = backButtonAppearance
+        appearance.backgroundEffect = UIBlurEffect(style: .light)
         
         UINavigationBar.appearance().standardAppearance = appearance
         UINavigationBar.appearance().scrollEdgeAppearance = appearance
@@ -53,6 +55,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             NSAttributedString.Key.foregroundColor: UIColor.gray_1200,
             NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18, weight: .medium)
         ]
+        
+        let tabBarappearance = UITabBarAppearance()
+        
+        tabBarappearance.configureWithOpaqueBackground()
+
+        tabBarappearance.shadowColor = UIColor.gray_300
+        tabBarappearance.shadowImage = UIImage(named: "tab-shadow")?.withRenderingMode(.alwaysTemplate)
+        tabBarappearance.backgroundColor = UIColor.background
+        
+        UITabBar.appearance().scrollEdgeAppearance = tabBarappearance
     }
 
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {

@@ -13,9 +13,9 @@ import KakaoSDKCommon
 import ComposableArchitecture
 
 struct KakaoSignDependency: Sendable {
-    var login: @Sendable () async throws -> String
+    var login: @Sendable () async throws -> Void
     var logout: @Sendable () async throws -> Void
-    var userId: @Sendable () async throws -> String
+    var saveUserId: @Sendable () async throws -> Void
 }
 
 extension KakaoSignDependency: DependencyKey {
@@ -28,8 +28,6 @@ extension KakaoSignDependency: DependencyKey {
                         guard let authToken = oauthToken else { return }
                         if let error = error {
                             continuation.resume(throwing: error)
-                        } else {
-                            continuation.resume(returning: authToken.accessToken)
                         }
                     }
                 } else {
@@ -38,8 +36,6 @@ extension KakaoSignDependency: DependencyKey {
                         
                         if let error = error {
                             continuation.resume(throwing: error)
-                        } else {
-                            continuation.resume(returning: authToken.accessToken)
                         }
                     }
                 }
@@ -57,7 +53,7 @@ extension KakaoSignDependency: DependencyKey {
             }
         }
     },
-    userId: {
+    saveUserId: {
         return try await withCheckedThrowingContinuation { continuation in
             UserApi.shared.me { user, error in
                 if let error = error {
@@ -65,10 +61,16 @@ extension KakaoSignDependency: DependencyKey {
                 }
                 else {
                     guard let userId = user?.id else {
+                        continuation.resume(throwing: YPError.kakaoAuth)
                         return
                     }
                     
-                    continuation.resume(returning: String(userId))
+                    do {
+                        try KeyChainManager.shared.create(account: .userId, data: String(userId))
+                    } catch {
+                        continuation.resume(throwing: error)
+                    }
+                    
                 }
             }
         }
@@ -78,7 +80,7 @@ extension KakaoSignDependency: DependencyKey {
   static let testValue = Self(
     login: unimplemented("KakaoSignDependency.login"),
     logout: unimplemented("KakaoSignDependency.logout"),
-    userId: unimplemented("KakaoSignDependency.userId")
+    saveUserId: unimplemented("KakaoSignDependency.saveUserId")
   )
 }
 

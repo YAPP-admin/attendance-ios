@@ -34,18 +34,17 @@ struct Onboarding: ReducerProtocol {
                 return .none
             case .kakaoSignButtonTapped:
                 return .run { send in
-//                    let _ = try await kakaoSign.login()
-//                    let userId = try await kakaoSign.userId()
+                    try await kakaoSign.login()
+                    try await kakaoSign.saveUserId()
                     
-                    await send(.pushSingUpName("이호영"))
+                    await send(.pushSingUpName(""))
                 } catch: { error, send in
                     //
                 }
             case .appleSignButtonTapped:
                 return .run { send in
-                    let data = try await appleSign.login()
-                    print(data)
-                    await send(.pushSingUpName("이호영"))
+                    let name = try await appleSign.login()
+                    await send(.pushSingUpName(name))
                 } catch: { error, send in
                     //
                 }

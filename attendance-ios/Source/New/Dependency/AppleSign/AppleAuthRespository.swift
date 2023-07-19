@@ -12,7 +12,7 @@ final class DefaultAppleAuthRespository: NSObject {
     
     static let shared = DefaultAppleAuthRespository()
     
-    private var authcontinuation: CheckedContinuation<SignInUserModel, Error>?
+    private var authcontinuation: CheckedContinuation<String, Error>?
     
     lazy var authorizationController: ASAuthorizationController = {
         let appleIDProvider = ASAuthorizationAppleIDProvider()
@@ -23,7 +23,7 @@ final class DefaultAppleAuthRespository: NSObject {
         return authorizationController
     }()
      
-    func loginWithApple() async throws -> SignInUserModel {
+    func loginWithApple() async throws -> String {
         return try await withCheckedThrowingContinuation { continuation in
             authcontinuation = continuation
             authorizationController.performRequests()
@@ -34,25 +34,24 @@ final class DefaultAppleAuthRespository: NSObject {
 extension DefaultAppleAuthRespository: ASAuthorizationControllerDelegate {
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
+            
+            do {
+                try KeyChainManager.shared.create(account: .userId, data: appleIDCredential.user)
+            } catch {
+                authcontinuation?.resume(throwing: error)
+            }
+            
             if let middleName = appleIDCredential.fullName?.middleName,
                let prefixName = appleIDCredential.fullName?.namePrefix {
-                let signInUserModel = SignInUserModel(userId: appleIDCredential.user, name: prefixName + middleName)
-                authcontinuation?.resume(returning: signInUserModel)
-            } else {
-                let signInUserModel = SignInUserModel(userId: appleIDCredential.user, name: "")
-                authcontinuation?.resume(returning: signInUserModel)
+                authcontinuation?.resume(returning: prefixName + middleName)
             }
         } else {
-            authcontinuation?.resume(throwing: AppleError.unknown)
+            authcontinuation?.resume(throwing: YPError.appleAuth)
         }
     }
     
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-        authcontinuation?.resume(throwing: AppleError.unknown)
+        authcontinuation?.resume(throwing: YPError.appleAuth)
     }
-}
-
-enum AppleError: Error {
-    case unknown
 }
 

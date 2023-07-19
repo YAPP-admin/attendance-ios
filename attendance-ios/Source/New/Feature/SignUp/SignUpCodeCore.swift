@@ -42,6 +42,8 @@ struct SignUpCode: ReducerProtocol {
         case pushHomeTab
     }
     
+    @Dependency(\.memberInfo.memberInfo) var memberInfo
+    
     var body: some ReducerProtocolOf<Self> {
         BindingReducer()
         
@@ -77,8 +79,20 @@ struct SignUpCode: ReducerProtocol {
                 return .none
             case .codeCheck:
                 state.isConfirmCode = true
+                let name = state.name
+                let selectedPosition = state.selectedPosition
                 if state.code == "1234" {
                     return .run { send in
+                        let userID = try KeyChainManager.shared.read(account: .userId)
+                        try await memberInfo.registerKakaoUser(
+                            memberId: Int(userID) ?? 0,
+                            newUserInfo: .init(
+                                name: name,
+                                positionType: selectedPosition,
+                                teamType: .none,
+                                teamNumber: 0
+                            )
+                        )
                         await send(.pushHomeTab)
                     }
                 } else {

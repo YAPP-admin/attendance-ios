@@ -103,6 +103,15 @@
 		F363C9612A63B2070024E0A2 /* ScoreCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F363C9602A63B2070024E0A2 /* ScoreCheckView.swift */; };
 		F363C9632A63B21B0024E0A2 /* ScoreCheckCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F363C9622A63B21B0024E0A2 /* ScoreCheckCore.swift */; };
 		F363C9652A63BAE60024E0A2 /* RemoteConfigDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = F363C9642A63BAE60024E0A2 /* RemoteConfigDependency.swift */; };
+		F363C9682A63D48F0024E0A2 /* SessionInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F363C9672A63D48F0024E0A2 /* SessionInfoUseCase.swift */; };
+		F363C96B2A63D61F0024E0A2 /* SessionInfoDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = F363C96A2A63D61F0024E0A2 /* SessionInfoDependency.swift */; };
+		F363C96D2A6404E40024E0A2 /* cornerRadiusPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = F363C96C2A6404E40024E0A2 /* cornerRadiusPart.swift */; };
+		F363C96F2A6413DD0024E0A2 /* MemberInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F363C96E2A6413DD0024E0A2 /* MemberInfoUseCase.swift */; };
+		F363C9712A6415570024E0A2 /* MemberInfoDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = F363C9702A6415570024E0A2 /* MemberInfoDependency.swift */; };
+		F363C9742A641A040024E0A2 /* YPError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F363C9732A641A040024E0A2 /* YPError.swift */; };
+		F363C9782A641AB20024E0A2 /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F363C9772A641AB20024E0A2 /* KeychainManager.swift */; };
+		F363C97A2A641AD20024E0A2 /* KeychainError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F363C9792A641AD20024E0A2 /* KeychainError.swift */; };
+		F363C97C2A641B0B0024E0A2 /* KeychainAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = F363C97B2A641B0B0024E0A2 /* KeychainAccount.swift */; };
 		F373D2372A59382A00EBA96B /* YPText.swift in Sources */ = {isa = PBXBuildFile; fileRef = F373D2362A59382A00EBA96B /* YPText.swift */; };
 		F373D2402A593E3C00EBA96B /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = F373D23F2A593E3C00EBA96B /* Color.swift */; };
 		F373D2422A5942F000EBA96B /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = F373D2412A5942F000EBA96B /* Font.swift */; };
@@ -240,6 +249,15 @@
 		F363C9602A63B2070024E0A2 /* ScoreCheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreCheckView.swift; sourceTree = "<group>"; };
 		F363C9622A63B21B0024E0A2 /* ScoreCheckCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreCheckCore.swift; sourceTree = "<group>"; };
 		F363C9642A63BAE60024E0A2 /* RemoteConfigDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteConfigDependency.swift; sourceTree = "<group>"; };
+		F363C9672A63D48F0024E0A2 /* SessionInfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionInfoUseCase.swift; sourceTree = "<group>"; };
+		F363C96A2A63D61F0024E0A2 /* SessionInfoDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionInfoDependency.swift; sourceTree = "<group>"; };
+		F363C96C2A6404E40024E0A2 /* cornerRadiusPart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cornerRadiusPart.swift; sourceTree = "<group>"; };
+		F363C96E2A6413DD0024E0A2 /* MemberInfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberInfoUseCase.swift; sourceTree = "<group>"; };
+		F363C9702A6415570024E0A2 /* MemberInfoDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberInfoDependency.swift; sourceTree = "<group>"; };
+		F363C9732A641A040024E0A2 /* YPError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YPError.swift; sourceTree = "<group>"; };
+		F363C9772A641AB20024E0A2 /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
+		F363C9792A641AD20024E0A2 /* KeychainError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainError.swift; sourceTree = "<group>"; };
+		F363C97B2A641B0B0024E0A2 /* KeychainAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainAccount.swift; sourceTree = "<group>"; };
 		F373D2362A59382A00EBA96B /* YPText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YPText.swift; sourceTree = "<group>"; };
 		F373D23F2A593E3C00EBA96B /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		F373D2412A5942F000EBA96B /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
@@ -620,6 +638,7 @@
 		F363C9412A633F640024E0A2 /* Dependency */ = {
 			isa = PBXGroup;
 			children = (
+				F363C9692A63D6110024E0A2 /* UseCase */,
 				F363C94E2A6353CB0024E0A2 /* FireBase */,
 				F363C94B2A6353B20024E0A2 /* AppleSign */,
 				F363C94A2A6353A00024E0A2 /* KakaoSign */,
@@ -680,9 +699,56 @@
 			path = ScoreCheck;
 			sourceTree = "<group>";
 		};
+		F363C9662A63D47A0024E0A2 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				F363C9672A63D48F0024E0A2 /* SessionInfoUseCase.swift */,
+				F363C96E2A6413DD0024E0A2 /* MemberInfoUseCase.swift */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		F363C9692A63D6110024E0A2 /* UseCase */ = {
+			isa = PBXGroup;
+			children = (
+				F363C96A2A63D61F0024E0A2 /* SessionInfoDependency.swift */,
+				F363C9702A6415570024E0A2 /* MemberInfoDependency.swift */,
+			);
+			path = UseCase;
+			sourceTree = "<group>";
+		};
+		F363C9722A6419E50024E0A2 /* Error */ = {
+			isa = PBXGroup;
+			children = (
+				F363C9732A641A040024E0A2 /* YPError.swift */,
+			);
+			path = Error;
+			sourceTree = "<group>";
+		};
+		F363C9752A641A9E0024E0A2 /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				F363C9762A641AA40024E0A2 /* Keychain */,
+			);
+			path = Storage;
+			sourceTree = "<group>";
+		};
+		F363C9762A641AA40024E0A2 /* Keychain */ = {
+			isa = PBXGroup;
+			children = (
+				F363C9772A641AB20024E0A2 /* KeychainManager.swift */,
+				F363C9792A641AD20024E0A2 /* KeychainError.swift */,
+				F363C97B2A641B0B0024E0A2 /* KeychainAccount.swift */,
+			);
+			path = Keychain;
+			sourceTree = "<group>";
+		};
 		F373D2322A59357A00EBA96B /* New */ = {
 			isa = PBXGroup;
 			children = (
+				F363C9752A641A9E0024E0A2 /* Storage */,
+				F363C9722A6419E50024E0A2 /* Error */,
+				F363C9662A63D47A0024E0A2 /* Domain */,
 				F363C9412A633F640024E0A2 /* Dependency */,
 				F373D2432A59440600EBA96B /* Feature */,
 				F373D23E2A593E2D00EBA96B /* Resource */,
@@ -762,6 +828,7 @@
 			isa = PBXGroup;
 			children = (
 				F37AD3552A630A6F006694D1 /* applyIf.swift */,
+				F363C96C2A6404E40024E0A2 /* cornerRadiusPart.swift */,
 			);
 			path = SwiftUI;
 			sourceTree = "<group>";
@@ -971,6 +1038,7 @@
 				FDC30B502A1429BE00E86FDE /* BaseAdminViewController.swift in Sources */,
 				FD0B2B092A07E506004BA8E9 /* Position.swift in Sources */,
 				5E9CC7BC27D0F79E006D8B12 /* SignUpCollectionViewCell.swift in Sources */,
+				F363C97A2A641AD20024E0A2 /* KeychainError.swift in Sources */,
 				5E7AEF2227E212690059FB3A /* AdminViewController.swift in Sources */,
 				5EF69ED427A83BCE007E9735 /* DetailViewController.swift in Sources */,
 				52C4CDE227D0C4D1005EDE78 /* HomeViewModel.swift in Sources */,
@@ -1027,9 +1095,13 @@
 				5EF69EA327A7DAF8007E9735 /* AppDelegate.swift in Sources */,
 				5EED02C027D7854F00C52637 /* AlertView.swift in Sources */,
 				F3B159ED2A59547100BD0BFC /* OnboardingCore.swift in Sources */,
+				F363C9782A641AB20024E0A2 /* KeychainManager.swift in Sources */,
+				F363C97C2A641B0B0024E0A2 /* KeychainAccount.swift in Sources */,
+				F363C9712A6415570024E0A2 /* MemberInfoDependency.swift in Sources */,
 				52EFD5F4280FF92600065FEB /* BaseTableViewCell.swift in Sources */,
 				FD0B2B072A07E16D004BA8E9 /* Team.swift in Sources */,
 				F363C9432A633F820024E0A2 /* kakaoSignDependency.swift in Sources */,
+				F363C96B2A63D61F0024E0A2 /* SessionInfoDependency.swift in Sources */,
 				5264EFF9280D5AC00026F560 /* SettingViewController.swift in Sources */,
 				F38C03A229EEEF7500573719 /* Status.swift in Sources */,
 				F363C9472A634A2A0024E0A2 /* AppleSignDependency.swift in Sources */,
@@ -1048,11 +1120,14 @@
 				FD0B2B032A07E133004BA8E9 /* Member.swift in Sources */,
 				5EAA79D727F5ED7B00BC7397 /* UIView.swift in Sources */,
 				5EF06A6F2823A8AE0021D25B /* AdminGradeMemberCell.swift in Sources */,
+				F363C9682A63D48F0024E0A2 /* SessionInfoUseCase.swift in Sources */,
 				52578C39280EB55F00C0D569 /* HomeAttendanceCheckViewController.swift in Sources */,
 				F37AD3532A6307DB006694D1 /* KeyboardAdaptive.swift in Sources */,
 				5E6ACB3A2808648700ADF2BB /* FirebaseWorker.swift in Sources */,
 				F3DE55812A5EEC5B004EB701 /* TodaySessionView.swift in Sources */,
 				5EAA79D527F5D6B400BC7397 /* AdminTodayView.swift in Sources */,
+				F363C96D2A6404E40024E0A2 /* cornerRadiusPart.swift in Sources */,
+				F363C96F2A6413DD0024E0A2 /* MemberInfoUseCase.swift in Sources */,
 				F363C9502A6354030024E0A2 /* AppleAuthRespository.swift in Sources */,
 				F363C9542A635A870024E0A2 /* FirebaseDependency.swift in Sources */,
 				5264EFFB280D5AE80026F560 /* SettingViewModel.swift in Sources */,
@@ -1062,6 +1137,7 @@
 				5EAA79F927FDD84C00BC7397 /* AdminMessageHeader.swift in Sources */,
 				5E6ACB3C28086A7300ADF2BB /* KakaoLoginWorker.swift in Sources */,
 				F37AD3502A630311006694D1 /* SignUpPositionCore.swift in Sources */,
+				F363C9742A641A040024E0A2 /* YPError.swift in Sources */,
 				5E7AEF2427E21D680059FB3A /* AdminViewModel.swift in Sources */,
 				522EFA45281A649E00EF09C7 /* SettingPrivacyPolicyViewController.swift in Sources */,
 				5EF06A6D2822B7010021D25B /* PrintFn.swift in Sources */,

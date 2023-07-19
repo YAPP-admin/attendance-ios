@@ -11,20 +11,23 @@ import Foundation
 
 import ComposableArchitecture
 
-struct RemoteConfigDependency: Sendable {
-    var login: @Sendable () async throws -> SignInUserModel
+struct RemoteConfigDependency {
+    var remoteConfig: ConfigWorker
+//    var yappConfig: @Sendable () async throws -> YappConfig
+//    var selectTeams: @Sendable () async throws -> [Team]
+//    var maginotlineTime: @Sendable () async throws -> String
+//    var qrPassword: @Sendable () async throws -> String
+//    var shouldShowGuestButton: @Sendable () async throws -> Bool
 }
 
 extension RemoteConfigDependency: DependencyKey {
     
   static let liveValue = Self(
-    login: {
-        try await DefaultAppleAuthRespository.shared.loginWithApple()
-    }
+    remoteConfig: ConfigWorker.shared
   )
 
   static let testValue = Self(
-    login: unimplemented("AppleSignDependency.login")
+    remoteConfig: unimplemented("RemoteConfigDependency.sessionList")
   )
 }
 

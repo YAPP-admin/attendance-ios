@@ -10,7 +10,7 @@ import Foundation
 import ComposableArchitecture
 
 struct AppleSignDependency: Sendable {
-    var login: @Sendable () async throws -> SignInUserModel
+    var login: @Sendable () async throws -> String
 }
 
 extension AppleSignDependency: DependencyKey {

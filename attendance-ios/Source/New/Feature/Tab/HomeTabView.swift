@@ -40,15 +40,22 @@ struct HomeTabView: View {
             .navigationBarBackButtonHidden(true)
             .applyIf(viewStore.selectedTab == .todaySession, apply: {
                 $0
+                    
                     .toolbar {
                         ToolbarItem(placement: .navigationBarTrailing) {
                             Button {
                                
                             } label: {
                                 Image("setting")
+                                    .foregroundColor(Color.gray_600)
                             }
                         }
                     }
+                    .toolbarBackground(
+                        Color.gray_200,
+                        for: .navigationBar
+                    )
+                    .toolbarBackground(.visible, for: .navigationBar)
             })
             .applyIf(viewStore.selectedTab == .scoreCheck, apply: {
                 $0

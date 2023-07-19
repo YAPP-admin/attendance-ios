@@ -37,5 +37,12 @@ struct HomeTab: ReducerProtocol {
             }
         }
         
+        Scope(state: \.todaySession, action: /Action.todaySession) {
+            TodaySession()
+        }
+        
+        Scope(state: \.scoreCheck, action: /Action.scoreCheck) {
+            ScoreCheck()
+        }
     }
 }
