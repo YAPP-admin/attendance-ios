@@ -35,10 +35,17 @@ struct App: ReducerProtocol {
                 else { return .none }
                 
                 state.path.pop(from: id)
+                
                 return .none
+                
             case let .onboarding(.pushSingUpName(userName)):
                 
                 state.path.append(App.Path.State.signUpName(SignUpName.State(userName: userName)))
+                
+                return .none
+            case .onboarding(.pushHomeScene):
+                
+                state.path.append(App.Path.State.homeTab(.init(selectedTab: .todaySession)))
                 
                 return .none
             case .path(.element(id: _, action: .signUpCode(.pushHomeTab))):

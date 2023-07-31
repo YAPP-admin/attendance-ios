@@ -88,6 +88,7 @@
 		5EF69EDB27AAB0BC007E9735 /* PolicyUnitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF69EDA27AAB0BC007E9735 /* PolicyUnitView.swift */; };
 		F315F04B2A6315BE0068B96B /* SignUpCodeCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F315F04A2A6315BE0068B96B /* SignUpCodeCore.swift */; };
 		F315F04D2A6316420068B96B /* SignUpCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F315F04C2A6316420068B96B /* SignUpCodeView.swift */; };
+		F31815B12A780F830047BA30 /* KeychainDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31815B02A780F830047BA30 /* KeychainDependency.swift */; };
 		F33025802A5954E900EC4527 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = F330257F2A5954E900EC4527 /* ComposableArchitecture */; };
 		F363C9372A6322BE0024E0A2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F363C9362A6322BE0024E0A2 /* GoogleService-Info.plist */; };
 		F363C93A2A632D6D0024E0A2 /* PopupView in Frameworks */ = {isa = PBXBuildFile; productRef = F363C9392A632D6D0024E0A2 /* PopupView */; };
@@ -236,6 +237,7 @@
 		5EF69EDA27AAB0BC007E9735 /* PolicyUnitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolicyUnitView.swift; sourceTree = "<group>"; };
 		F315F04A2A6315BE0068B96B /* SignUpCodeCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpCodeCore.swift; sourceTree = "<group>"; };
 		F315F04C2A6316420068B96B /* SignUpCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpCodeView.swift; sourceTree = "<group>"; };
+		F31815B02A780F830047BA30 /* KeychainDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainDependency.swift; sourceTree = "<group>"; };
 		F363C9362A6322BE0024E0A2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F363C9422A633F820024E0A2 /* kakaoSignDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = kakaoSignDependency.swift; sourceTree = "<group>"; };
 		F363C9462A634A2A0024E0A2 /* AppleSignDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleSignDependency.swift; sourceTree = "<group>"; };
@@ -628,6 +630,14 @@
 			path = Policy;
 			sourceTree = "<group>";
 		};
+		F31815AF2A780C990047BA30 /* Keychain */ = {
+			isa = PBXGroup;
+			children = (
+				F31815B02A780F830047BA30 /* KeychainDependency.swift */,
+			);
+			path = Keychain;
+			sourceTree = "<group>";
+		};
 		F330257E2A5954E900EC4527 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -638,6 +648,7 @@
 		F363C9412A633F640024E0A2 /* Dependency */ = {
 			isa = PBXGroup;
 			children = (
+				F31815AF2A780C990047BA30 /* Keychain */,
 				F363C9692A63D6110024E0A2 /* UseCase */,
 				F363C94E2A6353CB0024E0A2 /* FireBase */,
 				F363C94B2A6353B20024E0A2 /* AppleSign */,
@@ -1087,6 +1098,7 @@
 				F363C95C2A63AE620024E0A2 /* SettingCore.swift in Sources */,
 				52A85C59281A4AE900593749 /* HelpViewController.swift in Sources */,
 				5EAA7A0A27FF2A2200BC7397 /* ConfigWorker.swift in Sources */,
+				F31815B12A780F830047BA30 /* KeychainDependency.swift in Sources */,
 				52BCA07027C4D393001BF86F /* TextStyle.swift in Sources */,
 				F363C9612A63B2070024E0A2 /* ScoreCheckView.swift in Sources */,
 				5EF06A782823D7250021D25B /* Sessions.swift in Sources */,

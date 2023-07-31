@@ -42,6 +42,7 @@ struct SignUpCode: ReducerProtocol {
         case pushHomeTab
     }
     
+    @Dependency(\.kakaoSign) var kakaoSign
     @Dependency(\.memberInfo.memberInfo) var memberInfo
     
     var body: some ReducerProtocolOf<Self> {
@@ -83,7 +84,8 @@ struct SignUpCode: ReducerProtocol {
                 let selectedPosition = state.selectedPosition
                 if state.code == "1234" {
                     return .run { send in
-                        let userID = try KeyChainManager.shared.read(account: .userId)
+                        try await kakaoSign.saveUserId()
+                        let userID = try await KeyChainManager.shared.read(account: .userId)
                         try await memberInfo.registerKakaoUser(
                             memberId: Int(userID) ?? 0,
                             newUserInfo: .init(

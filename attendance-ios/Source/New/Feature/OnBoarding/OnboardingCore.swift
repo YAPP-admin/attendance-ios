@@ -19,8 +19,10 @@ struct Onboarding: ReducerProtocol {
         case launch
         case kakaoSignButtonTapped
         case appleSignButtonTapped
+        case compareUserId(String)
         
         case pushSingUpName(String)
+        case pushHomeScene
     }
     
     @Dependency(\.kakaoSign) var kakaoSign
@@ -33,13 +35,26 @@ struct Onboarding: ReducerProtocol {
                 state.isLaunching = true
                 return .none
             case .kakaoSignButtonTapped:
+                
                 return .run { send in
                     try await kakaoSign.login()
-                    try await kakaoSign.saveUserId()
+                    let userId = try await kakaoSign.getUserId()
                     
-                    await send(.pushSingUpName(""))
+                    await send(.compareUserId(userId))
                 } catch: { error, send in
-                    //
+                    print(error)
+                }
+            case let .compareUserId(userId):
+                return .run { send in
+                    let keychainUserId = try await KeyChainManager.shared.read(account: .userId)
+                    
+                    if userId == keychainUserId {
+                        await send(.pushHomeScene)
+                    } else {
+                        await send(.pushSingUpName(""))
+                    }
+                } catch: { error, send in
+                    print(error)
                 }
             case .appleSignButtonTapped:
                 return .run { send in

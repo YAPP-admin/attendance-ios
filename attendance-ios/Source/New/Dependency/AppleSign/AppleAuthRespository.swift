@@ -32,11 +32,11 @@ final class DefaultAppleAuthRespository: NSObject {
 }
 
 extension DefaultAppleAuthRespository: ASAuthorizationControllerDelegate {
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+    private func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) async {
         if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
             
             do {
-                try KeyChainManager.shared.create(account: .userId, data: appleIDCredential.user)
+                try await KeyChainManager.shared.create(account: .userId, data: appleIDCredential.user)
             } catch {
                 authcontinuation?.resume(throwing: error)
             }

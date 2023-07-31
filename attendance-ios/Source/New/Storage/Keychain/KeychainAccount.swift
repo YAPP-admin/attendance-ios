@@ -17,7 +17,7 @@ enum KeyChainAccount {
     var keyChainClass: CFString {
         switch self {
         case .userId:
-            return kSecPolicyName
+            return kSecClassGenericPassword
         }
     }
 }

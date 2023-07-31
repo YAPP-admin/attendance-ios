@@ -33,7 +33,7 @@ final class MemberInfoUseCase {
             firebaseWorker.registerKakaoUserInfo(id: memberId, newUser: newUserInfo) { result in
                 switch result {
                 case .success:
-                    break
+                    continuation.resume(returning: ())
                 case let .failure(error):
                     continuation.resume(throwing: error)
                 }

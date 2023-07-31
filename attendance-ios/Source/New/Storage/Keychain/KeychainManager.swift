@@ -5,41 +5,39 @@
 //  Created by 이호영 on 2023/07/16.
 //
 
-
 import Foundation
-import Security
 
-final class KeyChainManager {
+class KeyChainManager {
     
     static let shared = KeyChainManager()
-    static let serviceName = "attendance.ios.22"
+    private let service = Bundle.main.bundleIdentifier
     
     private init() { }
     
-    func create(account: KeyChainAccount, data: String) throws {
-        let query = [
-            kSecClass: account.keyChainClass,
-            kSecAttrService: KeyChainManager.serviceName,
-            kSecAttrAccount: account.description,
-            kSecValueData: (data as AnyObject).data(using: String.Encoding.utf8.rawValue) as Any
-        ] as CFDictionary
+    func create(account: KeyChainAccount, data: String) async throws {
+        let query = [kSecClass: account.keyChainClass,
+                     kSecAttrService: service,
+                     kSecAttrAccount: account.description,
+                     kSecValueData: (data as AnyObject).data(using: String.Encoding.utf8.rawValue) ] as CFDictionary
         
-        SecItemDelete(query as CFDictionary)
+        SecItemDelete(query)
         
-        let status = SecItemAdd(query as CFDictionary, nil)
+        let status = SecItemAdd(query, nil)
         
-        guard status == noErr else {
+        if status == errSecSuccess {
+            print("add success")
+        } else if status == errSecDuplicateItem {
+            print("keychain에 Item이 이미 있음")
+        } else {
             throw KeyChainError.unhandledError(status: status)
         }
     }
     
-    func read(account: KeyChainAccount) throws -> String {
-        let query = [
-            kSecClass: account.keyChainClass,
-            kSecAttrService: KeyChainManager.serviceName,
-            kSecAttrAccount: account.description,
-            kSecReturnData: true
-        ] as CFDictionary
+    func read(account: KeyChainAccount) async throws -> String {
+        let query = [kSecClass: account.keyChainClass,
+                     kSecAttrService: service,
+                     kSecAttrAccount: account.description,
+                     kSecReturnData: true] as CFDictionary
         
         var dataTypeRef: AnyObject?
         let status = SecItemCopyMatching(query, &dataTypeRef)
@@ -57,12 +55,10 @@ final class KeyChainManager {
         }
     }
     
-    func delete(account: KeyChainAccount) throws {
-        let query = [
-            kSecClass: account.keyChainClass,
-            kSecAttrService: KeyChainManager.serviceName,
-            kSecAttrAccount: account.description
-        ] as CFDictionary
+    func delete(account: KeyChainAccount) async throws {
+        let query = [kSecClass: account.keyChainClass,
+                     kSecAttrService: service,
+                     kSecAttrAccount: account.description] as CFDictionary
         
         let status = SecItemDelete(query)
         

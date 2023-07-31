@@ -51,6 +51,12 @@ struct SignUpName: ReducerProtocol {
             case .dismissCancelPopup:
                 state.showingCancelPopup = false
                 return .none
+            case .pop:
+                return .run { action in
+                    try await KeyChainManager.shared.delete(account: .userId)
+                } catch: { error, send in
+                    print(error)
+                }
             default:
                 return .none
             }
