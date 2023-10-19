@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum Position: String, CaseIterable, Codable {
+enum Position: String, CaseIterable, Codable, Equatable {
     case projectManager = "PROJECT_MANAGER"
     case designer = "DESIGNER"
     case android = "DEV_ANDROID"

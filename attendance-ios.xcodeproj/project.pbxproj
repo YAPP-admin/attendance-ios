@@ -90,6 +90,11 @@
 		F315F04D2A6316420068B96B /* SignUpCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F315F04C2A6316420068B96B /* SignUpCodeView.swift */; };
 		F31815B12A780F830047BA30 /* KeychainDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31815B02A780F830047BA30 /* KeychainDependency.swift */; };
 		F33025802A5954E900EC4527 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = F330257F2A5954E900EC4527 /* ComposableArchitecture */; };
+		F33DC5002AA73D5B0029566D /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = F33DC4FF2AA73D5B0029566D /* FirebaseAnalytics */; };
+		F33DC5022AA73D5B0029566D /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = F33DC5012AA73D5B0029566D /* FirebaseAnalyticsOnDeviceConversion */; };
+		F33DC5042AA73D5B0029566D /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = F33DC5032AA73D5B0029566D /* FirebaseAnalyticsSwift */; };
+		F33DC5062AA73D5B0029566D /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = F33DC5052AA73D5B0029566D /* FirebaseAnalyticsWithoutAdIdSupport */; };
+		F33DC5082AA73D5B0029566D /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = F33DC5072AA73D5B0029566D /* FirebaseAppCheck */; };
 		F363C9372A6322BE0024E0A2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F363C9362A6322BE0024E0A2 /* GoogleService-Info.plist */; };
 		F363C93A2A632D6D0024E0A2 /* PopupView in Frameworks */ = {isa = PBXBuildFile; productRef = F363C9392A632D6D0024E0A2 /* PopupView */; };
 		F363C9432A633F820024E0A2 /* kakaoSignDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = F363C9422A633F820024E0A2 /* kakaoSignDependency.swift */; };
@@ -125,6 +130,13 @@
 		F38C03A629F828EE00573719 /* SettingTeamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F38C03A529F828EE00573719 /* SettingTeamViewController.swift */; };
 		F3B159AF2A59490300BD0BFC /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B159AE2A59490300BD0BFC /* OnboardingView.swift */; };
 		F3B159ED2A59547100BD0BFC /* OnboardingCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B159EC2A59547100BD0BFC /* OnboardingCore.swift */; };
+		F3C9AB5E2ADAFF5000A589C9 /* AppLaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C9AB5D2ADAFF5000A589C9 /* AppLaunchView.swift */; };
+		F3C9AB602ADAFF5B00A589C9 /* AppLaunchCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C9AB5F2ADAFF5B00A589C9 /* AppLaunchCore.swift */; };
+		F3C9AB662AE18F9D00A589C9 /* SessionItemCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C9AB652AE18F9C00A589C9 /* SessionItemCore.swift */; };
+		F3C9AB682AE1934A00A589C9 /* SessionItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C9AB672AE1934A00A589C9 /* SessionItemView.swift */; };
+		F3C9AB6E2AE1AA2100A589C9 /* ScoreChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C9AB6D2AE1AA2100A589C9 /* ScoreChartView.swift */; };
+		F3C9AB702AE1AA3F00A589C9 /* ScoreChartCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C9AB6F2AE1AA3F00A589C9 /* ScoreChartCore.swift */; };
+		F3C9AB742AE1B15700A589C9 /* HalfDonutChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C9AB732AE1B15700A589C9 /* HalfDonutChartView.swift */; };
 		F3DE55772A597165004EB701 /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3DE55762A597165004EB701 /* LottieView.swift */; };
 		F3DE55792A598C63004EB701 /* SignUpNameCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3DE55782A598C63004EB701 /* SignUpNameCore.swift */; };
 		F3DE557B2A598C7F004EB701 /* SignUpNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3DE557A2A598C7F004EB701 /* SignUpNameView.swift */; };
@@ -272,6 +284,13 @@
 		F38C03A529F828EE00573719 /* SettingTeamViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingTeamViewController.swift; sourceTree = "<group>"; };
 		F3B159AE2A59490300BD0BFC /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		F3B159EC2A59547100BD0BFC /* OnboardingCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCore.swift; sourceTree = "<group>"; };
+		F3C9AB5D2ADAFF5000A589C9 /* AppLaunchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLaunchView.swift; sourceTree = "<group>"; };
+		F3C9AB5F2ADAFF5B00A589C9 /* AppLaunchCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLaunchCore.swift; sourceTree = "<group>"; };
+		F3C9AB652AE18F9C00A589C9 /* SessionItemCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionItemCore.swift; sourceTree = "<group>"; };
+		F3C9AB672AE1934A00A589C9 /* SessionItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionItemView.swift; sourceTree = "<group>"; };
+		F3C9AB6D2AE1AA2100A589C9 /* ScoreChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreChartView.swift; sourceTree = "<group>"; };
+		F3C9AB6F2AE1AA3F00A589C9 /* ScoreChartCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreChartCore.swift; sourceTree = "<group>"; };
+		F3C9AB732AE1B15700A589C9 /* HalfDonutChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfDonutChartView.swift; sourceTree = "<group>"; };
 		F3DE55762A597165004EB701 /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
 		F3DE55782A598C63004EB701 /* SignUpNameCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpNameCore.swift; sourceTree = "<group>"; };
 		F3DE557A2A598C7F004EB701 /* SignUpNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpNameView.swift; sourceTree = "<group>"; };
@@ -294,18 +313,23 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F33DC5002AA73D5B0029566D /* FirebaseAnalytics in Frameworks */,
 				FDA9A3C829124F8300FF4FB4 /* SnapKit in Frameworks */,
 				FDA9A3C529124F4500FF4FB4 /* RxSwift in Frameworks */,
 				F33025802A5954E900EC4527 /* ComposableArchitecture in Frameworks */,
 				FDA9A3C329124F4500FF4FB4 /* RxCocoa in Frameworks */,
 				FDA9A3D72912510C00FF4FB4 /* RxKakaoSDKCommon in Frameworks */,
 				FDA9A3D52912510C00FF4FB4 /* RxKakaoSDKAuth in Frameworks */,
+				F33DC5022AA73D5B0029566D /* FirebaseAnalyticsOnDeviceConversion in Frameworks */,
 				FDA9A3D12912503800FF4FB4 /* FirebaseRemoteConfig in Frameworks */,
+				F33DC5062AA73D5B0029566D /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				FDA9A3DC2912515800FF4FB4 /* Lottie in Frameworks */,
 				FDA9A3CD2912503800FF4FB4 /* FirebaseFirestore in Frameworks */,
 				FDA9A3CB2912503800FF4FB4 /* FirebaseAuth in Frameworks */,
+				F33DC5042AA73D5B0029566D /* FirebaseAnalyticsSwift in Frameworks */,
 				FDA9A3D92912510C00FF4FB4 /* RxKakaoSDKUser in Frameworks */,
 				FDA9A3CF2912503800FF4FB4 /* FirebaseFirestoreSwift in Frameworks */,
+				F33DC5082AA73D5B0029566D /* FirebaseAppCheck in Frameworks */,
 				F363C93A2A632D6D0024E0A2 /* PopupView in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -706,6 +730,11 @@
 			children = (
 				F363C9602A63B2070024E0A2 /* ScoreCheckView.swift */,
 				F363C9622A63B21B0024E0A2 /* ScoreCheckCore.swift */,
+				F3C9AB652AE18F9C00A589C9 /* SessionItemCore.swift */,
+				F3C9AB672AE1934A00A589C9 /* SessionItemView.swift */,
+				F3C9AB6D2AE1AA2100A589C9 /* ScoreChartView.swift */,
+				F3C9AB6F2AE1AA3F00A589C9 /* ScoreChartCore.swift */,
+				F3C9AB732AE1B15700A589C9 /* HalfDonutChartView.swift */,
 			);
 			path = ScoreCheck;
 			sourceTree = "<group>";
@@ -888,6 +917,8 @@
 			children = (
 				F3DE55842A5EFBEC004EB701 /* AppCore.swift */,
 				F3DE55862A5EFC74004EB701 /* AppView.swift */,
+				F3C9AB5F2ADAFF5B00A589C9 /* AppLaunchCore.swift */,
+				F3C9AB5D2ADAFF5000A589C9 /* AppLaunchView.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -962,6 +993,11 @@
 				FDA9A3DB2912515800FF4FB4 /* Lottie */,
 				F330257F2A5954E900EC4527 /* ComposableArchitecture */,
 				F363C9392A632D6D0024E0A2 /* PopupView */,
+				F33DC4FF2AA73D5B0029566D /* FirebaseAnalytics */,
+				F33DC5012AA73D5B0029566D /* FirebaseAnalyticsOnDeviceConversion */,
+				F33DC5032AA73D5B0029566D /* FirebaseAnalyticsSwift */,
+				F33DC5052AA73D5B0029566D /* FirebaseAnalyticsWithoutAdIdSupport */,
+				F33DC5072AA73D5B0029566D /* FirebaseAppCheck */,
 			);
 			productName = "attendance-ios";
 			productReference = 5EF69E9F27A7DAF8007E9735 /* attendance-ios.app */;
@@ -1039,6 +1075,8 @@
 				52A85C55281A201900593749 /* HomeChartView.swift in Sources */,
 				F37AD3562A630A70006694D1 /* applyIf.swift in Sources */,
 				5E6ACB41280894F800ADF2BB /* UserDefaultsWorker.swift in Sources */,
+				F3C9AB742AE1B15700A589C9 /* HalfDonutChartView.swift in Sources */,
+				F3C9AB5E2ADAFF5000A589C9 /* AppLaunchView.swift in Sources */,
 				5EAA79DD27F6045E00BC7397 /* AdminSessionCell.swift in Sources */,
 				5E63BC9B27BBE90F0024FCE3 /* SignUpNameViewController.swift in Sources */,
 				5EAA79D927F5EE1900BC7397 /* UIStackView.swift in Sources */,
@@ -1057,6 +1095,7 @@
 				52C4CDE027D0B1D1005EDE78 /* HomeBottomTabView.swift in Sources */,
 				297E957F27CFA68600452222 /* QRViewController.swift in Sources */,
 				F363C95E2A63AEA50024E0A2 /* SettingView.swift in Sources */,
+				F3C9AB662AE18F9D00A589C9 /* SessionItemCore.swift in Sources */,
 				F3B159AF2A59490300BD0BFC /* OnboardingView.swift in Sources */,
 				5E68F169281197FB0093B985 /* Date.swift in Sources */,
 				527657F727C384AE0080DA32 /* UIViewController.swift in Sources */,
@@ -1111,12 +1150,15 @@
 				F363C97C2A641B0B0024E0A2 /* KeychainAccount.swift in Sources */,
 				F363C9712A6415570024E0A2 /* MemberInfoDependency.swift in Sources */,
 				52EFD5F4280FF92600065FEB /* BaseTableViewCell.swift in Sources */,
+				F3C9AB682AE1934A00A589C9 /* SessionItemView.swift in Sources */,
 				FD0B2B072A07E16D004BA8E9 /* Team.swift in Sources */,
 				F363C9432A633F820024E0A2 /* kakaoSignDependency.swift in Sources */,
 				F363C96B2A63D61F0024E0A2 /* SessionInfoDependency.swift in Sources */,
 				5264EFF9280D5AC00026F560 /* SettingViewController.swift in Sources */,
+				F3C9AB702AE1AA3F00A589C9 /* ScoreChartCore.swift in Sources */,
 				F38C03A229EEEF7500573719 /* Status.swift in Sources */,
 				F363C9472A634A2A0024E0A2 /* AppleSignDependency.swift in Sources */,
+				F3C9AB602ADAFF5B00A589C9 /* AppLaunchCore.swift in Sources */,
 				F315F04D2A6316420068B96B /* SignUpCodeView.swift in Sources */,
 				5E7AEF2A27E223040059FB3A /* AdminManagementViewController.swift in Sources */,
 				FDC30B462A12B30800E86FDE /* AttendanceStatusView.swift in Sources */,
@@ -1154,6 +1196,7 @@
 				522EFA45281A649E00EF09C7 /* SettingPrivacyPolicyViewController.swift in Sources */,
 				5EF06A6D2822B7010021D25B /* PrintFn.swift in Sources */,
 				5E68F167281197810093B985 /* UIString.swift in Sources */,
+				F3C9AB6E2AE1AA2100A589C9 /* ScoreChartView.swift in Sources */,
 				5EAA7A0727FF24CB00BC7397 /* CollectionViewLeftAlignFlowLayout.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1427,7 +1470,7 @@
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 9.0.0;
+				minimumVersion = 10.14.0;
 			};
 		};
 		FDA9A3D22912507D00FF4FB4 /* XCRemoteSwiftPackageReference "kakao-ios-sdk-rx" */ = {
@@ -1453,6 +1496,26 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F373D2442A59444600EBA96B /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
 			productName = ComposableArchitecture;
+		};
+		F33DC4FF2AA73D5B0029566D /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = FirebaseAnalytics;
+		};
+		F33DC5012AA73D5B0029566D /* FirebaseAnalyticsOnDeviceConversion */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = FirebaseAnalyticsOnDeviceConversion;
+		};
+		F33DC5032AA73D5B0029566D /* FirebaseAnalyticsSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = FirebaseAnalyticsSwift;
+		};
+		F33DC5052AA73D5B0029566D /* FirebaseAnalyticsWithoutAdIdSupport */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = FirebaseAnalyticsWithoutAdIdSupport;
+		};
+		F33DC5072AA73D5B0029566D /* FirebaseAppCheck */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = FirebaseAppCheck;
 		};
 		F363C9392A632D6D0024E0A2 /* PopupView */ = {
 			isa = XCSwiftPackageProductDependency;

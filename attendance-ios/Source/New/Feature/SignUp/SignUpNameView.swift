@@ -151,16 +151,6 @@ struct SignUpNameView: View {
                 $0
                  .backgroundColor(.black.opacity(0.4))
             }
-            .navigationBarBackButtonHidden(true)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button {
-                        viewStore.send(.showCancelPopup)
-                    } label: {
-                        Image("back")
-                    }
-                }
-            }
         }
     }
 }

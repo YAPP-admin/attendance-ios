@@ -9,4 +9,6 @@ import Foundation
 
 enum YPError: Error {
     case kakaoAuth, appleAuth
+  
+    case firebaseDecode
 }

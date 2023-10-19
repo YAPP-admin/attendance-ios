@@ -20,21 +20,22 @@ struct FirebaseNewMember {
 
 final class FirebaseWorker {
 
+    typealias Attendances = [[String: Any]]
+  
     static let shared = FirebaseWorker()
     private let memberCollectionRef = Firestore.firestore().collection("debug-member")
-    private var attendances: [[String: Any]] = []
+    private var attendances: Attendances = []
     private let configWorker = ConfigWorker.shared
 
     init() {
-        setEmptyAttendances()
     }
 
 }
 
 extension FirebaseWorker {
 
-    private func setEmptyAttendances() {
-        configWorker.decodeSessionList { [weak self] result in
+    private func setEmptyAttendances(completion: @escaping (Result<Attendances, Error>) -> Void) {
+        configWorker.decodeSessionList { result in
             switch result {
             case .success(let sessionList):
                 var attendances: [[String: Any]] = []
@@ -47,28 +48,37 @@ extension FirebaseWorker {
                                                 "status": status.serverText]
                     attendances.append(empty)
                 }
-
-                self?.attendances = attendances
-            case .failure: ()
+              
+                completion(.success(attendances))
+            case .failure:
+                completion(.failure(YPError.firebaseDecode))
             }
         }
     }
 
     func registerKakaoUserInfo(id: Int, newUser: FirebaseNewMember, completion: @escaping (Result<Void, Error>) -> Void) {
 
-        self.memberCollectionRef.document("\(id)").setData([
-            "id": id,
-            "name": newUser.name,
-            "position": newUser.positionType.rawValue,
-            "team": ["number": newUser.teamNumber,
-                     "type": newUser.teamType.rawValue],
-            "attendances": attendances
-        ]) { error in
-            guard let error = error else {
-                completion(.success(()))
-                return
+        self.setEmptyAttendances { result in
+            switch result {
+            case .success(let attendances):
+                self.memberCollectionRef.document("\(id)").setData([
+                    "id": id,
+                    "name": newUser.name,
+                    "position": newUser.positionType.rawValue,
+                    "team": ["number": newUser.teamNumber,
+                             "type": newUser.teamType.rawValue],
+                    "attendances": attendances
+                ]) { error in
+                    guard let error = error else {
+                        completion(.success(()))
+                      
+                        return
+                    }
+                    completion(.failure(error))
+                }
+            case .failure:
+                completion(.failure(YPError.firebaseDecode))
             }
-            completion(.failure(error))
         }
     }
 

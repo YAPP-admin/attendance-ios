@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Attendance: Codable {
+struct Attendance: Codable, Equatable {
     let sessionId: Int
     var status: Status
 }

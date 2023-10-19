@@ -10,36 +10,58 @@ import Foundation
 import ComposableArchitecture
 
 struct TodaySession: ReducerProtocol {
+  
+  struct State: Equatable {
+    var session: Session?
+    var member: Member?
+    var isCompleteAttendance: Bool = false
     
-    struct State: Equatable {
-        var session: Session?
-        var isCompleteAttendance: Bool = false
+    var sessionDate: String {
+      let dateFormatter = DateFormatter()
+      let sessionDateFormatter = DateFormatter()
+      dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+      let date = dateFormatter.date(from: session?.date ?? "")
+      sessionDateFormatter.dateFormat = "MM.dd"
+      return sessionDateFormatter.string(from: date ?? Date())
     }
     
-    enum Action: Equatable {
-        case showSetting
-        case onAppear
-        case setSession(Session?)
+    var sessionTitle: String {
+      return session?.title ?? ""
     }
     
-    @Dependency(\.sessionInfo.sessionInfo) var sessionInfo
+    var sessionDescription: String {
+      return session?.description ?? ""
+    }
     
-    var body: some ReducerProtocolOf<Self> {
-        Reduce { state, action in
-            switch action {
-            case .onAppear:
-                return .run { send in
-                    let session = try await sessionInfo.todaySession()
-                    await send(.setSession(session))
-                } catch: { error, send in
-                    
-                }
-            case let .setSession(currentSession):
-                state.session = currentSession
-                return .none
-            default:
-                return .none
-            }
+    init(member: Member?) {
+      self.member = member
+    }
+  }
+  
+  enum Action: Equatable {
+    case showSetting
+    case onAppear
+    case setSession(Session?)
+  }
+  
+  @Dependency(\.sessionInfo.sessionInfo) var sessionInfo
+  
+  var body: some ReducerProtocolOf<Self> {
+    Reduce { state, action in
+      switch action {
+      case .onAppear:
+        return .run { send in
+          let session = try await sessionInfo.todaySession()
+          await send(.setSession(session))
+        } catch: { error, send in
+          
         }
+      case let .setSession(currentSession):
+        state.session = currentSession
+        return .none
+      default:
+        return .none
+      }
     }
+  }
 }

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 enum Status: Codable, CaseIterable {
     case normal
@@ -65,4 +66,17 @@ extension Status {
             return UIImage(named: "admit")
         }
     }
+  
+  var imageForSwiftUI: Image {
+      switch self {
+      case .absent:
+          return Image("absence")
+      case .late:
+          return Image("tardy")
+      case .normal:
+          return Image("attendance")
+      case .admit:
+          return Image("admit")
+      }
+  }
 }

@@ -83,7 +83,7 @@ struct SignUpCodeView: View {
                                     isFocus = true
                                 } label: {
                                     if viewStore.secondInputView {
-                                        Image("code_first")
+                                        Image("code_second")
                                             .resizable()
                                             .frame(width: 72, height: 72)
                                     } else {
@@ -162,7 +162,6 @@ struct SignUpCodeView: View {
                                 .padding(.bottom, viewStore.isFocus ? 0 : 6)
                             }
                         }
-                        
                     }
                 }
             }

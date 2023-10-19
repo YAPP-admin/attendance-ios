@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Member: Codable {
+struct Member: Equatable {
     let id: Int
     let name: String
     let position: Position

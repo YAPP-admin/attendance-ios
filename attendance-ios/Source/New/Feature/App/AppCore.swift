@@ -10,57 +10,89 @@ import Foundation
 import ComposableArchitecture
 
 struct App: ReducerProtocol {
+  
+  struct State: Equatable {
+    var path = StackState<Path.State>()
+    var appLaunch: AppLaunch.State?
+  }
+  
+  enum Action {
+    case path(StackAction<Path.State, Path.Action>)
+    case onAppear
+    case launchOnboarding
+    case launchTodaySession(Member?)
     
-    struct State: Equatable {
-        var path = StackState<Path.State>()
-        var onboarding = Onboarding.State()
-    }
+    case appLaunch(AppLaunch.Action)
+  }
+  
+  @Dependency(\.memberInfo) var memberInfo
+  
+  var body: some ReducerProtocolOf<Self> {
     
-    enum Action {
-        case path(StackAction<Path.State, Path.Action>)
+    Reduce<State, Action> { state, action in
+      switch action {
+      case .onAppear:
         
-        case onboarding(Onboarding.Action)
-    }
-    
-    var body: some ReducerProtocolOf<Self> {
-        
-        Scope(state: \.onboarding, action: /Action.onboarding) {
-            Onboarding()
+        return .run { send in
+          do {
+            let userId = try await KeyChainManager.shared.read(account: .userId)
+            let member = try await memberInfo.memberInfo.getMemberInfo(memberId: Int(userId) ?? 0)
+            
+            await send(.launchTodaySession(member))
+          } catch {
+            await send(.launchOnboarding)
+          }
         }
         
-        Reduce<State, Action> { state, action in
-            switch action {
-            case let .path(.element(id: id, action: .signUpName(.pop))):
-                guard case .some(.signUpName) = state.path[id: id]
-                else { return .none }
-                
-                state.path.pop(from: id)
-                
-                return .none
-                
-            case let .onboarding(.pushSingUpName(userName)):
-                
-                state.path.append(App.Path.State.signUpName(SignUpName.State(userName: userName)))
-                
-                return .none
-            case .onboarding(.pushHomeScene):
-                
-                state.path.append(App.Path.State.homeTab(.init(selectedTab: .todaySession)))
-                
-                return .none
-            case .path(.element(id: _, action: .signUpCode(.pushHomeTab))):
-                
-                state.path.append(App.Path.State.homeTab(.init(selectedTab: .todaySession)))
-                
-                return .none
-            default:
-                return .none
-            }
-        }
-        .forEach(\.path, action: /Action.path) {
-            Path()
-        }
+      case .launchOnboarding:
+        
+        state.appLaunch = .onboarding(Onboarding.State())
+        
+        return .none
+        
+      case let .launchTodaySession(member):
+      
+        state.appLaunch = .tab(HomeTab.State(member: member, selectTab: .todaySession))
+        
+        return .none
+        
+      case let .path(.element(id: id, action: .signUpName(.pop))):
+        guard case .some(.signUpName) = state.path[id: id]
+        else { return .none }
+        
+        state.path.pop(from: id)
+        
+        return .none
+        
+      case let .appLaunch(.onboarding(.pushSingUpName(userName))):
+        
+        state.path.append(App.Path.State.signUpName(SignUpName.State(userName: userName)))
+        
+        return .none
+        
+      case let .appLaunch(.onboarding(.pushHomeScene(member))):
+        
+        state.path.append(App.Path.State.homeTab(.init(member: member, selectTab: .todaySession)))
+        
+        return .none
+        
+      case let .path(.element(id: _, action: .signUpCode(.pushHomeTab(member)))):
+        
+        state.path.append(App.Path.State.homeTab(.init(member: member, selectTab: .todaySession)))
+        
+        return .none
+        
+      default:
+        return .none
+      }
     }
+    .forEach(\.path, action: /Action.path) {
+      Path()
+    }
+    .ifLet(\.appLaunch, action: /Action.appLaunch) {
+      AppLaunch()
+    }
+  }
 }
 
 extension App {

@@ -14,10 +14,23 @@ struct AppView: View {
     let store: StoreOf<App>
     
     var body: some View {
-        NavigationStackStore(self.store.scope(state: \.path, action: { .path($0) })) {
-          OnboardingView(
-            store: self.store.scope(state: \.onboarding, action: { .onboarding($0) })
-          )
+      WithViewStore(self.store, observe:  { $0 }) { viewStore in
+        
+        NavigationStackStore(
+          self.store.scope(
+            state: \.path,
+            action: { .path($0) })
+        ) {
+          
+          IfLetStore(
+            self.store.scope(
+              state: \.appLaunch,
+              action: App.Action.appLaunch
+            )
+          ) { store in
+            AppLaunchView(store: store)
+          }
+          
         } destination: {
           switch $0 {
           case .signUpName:
@@ -47,5 +60,10 @@ struct AppView: View {
           }
         }
         .tint(Color.gray_800)
+        .onAppear {
+          viewStore.send(.onAppear)
+        }
+      }
+        
     }
 }
