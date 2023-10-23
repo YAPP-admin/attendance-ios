@@ -40,4 +40,12 @@ final class MemberInfoUseCase {
       }
     }
   }
+  
+  func updateMemberInfo(memberId: Int, team: Team) async throws {
+    return try await withCheckedThrowingContinuation { continuation in
+      firebaseWorker.updateMemberInfo(memberId: memberId, team: team) {
+        continuation.resume(returning: ())
+      }
+    }
+  }
 }

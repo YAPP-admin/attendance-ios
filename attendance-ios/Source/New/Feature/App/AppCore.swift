@@ -96,41 +96,41 @@ struct App: ReducerProtocol {
 }
 
 extension App {
-    struct Path: ReducerProtocol {
-        enum State: Equatable {
-            case signUpName(SignUpName.State)
-            case signUpPosition(SignUpPosition.State)
-            case signUpCode(SignUpCode.State)
-            
-            case homeTab(HomeTab.State)
-        }
-        
-        enum Action {
-            case signUpName(SignUpName.Action)
-            case signUpPosition(SignUpPosition.Action)
-            case signUpCode(SignUpCode.Action)
-            
-            case homeTab(HomeTab.Action)
-        }
-        
-        var body: some ReducerProtocolOf<Self> {
-            Scope(state: /State.signUpName, action: /Action.signUpName) {
-                SignUpName()
-            }
-            
-            Scope(state: /State.signUpPosition, action: /Action.signUpPosition) {
-                SignUpPosition()
-            }
-            
-            Scope(state: /State.signUpCode, action: /Action.signUpCode) {
-                SignUpCode()
-            }
-            
-            Scope(state: /State.homeTab, action: /Action.homeTab) {
-                HomeTab()
-            }
-        }
+  struct Path: ReducerProtocol {
+    enum State: Equatable {
+      case signUpName(SignUpName.State)
+      case signUpPosition(SignUpPosition.State)
+      case signUpCode(SignUpCode.State)
+      
+      case homeTab(HomeTab.State)
     }
+    
+    enum Action {
+      case signUpName(SignUpName.Action)
+      case signUpPosition(SignUpPosition.Action)
+      case signUpCode(SignUpCode.Action)
+      
+      case homeTab(HomeTab.Action)
+    }
+    
+    var body: some ReducerProtocolOf<Self> {
+      Scope(state: /State.signUpName, action: /Action.signUpName) {
+        SignUpName()
+      }
+      
+      Scope(state: /State.signUpPosition, action: /Action.signUpPosition) {
+        SignUpPosition()
+      }
+      
+      Scope(state: /State.signUpCode, action: /Action.signUpCode) {
+        SignUpCode()
+      }
+      
+      Scope(state: /State.homeTab, action: /Action.homeTab) {
+        HomeTab()
+      }
+    }
+  }
 }
 
 

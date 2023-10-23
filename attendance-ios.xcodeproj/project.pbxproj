@@ -137,6 +137,16 @@
 		F3C9AB6E2AE1AA2100A589C9 /* ScoreChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C9AB6D2AE1AA2100A589C9 /* ScoreChartView.swift */; };
 		F3C9AB702AE1AA3F00A589C9 /* ScoreChartCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C9AB6F2AE1AA3F00A589C9 /* ScoreChartCore.swift */; };
 		F3C9AB742AE1B15700A589C9 /* HalfDonutChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C9AB732AE1B15700A589C9 /* HalfDonutChartView.swift */; };
+		F3C9AB762AE554DC00A589C9 /* ScoreCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C9AB752AE554DC00A589C9 /* ScoreCoordinator.swift */; };
+		F3C9AB782AE5554500A589C9 /* ScoreCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C9AB772AE5554500A589C9 /* ScoreCoordinatorView.swift */; };
+		F3C9AB7A2AE5578F00A589C9 /* ScoreInfoCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C9AB792AE5578F00A589C9 /* ScoreInfoCore.swift */; };
+		F3C9AB7C2AE557F000A589C9 /* ScoreInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C9AB7B2AE557F000A589C9 /* ScoreInfoView.swift */; };
+		F3C9AB7E2AE5F0F100A589C9 /* TodaySessionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C9AB7D2AE5F0F100A589C9 /* TodaySessionCoordinator.swift */; };
+		F3C9AB802AE5F30D00A589C9 /* TodaySessionCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C9AB7F2AE5F30D00A589C9 /* TodaySessionCoordinatorView.swift */; };
+		F3C9AB862AE61C6300A589C9 /* TeamSelectCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C9AB852AE61C6300A589C9 /* TeamSelectCore.swift */; };
+		F3C9AB882AE61D5900A589C9 /* TeamSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C9AB872AE61D5900A589C9 /* TeamSelectView.swift */; };
+		F3C9AB8A2AE6211200A589C9 /* TeamItemCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C9AB892AE6211200A589C9 /* TeamItemCore.swift */; };
+		F3C9AB8C2AE6215A00A589C9 /* TeamItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C9AB8B2AE6215A00A589C9 /* TeamItemView.swift */; };
 		F3DE55772A597165004EB701 /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3DE55762A597165004EB701 /* LottieView.swift */; };
 		F3DE55792A598C63004EB701 /* SignUpNameCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3DE55782A598C63004EB701 /* SignUpNameCore.swift */; };
 		F3DE557B2A598C7F004EB701 /* SignUpNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3DE557A2A598C7F004EB701 /* SignUpNameView.swift */; };
@@ -291,6 +301,16 @@
 		F3C9AB6D2AE1AA2100A589C9 /* ScoreChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreChartView.swift; sourceTree = "<group>"; };
 		F3C9AB6F2AE1AA3F00A589C9 /* ScoreChartCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreChartCore.swift; sourceTree = "<group>"; };
 		F3C9AB732AE1B15700A589C9 /* HalfDonutChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfDonutChartView.swift; sourceTree = "<group>"; };
+		F3C9AB752AE554DC00A589C9 /* ScoreCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreCoordinator.swift; sourceTree = "<group>"; };
+		F3C9AB772AE5554500A589C9 /* ScoreCoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreCoordinatorView.swift; sourceTree = "<group>"; };
+		F3C9AB792AE5578F00A589C9 /* ScoreInfoCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreInfoCore.swift; sourceTree = "<group>"; };
+		F3C9AB7B2AE557F000A589C9 /* ScoreInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreInfoView.swift; sourceTree = "<group>"; };
+		F3C9AB7D2AE5F0F100A589C9 /* TodaySessionCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodaySessionCoordinator.swift; sourceTree = "<group>"; };
+		F3C9AB7F2AE5F30D00A589C9 /* TodaySessionCoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodaySessionCoordinatorView.swift; sourceTree = "<group>"; };
+		F3C9AB852AE61C6300A589C9 /* TeamSelectCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamSelectCore.swift; sourceTree = "<group>"; };
+		F3C9AB872AE61D5900A589C9 /* TeamSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamSelectView.swift; sourceTree = "<group>"; };
+		F3C9AB892AE6211200A589C9 /* TeamItemCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamItemCore.swift; sourceTree = "<group>"; };
+		F3C9AB8B2AE6215A00A589C9 /* TeamItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamItemView.swift; sourceTree = "<group>"; };
 		F3DE55762A597165004EB701 /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
 		F3DE55782A598C63004EB701 /* SignUpNameCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpNameCore.swift; sourceTree = "<group>"; };
 		F3DE557A2A598C7F004EB701 /* SignUpNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpNameView.swift; sourceTree = "<group>"; };
@@ -674,7 +694,6 @@
 			children = (
 				F31815AF2A780C990047BA30 /* Keychain */,
 				F363C9692A63D6110024E0A2 /* UseCase */,
-				F363C94E2A6353CB0024E0A2 /* FireBase */,
 				F363C94B2A6353B20024E0A2 /* AppleSign */,
 				F363C94A2A6353A00024E0A2 /* KakaoSign */,
 			);
@@ -735,6 +754,10 @@
 				F3C9AB6D2AE1AA2100A589C9 /* ScoreChartView.swift */,
 				F3C9AB6F2AE1AA3F00A589C9 /* ScoreChartCore.swift */,
 				F3C9AB732AE1B15700A589C9 /* HalfDonutChartView.swift */,
+				F3C9AB752AE554DC00A589C9 /* ScoreCoordinator.swift */,
+				F3C9AB772AE5554500A589C9 /* ScoreCoordinatorView.swift */,
+				F3C9AB792AE5578F00A589C9 /* ScoreInfoCore.swift */,
+				F3C9AB7B2AE557F000A589C9 /* ScoreInfoView.swift */,
 			);
 			path = ScoreCheck;
 			sourceTree = "<group>";
@@ -751,6 +774,7 @@
 		F363C9692A63D6110024E0A2 /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
+				F363C94E2A6353CB0024E0A2 /* FireBase */,
 				F363C96A2A63D61F0024E0A2 /* SessionInfoDependency.swift */,
 				F363C9702A6415570024E0A2 /* MemberInfoDependency.swift */,
 			);
@@ -845,6 +869,8 @@
 		F373D2432A59440600EBA96B /* Feature */ = {
 			isa = PBXGroup;
 			children = (
+				F3C9AB842AE61C4A00A589C9 /* TeamSelect */,
+				F3C9AB812AE5F88A00A589C9 /* AttendanceCode */,
 				F363C95F2A63B1F00024E0A2 /* ScoreCheck */,
 				F363C95A2A63AE530024E0A2 /* Setting */,
 				F363C9552A63AD110024E0A2 /* Tab */,
@@ -891,6 +917,24 @@
 			path = OnBoarding;
 			sourceTree = "<group>";
 		};
+		F3C9AB812AE5F88A00A589C9 /* AttendanceCode */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = AttendanceCode;
+			sourceTree = "<group>";
+		};
+		F3C9AB842AE61C4A00A589C9 /* TeamSelect */ = {
+			isa = PBXGroup;
+			children = (
+				F3C9AB852AE61C6300A589C9 /* TeamSelectCore.swift */,
+				F3C9AB872AE61D5900A589C9 /* TeamSelectView.swift */,
+				F3C9AB892AE6211200A589C9 /* TeamItemCore.swift */,
+				F3C9AB8B2AE6215A00A589C9 /* TeamItemView.swift */,
+			);
+			path = TeamSelect;
+			sourceTree = "<group>";
+		};
 		F3DE55722A596E61004EB701 /* SignUp */ = {
 			isa = PBXGroup;
 			children = (
@@ -928,6 +972,8 @@
 			children = (
 				F3DE55802A5EEC5B004EB701 /* TodaySessionView.swift */,
 				F3DE55822A5EED2C004EB701 /* TodaySessionCore.swift */,
+				F3C9AB7D2AE5F0F100A589C9 /* TodaySessionCoordinator.swift */,
+				F3C9AB7F2AE5F30D00A589C9 /* TodaySessionCoordinatorView.swift */,
 			);
 			path = TodaySession;
 			sourceTree = "<group>";
@@ -1072,6 +1118,7 @@
 			files = (
 				527AC9AA281A0AF200B055E3 /* MKMagneticProgress.swift in Sources */,
 				5EAA7A0C27FF338800BC7397 /* (null) in Sources */,
+				F3C9AB782AE5554500A589C9 /* ScoreCoordinatorView.swift in Sources */,
 				52A85C55281A201900593749 /* HomeChartView.swift in Sources */,
 				F37AD3562A630A70006694D1 /* applyIf.swift in Sources */,
 				5E6ACB41280894F800ADF2BB /* UserDefaultsWorker.swift in Sources */,
@@ -1107,7 +1154,10 @@
 				F373D2402A593E3C00EBA96B /* Color.swift in Sources */,
 				F37AD34E2A6302F4006694D1 /* SignUpPositionView.swift in Sources */,
 				52EFD5F0280FF78C00065FEB /* HomeAttendanceCheckTableViewCell.swift in Sources */,
+				F3C9AB8C2AE6215A00A589C9 /* TeamItemView.swift in Sources */,
 				F3DE557B2A598C7F004EB701 /* SignUpNameView.swift in Sources */,
+				F3C9AB8A2AE6211200A589C9 /* TeamItemCore.swift in Sources */,
+				F3C9AB862AE61C6300A589C9 /* TeamSelectCore.swift in Sources */,
 				F363C9632A63B21B0024E0A2 /* ScoreCheckCore.swift in Sources */,
 				F3DE55792A598C63004EB701 /* SignUpNameCore.swift in Sources */,
 				F363C9492A634BC40024E0A2 /* SignInUserModel.swift in Sources */,
@@ -1134,6 +1184,7 @@
 				297E958327CFAC0A00452222 /* QRViewModel.swift in Sources */,
 				5E3D7691280717090067286A /* AdminGradeCell.swift in Sources */,
 				5EF69EDB27AAB0BC007E9735 /* PolicyUnitView.swift in Sources */,
+				F3C9AB7E2AE5F0F100A589C9 /* TodaySessionCoordinator.swift in Sources */,
 				F363C95C2A63AE620024E0A2 /* SettingCore.swift in Sources */,
 				52A85C59281A4AE900593749 /* HelpViewController.swift in Sources */,
 				5EAA7A0A27FF2A2200BC7397 /* ConfigWorker.swift in Sources */,
@@ -1144,11 +1195,14 @@
 				5EF69EA727A7DAF8007E9735 /* LoginViewController.swift in Sources */,
 				5EED02BD27D76D4200C52637 /* SignUpViewModel.swift in Sources */,
 				5EF69EA327A7DAF8007E9735 /* AppDelegate.swift in Sources */,
+				F3C9AB7A2AE5578F00A589C9 /* ScoreInfoCore.swift in Sources */,
 				5EED02C027D7854F00C52637 /* AlertView.swift in Sources */,
+				F3C9AB802AE5F30D00A589C9 /* TodaySessionCoordinatorView.swift in Sources */,
 				F3B159ED2A59547100BD0BFC /* OnboardingCore.swift in Sources */,
 				F363C9782A641AB20024E0A2 /* KeychainManager.swift in Sources */,
 				F363C97C2A641B0B0024E0A2 /* KeychainAccount.swift in Sources */,
 				F363C9712A6415570024E0A2 /* MemberInfoDependency.swift in Sources */,
+				F3C9AB7C2AE557F000A589C9 /* ScoreInfoView.swift in Sources */,
 				52EFD5F4280FF92600065FEB /* BaseTableViewCell.swift in Sources */,
 				F3C9AB682AE1934A00A589C9 /* SessionItemView.swift in Sources */,
 				FD0B2B072A07E16D004BA8E9 /* Team.swift in Sources */,
@@ -1172,6 +1226,7 @@
 				F38C03A629F828EE00573719 /* SettingTeamViewController.swift in Sources */,
 				FDC30B482A12BF9200E86FDE /* AttendanceSummaryHeaderView.swift in Sources */,
 				FD0B2B032A07E133004BA8E9 /* Member.swift in Sources */,
+				F3C9AB762AE554DC00A589C9 /* ScoreCoordinator.swift in Sources */,
 				5EAA79D727F5ED7B00BC7397 /* UIView.swift in Sources */,
 				5EF06A6F2823A8AE0021D25B /* AdminGradeMemberCell.swift in Sources */,
 				F363C9682A63D48F0024E0A2 /* SessionInfoUseCase.swift in Sources */,
@@ -1192,6 +1247,7 @@
 				5E6ACB3C28086A7300ADF2BB /* KakaoLoginWorker.swift in Sources */,
 				F37AD3502A630311006694D1 /* SignUpPositionCore.swift in Sources */,
 				F363C9742A641A040024E0A2 /* YPError.swift in Sources */,
+				F3C9AB882AE61D5900A589C9 /* TeamSelectView.swift in Sources */,
 				5E7AEF2427E21D680059FB3A /* AdminViewModel.swift in Sources */,
 				522EFA45281A649E00EF09C7 /* SettingPrivacyPolicyViewController.swift in Sources */,
 				5EF06A6D2822B7010021D25B /* PrintFn.swift in Sources */,

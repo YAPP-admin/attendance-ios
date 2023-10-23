@@ -16,26 +16,35 @@ struct HomeTabView: View {
   var body: some View {
     WithViewStore(self.store, observe: { $0 }) { viewStore in
       TabView(selection: viewStore.binding(\.$selectedTab)) {
-        TodaySessionView(store: self.store.scope(state: \.todaySession, action: HomeTab.Action.todaySession))
-          .tabItem({
-            VStack(spacing: 4) {
-              Image("home_disabled")
-              
-              Text("오늘 세션")
-            }
+        TodaySessionCoordinatorView(
+          store: self.store.scope(
+            state: \.todaySessionCoordinator,
+            action: HomeTab.Action.todaySessionCoordinator
+          )
+        )
+        .tabItem({
+          VStack(spacing: 4) {
+            Image("home_disabled")
             
-          })
-          .tag(HomeTab.Tab.todaySession)
+            Text("오늘 세션")
+          }
+        })
+        .tag(HomeTab.Tab.todaySession)
         
-        ScoreCheckView(store: self.store.scope(state: \.scoreCheck, action: HomeTab.Action.scoreCheck))
-          .tabItem({
-            VStack(spacing: 4) {
-              Image("check_disabled")
-              
-              Text("오늘 세션")
-            }
-          })
-          .tag(HomeTab.Tab.scoreCheck)
+        ScoreCoordinatorView(
+          store: self.store.scope(
+            state: \.scoreCoordinator,
+            action: HomeTab.Action.scoreCoordinator
+          )
+        )
+        .tabItem({
+          VStack(spacing: 4) {
+            Image("check_disabled")
+            
+            Text("출결 확인")
+          }
+        })
+        .tag(HomeTab.Tab.scoreCheck)
       }
       .navigationBarBackButtonHidden(true)
       .navigationBarTitleDisplayMode(.inline)
@@ -44,7 +53,7 @@ struct HomeTabView: View {
           .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
               Button {
-                
+                viewStore.send(.tappedSettingButton)
               } label: {
                 Image("setting")
                   .foregroundColor(Color.gray_600)
@@ -56,17 +65,13 @@ struct HomeTabView: View {
             for: .navigationBar
           )
           .toolbarBackground(.visible, for: .navigationBar)
-          
+          .navigationTitle("")
+          .font(Font.YPFont(type: .medium, size: 18))
+          .foregroundColor(Color.gray_1200)
       })
       .applyIf(viewStore.selectedTab == .scoreCheck, apply: {
         $0
           .navigationTitle("출결 점수 확인")
-      })
-      .applyIf(viewStore.selectedTab != .scoreCheck, apply: {
-        $0
-          .navigationTitle("")
-          .font(Font.YPFont(type: .medium, size: 18))
-          .foregroundColor(Color.gray_1200)
       })
     }
   }

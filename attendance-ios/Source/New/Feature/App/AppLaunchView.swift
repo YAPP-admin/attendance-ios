@@ -25,9 +25,3 @@ struct AppLaunchView: View {
       }
     }
 }
-
-struct AppLaunchView_Previews: PreviewProvider {
-    static var previews: some View {
-        SettingView(store: .init(initialState: Setting.State(), reducer: Setting()))
-    }
-}

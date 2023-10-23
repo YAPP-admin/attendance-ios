@@ -42,6 +42,7 @@ struct TodaySession: ReducerProtocol {
     case showSetting
     case onAppear
     case setSession(Session?)
+    case setMember(Member?)
   }
   
   @Dependency(\.sessionInfo.sessionInfo) var sessionInfo
@@ -58,6 +59,9 @@ struct TodaySession: ReducerProtocol {
         }
       case let .setSession(currentSession):
         state.session = currentSession
+        return .none
+      case let .setMember(member):
+        state.member = member
         return .none
       default:
         return .none

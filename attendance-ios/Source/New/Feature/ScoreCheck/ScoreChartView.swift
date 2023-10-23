@@ -16,14 +16,12 @@ struct ScoreChartView: View {
   var body: some View {
     WithViewStore(self.store, observe: { $0 }) { viewStore in
       
-      VStack {
+      VStack(spacing: 28) {
         VStack {
           HStack {
             Spacer()
             
-            Button {
-              
-            } label: {
+            NavigationLink(state: ScoreCoordinator.Path.State.scoreInfo(ScoreInfo.State())) {
               Image("help")
                 .frame(width: 44, height: 44)
             }
@@ -47,12 +45,91 @@ struct ScoreChartView: View {
               }
             }
         }
-        .padding(.bottom, -50)
+        .padding(.bottom, -20)
         
+        HStack(spacing: 0) {
+          
+          VStack {
+            HStack(spacing: 4) {
+              Image("attendance")
+                .frame(width: 20, height: 20)
+              
+              YPText(
+                string: AttributedString("출석"),
+                color: .gray_600,
+                font: .YPBody2
+              )
+            }
+            .frame(maxWidth: .infinity, alignment: .center)
+            .frame(height: 40)
+            .background(Color.gray_200)
+            
+            YPText(
+              string: AttributedString(String(viewStore.attendanceCount)),
+              color: .gray_800,
+              font: .YPHead2
+            )
+            .frame(maxHeight: .infinity, alignment: .center)
+          }
+          
+          VStack {
+            HStack(spacing: 4) {
+              Image("tardy")
+                .frame(width: 20, height: 20)
+              
+              YPText(
+                string: AttributedString("지각"),
+                color: .gray_600,
+                font: .YPBody2
+              )
+            }
+            .frame(maxWidth: .infinity, alignment: .center)
+            .frame(height: 40)
+            .background(Color.gray_200)
+            
+            YPText(
+              string: AttributedString(String(viewStore.lateCount)),
+              color: .gray_800,
+              font: .YPHead2
+            )
+            .frame(maxHeight: .infinity, alignment: .center)
+          }
+          
+          VStack {
+            HStack(spacing: 4) {
+              Image("absence")
+                .frame(width: 20, height: 20)
+              
+              YPText(
+                string: AttributedString("결석"),
+                color: .gray_600,
+                font: .YPBody2
+              )
+            }
+            .frame(maxWidth: .infinity, alignment: .center)
+            .frame(height: 40)
+            .background(Color.gray_200)
+            
+            YPText(
+              string: AttributedString(String(viewStore.absentCount)),
+              color: .gray_800,
+              font: .YPHead2
+            )
+            .frame(maxHeight: .infinity, alignment: .center)
+          }
+        }
+        .frame(height: 100)
+        .overlay(
+          RoundedRectangle(cornerRadius: 10)
+            .inset(by: -0.75)
+            .stroke(Color.gray_200, lineWidth: 1.5)
+        )
+        .padding(.horizontal, 24)
         
-        
+        Color.gray_200
+          .frame(maxWidth: .infinity, alignment: .center)
+          .frame(height: 12)
       }
-      
     }
   }
 }

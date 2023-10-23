@@ -15,7 +15,10 @@ struct ScoreChart: ReducerProtocol {
     
     var score: Int = 0
     
-    let sessionList: [Session] = []
+    var attendanceCount: Int = 0
+    var lateCount: Int = 0
+    var absentCount: Int = 0
+    
   }
   
   enum Action: Equatable {
@@ -26,13 +29,12 @@ struct ScoreChart: ReducerProtocol {
     Reduce { state, action in
       switch action {
       case let .setStatusList(status):
-        
         state.score = status.map { $0.point }.reduce(0) { $0 + $1 }
         
-        print(state.score)
+        state.attendanceCount = status.filter { $0 == .admit && $0 == .normal }.count
+        state.lateCount = status.filter { $0 == .late }.count
+        state.absentCount = status.filter { $0 == .absent }.count
         
-        return .none
-      default:
         return .none
       }
     }

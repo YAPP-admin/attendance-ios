@@ -44,4 +44,30 @@ final class SessionInfoUseCase {
       })
     }
   }
+  
+  func getYAPPGeneration() async throws -> Int {
+    return try await withCheckedThrowingContinuation { continuation in
+      remoteConfig.decodeYappConfig { result in
+        switch result {
+        case let .success(config):
+          continuation.resume(returning: config.generation)
+        case let .failure(error):
+          continuation.resume(throwing: error)
+        }
+      }
+    }
+  }
+  
+  func getTeamList() async throws -> [Team] {
+    return try await withCheckedThrowingContinuation { continuation in
+      remoteConfig.decodeSelectTeams { result in
+        switch result {
+        case let .success(team):
+          continuation.resume(returning: team)
+        case let .failure(error):
+          continuation.resume(throwing: error)
+        }
+      }
+    }
+  }
 }
