@@ -8,7 +8,7 @@
 import UIKit
 import SwiftUI
 
-enum Status: Codable, CaseIterable {
+enum Status: Codable, CaseIterable, Equatable {
     case normal
     case late
     case absent

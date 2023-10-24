@@ -25,18 +25,22 @@ struct TodaySessionView: View {
           Color.gray_200
             .frame(height: 500)
           
-          Image("illust_member_home_disabled")
+          Image(viewStore.isCompleteAttendance ? "illust_member_home_enabled" : "illust_member_home_disabled")
             .resizable()
             .frame(width: 375, height: 88)
           
           VStack {
             HStack(spacing: 8) {
-              Image("info_check_disabled")
+              Image(viewStore.isCompleteAttendance ? "qr_check_enabled" : "info_check_disabled")
                 .resizable()
                 .frame(width: 20, height: 20)
               
-              YPText(string: "아직 출석 전이에요", color: .gray_600, font: .YPBody1)
-                .frame(maxWidth: .infinity, alignment: .leading)
+              YPText(
+                string: viewStore.isCompleteAttendance ? "출석을 완료했어요": "아직 출석 전이에요",
+                color: viewStore.isCompleteAttendance ? .yapp_orange : .gray_600,
+                font: .YPBody1
+              )
+              .frame(maxWidth: .infinity, alignment: .leading)
             }
             .padding(.all, 20)
           }

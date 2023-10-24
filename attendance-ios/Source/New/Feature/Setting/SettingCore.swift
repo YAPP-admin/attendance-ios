@@ -20,6 +20,7 @@ struct Setting: ReducerProtocol {
     }
     
     @PresentationState var destination: Destination.State?
+    @BindingState var isShowDeletePopup: Bool = false
     
     init(member: Member?) {
       self.member = member
@@ -31,7 +32,7 @@ struct Setting: ReducerProtocol {
     }
   }
   
-  enum Action: Equatable {
+  enum Action: Equatable, BindableAction {
     case onAppear
     case setYappGeneration(Int)
     case tappedTeamSelect
@@ -41,7 +42,11 @@ struct Setting: ReducerProtocol {
     case logout
     case deleteUser
     
+    case showDeletePopup
+    case dismissDeletePopup
+    
     case destination(PresentationAction<Destination.Action>)
+    case binding(BindingAction<State>)
   }
   
   public struct Destination: ReducerProtocol {
@@ -71,6 +76,8 @@ struct Setting: ReducerProtocol {
   @Dependency(\.kakaoSign) var kakaoSign
   
   var body: some ReducerProtocolOf<Self> {
+    BindingReducer()
+    
     Reduce { state, action in
       switch action {
       case .onAppear:
@@ -108,10 +115,11 @@ struct Setting: ReducerProtocol {
       case .logout:
         return .run { send in
           let platform = try await KeyChainManager.shared.read(account: .platform)
-          try await KeyChainManager.shared.delete(account: .userId)
-          try await KeyChainManager.shared.delete(account: .platform)
+          
 
           if platform == "kakao" {
+            try await KeyChainManager.shared.delete(account: .userId)
+            try await KeyChainManager.shared.delete(account: .platform)
             try await kakaoSign.logout()
           }
         }
@@ -119,15 +127,24 @@ struct Setting: ReducerProtocol {
         
         return .run { send in
           let platform = try await KeyChainManager.shared.read(account: .platform)
+          let userId = try await KeyChainManager.shared.read(account: .userId)
           try await KeyChainManager.shared.delete(account: .userId)
           try await KeyChainManager.shared.delete(account: .platform)
 
           if platform == "kakao" {
             memberInfo.deleteKakaoTalkUserInfo()
             try await kakaoSign.logout()
+          } else {
+            memberInfo.deleteDocument(id: userId)
           }
          
         }
+      case .showDeletePopup:
+        state.isShowDeletePopup = true
+        return .none
+      case .dismissDeletePopup:
+        state.isShowDeletePopup = false
+        return .none
       default:
         return .none
       }

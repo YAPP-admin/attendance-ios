@@ -25,7 +25,7 @@ struct ScoreCheck: ReducerProtocol {
     var sessionList: IdentifiedArrayOf<SessionItem.State> = []
     var scoreChart = ScoreChart.State()
     
-    let member: Member?
+    var member: Member?
     
     init(member: Member?) {
       self.member = member
@@ -38,6 +38,7 @@ struct ScoreCheck: ReducerProtocol {
     
     case onAppear
     case setSessionList([Session])
+    case setMember(Member?)
   }
   
   @Dependency(\.sessionInfo.sessionInfo) var sessionInfo
@@ -51,6 +52,13 @@ struct ScoreCheck: ReducerProtocol {
         
           await send(.setSessionList(sessions))
         }
+        
+      case let .setMember(member):
+        
+        state.member = member
+        
+        return .none
+        
       case let .setSessionList(sessions):
         guard let member = state.member else {
           return .none
@@ -63,7 +71,7 @@ struct ScoreCheck: ReducerProtocol {
       
             if session.type == .dontNeedAttendance {
               state.sessionList.updateOrAppend(.init(session: session, status: .notNeed))
-            } else if Date().isPast(than: session.date.date()) == false {
+            } else if Date().isPastBeforeFiveMinuate(than: session.date.date()) == false {
               state.sessionList.updateOrAppend(.init(session: session, status: .pre))
             } else {
               state.sessionList.updateOrAppend(.init(session: session, status: attendance.status.convertSessionStatus()))

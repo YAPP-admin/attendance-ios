@@ -121,6 +121,8 @@
 		F373D2372A59382A00EBA96B /* YPText.swift in Sources */ = {isa = PBXBuildFile; fileRef = F373D2362A59382A00EBA96B /* YPText.swift */; };
 		F373D2402A593E3C00EBA96B /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = F373D23F2A593E3C00EBA96B /* Color.swift */; };
 		F373D2422A5942F000EBA96B /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = F373D2412A5942F000EBA96B /* Font.swift */; };
+		F37AB8AE2AE7BFCE00B2C9C7 /* AttendanceCodeCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37AB8AD2AE7BFCE00B2C9C7 /* AttendanceCodeCore.swift */; };
+		F37AB8B02AE7C2D700B2C9C7 /* AttendanceCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37AB8AF2AE7C2D700B2C9C7 /* AttendanceCodeView.swift */; };
 		F37AD34C2A5F066C006694D1 /* NavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37AD34B2A5F066C006694D1 /* NavigationBarView.swift */; };
 		F37AD34E2A6302F4006694D1 /* SignUpPositionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37AD34D2A6302F4006694D1 /* SignUpPositionView.swift */; };
 		F37AD3502A630311006694D1 /* SignUpPositionCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37AD34F2A630311006694D1 /* SignUpPositionCore.swift */; };
@@ -287,6 +289,8 @@
 		F373D2362A59382A00EBA96B /* YPText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YPText.swift; sourceTree = "<group>"; };
 		F373D23F2A593E3C00EBA96B /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		F373D2412A5942F000EBA96B /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
+		F37AB8AD2AE7BFCE00B2C9C7 /* AttendanceCodeCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendanceCodeCore.swift; sourceTree = "<group>"; };
+		F37AB8AF2AE7C2D700B2C9C7 /* AttendanceCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendanceCodeView.swift; sourceTree = "<group>"; };
 		F37AD34B2A5F066C006694D1 /* NavigationBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarView.swift; sourceTree = "<group>"; };
 		F37AD34D2A6302F4006694D1 /* SignUpPositionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpPositionView.swift; sourceTree = "<group>"; };
 		F37AD34F2A630311006694D1 /* SignUpPositionCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpPositionCore.swift; sourceTree = "<group>"; };
@@ -926,6 +930,8 @@
 		F3C9AB812AE5F88A00A589C9 /* AttendanceCode */ = {
 			isa = PBXGroup;
 			children = (
+				F37AB8AD2AE7BFCE00B2C9C7 /* AttendanceCodeCore.swift */,
+				F37AB8AF2AE7C2D700B2C9C7 /* AttendanceCodeView.swift */,
 			);
 			path = AttendanceCode;
 			sourceTree = "<group>";
@@ -1179,6 +1185,7 @@
 				52EFD5F6280FFA3200065FEB /* HomeTotalScoreTableViewCell.swift in Sources */,
 				5E6B7FFD283271C100F4D88F /* Attendances.swift in Sources */,
 				5EF69ED927AAACBA007E9735 /* PolicyViewController.swift in Sources */,
+				F37AB8AE2AE7BFCE00B2C9C7 /* AttendanceCodeCore.swift in Sources */,
 				5EF06A6B2822B4B10021D25B /* Array.swift in Sources */,
 				F315F04B2A6315BE0068B96B /* SignUpCodeCore.swift in Sources */,
 				52A85C57281A4A3000593749 /* BaseNavigationBarView.swift in Sources */,
@@ -1207,6 +1214,7 @@
 				5EED02C027D7854F00C52637 /* AlertView.swift in Sources */,
 				F3C9AB802AE5F30D00A589C9 /* TodaySessionCoordinatorView.swift in Sources */,
 				F3B159ED2A59547100BD0BFC /* OnboardingCore.swift in Sources */,
+				F37AB8B02AE7C2D700B2C9C7 /* AttendanceCodeView.swift in Sources */,
 				F363C9782A641AB20024E0A2 /* KeychainManager.swift in Sources */,
 				F363C97C2A641B0B0024E0A2 /* KeychainAccount.swift in Sources */,
 				F363C9712A6415570024E0A2 /* MemberInfoDependency.swift in Sources */,

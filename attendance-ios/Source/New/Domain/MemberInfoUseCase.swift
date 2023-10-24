@@ -49,7 +49,15 @@ final class MemberInfoUseCase {
     }
   }
   
+  func updateMemberAttendances(memberId: Int, attendances: [Attendance]) {
+    firebaseWorker.updateMemberAttendances(memberId: memberId, attendances: attendances)
+  }
+  
   func deleteKakaoTalkUserInfo()  {
     firebaseWorker.deleteKakaoTalkUserInfo()
+  }
+  
+  func deleteDocument(id: String)  {
+    firebaseWorker.deleteDocument(id: id)
   }
 }

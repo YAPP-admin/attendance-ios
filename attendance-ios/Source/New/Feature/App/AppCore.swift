@@ -56,13 +56,19 @@ struct App: ReducerProtocol {
         
         return .none
         
-      case let .path(.element(id: id, action: .signUpName(.pop))):
-        guard case .some(.signUpName) = state.path[id: id]
-        else { return .none }
+//      case let .path(.element(id: id, action: .signUpName(.pop))):
+//        guard case .some(.signUpName) = state.path[id: id]
+//        else { return .none }
+//
+//        state.path.pop(from: id)
+//
+//        return .none
         
-        state.path.pop(from: id)
-        
-        return .none
+//      case let .path(.popFrom(id: id)):
+//        guard case .some(.signUpName) = state.path[id: id]
+//        else { return .none }
+//        
+//        return .send(.path(.element(id: id, action: .signUpName(.showCancelPopup))))
         
       case let .appLaunch(.onboarding(.pushSingUpName(userName))):
         

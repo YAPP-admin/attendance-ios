@@ -53,6 +53,16 @@ extension Date {
         guard let other = other else { return false }
         return isPast(than: other)
     }
+  
+    func isPastBeforeFiveMinuate(than other: Date?) -> Bool {
+        let calendar = Calendar.current
+        guard let other = other,
+              let otherDate = calendar.date(byAdding: .minute, value: -5, to: other) else {
+          return false
+        }
+    
+      return isPast(than: otherDate)
+    }
 
     /// 현재 날짜가 다른 날짜보다 미래인지를 반환합니다.
     func isFuture(than other: Date) -> Bool {
@@ -65,6 +75,16 @@ extension Date {
         guard let other = other else { return false }
         return isFuture(than: other)
     }
+  
+  func isFutureBeforeFiveMinuate(than other: Date?) -> Bool {
+      let calendar = Calendar.current
+      guard let other = other,
+            let otherDate = calendar.date(byAdding: .minute, value: -5, to: other) else {
+        return false
+      }
+  
+    return self.compare(otherDate) == .orderedAscending
+  }
 
 	/// 현재 날짜가 다른 날짜와 같은 날짜인지 반환합니다.
 	func isPresent(than other: Date) -> Bool {

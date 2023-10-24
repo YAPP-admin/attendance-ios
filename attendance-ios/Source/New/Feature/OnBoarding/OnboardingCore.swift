@@ -23,7 +23,8 @@ struct Onboarding: ReducerProtocol {
   enum Action {
     case launch
     case kakaoSignButtonTapped
-    case appleSignButtonTapped
+    case registerAppleSign
+    case appleSignButtonTapped(name: String)
     case compareKakaoUserId(String)
     
     case pushSingUpName(String)
@@ -65,12 +66,26 @@ struct Onboarding: ReducerProtocol {
           await send(.pushSingUpName(""))
         }
         
-      case .appleSignButtonTapped:
+      case let .appleSignButtonTapped(name):
         return .run { send in
-          let name = try await appleSign.login()
-          await send(.pushSingUpName(name))
+          let userId = try await KeyChainManager.shared.read(account: .userId)
+          let platform = try await KeyChainManager.shared.read(account: .platform)
+          
+          if platform == "apple" {
+            let member = try await memberInfo.memberInfo.getMemberInfo(memberId: Int(userId) ?? 0)
+             
+             try await KeyChainManager.shared.create(account: .userId, data: userId)
+             try await KeyChainManager.shared.create(account: .platform, data: "apple")
+             await send(.pushHomeScene(member))
+          }
+          
         } catch: { error, send in
-          //
+          await send(.registerAppleSign)
+          await send(.pushSingUpName(name))
+        }
+      case .registerAppleSign:
+        return .run { send in
+          try await KeyChainManager.shared.create(account: .platform, data: "apple")
         }
         
       default:

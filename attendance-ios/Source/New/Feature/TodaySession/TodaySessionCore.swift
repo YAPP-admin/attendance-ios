@@ -44,6 +44,8 @@ struct TodaySession: ReducerProtocol {
     case setSession(Session?)
     case setMember(Member?)
     case pushSetting(Member?)
+    
+    case setAttendance
   }
   
   @Dependency(\.sessionInfo.sessionInfo) var sessionInfo
@@ -60,9 +62,23 @@ struct TodaySession: ReducerProtocol {
         }
       case let .setSession(currentSession):
         state.session = currentSession
-        return .none
+        return .send(.setAttendance)
       case let .setMember(member):
         state.member = member
+        return .send(.setAttendance)
+        
+      case .setAttendance:
+        
+        if let session = state.session,
+           let member = state.member {
+          print(member.attendances)
+          if member.attendances[session.sessionId].status == .absent {
+            state.isCompleteAttendance = false
+          } else {
+            state.isCompleteAttendance = true
+          }
+        }
+        
         return .none
       default:
         return .none

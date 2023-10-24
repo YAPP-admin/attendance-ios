@@ -17,6 +17,9 @@ struct TeamSelectView: View {
       WithViewStore(self.store, observe: { $0 }) { viewStore in
         VStack {
           HStack {
+            
+            Spacer()
+            
             Button {
               viewStore.send(.dismiss)
             } label: {
@@ -24,10 +27,9 @@ struct TeamSelectView: View {
                 .resizable()
                 .tint(.gray_800)
                 .frame(width: 24, height: 24)
-                .padding(.leading, 17)
+                .padding(.trailing, 17)
             }
             
-            Spacer()
           }
           .frame(maxWidth: .infinity)
           .frame(height: 56)

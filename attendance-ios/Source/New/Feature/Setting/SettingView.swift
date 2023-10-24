@@ -138,7 +138,7 @@ struct SettingView: View {
               }
 
               Button {
-                viewStore.send(.deleteUser)
+                viewStore.send(.showDeletePopup)
               } label: {
                 HStack {
                   YPText(
@@ -164,7 +164,7 @@ struct SettingView: View {
       ) { store in
         TeamSelectView(store: store)
       }
-      .popup(isPresented: viewStore.binding(\.$showingCancelPopup)) {
+      .popup(isPresented: viewStore.binding(\.$isShowDeletePopup)) {
           VStack {
               VStack(spacing: 19) {
                   VStack(spacing: 8) {
@@ -185,10 +185,10 @@ struct SettingView: View {
                   
                   HStack(spacing: 8) {
                       Button {
-                          viewStore.send(.pop)
+                        viewStore.send(.deleteUser)
                       } label: {
                           YPText(
-                              string: "취소",
+                              string: "탈퇴하기",
                               color: .gray_800,
                               font: .YPSubHead1
                           )
@@ -200,10 +200,10 @@ struct SettingView: View {
                       .frame(maxWidth: .infinity)
 
                       Button {
-                          viewStore.send(.dismissCancelPopup)
+                          viewStore.send(.dismissDeletePopup)
                       } label: {
                           YPText(
-                              string: "탈퇴합니다",
+                              string: "취소",
                               color: .white,
                               font: .YPSubHead1
                           )

@@ -29,9 +29,10 @@ struct ScoreChart: ReducerProtocol {
     Reduce { state, action in
       switch action {
       case let .setStatusList(status):
-        state.score = status.map { $0.point }.reduce(0) { $0 + $1 }
+        let score = 100 + status.map { $0.point }.reduce(0) { $0 + $1 }
+        state.score = score > 0 ? score : 0
         
-        state.attendanceCount = status.filter { $0 == .admit && $0 == .normal }.count
+        state.attendanceCount = status.filter { $0 == .admit || $0 == .normal }.count
         state.lateCount = status.filter { $0 == .late }.count
         state.absentCount = status.filter { $0 == .absent }.count
         
