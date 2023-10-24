@@ -16,11 +16,21 @@ struct OnboardingView: View {
     var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             ZStack {
+              if viewStore.isFirstLaunched {
                 LottieView(filename: "splash_main") { _ in
                     viewStore.send(.launch)
                 }
+              } else {
+                VStack {
+                  Image("splash_main_still")
+                    .frame(width: 375, height: 375)
+                    .padding(.top, 120)
+                  
+                  Spacer()
+                }
+              }
                 
-                if viewStore.isLaunching {
+              if viewStore.isLaunching || viewStore.isFirstLaunched == false {
                     
                     VStack(spacing: 8) {
                         Spacer()
@@ -72,7 +82,7 @@ struct OnboardingView: View {
                     .padding(.bottom, 47)
                 }
             }
-            .background(viewStore.isLaunching ? Color.white : Color.yapp_orange)
+            .background(viewStore.isLaunching || viewStore.isFirstLaunched == false ? Color.white : Color.yapp_orange)
         }
     }
 }

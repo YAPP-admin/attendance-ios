@@ -82,6 +82,37 @@ struct App: ReducerProtocol {
         
         return .none
         
+      case let .path(.element(id: _, action: .homeTab(.tappedSettingButton(member)))):
+        
+        state.path.append(Path.State.setting(Setting.State(member: member)))
+        
+        return .none
+        
+      case let .appLaunch(.tab(.tappedSettingButton(member))):
+        
+        state.path.append(Path.State.setting(Setting.State(member: member)))
+        
+        return .none
+        
+      case let .path(.element(id: id, action: .setting(.setMemberInfo(member)))):
+        
+        return .run { send in
+          await send(.appLaunch(.tab(.setMember(member))))
+          await send(.path(.element(id: id, action: .homeTab(.setMember(member)))))
+        }
+      case .path(.element(id: _, action: .setting(.logout))):
+        
+        state.path.removeAll()
+        state.appLaunch = .onboarding(Onboarding.State(isFirstLaunched: false))
+        
+        return .none
+        
+      case .path(.element(id: _, action: .setting(.deleteUser))):
+        
+        state.path.removeAll()
+        state.appLaunch = .onboarding(Onboarding.State(isFirstLaunched: false))
+        
+        return .none
       default:
         return .none
       }
@@ -103,6 +134,10 @@ extension App {
       case signUpCode(SignUpCode.State)
       
       case homeTab(HomeTab.State)
+      
+      case scoreInfo(ScoreInfo.State)
+      
+      case setting(Setting.State)
     }
     
     enum Action {
@@ -111,6 +146,10 @@ extension App {
       case signUpCode(SignUpCode.Action)
       
       case homeTab(HomeTab.Action)
+      
+      case scoreInfo(ScoreInfo.Action)
+      
+      case setting(Setting.Action)
     }
     
     var body: some ReducerProtocolOf<Self> {
@@ -128,6 +167,14 @@ extension App {
       
       Scope(state: /State.homeTab, action: /Action.homeTab) {
         HomeTab()
+      }
+      
+      Scope(state: /State.scoreInfo, action: /Action.scoreInfo) {
+          EmptyReducer()
+      }
+      
+      Scope(state: /State.setting, action: /Action.setting) {
+        Setting()
       }
     }
   }

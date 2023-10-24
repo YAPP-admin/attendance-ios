@@ -13,13 +13,18 @@ struct Onboarding: ReducerProtocol {
   
   struct State: Equatable {
     var isLaunching: Bool = false
+    var isFirstLaunched: Bool
+    
+    init(isFirstLaunched: Bool = true) {
+      self.isFirstLaunched = isFirstLaunched
+    }
   }
   
   enum Action {
     case launch
     case kakaoSignButtonTapped
     case appleSignButtonTapped
-    case compareUserId(String)
+    case compareKakaoUserId(String)
     
     case pushSingUpName(String)
     case pushHomeScene(Member?)
@@ -41,20 +46,22 @@ struct Onboarding: ReducerProtocol {
           try await kakaoSign.login()
           let userId = try await kakaoSign.getUserId()
           
-          await send(.compareUserId(userId))
+          await send(.compareKakaoUserId(userId))
         } catch: { error, send in
           print(error)
           await send(.pushSingUpName(""))
         }
         
-      case let .compareUserId(userId):
+      case let .compareKakaoUserId(userId):
         return .run { send in
          let member = try await memberInfo.memberInfo.getMemberInfo(memberId: Int(userId) ?? 0)
           
           try await KeyChainManager.shared.create(account: .userId, data: userId)
+          try await KeyChainManager.shared.create(account: .platform, data: "kakao")
           await send(.pushHomeScene(member))
           
-        }catch: { error, send in
+        } catch: { error, send in
+          print(error)
           await send(.pushSingUpName(""))
         }
         

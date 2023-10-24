@@ -249,12 +249,22 @@ extension FirebaseWorker {
                 completion(.failure(error))
             }
             guard let documents = snapshot?.documents else { return }
+          var flag: Bool = false
+          
             for document in documents {
-                guard let member = try? document.data(as: MemberDTO.self) else { continue }
+                guard let member = try? document.data(as: MemberDTO.self) else {
+                  continue
+                }
                 if member.id == memberId {
                   completion(.success(member.convert()))
+                  flag = true
                 }
             }
+          
+          if flag == false {
+            completion(.failure(FirebaseError.noData))
+          }
+            
         }
     }
 }
@@ -297,4 +307,8 @@ extension FirebaseWorker {
         }
     }
 
+}
+
+enum FirebaseError: Error {
+  case noData
 }

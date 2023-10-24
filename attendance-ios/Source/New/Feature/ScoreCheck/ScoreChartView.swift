@@ -21,7 +21,7 @@ struct ScoreChartView: View {
           HStack {
             Spacer()
             
-            NavigationLink(state: ScoreCoordinator.Path.State.scoreInfo(ScoreInfo.State())) {
+            NavigationLink(state: App.Path.State.scoreInfo(ScoreInfo.State())) {
               Image("help")
                 .frame(width: 44, height: 44)
             }

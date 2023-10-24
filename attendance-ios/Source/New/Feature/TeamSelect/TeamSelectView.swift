@@ -156,7 +156,7 @@ struct TeamSelectView: View {
                   viewStore.send(.tappedConfirmButton)
                 } label: {
                   YPText(
-                    string: "다음",
+                    string: "확인",
                     color: .white,
                     font: .YPHead2
                   )

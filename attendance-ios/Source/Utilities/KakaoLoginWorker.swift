@@ -66,6 +66,10 @@ extension KakaoLoginWorker {
 
 // MARK: - Logout
 extension KakaoLoginWorker {
+  
+  func logoutKakao(completion: @escaping (Error?) -> Void) {
+    UserApi.shared.logout(completion: completion)
+  }
 
     func logoutWithKakao() {
         UserApi.shared.rx.logout()

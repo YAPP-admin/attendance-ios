@@ -43,6 +43,7 @@ struct TodaySession: ReducerProtocol {
     case onAppear
     case setSession(Session?)
     case setMember(Member?)
+    case pushSetting(Member?)
   }
   
   @Dependency(\.sessionInfo.sessionInfo) var sessionInfo

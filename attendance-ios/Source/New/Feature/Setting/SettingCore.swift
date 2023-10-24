@@ -38,6 +38,9 @@ struct Setting: ReducerProtocol {
     case getMemberInfo
     case setMemberInfo(Member?)
     
+    case logout
+    case deleteUser
+    
     case destination(PresentationAction<Destination.Action>)
   }
   
@@ -65,6 +68,7 @@ struct Setting: ReducerProtocol {
   
   @Dependency(\.sessionInfo.sessionInfo) var sessionInfo
   @Dependency(\.memberInfo.memberInfo) var memberInfo
+  @Dependency(\.kakaoSign) var kakaoSign
   
   var body: some ReducerProtocolOf<Self> {
     Reduce { state, action in
@@ -101,6 +105,29 @@ struct Setting: ReducerProtocol {
         state.member = member
         
         return .none
+      case .logout:
+        return .run { send in
+          let platform = try await KeyChainManager.shared.read(account: .platform)
+          try await KeyChainManager.shared.delete(account: .userId)
+          try await KeyChainManager.shared.delete(account: .platform)
+
+          if platform == "kakao" {
+            try await kakaoSign.logout()
+          }
+        }
+      case .deleteUser:
+        
+        return .run { send in
+          let platform = try await KeyChainManager.shared.read(account: .platform)
+          try await KeyChainManager.shared.delete(account: .userId)
+          try await KeyChainManager.shared.delete(account: .platform)
+
+          if platform == "kakao" {
+            memberInfo.deleteKakaoTalkUserInfo()
+            try await kakaoSign.logout()
+          }
+         
+        }
       default:
         return .none
       }

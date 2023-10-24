@@ -86,17 +86,24 @@ struct SignUpCode: ReducerProtocol {
           return .run { send in
             try await kakaoSign.saveUserId()
             let userID = try await KeyChainManager.shared.read(account: .userId)
-            try await memberInfo.registerKakaoUser(
-              memberId: Int(userID) ?? 0,
-              newUserInfo: .init(
-                name: name,
-                positionType: selectedPosition,
-                teamType: .none,
-                teamNumber: 0
+            let platform = try await KeyChainManager.shared.read(account: .platform)
+            if platform == "kakao" {
+              try await memberInfo.registerKakaoUser(
+                memberId: Int(userID) ?? 0,
+                newUserInfo: .init(
+                  name: name,
+                  positionType: selectedPosition,
+                  teamType: .none,
+                  teamNumber: 0
+                )
               )
-            )
-            let member = try await memberInfo.getMemberInfo(memberId: Int(userID) ?? 0)
-            await send(.pushHomeTab(member))
+              let member = try await memberInfo.getMemberInfo(memberId: Int(userID) ?? 0)
+              await send(.pushHomeTab(member))
+            } else {
+              //apple
+            }
+          } catch: { error, send in
+            print(error)
           }
         } else {
           return .run { send in

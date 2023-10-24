@@ -15,24 +15,28 @@ struct HomeTab: ReducerProtocol {
   enum Tab { case todaySession, qr, scoreCheck}
   
   struct State: Equatable {
-    var todaySessionCoordinator: TodaySessionCoordinator.State
-    var scoreCoordinator: ScoreCoordinator.State
+    var todaySession: TodaySession.State
+    var scoreCheck: ScoreCheck.State
     
     @BindingState var selectedTab: Tab
     
+    var member: Member?
+    
     init(member: Member?, selectTab: Tab) {
-      self.todaySessionCoordinator = TodaySessionCoordinator.State(member: member)
-      self.scoreCoordinator = ScoreCoordinator.State(member: member)
+      self.todaySession = TodaySession.State(member: member)
+      self.scoreCheck = ScoreCheck.State(member: member)
       selectedTab = selectTab
+      self.member = member
     }
   }
   
   enum Action: BindableAction {
     case binding(BindingAction<State>)
     
-    case todaySessionCoordinator(TodaySessionCoordinator.Action)
-    case scoreCoordinator(ScoreCoordinator.Action)
-    case tappedSettingButton
+    case todaySession(TodaySession.Action)
+    case scoreCheck(ScoreCheck.Action)
+    case tappedSettingButton(Member?)
+    case setMember(Member?)
   }
   
   var body: some ReducerProtocolOf<Self> {
@@ -41,18 +45,21 @@ struct HomeTab: ReducerProtocol {
     Reduce { state, action in
       switch action {
       case .tappedSettingButton:
-        return .send(.todaySessionCoordinator(.pushSetting))
+        return .none
+      case let .setMember(member):
+        state.member = member
+        return .none
       default:
         return .none
       }
     }
     
-    Scope(state: \.todaySessionCoordinator, action: /Action.todaySessionCoordinator) {
-      TodaySessionCoordinator()
+    Scope(state: \.todaySession, action: /Action.todaySession) {
+      TodaySession()
     }
     
-    Scope(state: \.scoreCoordinator, action: /Action.scoreCoordinator) {
-      ScoreCoordinator()
+    Scope(state: \.scoreCheck, action: /Action.scoreCheck) {
+      ScoreCheck()
     }
   }
 }

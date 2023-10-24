@@ -16,10 +16,10 @@ struct HomeTabView: View {
   var body: some View {
     WithViewStore(self.store, observe: { $0 }) { viewStore in
       TabView(selection: viewStore.binding(\.$selectedTab)) {
-        TodaySessionCoordinatorView(
+        TodaySessionView(
           store: self.store.scope(
-            state: \.todaySessionCoordinator,
-            action: HomeTab.Action.todaySessionCoordinator
+            state: \.todaySession,
+            action: HomeTab.Action.todaySession
           )
         )
         .tabItem({
@@ -31,10 +31,10 @@ struct HomeTabView: View {
         })
         .tag(HomeTab.Tab.todaySession)
         
-        ScoreCoordinatorView(
+        ScoreCheckView(
           store: self.store.scope(
-            state: \.scoreCoordinator,
-            action: HomeTab.Action.scoreCoordinator
+            state: \.scoreCheck,
+            action: HomeTab.Action.scoreCheck
           )
         )
         .tabItem({
@@ -53,7 +53,7 @@ struct HomeTabView: View {
           .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
               Button {
-                viewStore.send(.tappedSettingButton)
+                viewStore.send(.tappedSettingButton(viewStore.member))
               } label: {
                 Image("setting")
                   .foregroundColor(Color.gray_600)

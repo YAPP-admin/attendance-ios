@@ -48,4 +48,8 @@ final class MemberInfoUseCase {
       }
     }
   }
+  
+  func deleteKakaoTalkUserInfo()  {
+    firebaseWorker.deleteKakaoTalkUserInfo()
+  }
 }

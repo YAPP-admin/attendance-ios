@@ -15,6 +15,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
 
+        let providerFactory = YourAppCheckProviderFactory()
+        AppCheck.setAppCheckProviderFactory(providerFactory)
+
         FirebaseApp.configure()
         RxKakaoSDK.initSDK(appKey: "867a06f8e2786f651c1802e821922b82")
 
@@ -39,4 +42,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return .portrait
     }
 
+}
+
+class YourAppCheckProviderFactory: NSObject, AppCheckProviderFactory {
+  func createProvider(with app: FirebaseApp) -> AppCheckProvider? {
+    return AppAttestProvider(app: app)
+  }
 }

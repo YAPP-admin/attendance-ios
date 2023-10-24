@@ -122,7 +122,7 @@ struct SettingView: View {
             
             VStack(spacing: 0) {
               Button {
-
+                viewStore.send(.logout)
               } label: {
                 HStack {
                   YPText(
@@ -138,7 +138,7 @@ struct SettingView: View {
               }
 
               Button {
-
+                viewStore.send(.deleteUser)
               } label: {
                 HStack {
                   YPText(
@@ -163,6 +163,66 @@ struct SettingView: View {
         action: Setting.Destination.Action.teamSelect
       ) { store in
         TeamSelectView(store: store)
+      }
+      .popup(isPresented: viewStore.binding(\.$showingCancelPopup)) {
+          VStack {
+              VStack(spacing: 19) {
+                  VStack(spacing: 8) {
+                      YPText(
+                          string: "정말 탈퇴하시겠어요?",
+                          color: .gray_1200,
+                          font: .YPHead2
+                      )
+                      .frame(maxWidth: .infinity, alignment: .leading)
+                      
+                      YPText(
+                          string: "탈퇴하면 모든 정보가 사라져요.",
+                          color: .gray_800,
+                          font: .YPBody1
+                      )
+                      .frame(maxWidth: .infinity, alignment: .leading)
+                  }
+                  
+                  HStack(spacing: 8) {
+                      Button {
+                          viewStore.send(.pop)
+                      } label: {
+                          YPText(
+                              string: "취소",
+                              color: .gray_800,
+                              font: .YPSubHead1
+                          )
+                          .padding(.vertical, 12)
+                          .frame(maxWidth: .infinity)
+                      }
+                      .background(Color.gray_200)
+                      .cornerRadius(10)
+                      .frame(maxWidth: .infinity)
+
+                      Button {
+                          viewStore.send(.dismissCancelPopup)
+                      } label: {
+                          YPText(
+                              string: "탈퇴합니다",
+                              color: .white,
+                              font: .YPSubHead1
+                          )
+                          .padding(.vertical, 12)
+                          .frame(maxWidth: .infinity)
+                      }
+                      .background(Color.yapp_orange)
+                      .cornerRadius(10)
+                  }
+                  
+              }
+              .padding(.all, 24)
+          }
+          .background(Color.white)
+          .cornerRadius(10)
+          .padding(.horizontal, 32)
+      } customize: {
+          $0
+           .backgroundColor(.black.opacity(0.4))
       }
       .onAppear {
         viewStore.send(.onAppear)
