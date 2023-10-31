@@ -85,6 +85,36 @@ final class ConfigWorker {
 			}
 		}
 	}
+  
+      /// attendance_qr_password
+    func decodeSignUpPassword(completion: @escaping (Result<String, Error>) -> Void) {
+      remoteConfig.fetch { [weak self] status, _ in
+        guard let self = self, status == .success else { 
+          return
+        }
+        self.remoteConfig.activate { _, _ in
+          guard let qrPassword = self.remoteConfig[Config.signUpPassword.rawValue].stringValue else {
+            return
+          }
+          completion(.success(qrPassword))
+        }
+      }
+    }
+      
+      /// attendance_qr_password
+    func decodeSessionPassword(completion: @escaping (Result<String, Error>) -> Void) {
+      remoteConfig.fetch { [weak self] status, _ in
+        guard let self = self, status == .success else {
+          return
+        }
+        self.remoteConfig.activate { _, _ in
+          guard let qrPassword = self.remoteConfig[Config.sessionPassword.rawValue].stringValue else {
+            return
+          }
+          completion(.success(qrPassword))
+        }
+      }
+    }
 
     /// should_show_guest_button
     func decodeShouldShowGuestButton(completion: @escaping (Result<Bool, Error>) -> Void) {

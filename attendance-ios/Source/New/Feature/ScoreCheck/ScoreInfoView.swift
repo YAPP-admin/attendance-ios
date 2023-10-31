@@ -121,7 +121,7 @@ struct ScoreInfoView: View {
                   .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 
-                HStack(spacing: 0) {
+                HStack(alignment: .top, spacing: 0) {
                   YPText(
                     string: AttributedString("﹒"),
                     color: .gray_600,

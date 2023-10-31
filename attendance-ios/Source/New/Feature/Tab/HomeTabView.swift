@@ -31,7 +31,7 @@ struct HomeTabView: View {
               
               Text("오늘 세션")
             }
-            .frame(width: 100)
+            .frame(width: 120)
           })
           .tag(HomeTab.Tab.todaySession)
           
@@ -47,10 +47,11 @@ struct HomeTabView: View {
               
               Text("출결 확인")
             }
-            .frame(width: 100)
+            .frame(width: 120)
           })
           .tag(HomeTab.Tab.scoreCheck)
         }
+        .toolbarColorScheme(.light, for: .tabBar)
         .navigationBarBackButtonHidden(true)
         .navigationBarTitleDisplayMode(.inline)
         .applyIf(viewStore.selectedTab == .todaySession, apply: {

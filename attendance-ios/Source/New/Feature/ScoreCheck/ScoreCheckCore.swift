@@ -66,15 +66,33 @@ struct ScoreCheck: ReducerProtocol {
         
         var sessionStatus: [Status] = []
         
-        sessions.forEach { session in
+        for (index, session) in sessions.enumerated() {
           if let attendance = member.attendances.filter({ $0.sessionId == session.sessionId }).first {
       
             if session.type == .dontNeedAttendance {
-              state.sessionList.updateOrAppend(.init(session: session, status: .notNeed))
+              state.sessionList.updateOrAppend(
+                .init(
+                  session: session,
+                  status: .notNeed,
+                  isLast: index+1 == sessions.count
+                )
+              )
             } else if Date().isPastBeforeFiveMinuate(than: session.date.date()) == false {
-              state.sessionList.updateOrAppend(.init(session: session, status: .pre))
+              state.sessionList.updateOrAppend(
+                .init(
+                  session: session,
+                  status: .pre,
+                  isLast: index+1 == sessions.count
+                )
+              )
             } else {
-              state.sessionList.updateOrAppend(.init(session: session, status: attendance.status.convertSessionStatus()))
+              state.sessionList.updateOrAppend(
+                .init(
+                  session: session,
+                  status: attendance.status.convertSessionStatus(),
+                  isLast: index+1 == sessions.count
+                )
+              )
               sessionStatus.append(attendance.status)
             }
           }

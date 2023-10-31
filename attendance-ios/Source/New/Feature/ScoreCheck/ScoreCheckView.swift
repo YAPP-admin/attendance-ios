@@ -16,7 +16,7 @@ struct ScoreCheckView: View {
       WithViewStore(self.store, observe: { $0 }) { viewStore in
         ScrollView(.vertical, showsIndicators: false) {
           
-          VStack(spacing: 28) {
+          VStack(spacing: 0) {
             
             ScoreChartView(
               store: self.store.scope(
@@ -24,6 +24,7 @@ struct ScoreCheckView: View {
                 action: ScoreCheck.Action.scoreChart
               )
             )
+            .padding(.bottom, 28)
             
             ForEachStore(
               self.store.scope(

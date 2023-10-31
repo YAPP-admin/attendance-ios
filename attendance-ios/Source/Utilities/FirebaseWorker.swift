@@ -23,7 +23,7 @@ final class FirebaseWorker {
     typealias Attendances = [[String: Any]]
   
     static let shared = FirebaseWorker()
-    private let memberCollectionRef = Firestore.firestore().collection("debug-member")
+    private let memberCollectionRef = Firestore.firestore().collection("release-member")
     private var attendances: Attendances = []
     private let configWorker = ConfigWorker.shared
 

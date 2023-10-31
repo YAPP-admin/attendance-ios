@@ -61,6 +61,7 @@ struct AttendanceCode: ReducerProtocol {
   
   @Dependency(\.kakaoSign) var kakaoSign
   @Dependency(\.memberInfo.memberInfo) var memberInfo
+  @Dependency(\.config.remoteConfig) var config
   
   var body: some ReducerProtocolOf<Self> {
     BindingReducer()
@@ -97,39 +98,45 @@ struct AttendanceCode: ReducerProtocol {
         return .none
       case .codeCheck:
         state.isConfirmCode = true
-        if state.code == "1028" {
+        let stateCode = state.code
+        let sessionDate = state.session.date
+        return .run { send in
           
-          let format = DateFormatter()
-          format.dateFormat = "yyyy-MM-dd HH:mm:ss"
-          format.locale = Locale(identifier: "ko_KR")
-          format.timeZone = TimeZone(abbreviation: "KST")
+          let code = try await config.getSessionPassword()
           
-          let calendar = Calendar.current
-          let currenTime = Date()
-          
-          if let sessionTime = format.date(from: state.session.date),
-             let startTime = calendar.date(byAdding: .minute, value: -5, to: sessionTime),
-             let endTime = calendar.date(byAdding: .minute, value: 5, to: sessionTime),
-             let lateTime = calendar.date(byAdding: .minute, value: 30, to: sessionTime)
-          {
-            if startTime <= currenTime, lateTime > currenTime {
-              if endTime > currenTime {
-                return .send(.setAttendance(.normal))
-              } else {
-                return .send(.setAttendance(.late))
-              }
-            } else {
-              return .send(.setAttendance(.absent))
-            }
+          if stateCode == code {
             
+            let format = DateFormatter()
+            format.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            format.locale = Locale(identifier: "ko_KR")
+            format.timeZone = TimeZone(abbreviation: "KST")
+            
+            let calendar = Calendar.current
+            let currenTime = Date()
+            
+            if let sessionTime = format.date(from: sessionDate),
+               let startTime = calendar.date(byAdding: .minute, value: -5, to: sessionTime),
+               let endTime = calendar.date(byAdding: .minute, value: 5, to: sessionTime),
+               let lateTime = calendar.date(byAdding: .minute, value: 30, to: sessionTime)
+            {
+              if startTime <= currenTime, lateTime > currenTime {
+                if endTime > currenTime {
+                  await send(.setAttendance(.normal))
+                } else {
+                  await send(.setAttendance(.late))
+                }
+              } else {
+                await send(.setAttendance(.absent))
+              }
+              
+            } else {
+              await send(.sendError)
+            }
           } else {
-            return .send(.sendError)
-          }
-        } else {
-          return .run { send in
             await send(.incorrectCode)
           }
         }
+        
       case let .setAttendance(status):
         
         if var member = state.member {

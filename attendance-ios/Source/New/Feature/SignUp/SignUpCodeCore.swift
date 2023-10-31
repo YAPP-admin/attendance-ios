@@ -44,6 +44,7 @@ struct SignUpCode: ReducerProtocol {
   
   @Dependency(\.kakaoSign) var kakaoSign
   @Dependency(\.memberInfo.memberInfo) var memberInfo
+  @Dependency(\.config.remoteConfig) var config
   
   var body: some ReducerProtocolOf<Self> {
     BindingReducer()
@@ -82,8 +83,12 @@ struct SignUpCode: ReducerProtocol {
         state.isConfirmCode = true
         let name = state.name
         let selectedPosition = state.selectedPosition
-        if state.code == "1234" {
-          return .run { send in
+        
+        return .run { [stateCode = state.code] send in
+          let code = try await config.getSignUpPassword()
+          
+          if stateCode == code {
+
             let platform = try await KeyChainManager.shared.read(account: .platform)
             if platform == "kakao" {
               try await kakaoSign.saveUserId()
@@ -117,13 +122,11 @@ struct SignUpCode: ReducerProtocol {
               let member = try await memberInfo.getMemberInfo(memberId: userID)
               await send(.pushHomeTab(member))
             }
-          } catch: { error, send in
-            print(error)
-          }
-        } else {
-          return .run { send in
+          } else {
             await send(.incorrectCode)
           }
+        } catch: { error, send in
+          print(error)
         }
       case .incorrectCode:
         state.isIncorrectCode = true

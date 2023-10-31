@@ -104,6 +104,7 @@ struct App: ReducerProtocol {
         
         return .run { send in
           await send(.appLaunch(.tab(.setMember(member))))
+          await send(.appLaunch(.tab(.todaySession(.setMember(member)))))
           await send(.path(.element(id: id, action: .homeTab(.setMember(member)))))
         }
       case .path(.element(id: _, action: .setting(.logout))):
@@ -144,6 +145,8 @@ extension App {
       case scoreInfo(ScoreInfo.State)
       
       case setting(Setting.State)
+      
+      case sessionInfo(SessionInfo.State)
     }
     
     enum Action {
@@ -156,6 +159,8 @@ extension App {
       case scoreInfo(ScoreInfo.Action)
       
       case setting(Setting.Action)
+      
+      case sessionInfo(SessionInfo.Action)
     }
     
     var body: some ReducerProtocolOf<Self> {
@@ -181,6 +186,10 @@ extension App {
       
       Scope(state: /State.setting, action: /Action.setting) {
         Setting()
+      }
+      
+      Scope(state: /State.sessionInfo, action: /Action.sessionInfo) {
+        SessionInfo()
       }
     }
   }

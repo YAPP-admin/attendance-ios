@@ -101,9 +101,11 @@ struct SettingView: View {
               .padding(.vertical, 18)
               .padding(.horizontal, 24)
               
-              Button {
-                
-              } label: {
+              NavigationLink(
+                destination: PolicyWebView(
+                  urlToLoad: "https://yapprecruit.notion.site/8b561d1b0fa449bba4db395f53a559f3"
+                )
+              ) {
                 HStack {
                   YPText(
                     string: AttributedString("개인정보 처리방침"),

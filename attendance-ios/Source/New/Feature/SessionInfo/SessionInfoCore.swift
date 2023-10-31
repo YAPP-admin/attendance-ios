@@ -1,15 +1,15 @@
 //
-//  SessionItemCore.swift
+//  SessionInfoCore.swift
 //  attendance-ios
 //
-//  Created by 이호영 on 2023/10/20.
+//  Created by 이호영 on 2023/10/27.
 //
 
 import Foundation
 
 import ComposableArchitecture
 
-struct SessionItem: ReducerProtocol {
+struct SessionInfo: ReducerProtocol {
   
   struct State: Equatable, Identifiable {
     
@@ -19,7 +19,6 @@ struct SessionItem: ReducerProtocol {
     
     let session: Session
     let status: SessionStatus
-    var isLast: Bool
     
     var sessionDate: String {
       let dateFormatter = DateFormatter()
@@ -32,16 +31,15 @@ struct SessionItem: ReducerProtocol {
     
     init(
       session: Session,
-      status: SessionStatus,
-      isLast: Bool = false
+      status: SessionStatus
     ) {
       self.session = session
       self.status = status
-      self.isLast = isLast
     }
   }
   
   enum Action: Equatable {
+    
   }
   
   var body: some ReducerProtocolOf<Self> {

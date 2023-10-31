@@ -14,6 +14,7 @@ struct Onboarding: ReducerProtocol {
   struct State: Equatable {
     var isLaunching: Bool = false
     var isFirstLaunched: Bool
+    var isShowGuestButton: Bool = false
     
     init(isFirstLaunched: Bool = true) {
       self.isFirstLaunched = isFirstLaunched
@@ -21,9 +22,13 @@ struct Onboarding: ReducerProtocol {
   }
   
   enum Action {
+    case onAppear
+    case setGuestButton(Bool)
+    
     case launch
     case kakaoSignButtonTapped
-    case registerAppleSign
+    case guestSignButtonTapped
+    case registerPlatform(String)
     case appleSignButtonTapped(name: String)
     case compareKakaoUserId(String)
     
@@ -34,10 +39,20 @@ struct Onboarding: ReducerProtocol {
   @Dependency(\.kakaoSign) var kakaoSign
   @Dependency(\.appleSign) var appleSign
   @Dependency(\.memberInfo) var memberInfo
+  @Dependency(\.config.remoteConfig) var config
   
   var body: some ReducerProtocolOf<Self> {
     Reduce { state, action in
       switch action {
+      case .onAppear:
+        return .run { send in
+          let isShow = try await config.shouldShowGuestButton()
+          
+          await send(.setGuestButton(isShow))
+        }
+      case let .setGuestButton(isShow):
+        state.isShowGuestButton = isShow
+        return .none
       case .launch:
         state.isLaunching = true
         return .none
@@ -63,6 +78,7 @@ struct Onboarding: ReducerProtocol {
           
         } catch: { error, send in
           print(error)
+          await send(.registerPlatform("kakao"))
           await send(.pushSingUpName(""))
         }
         
@@ -80,14 +96,23 @@ struct Onboarding: ReducerProtocol {
           }
           
         } catch: { error, send in
-          await send(.registerAppleSign)
+          await send(.registerPlatform("apple"))
           await send(.pushSingUpName(name))
         }
-      case .registerAppleSign:
+      case let .registerPlatform(platform):
         return .run { send in
-          try await KeyChainManager.shared.create(account: .platform, data: "apple")
+          try await KeyChainManager.shared.create(account: .platform, data: platform)
         }
         
+      case .guestSignButtonTapped:
+        
+        return .run { send in
+          
+          let member = try await memberInfo.memberInfo.getMemberInfo(memberId: 2920795262)
+          await send(.pushHomeScene(member))
+        } catch: { error, send in
+          print(error)
+        }
       default:
         return .none
       }

@@ -84,7 +84,7 @@ struct OnboardingView: View {
                 YPText(
                   string: "카카오 로그인",
                   color: .gray_1200,
-                  font: .YPFont(type: .regular, size: 19)
+                  font: .YPFont(type: .semiBold, size: 19)
                 )
               }
               .frame(maxWidth: .infinity, alignment: .center)
@@ -93,6 +93,24 @@ struct OnboardingView: View {
               .cornerRadius(12)
             }
             
+            if viewStore.isShowGuestButton {
+              Button {
+                viewStore.send(.guestSignButtonTapped)
+              } label: {
+                HStack(spacing: 6) {
+                  
+                  YPText(
+                    string: "guest sign",
+                    color: .white,
+                    font: .YPFont(type: .regular, size: 19)
+                  )
+                }
+                .frame(maxWidth: .infinity, alignment: .center)
+                .padding(.vertical, 10)
+                .background(Color.gray_1200)
+                .cornerRadius(12)
+              }
+            }
           }
           .frame(maxWidth: .infinity, alignment: .center)
           .padding(.horizontal, 24)
@@ -100,6 +118,9 @@ struct OnboardingView: View {
         }
       }
       .background(viewStore.isLaunching || viewStore.isFirstLaunched == false ? Color.white : Color.yapp_orange)
+      .onAppear {
+        viewStore.send(.onAppear)
+      }
     }
   }
 }

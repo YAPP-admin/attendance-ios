@@ -69,6 +69,13 @@ struct AppView: View {
             action: App.Path.Action.setting,
             then: SettingView.init(store:)
           )
+        case .sessionInfo:
+          CaseLet(
+            state: /App.Path.State.sessionInfo,
+            action: App.Path.Action.sessionInfo,
+            then: SessionInfoView.init(store:)
+          )
+
         }
       }
       .tint(Color.gray_800)

@@ -118,9 +118,13 @@
 		F363C9782A641AB20024E0A2 /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F363C9772A641AB20024E0A2 /* KeychainManager.swift */; };
 		F363C97A2A641AD20024E0A2 /* KeychainError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F363C9792A641AD20024E0A2 /* KeychainError.swift */; };
 		F363C97C2A641B0B0024E0A2 /* KeychainAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = F363C97B2A641B0B0024E0A2 /* KeychainAccount.swift */; };
+		F365FA622AEABFF700DCAD78 /* SessionInfoCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F365FA612AEABFF700DCAD78 /* SessionInfoCore.swift */; };
+		F365FA642AEAC03800DCAD78 /* SessionInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F365FA632AEAC03800DCAD78 /* SessionInfoView.swift */; };
 		F373D2372A59382A00EBA96B /* YPText.swift in Sources */ = {isa = PBXBuildFile; fileRef = F373D2362A59382A00EBA96B /* YPText.swift */; };
 		F373D2402A593E3C00EBA96B /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = F373D23F2A593E3C00EBA96B /* Color.swift */; };
 		F373D2422A5942F000EBA96B /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = F373D2412A5942F000EBA96B /* Font.swift */; };
+		F3741B362AE915C9006104AE /* ConfigUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3741B352AE915C9006104AE /* ConfigUseCase.swift */; };
+		F3741B382AE91656006104AE /* ConfigDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3741B372AE91656006104AE /* ConfigDependency.swift */; };
 		F37AB8AE2AE7BFCE00B2C9C7 /* AttendanceCodeCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37AB8AD2AE7BFCE00B2C9C7 /* AttendanceCodeCore.swift */; };
 		F37AB8B02AE7C2D700B2C9C7 /* AttendanceCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37AB8AF2AE7C2D700B2C9C7 /* AttendanceCodeView.swift */; };
 		F37AD34C2A5F066C006694D1 /* NavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37AD34B2A5F066C006694D1 /* NavigationBarView.swift */; };
@@ -151,6 +155,7 @@
 		F3C9AB8C2AE6215A00A589C9 /* TeamItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C9AB8B2AE6215A00A589C9 /* TeamItemView.swift */; };
 		F3C9AB902AE773E000A589C9 /* OnBoardingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C9AB8F2AE773E000A589C9 /* OnBoardingCoordinator.swift */; };
 		F3C9AB922AE775D500A589C9 /* OnBoardingCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C9AB912AE775D500A589C9 /* OnBoardingCoordinatorView.swift */; };
+		F3D1634D2AE96AC8002D2509 /* PolicyWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3D1634C2AE96AC8002D2509 /* PolicyWebView.swift */; };
 		F3DE55772A597165004EB701 /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3DE55762A597165004EB701 /* LottieView.swift */; };
 		F3DE55792A598C63004EB701 /* SignUpNameCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3DE55782A598C63004EB701 /* SignUpNameCore.swift */; };
 		F3DE557B2A598C7F004EB701 /* SignUpNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3DE557A2A598C7F004EB701 /* SignUpNameView.swift */; };
@@ -286,9 +291,13 @@
 		F363C9772A641AB20024E0A2 /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
 		F363C9792A641AD20024E0A2 /* KeychainError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainError.swift; sourceTree = "<group>"; };
 		F363C97B2A641B0B0024E0A2 /* KeychainAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainAccount.swift; sourceTree = "<group>"; };
+		F365FA612AEABFF700DCAD78 /* SessionInfoCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionInfoCore.swift; sourceTree = "<group>"; };
+		F365FA632AEAC03800DCAD78 /* SessionInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionInfoView.swift; sourceTree = "<group>"; };
 		F373D2362A59382A00EBA96B /* YPText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YPText.swift; sourceTree = "<group>"; };
 		F373D23F2A593E3C00EBA96B /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		F373D2412A5942F000EBA96B /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
+		F3741B352AE915C9006104AE /* ConfigUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigUseCase.swift; sourceTree = "<group>"; };
+		F3741B372AE91656006104AE /* ConfigDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigDependency.swift; sourceTree = "<group>"; };
 		F37AB8AD2AE7BFCE00B2C9C7 /* AttendanceCodeCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendanceCodeCore.swift; sourceTree = "<group>"; };
 		F37AB8AF2AE7C2D700B2C9C7 /* AttendanceCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendanceCodeView.swift; sourceTree = "<group>"; };
 		F37AD34B2A5F066C006694D1 /* NavigationBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarView.swift; sourceTree = "<group>"; };
@@ -319,6 +328,7 @@
 		F3C9AB8B2AE6215A00A589C9 /* TeamItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamItemView.swift; sourceTree = "<group>"; };
 		F3C9AB8F2AE773E000A589C9 /* OnBoardingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingCoordinator.swift; sourceTree = "<group>"; };
 		F3C9AB912AE775D500A589C9 /* OnBoardingCoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingCoordinatorView.swift; sourceTree = "<group>"; };
+		F3D1634C2AE96AC8002D2509 /* PolicyWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolicyWebView.swift; sourceTree = "<group>"; };
 		F3DE55762A597165004EB701 /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
 		F3DE55782A598C63004EB701 /* SignUpNameCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpNameCore.swift; sourceTree = "<group>"; };
 		F3DE557A2A598C7F004EB701 /* SignUpNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpNameView.swift; sourceTree = "<group>"; };
@@ -748,6 +758,7 @@
 			children = (
 				F363C95B2A63AE620024E0A2 /* SettingCore.swift */,
 				F363C95D2A63AEA50024E0A2 /* SettingView.swift */,
+				F3D1634C2AE96AC8002D2509 /* PolicyWebView.swift */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -775,6 +786,7 @@
 			children = (
 				F363C9672A63D48F0024E0A2 /* SessionInfoUseCase.swift */,
 				F363C96E2A6413DD0024E0A2 /* MemberInfoUseCase.swift */,
+				F3741B352AE915C9006104AE /* ConfigUseCase.swift */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -785,6 +797,7 @@
 				F363C94E2A6353CB0024E0A2 /* FireBase */,
 				F363C96A2A63D61F0024E0A2 /* SessionInfoDependency.swift */,
 				F363C9702A6415570024E0A2 /* MemberInfoDependency.swift */,
+				F3741B372AE91656006104AE /* ConfigDependency.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -813,6 +826,15 @@
 				F363C97B2A641B0B0024E0A2 /* KeychainAccount.swift */,
 			);
 			path = Keychain;
+			sourceTree = "<group>";
+		};
+		F365FA602AEABFE400DCAD78 /* SessionInfo */ = {
+			isa = PBXGroup;
+			children = (
+				F365FA612AEABFF700DCAD78 /* SessionInfoCore.swift */,
+				F365FA632AEAC03800DCAD78 /* SessionInfoView.swift */,
+			);
+			path = SessionInfo;
 			sourceTree = "<group>";
 		};
 		F373D2322A59357A00EBA96B /* New */ = {
@@ -877,6 +899,7 @@
 		F373D2432A59440600EBA96B /* Feature */ = {
 			isa = PBXGroup;
 			children = (
+				F365FA602AEABFE400DCAD78 /* SessionInfo */,
 				F3C9AB842AE61C4A00A589C9 /* TeamSelect */,
 				F3C9AB812AE5F88A00A589C9 /* AttendanceCode */,
 				F363C95F2A63B1F00024E0A2 /* ScoreCheck */,
@@ -1142,13 +1165,16 @@
 				F373D2422A5942F000EBA96B /* Font.swift in Sources */,
 				5EAA7A0E27FF441600BC7397 /* SignUpPositionViewController.swift in Sources */,
 				5EA97D8A27DBB06A004E2330 /* Config.swift in Sources */,
+				F3D1634D2AE96AC8002D2509 /* PolicyWebView.swift in Sources */,
 				5E6B7FFB28321BBE00F4D88F /* UICollectionReusableView.swift in Sources */,
 				FDC30B502A1429BE00E86FDE /* BaseAdminViewController.swift in Sources */,
 				F3C9AB922AE775D500A589C9 /* OnBoardingCoordinatorView.swift in Sources */,
 				FD0B2B092A07E506004BA8E9 /* Position.swift in Sources */,
 				5E9CC7BC27D0F79E006D8B12 /* SignUpCollectionViewCell.swift in Sources */,
 				F363C97A2A641AD20024E0A2 /* KeychainError.swift in Sources */,
+				F365FA622AEABFF700DCAD78 /* SessionInfoCore.swift in Sources */,
 				5E7AEF2227E212690059FB3A /* AdminViewController.swift in Sources */,
+				F365FA642AEAC03800DCAD78 /* SessionInfoView.swift in Sources */,
 				5EF69ED427A83BCE007E9735 /* DetailViewController.swift in Sources */,
 				52C4CDE227D0C4D1005EDE78 /* HomeViewModel.swift in Sources */,
 				527657FB27C387E40080DA32 /* UILabelWithRound.swift in Sources */,
@@ -1182,6 +1208,7 @@
 				5EF69EC227A7EFFF007E9735 /* BaseViewModel.swift in Sources */,
 				52BCA07227C4D3DF001BF86F /* UIFont.swift in Sources */,
 				522EFA43281A5EEC00EF09C7 /* HomeAttendanceDetailViewController.swift in Sources */,
+				F3741B382AE91656006104AE /* ConfigDependency.swift in Sources */,
 				52EFD5F6280FFA3200065FEB /* HomeTotalScoreTableViewCell.swift in Sources */,
 				5E6B7FFD283271C100F4D88F /* Attendances.swift in Sources */,
 				5EF69ED927AAACBA007E9735 /* PolicyViewController.swift in Sources */,
@@ -1262,6 +1289,7 @@
 				5EAA79F927FDD84C00BC7397 /* AdminMessageHeader.swift in Sources */,
 				5E6ACB3C28086A7300ADF2BB /* KakaoLoginWorker.swift in Sources */,
 				F37AD3502A630311006694D1 /* SignUpPositionCore.swift in Sources */,
+				F3741B362AE915C9006104AE /* ConfigUseCase.swift in Sources */,
 				F363C9742A641A040024E0A2 /* YPError.swift in Sources */,
 				F3C9AB882AE61D5900A589C9 /* TeamSelectView.swift in Sources */,
 				5E7AEF2427E21D680059FB3A /* AdminViewModel.swift in Sources */,
@@ -1430,13 +1458,13 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = attendance.ios.22;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1465,13 +1493,13 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = attendance.ios.22;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
